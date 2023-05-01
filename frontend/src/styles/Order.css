@@ -1,3 +1,86 @@
-h1 {
-    color: black;
+
+/* 바디 */
+body {
+    margin-left: 227px;
+    margin-top: 55px;
 }
+
+/* 주문 결제 */
+.title {
+    border-bottom: 1px solid #D9D9D9;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+    width: 762px;
+    height: 60px;
+    font-size: 32px;
+}
+
+/* 주문 상품 정보 */
+.prod_title {
+    margin-top: 28px;
+    margin-left: 10px;
+    border: none;
+    width: 719px;
+    height: 27px;
+    font-weight: 700;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* + - 확장 버튼 */
+.prod_title > button {
+    border: none ;
+    font-size: 30px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+/* 주문 상품 컴포넌트 */
+.prod_info {
+    
+    font-size: 24px;
+    margin-left: 40px;
+    margin-top: 46px;
+    /* border: 1px solid; */
+    width: 638px;
+    height: 100px;
+    display: flex;
+}
+
+/* 상품 이미지 */
+.prod_info > img {
+    width: 99px;
+    height: 99px;
+}
+
+/* 상품 정보 */
+.prod_info > div {
+    margin-top: 10px;
+    margin-left: 33px;
+    width: 254px;
+    height: 69px;
+    /* border: 1px solid; */
+}
+
+.prod_info > div > div{
+    margin-bottom: 21px;
+}
+
+/* 상품명, 옵션, 수량 */
+.prod_info > div > div{
+    margin-bottom: 21px;
+}
+
+/* 가격 정보 */
+.prod_info > div:nth-child(3) > div{
+    margin-left: 130px;
+    /* color: red; */
+}
+
+
+
+
+
+
+
+

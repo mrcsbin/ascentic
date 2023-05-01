@@ -7,8 +7,6 @@ body {
 
 /* 주문 결제 */
 .title {
-    border-bottom: 1px solid #D9D9D9;
-    transform: matrix(1, 0, -0.01, 1, 0, 0);
     width: 762px;
     height: 60px;
     font-size: 32px;
@@ -16,7 +14,7 @@ body {
 
 /* 주문 상품 정보 */
 .sub_title {
-    margin-top: 28px;
+    margin-top: 20px;
     margin-left: 10px;
     border: none;
     width: 719px;
@@ -25,6 +23,11 @@ body {
     font-size: 24px;
     display: flex;
     justify-content: space-between;
+    padding-top: 28px;
+
+    border-top: 1px solid #D9D9D9;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+
 }
 
 /* + - 확장 버튼 */

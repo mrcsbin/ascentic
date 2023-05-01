@@ -15,7 +15,7 @@ body {
 }
 
 /* 주문 상품 정보 */
-.prod_title {
+.sub_title {
     margin-top: 28px;
     margin-left: 10px;
     border: none;
@@ -28,7 +28,7 @@ body {
 }
 
 /* + - 확장 버튼 */
-.prod_title > button {
+.sub_title > button {
     border: none ;
     font-size: 30px;
     background-color: transparent;

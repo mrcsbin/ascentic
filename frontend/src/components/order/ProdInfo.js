@@ -14,7 +14,7 @@ function ProdInfo() {
 
   return (
     <div>
-      <div className="prod_title">
+      <div className="sub_title">
         주문 상품 정보
         <button onClick={changeDetail}>{detail ? "-" : "+"}</button>
       </div>

@@ -436,6 +436,36 @@ body {
     font-size: 18px;
 }
 
+/* ---------------------------        여기 부터 결제 수단 --------------------------------*/
+/* 할인 혜택 폼 */
+.payment_method {
+    margin-top: 50px;
+    margin-left: 110px;
+    width: 515px;
+    height: 450px;
+    /* border: 1px solid; */
+}
+
+/* 결제수단 버튼(네이버, 카카오 등등) */
+.payment_method > div > button {
+    margin-top: 7px;
+    background-color: white;
+    width: 515px;
+    height: 50px;
+    font-size: 18px;
+}
+
+/* 결제 수단 안내문 */
+.payment_method > :nth-child(2) {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* 서비스 가입사실 확인 링크 */
+.payment_method > :nth-child(2) > a {
+    color: black;
+}
+
 /* ---------------------------        여기 부터 최종 결제 금액 --------------------*/
 
 /* 최종결제금액  */
@@ -513,6 +543,24 @@ body {
     font-size: 25px;
     color: white;
 }
+
+/* ---------------------------        여기 부터 주문/결제 페이지 안내문 --------------------*/
+
+/* 주문/결제 페이지 안내문 */
+.order_notice {
+    width: 570px;
+    color: red;
+    margin-top: 40px;
+    font-size: 15px;
+}
+
+/* 안내문 링크 */
+.order_notice > a {
+    color: #CFA614;
+}
+
+
+
 
 
 

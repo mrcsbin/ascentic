@@ -3,8 +3,8 @@
 body {
     margin-left: 227px;
     margin-top: 55px;
-    
 }
+/*------------------------------------- 여기부터 order 페이지 title -------------------*/
 
 /* 주문 결제 */
 .title {
@@ -13,6 +13,7 @@ body {
     font-size: 32px;
 }
 
+/*------------------------------------- 여기부터 order 페이지 body -------------------*/
 /* order 페이지 바디 */
 .order_body {
     display: flex;
@@ -46,6 +47,8 @@ body {
     background-color: transparent;
     cursor: pointer;
 }
+
+/*------------------------------------- 여기부터 주분 상품 정보 -------------------*/
 
 /* 주문 상품 컴포넌트 */
 .prod_info {
@@ -88,6 +91,136 @@ body {
     margin-left: 130px;
     /* color: red; */
 }
+
+/*------------------------------------- 여기부터 주문자 정보 -------------------*/
+
+/* 주문자 정보 전체 */
+.order_form {
+    margin-top: 30px;
+    margin-left: 60px;
+    width: 609px;
+    height: 500px;
+    /* border: 1px solid; */
+}
+
+
+/* 이메일과 이메일 폼 */
+.email_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 이메일 폼 제목 */
+.email_content > div{
+    margin-left: 5px;
+}
+
+/* 이메일 폼 */
+.email_content > input{
+    width: 143px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 이메일 폼 */
+.email_content > select{
+    width: 150px;
+    height: 36px;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+/* 이름과 이름 입력 폼 */
+.name_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 이름 폼 제목 */
+.name_content > div{
+    margin-left: 5px;
+}
+
+/* 이름 폼 */
+.name_content > input {
+    width: 490px;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    letter-spacing: 5px;
+    padding-left: 15px;
+}
+
+/* 연락처와 연락처 입력 폼 */
+.phone_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 연락처 폼 제목 */
+.phone_content > div{
+    margin-left: 5px;
+}
+
+/* 연락처 폼 */
+.phone_content > input {
+    width: 380px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 연락처 인증 버튼 */
+.phone_content > button {
+    background-color: white;
+    margin-top: 5px;
+    width: 107px;
+    height: 38px;
+}
+
+/* 동의하기 */
+.order_info_agree {
+    margin-top: 40px;
+    margin-left: 60px;
+    /* border: 1px solid; */
+    width: 515px;
+    height: 120px;
+}
+
+/* 모두 동의 */
+.order_info_agree > div:nth-child(1) {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* 나머지 동의 */
+.order_info_agree > div{
+    margin-top: 8px;
+}
+
+/* 저장하고 다음 단계로 버튼 */
+.order_form > button {
+    margin-left: 60px;
+    color: white;
+    background-color: black;
+    width: 515px;
+    height: 50px;
+    font-size: 18px;
+}
+
+
+/* ---------------------------        여기 부터 최종 결제 금액 --------------------*/
 
 /* 최종결제금액  */
 .final_sub_title {

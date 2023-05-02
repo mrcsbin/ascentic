@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/Order.css";
-import ProdInfo from "../../components/order/ProdInfo";
+import ProductInfo from "../../components/order/ProductInfo";
 import OrderInfo from "../../components/order/OrderInfo";
 import DiscountBenefit from "../../components/order/DiscountBenefit";
 import DeliveryInfo from "../../components/order/DeliveryInfo";
@@ -14,14 +14,18 @@ function Order() {
       {/* 주문/결제 타이틀 */}
       <div className="title">주문 / 결제</div>
       {/* 주문 상품정보 */}
-      <div className="left"></div>
-      <ProdInfo></ProdInfo>
-      <OrderInfo></OrderInfo>
-      <DeliveryInfo></DeliveryInfo>
-      <DiscountBenefit></DiscountBenefit>
-      <Payment></Payment>
-      <div className="right">
-        <FinalPayment></FinalPayment>
+      <div className="order_body">
+        <div className="left">
+          <ProductInfo></ProductInfo>
+          <OrderInfo></OrderInfo>
+          <DeliveryInfo></DeliveryInfo>
+          <DiscountBenefit></DiscountBenefit>
+          <Payment></Payment>
+        </div>
+
+        <div className="right">
+          <FinalPayment></FinalPayment>
+        </div>
       </div>
     </div>
   );

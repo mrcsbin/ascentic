@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import "../../styles/StoreMain.css";
 import CardList from "../../components/common/storemain/CardList";
 import Categories from "../../components/common/storemain/Categories";
@@ -82,8 +83,7 @@ function StoreMain() {
 
   // 대기 중일 때
   if (loading) {
-    <Loading />;
-    return <Loading isLoading={loading} />;
+    // return <Loading isLoading={loading} />;
   }
   // 아직 값이 설정되지 않았을 때
   if (!products) {

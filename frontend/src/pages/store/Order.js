@@ -21,10 +21,6 @@ function Order() {
           <DeliveryInfo></DeliveryInfo>
           <DiscountBenefit></DiscountBenefit>
           <Payment></Payment>
-        </div>
-
-        <div className="right">
-          <FinalPayment></FinalPayment>
           <div className="order_notice">
             · 환경부 고시에 따라, 기본 쇼핑백이 제공되지 않습니다.
             <br />
@@ -38,6 +34,10 @@ function Order() {
             <br />· 도움이 필요하신가요? 더 궁금하신 사항이 있다면 [a]scentic
             고객센터[1644-1111]로 문의하여 주십시오.
           </div>
+        </div>
+
+        <div className="right">
+          <FinalPayment></FinalPayment>
         </div>
       </div>
     </div>

@@ -18,11 +18,13 @@ body {
 .order_body {
     display: flex;
 }
+  
 
 /* order 페이지 오른쪽 요소 */
 .right {
     margin-left: 142px;
 }
+
 
 /* order 페이지 왼쪽 요소들의 제목(주문상품정보, 주문자 정보, 배송정보, 할인 혜택, 결제수단) */
 .sub_title {
@@ -56,7 +58,8 @@ body {
     font-size: 24px;
     margin-left: 40px;
     margin-top: 46px;
-    /* border: 1px solid; */
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 10px;
     width: 638px;
     height: 100px;
     display: flex;
@@ -466,6 +469,27 @@ body {
     color: black;
 }
 
+/* ---------------------------        여기 부터 주문/결제 페이지 안내문 --------------------*/
+
+/* 주문/결제 페이지 안내문 */
+.order_notice {
+    color: red;
+    font-size: 10px;
+    margin-top: 40px;
+    margin-left: 10px;
+    width: 719px;
+    height: 150px;
+    border-top: 1px solid #D9D9D9;
+    padding-top: 40px;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+}
+
+/* 안내문 링크 */
+.order_notice > a {
+    color: #CFA614;
+}
+
+
 /* ---------------------------        여기 부터 최종 결제 금액 --------------------*/
 
 /* 최종결제금액  */
@@ -544,20 +568,6 @@ body {
     color: white;
 }
 
-/* ---------------------------        여기 부터 주문/결제 페이지 안내문 --------------------*/
-
-/* 주문/결제 페이지 안내문 */
-.order_notice {
-    width: 570px;
-    color: red;
-    margin-top: 40px;
-    font-size: 15px;
-}
-
-/* 안내문 링크 */
-.order_notice > a {
-    color: #CFA614;
-}
 
 
 

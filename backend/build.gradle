@@ -15,10 +15,12 @@ repositories {
 dependencies {
     //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.testng:testng:7.1.0'
     //DB
     runtimeOnly 'com.mysql:mysql-connector-j'
     //Security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     // assertj
     testImplementation 'org.assertj:assertj-core:3.23.1'
 
@@ -29,6 +31,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
+
+    //sms(coolsms)
+    implementation 'net.nurigo:sdk:4.2.7'
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//    configuration annotation processor not configured 해결
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // Use ConfigurationProperties
 }
 
 tasks.named('test') {

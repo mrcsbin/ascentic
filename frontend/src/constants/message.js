@@ -1,16 +1,15 @@
-const CONFIRM_MESSAGE = {
+export const CONFIRM_MESSAGE = {
   DELETE: "정말 삭제하시겠습니까?",
   LOGOUT: "로그아웃하시겠습니까?",
   WITHDRAWAL: "정말 탈퇴하시겠습니까?",
 };
 
-const ERROR_MESSAGE = {
-  DEFAULT: "에러가 발생했습니다. 잠시 후에 다시 시도해주세요.",
-  NOTFOUND: "죄송합니다. 요청하신 페이지를 찾을 수 없습니다.",
-};
-
-const SUCCESS_MESSAGE = {
-  DELETE_PROFILE: "회원 탈퇴가 완료되었습니다.",
-  PATCH_PROFILE_IMAGE: "사진을 변경하였습니다.",
-  POST_LOGIN: "로그인에 성공했습니다.",
+export const SIGNUP_ERROR_MESSAGE = {
+  ID: "id가 5자 이상, 15자 이하의 문자열이며 대소문자/숫자인지",
+  PW: "입력된 비밀번호 값이 8자 이상이며, 영문 대/소문자와 숫자, 그리고 특수문자가 각각 하나 이상 포함되어 있는지.",
+  CONFIRMPW: "그리고 비밀번호와 확인 비밀번호가 일치하는지",
+  PHONE: "11자리의 숫자만 입력하였는지",
+  NAME: "입력된 이름 값이 비어있지 않은 문자열이며 2-4글자의 한글이름인지",
+  EMAIL: "입력된 이메일 값이 이메일 주소의 형식에 맞는지",
+  INFOAGREE: "정보동의란 동의 했는지",
 };

@@ -1,3 +1,17 @@
-h1 {
-    color: black;
+/*HSM*/
+
+.footer {
+  border-top: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  align-items: center;
+  background-color: transparent;
+  text-align: center;
+  letter-spacing: 0.35px;
+  line-height: 1.4;
+}
+
+.footerSeparator {
+  width: 100%;
 }

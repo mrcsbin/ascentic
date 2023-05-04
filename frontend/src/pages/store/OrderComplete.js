@@ -45,7 +45,7 @@ function OrderComplete() {
           <tr>
             <td>
               <span>주문일자: {orderInfo.date}</span>
-              <span>주문번호:{orderInfo.orderNum}</span>
+              <span>주문번호: {orderInfo.orderNum}</span>
             </td>
             <td>
               주문자: {orderInfo.orderMembeName} ({orderInfo.orderMemberEmail})

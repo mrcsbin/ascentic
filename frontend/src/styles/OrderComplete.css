@@ -73,6 +73,7 @@ body {
 /* 첫번째 td */
 .complete_body > table > tr > td:nth-child(1) {
     width: 530px;
+    border-right: 1px solid #E3E3E3;
 }
 
 /* 첫번째 td의 주문일자, 주문번호 간격 조정 */
@@ -83,11 +84,7 @@ body {
 /* 두번째 td */
 .complete_body > table > tr > td:nth-child(2) {
     width: 530px;
-}
-
-/* 세번째 td */
-.complete_body > table > tr > td:nth-child(3) {
-    width: 530px;
+    border-right: 1px solid #E3E3E3;
 }
 
 /* 세번째 td */

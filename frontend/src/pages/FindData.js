@@ -30,6 +30,7 @@ function FindId() {
     axios
       .post("http://localhost:8080/member/find/id", findIdData)
       .then((response) => {
+        console.log(response);
         setGetData(response.data);
       });
     setActionMode(1);
@@ -64,7 +65,12 @@ function FindId() {
   ) : (
     <div className="result">
       {getData === "" ? (
-        <h1>"찾으시는 정보가 없습니다."</h1>
+        <div>
+          <h1></h1>
+          <Link to="/login">
+            <span>로그인 하러 가기</span>
+          </Link>
+        </div>
       ) : (
         <div>
           <h1>{getData}</h1>
@@ -146,7 +152,12 @@ function FindPassword() {
   ) : (
     <div className="result">
       {getData === "" ? (
-        <h1>"찾으시는 정보가 없습니다."</h1>
+        <div>
+          <h1></h1>
+          <Link to="/login">
+            <span>로그인 하러 가기</span>
+          </Link>
+        </div>
       ) : (
         <div>
           <h1>{getData}</h1>

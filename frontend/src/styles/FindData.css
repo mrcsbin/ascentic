@@ -22,7 +22,8 @@
 }
 
 #find-wrap .find-tab .active {
-  background-color: orange;
+  background-color: #f2b6a0;
+  border-radius: 10px;
 }
 
 /* 조회 박스*/

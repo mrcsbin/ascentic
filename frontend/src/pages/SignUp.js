@@ -7,13 +7,15 @@ import Wrong from "../assets/wrong.png";
 import { validateForm } from "../constants/Validation";
 import { SIGNUP_ERROR_MESSAGE } from "../constants/Message";
 import { checkCode, sendCode } from "../constants/PhoneCertification";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 function SignUp() {
   const [showCertificate, setShowCertificate] = useState(false);
   const [emailDuplicateStatus, setEmailDuplicateStatus] = useState(0);
   const [idDuplicateStatus, setIdDuplicateStatus] = useState(0);
   const [certificateCode, setCertificateCode] = useState("");
-
+  const [selectedDate, setSelectedDate] = useState("");
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -21,6 +23,7 @@ function SignUp() {
     name: "",
     email: "",
     phone: "",
+    birthDate: "",
     infoAgree: false,
     snsPush: false,
     emailPush: false,
@@ -40,11 +43,12 @@ function SignUp() {
     setCertificateCode(e.target.value);
   };
 
+  //handlephonecertificate : 휴대폰 번호를 백으로 보내, 문자 발송시킴
   function handlePhoneCertificate() {
     sendCode(formData.phone);
     setShowCertificate(true);
   }
-
+  //handlephonecertificate2 : 휴대폰 인증번호 일치 여부를 백으로 질문
   function handlePhoneCertificate2() {
     console.log(certificateCode);
     checkCode(formData.phone, certificateCode);
@@ -59,6 +63,7 @@ function SignUp() {
           setEmailDuplicateStatus(1);
         } else {
           setEmailDuplicateStatus(2);
+          alert(SIGNUP_ERROR_MESSAGE.EMAIL_DUPLICATE);
         }
       })
       .catch((e) => {
@@ -75,6 +80,7 @@ function SignUp() {
           setIdDuplicateStatus(1);
         } else {
           setIdDuplicateStatus(2);
+          alert(SIGNUP_ERROR_MESSAGE.ID_DUPLICATE);
         }
       })
       .catch((e) => {
@@ -82,10 +88,27 @@ function SignUp() {
       });
   }
 
+  function handleBirthDateChange(date) {
+    setSelectedDate(date);
+  }
+
+  function formatBirthDate(date) {
+    if (!date) return "";
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return month + day;
+  }
+  function handleBirthDateConfirm() {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      birthDate: formatBirthDate(selectedDate),
+    }));
+  }
   useEffect(() => {
+    console.log(formData);
     const formErrors = validateForm(formData);
     setErrors(formErrors);
-    console.log(formErrors);
+    // console.log(formErrors);
   }, [formData]);
 
   function handleInputChange(e) {
@@ -96,8 +119,8 @@ function SignUp() {
       setFormData((prevFormData) => ({ ...prevFormData, [id]: value }));
     }
 
-    setEmailDuplicateStatus(0);
-    setIdDuplicateStatus(0);
+    // setEmailDuplicateStatus(0);
+    // setIdDuplicateStatus(0);
   }
 
   function handleSubmit(e) {
@@ -128,6 +151,7 @@ function SignUp() {
             className="input"
             id="id"
             placeholder="a"
+            autoComplete="new-password"
             onChange={handleInputChange}
           />
           <label htmlFor="id" className="label">
@@ -159,6 +183,7 @@ function SignUp() {
             id="password"
             type="password"
             className="input"
+            autoComplete="new-password"
             placeholder="a"
             onChange={handleInputChange}
           />
@@ -174,6 +199,7 @@ function SignUp() {
             id="confirmPassword"
             type="password"
             className="input"
+            autoComplete="new-password"
             placeholder="a"
             onChange={handleInputChange}
           />
@@ -214,8 +240,8 @@ function SignUp() {
             <button
               id="verifyBtn"
               onClick={(e) => {
+                e.preventDefault();
                 handlePhoneCertificate();
-                handleIdCheck();
               }}
             >
               인증하기
@@ -280,6 +306,18 @@ function SignUp() {
         {errors.emailError && (
           <div className="error">{SIGNUP_ERROR_MESSAGE.EMAIL}</div>
         )}
+
+        <div>
+          <Calendar onChange={handleBirthDateChange} value={selectedDate} />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleBirthDateConfirm();
+            }}
+          >
+            확인
+          </button>
+        </div>
         <br />
         <br />
         <input

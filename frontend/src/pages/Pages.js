@@ -5,7 +5,7 @@ const OrderComplete = lazy(() => import("./store/OrderComplete"));
 const ProdDetail = lazy(() => import("./store/ProdDetail"));
 const StoreMain = lazy(() => import("./store/StoreMain"));
 const Login = lazy(() => import("./Login"));
-const KakaoRedirect = lazy(() => import("../components/login/KakaoRedirect"));
+const KakaoLogin = lazy(() => import("../components/login/KakaoLogin"));
 const FindData = lazy(() => import("./FindData"));
 const Main = lazy(() => import("./Main"));
 const SignUp = lazy(() => import("./SignUp"));
@@ -18,7 +18,7 @@ export {
   ProdDetail,
   StoreMain,
   Login,
-  KakaoRedirect,
+  KakaoLogin,
   FindData,
   Main,
   SignUp,

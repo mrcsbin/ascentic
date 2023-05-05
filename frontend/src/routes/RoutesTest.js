@@ -2,6 +2,7 @@ import {
   Main,
   Login,
   FindData,
+  KakaoLogin,
   SignUp,
   SignUpSuccess,
   MyPage,
@@ -9,7 +10,6 @@ import {
   ProdDetail,
   OrderComplete,
   Order,
-  KakaoRedirect,
 } from "../pages/Pages";
 
 import { Route, Routes as BrowserRoutes } from "react-router-dom";
@@ -23,7 +23,7 @@ function RoutesTest() {
 
       <Route path="/login" element={<Login />}></Route>
 
-      <Route path="/login/kakao" element={<KakaoRedirect />} />
+      <Route path="/login/kakao" element={<KakaoLogin />} />
 
       <Route path="/member/find" element={<FindData />} />
 

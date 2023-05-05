@@ -12,4 +12,8 @@ export const SIGNUP_ERROR_MESSAGE = {
   NAME: "입력된 이름 값이 비어있지 않은 문자열이며 2-4글자의 한글이름인지",
   EMAIL: "입력된 이메일 값이 이메일 주소의 형식에 맞는지",
   INFOAGREE: "정보동의란 동의 했는지",
+  PHONE_CERTIFICATE_WRONG: "인증번호가 틀렸다.",
+  ID_DUPLICATE: "중복된 ID가 존재한다",
+  PHONE_DUPLICATE: "중복된 전화번호가 존재한다",
+  EMAIL_DUPLICATE: "중복된 이메일이가 존재한다",
 };

@@ -21,7 +21,7 @@ public class VerificationController {
     @GetMapping("/sendCode")
     public ResponseEntity<String> generateVerificationCode(@RequestParam("phoneNumber") String phoneNumber) {
         if (phoneNumber == null) {
-            return ResponseEntity.badRequest().body("휴대폰 번호가 필요합니다.");
+            return ResponseEntity.badRequest().body("휴대폰 번호가 입력되지 않았습니다.");
         }
 
         // 6자리의 난수 생성

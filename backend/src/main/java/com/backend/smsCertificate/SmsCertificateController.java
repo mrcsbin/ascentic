@@ -6,6 +6,7 @@ import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -28,7 +29,7 @@ public class SmsCertificateController {
     /**
      * 단일 메시지 발송 예제
      */
-//@PostMapping("/send-one")
+@PostMapping("/send-one")
     public SingleMessageSentResponse sendOne(String phoneNumber) {
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.

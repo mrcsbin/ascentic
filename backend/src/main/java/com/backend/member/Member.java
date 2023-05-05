@@ -6,6 +6,9 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Entity
 @Table(name="memberTbl")
 @Getter @Setter
@@ -33,6 +36,12 @@ public class Member {
     @Column(name="memberEmail")
     private String email;
 
+    @Column(name="memberBirthDate")
+    private String memberBirthDate;
+
+    @Column(name="memberSignUpTime")
+    private LocalDateTime memberSignUpTime = LocalDateTime.now();
+
     @Column(name="memberInfoYn")
     private boolean infoAgree;
 
@@ -41,5 +50,6 @@ public class Member {
 
     @Column(name="memberEmailPushYn")
     private boolean emailPushYn;
+
 }
 

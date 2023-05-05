@@ -38,6 +38,7 @@ public class VerificationController {
     @GetMapping("/checkCode")
     public ResponseEntity checkVerificationCode(@RequestParam("phoneNumber") String phoneNumber, @RequestParam("code") String code) {
         if (phoneNumber == null || code == null) {
+
             return ResponseEntity.badRequest().body(false);
         }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../../styles/StoreMain.css";
+import "../../../styles/StoreMain.css";
 import ProductCard from "./ProductCard";
 
 const CardList = ({ products }) => {

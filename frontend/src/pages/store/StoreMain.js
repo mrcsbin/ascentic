@@ -5,6 +5,8 @@ import "../../styles/StoreMain.css";
 import CardList from "../../components/common/storemain/CardList";
 import Categories from "../../components/common/storemain/Categories";
 import FilterModal from "../../components/common/storemain/FilterModal";
+import mainimg from "../../assets/storemain.jpeg";
+import mainvideo from "../../assets/storemain.mp4";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
@@ -95,7 +97,10 @@ function StoreMain() {
   return (
     <div>
       <div className="imagebox">
-        <img src="" alt="" />
+        <img src={mainimg} alt="" />
+        {/* <video loop autoPlay muted>
+          <source src={mainvideo} type="video/mp4" />
+        </video> */}
       </div>
       <div className="infobox">소개글</div>
       <Categories />

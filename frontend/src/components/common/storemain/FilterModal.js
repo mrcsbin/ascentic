@@ -3,7 +3,7 @@ import all from "../../../assets/productCategory/category_all.webp";
 import best from "../../../assets/productCategory/category_best.webp";
 import body from "../../../assets/productCategory/category_body.webp";
 import candle from "../../../assets/productCategory/category_candle.webp";
-import diffuser from "../../../assets/productCategory/category_diffuser.webp";
+import diffuser from "../../../assets/productCategory/category_diffuser.png";
 import fabric from "../../../assets/productCategory/category_fabric.webp";
 import hand from "../../../assets/productCategory/category_hand.webp";
 import perfume from "../../../assets/productCategory/category_perfume.webp";
@@ -73,9 +73,9 @@ const FilterModal = (props) => {
         <header>
           제품 카테고리
           {showOption === false ? (
-            <button onClick={setShowOption(!showOption)}>+</button>
+            <button onClick={() => setShowOption(!showOption)}>+</button>
           ) : (
-            <button onClick={setShowOption(!showOption)}>-</button>
+            <button onClick={() => setShowOption(!showOption)}>-</button>
           )}
         </header>
         {showOption === true ? (
@@ -109,9 +109,9 @@ const FilterModal = (props) => {
         <header>
           정렬형식
           {showOption === false ? (
-            <button onClick={setShowOption(!showOption)}>+</button>
+            <button onClick={() => setShowOption(!showOption)}>+</button>
           ) : (
-            <button onClick={setShowOption(!showOption)}>-</button>
+            <button onClick={() => setShowOption(!showOption)}>-</button>
           )}
         </header>
         {showOption === true ? (
@@ -164,7 +164,7 @@ const FilterModal = (props) => {
         <section>
           <header>
             {header}
-            <button className="close" onClick={close}>
+            <button className="close" onClick={handleSave}>
               &times;
             </button>
           </header>

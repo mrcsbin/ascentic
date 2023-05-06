@@ -1,5 +1,6 @@
 package com.backend.product;
 
+import com.backend.productImg.ProductImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,15 @@ public class ProductController {
     }
 
     @GetMapping("/prodDetail/{prod_num}")
-    public Optional<Product> prodDetail(@PathVariable("prod_num") Long prod_num){
-        Optional<Product> product = productServiceImpl.ProdDetail(prod_num);
+    public Product prodDetail(@PathVariable("prod_num") Integer prod_num){
+        Product product = productServiceImpl.ProdDetail(prod_num);
         return product;
+    }
+
+    @GetMapping("/prodImage/${prod_num}")
+    public List<ProductImg> productDetailImg (@PathVariable("prod_num") Integer prod_num){
+        Product product = productServiceImpl.ProdDetail(prod_num);
+        return product.getProductImg();
     }
 
     @GetMapping("/Order/{prod_num}/{prod_ea}")

@@ -1,5 +1,6 @@
 package com.backend.product;
 
+import com.backend.productImg.ProductImg;
 import com.backend.scent.Scent;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -49,4 +51,6 @@ public class Product {
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
 
+    @OneToMany(mappedBy = "prod_num_to_get_img")
+    private List<ProductImg> productImg;
 }

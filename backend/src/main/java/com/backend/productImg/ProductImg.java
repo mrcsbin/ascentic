@@ -1,6 +1,5 @@
 package com.backend.productImg;
 
-import com.backend.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,8 +20,8 @@ public class ProductImg {
     private Integer imgNum;
 
     @ManyToOne // 다:1 관계
-    @JoinColumn(name="prod_num")
-    private Product product;
+    @JoinColumn(name="prod_num_to_get_img")
+    private Integer prodNum;
 
     @Column(name = "prod_save_name")
     private String prodSaveName;
@@ -36,5 +35,4 @@ public class ProductImg {
 
     @Column(name = "prod_image_type") // 0: 썸네일, 1: 상품 설명 첫사진 2: 상품 설명 사진
     private Integer prodImageType;
-
 }

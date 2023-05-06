@@ -37,8 +37,11 @@ public class Order {
     @Column(name = "ship_tel", nullable = false)
     private String shipTel;
 
-    @Column(name = "ship_address", nullable = false)
-    private String shipAddress;
+    @Column(name = "ship_main_address", nullable = false)
+    private String shipMainAddress;
+
+    @Column(name = "ship_sub_address", nullable = false)
+    private String shipSubAddress;
 
     @Column(name = "ship_message")
     private String shipMessage;

@@ -21,7 +21,11 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public AddressDTO getRecentAddr(String memberId) {
-        List<AddressDTO> recentAddresses = orderRepository.findRecentAddressByMemberId(memberId); // 배송지 전체
-        return recentAddresses.isEmpty() ? null : recentAddresses.get(0); // 가장 최근 배송지
+        Order order = orderRepository.findFirstByMemberOrderByOrderIdAsc(memberRepository.findById(memberId).orElse(null));
+        return AddressDTO.builder()
+                .memberId(memberId)
+                .shipMainAddress(order.getShipMainAddress())
+                .shipSubAddress(order.getShipSubAddress())
+                .build();
     }
 }

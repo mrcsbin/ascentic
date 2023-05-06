@@ -1,10 +1,11 @@
 package com.backend.order;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+@Builder
 public class AddressDTO {
     private String memberId;
     private String shipMainAddress;

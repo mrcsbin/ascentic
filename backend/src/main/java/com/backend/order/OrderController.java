@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class OrderController {
@@ -17,10 +19,7 @@ public class OrderController {
     }
 
     @PostMapping("/recentaddr") // 최근 배송지 가져오기
-    public Order getRecentAddr(@RequestParam("memberId") String memberId) {
+    public AddressDTO getRecentAddr(@RequestParam("memberId") String memberId) {
         return orderService.getRecentAddr(memberId);
     }
-
-
-
 }

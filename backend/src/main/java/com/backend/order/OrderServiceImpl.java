@@ -5,6 +5,7 @@ import com.backend.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -19,10 +20,8 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order getRecentAddr(String memberId) {
-//        AddressDTO addressDTO = orderRepository.findRecentAddressByMemberId(memberId).orElse(null);
-        Member member = memberRepository.findById(memberId).orElse(null);
-        Order order = orderRepository.findTopByMember(member);
-        return order;
+    public AddressDTO getRecentAddr(String memberId) {
+        List<AddressDTO> recentAddresses = orderRepository.findRecentAddressByMemberId(memberId); // 배송지 전체
+        return recentAddresses.isEmpty() ? null : recentAddresses.get(0); // 가장 최근 배송지
     }
 }

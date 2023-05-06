@@ -1,14 +1,45 @@
 package com.backend.wish;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.backend.cart.CartServiceImpl;
+import com.backend.member.Member;
+import com.backend.member.MemberRepository;
+import com.backend.product.Product;
+import org.hibernate.annotations.GeneratorType;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping
 public class WishController {
 
-//    @PostMapping("/wishAdd")
-//    public int
-//
-//    @PostMapping("/wishDelete")
+    private WishServiceImpl wishServiceImpl;
+
+    public WishController(WishServiceImpl wishServiceImpl){
+        this.wishServiceImpl = wishServiceImpl;
+    }
+
+    @PostMapping("/addwish")
+    public void addWish(Product product, String memberId){
+       this.wishServiceImpl.addWish(product, memberId);
+    }
+
+    @PostMapping("/delwish")
+    public void delWish(Product product, String memberId){
+        this.wishServiceImpl.delWish(product, memberId);
+    }
+
+    @GetMapping("/iswish")
+    public int isWish(@Param("prodNum") int prodNum, @Param("memberId") String memberId){
+        int res = this.wishServiceImpl.isWish(prodNum, memberId);
+        return res;
+    }
+
+    @PostMapping("/listwish")
+    public List<Wish> listWish(String memberId){
+        List<Wish> wishlist = this.wishServiceImpl.listWish(memberId);
+        return wishlist;
+    }
 
 }

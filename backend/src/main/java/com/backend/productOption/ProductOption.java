@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -19,10 +18,10 @@ public class ProductOption {
     @Column(name = "option_num")
     private Integer optionNum;
 
-    @ManyToOne
-    @JoinColumn(name = "prod_num")
-    private Product product;
-
     @Column(name = "prod_option")
     private String prodOption;
+
+    @ManyToOne
+    @JoinColumn(name = "prod_num")
+    private Product product;   ///이걸 Product Class로 설정해도 db엔 PK만 들어 갔던거임!!! 근데 왜?
 }

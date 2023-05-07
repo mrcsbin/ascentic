@@ -21,21 +21,17 @@ public class ProductController {
     }
 
     @GetMapping("/prodDetail/{prod_num}")
-    public Product prodDetail(@PathVariable("prod_num") Integer prod_num){
-        Product product = productServiceImpl.ProdDetail(prod_num);
+    public Product prodDetail(@PathVariable("prod_num") Integer prodNum){
+        Product product = productServiceImpl.ProdDetail(prodNum);
         return product;
     }
 
-    @GetMapping("/prodImage/${prod_num}")
-    public List<ProductImg> productDetailImg (@PathVariable("prod_num") Integer prod_num){
-        Product product = productServiceImpl.ProdDetail(prod_num);
-        return product.getProductImg();
-    }
 
-    @GetMapping("/Order/{prod_num}/{prod_ea}")
-    public void prodOrder(@PathVariable("prod_num")Long prod_num, @PathVariable("prod_ea") int prod_ea){
-
-    }
+//    @GetMapping("/prodImage/{prod_num}")
+//    public List<ProductImg> productDetailImg (@PathVariable("prod_num") Integer prodNum){
+//        Product product = productServiceImpl.ProdDetail(prodNum);
+//        return product.getProductImg();
+//    }
 
     @GetMapping("/prodDetail/list")
     public List<Product> getAll(){

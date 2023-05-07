@@ -19,18 +19,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void createNewProd(Product product) {
-
-    }
-
-    @Override
     public Product ProdDetail(Integer prod_num) {
-        Product product = productRepository.findById(prod_num);
+        Product product = productRepository.findById(prod_num).orElse(null);
         return product;
     }
 
-    @Override
-    public void prodOrder() {
-
-    }
 }

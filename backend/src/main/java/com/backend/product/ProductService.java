@@ -5,8 +5,5 @@ import java.util.Optional;
 
 public interface ProductService {
 
-    public void createNewProd(Product product);
     public Product ProdDetail(Integer prod_num);
-    public void prodOrder();
-
 }

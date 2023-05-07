@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    Order findFirstByMemberOrderByOrderIdAsc(Member member);
+    Order findFirstByMemberOrderByOrderIdDesc(Member member);
 }

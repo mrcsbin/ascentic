@@ -21,7 +21,8 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public AddressDTO getRecentAddr(String memberId) {
-        Order order = orderRepository.findFirstByMemberOrderByOrderIdAsc(memberRepository.findById(memberId).orElse(null));
+        Order order = orderRepository.findFirstByMemberOrderByOrderIdDesc(memberRepository.findById(memberId).orElse(null));
+
         return AddressDTO.builder()
                 .memberId(memberId)
                 .shipMainAddress(order.getShipMainAddress())

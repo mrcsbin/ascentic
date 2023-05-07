@@ -2,15 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 // 할인 혜택
-function DiscountBenefit() {
-  // +, - 확장응 위한 State
-  const [detail, setDetail] = useState(false);
-
-  // +, - 버튼 클릭이벤트
-  function changeDetail() {
-    setDetail(!detail);
-  }
-
+function DiscountBenefit(props) {
   // 보유 포인트 state
   const [holdPoint, setHoldPoint] = useState(0);
   // 사용 포인트 state
@@ -25,9 +17,9 @@ function DiscountBenefit() {
     <div>
       <div className="sub_title">
         할인 혜택
-        <button onClick={changeDetail}>{detail ? "-" : "+"}</button>
+        <button onClick={props.changeExtend}>{props.extend ? "-" : "+"}</button>
       </div>
-      {detail && (
+      {props.extend && (
         <div className="discount_benifit_form">
           <div>
             <div>보유 포인트</div>

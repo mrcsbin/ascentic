@@ -2,15 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 // 결제 수단
-function Payment() {
-  // +, - 확장응 위한 State
-  const [detail, setDetail] = useState(false);
-
-  // +, - 버튼 클릭이벤트
-  function changeDetail() {
-    setDetail(!detail);
-  }
-
+function Payment(props) {
   function payKakao() {
     // 카카오 페이 결제수단 선택
   }
@@ -31,9 +23,9 @@ function Payment() {
     <div>
       <div className="sub_title">
         결제 수단
-        <button onClick={changeDetail}>{detail ? "-" : "+"}</button>
+        <button onClick={props.changeExtend}>{props.extend ? "-" : "+"}</button>
       </div>
-      {detail && (
+      {props.extend && (
         <div className="payment_method">
           <div>
             <button onClick={payKakao}>카카오페이</button>

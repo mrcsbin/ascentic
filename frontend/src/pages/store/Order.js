@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/Order.css";
 import ProductInfo from "../../components/order/ProductInfo";
 import OrderInfo from "../../components/order/OrderInfo";
@@ -6,9 +6,73 @@ import DiscountBenefit from "../../components/order/DiscountBenefit";
 import DeliveryInfo from "../../components/order/DeliveryInfo";
 import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
+import axios from "axios";
+import { useEffect } from "react";
+// import Cookies from "js-cookie";
 
 // 구매 과정 페이지
 function Order() {
+  // 컴포넌트 별 정리
+  // ProductInfo:  url로 받아온 제품정보, 옵션, 수량, 가격
+  // OrderInfo: useEffect => 세션값에 따른 주문자 정보(이메일, 이름, 연락처)
+  // DeliveryInfo: 없음,
+  // 주문자 정보와 동일 클릭시 주문자 정보 가져오기, 최근배송지 클릭시 session id에 해당하는 최근배송지 불러오기
+  // DiscountBenefit: 없음
+  // FinalPayment: 없음, 클릭시 해당 결제수단의 state값을 가지고 있고
+  // FinalPayment: 주문금액, 배송비 총금액
+  // 구매하기 클릭시
+  // 1. 주문자정보, 배송정보, 총금액, 배송비, 결제방법 서버로 전송
+  // 2. 주문번호 받아와서 상품1개씩 묶어서 서버로 전송
+
+  // 인증 토큰 읽는 방법
+  // npm install js-cookie 쿠키 라이브러리
+  // const token = localStorage.getItem("autoToken"); // 로컬 스토리지, authToken = 키
+  // const token = Cookies.get("autoToken"); // 쿠키
+  localStorage.setItem("autoToken", "kim123"); // 임시
+  const token = localStorage.getItem("autoToken");
+
+  // +, - 확장응 위한 State
+  const [extend, setExtend] = useState({
+    prod: true,
+    order: false,
+    delivery: false,
+    disCount: false,
+    payment: false,
+  });
+
+  // +, - 버튼 클릭이벤트
+  function handleExtendChange(type) {
+    console.log(extend.order);
+    setExtend({
+      ...extend,
+      [type]: !extend[type],
+    });
+  }
+
+  const [order, setOrder] = useState({
+    email: "example",
+    domain: "naver.com",
+    name: "김기자",
+    tel: "01012341234",
+  });
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await axios.get("/get_member", { params: { token } });
+        const { memberEmail, name, tel } = res.data;
+        setOrder({
+          email: memberEmail,
+          name,
+          tel,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <div>
       {/* 주문/결제 타이틀 */}
@@ -16,11 +80,27 @@ function Order() {
       {/* 주문 상품정보 */}
       <div className="order_body">
         <div className="left">
-          <ProductInfo></ProductInfo>
-          <OrderInfo></OrderInfo>
-          <DeliveryInfo></DeliveryInfo>
-          <DiscountBenefit></DiscountBenefit>
-          <Payment></Payment>
+          <ProductInfo
+            extend={extend.prod}
+            changeExtend={() => handleExtendChange("prod")}
+          ></ProductInfo>
+          <OrderInfo
+            extend={extend.order}
+            changeExtend={() => handleExtendChange("order")}
+            order={order}
+          ></OrderInfo>
+          <DeliveryInfo
+            extend={extend.delivery}
+            changeExtend={() => handleExtendChange("delivery")}
+          ></DeliveryInfo>
+          <DiscountBenefit
+            extend={extend.disCount}
+            changeExtend={() => handleExtendChange("disCount")}
+          ></DiscountBenefit>
+          <Payment
+            extend={extend.payment}
+            changeExtend={() => handleExtendChange("payment")}
+          ></Payment>
           <div className="order_notice">
             · 환경부 고시에 따라, 기본 쇼핑백이 제공되지 않습니다.
             <br />

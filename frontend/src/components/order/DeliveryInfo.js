@@ -3,15 +3,7 @@ import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 
 // 배송 정보
-function DeliveryInfo() {
-  // +, - 확장응 위한 State
-  const [detail, setDetail] = useState(false);
-
-  // +, - 버튼 클릭이벤트
-  function changeDetail() {
-    setDetail(!detail);
-  }
-
+function DeliveryInfo(props) {
   // 주문자 정보 동일 버튼 이벤트
   function getOrderInfo() {
     // 주문자 정보 가져오기
@@ -42,9 +34,9 @@ function DeliveryInfo() {
     <div>
       <div className="sub_title">
         배송 정보
-        <button onClick={changeDetail}>{detail ? "-" : "+"}</button>
+        <button onClick={props.changeExtend}>{props.extend ? "-" : "+"}</button>
       </div>
-      {detail && (
+      {props.extend && (
         <div className="delivery_form">
           <div className="recipient_content">
             <div>

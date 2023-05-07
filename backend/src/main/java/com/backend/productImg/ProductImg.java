@@ -3,17 +3,19 @@ package com.backend.productImg;
 import com.backend.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
+
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "tb_prod_image")
-
+@Entity
 public class ProductImg {
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
@@ -21,7 +23,7 @@ public class ProductImg {
     private Integer imgNum;
 
     @ManyToOne // 다:1 관계
-    @JoinColumn(name="prod_num")
+    @JoinColumn(name = "prod_num")
     private Product product;
 
     @Column(name = "prod_save_name")
@@ -31,10 +33,10 @@ public class ProductImg {
     private String prodUploadName;
 
     // CURRENT_TIMESTAMP 적용
-    @Column(name = "prod_upload_date", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
+    @Column(name = "prod_upload_date", nullable = false)
     private LocalDateTime prodUploadDate;
 
-    @Column(name = "prod_image_type") // 0: 썸네일, 1: 상품 설명 첫사진 2: 상품 설명 사진
+    @Column(name = "prod_image_type") // 0: 썸네일, 1: 상품 설명 첫사진 2~: 상품 설명 사진 + 같은 상품내에서 중복되지 않도록 해야함
     private Integer prodImageType;
-
 }

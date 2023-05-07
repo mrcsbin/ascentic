@@ -49,6 +49,18 @@ function Order() {
     });
   }
 
+  // 저장 후 자동으로 다음 컴포넌트 확장
+  function handleSaveChange(type) {
+    console.log(extend.order);
+    setExtend({
+      ...extend,
+      [type]: true,
+    });
+  }
+
+  // ---------------------- ProductInfo -------------------------------------
+
+  // ---------------------- OrderInfo -------------------------------------
   const [order, setOrder] = useState({
     email: "example",
     domain: "naver.com",
@@ -56,6 +68,11 @@ function Order() {
     tel: "01012341234",
   });
 
+  function changeOrder(updatedOrder) {
+    setOrder(updatedOrder);
+  }
+
+  // 회원 정보 조회
   useEffect(() => {
     async function fetchData() {
       try {
@@ -73,11 +90,19 @@ function Order() {
     fetchData();
   }, []);
 
+  // ---------------------- DeliveryInfo -------------------------------------
+
+  // ---------------------- DiscountBenefit -------------------------------------
+
+  // ---------------------- Payment -------------------------------------
+
+  // ---------------------- FinalPayment -------------------------------------
+
   return (
     <div>
       {/* 주문/결제 타이틀 */}
       <div className="title">주문 / 결제</div>
-      {/* 주문 상품정보 */}
+      {/* 주문 정보 */}
       <div className="order_body">
         <div className="left">
           <ProductInfo
@@ -87,7 +112,9 @@ function Order() {
           <OrderInfo
             extend={extend.order}
             changeExtend={() => handleExtendChange("order")}
+            changeSaveExtend={() => handleSaveChange("delivery")}
             order={order}
+            changeOrder={changeOrder}
           ></OrderInfo>
           <DeliveryInfo
             extend={extend.delivery}
@@ -96,6 +123,7 @@ function Order() {
           <DiscountBenefit
             extend={extend.disCount}
             changeExtend={() => handleExtendChange("disCount")}
+            changeSaveExtend={() => handleSaveChange("payment")}
           ></DiscountBenefit>
           <Payment
             extend={extend.payment}

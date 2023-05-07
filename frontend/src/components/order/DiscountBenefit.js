@@ -11,6 +11,7 @@ function DiscountBenefit(props) {
   // 저장하고 다음 단계로 버튼 이벤트
   function saveAndNext() {
     alert("저장되었습니다.");
+    props.changeSaveExtend();
   }
 
   return (

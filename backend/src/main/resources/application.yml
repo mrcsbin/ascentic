@@ -1,9 +1,20 @@
+jwt:
+  secret-key: c22842d6d972c3344bc6b02882f4ee97df876582809b9ae10e03abbd49a8c49f3043072f1b313cda6f65a23f99a2d90621a1225c7b0ad2f669a94d074b43abec
+  # 1800 => 30 * 60 (1800초)
+  token-validity-in-seconds: 1800
+
+logging:
+  level:
+    com.backend: DEBUG
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ascentic?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/ascentic
     username: root
     password: 123456
+
+
   jpa:
     # true: 트랜잭션이 완료되도 영속성 컨텍스트는 유지된다.
     # false: 트랜잭션을 종료할 때 영속성 컨텍스트는 종료된다.
@@ -20,12 +31,13 @@ spring:
     properties:
       hibernate.format_sql: true # sql 명령문을 보기 좋게 보여준다.
 
+
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
       # window
-      location: c:\\Project\\ascentic_file
+      #      location: c:\\Project\\ascentic_file
       # mac
       #location: /Users/sungbincho/Desktop/ascentic_file
       #location: /Users/hansic/Desktop/ascentic

@@ -15,10 +15,11 @@ repositories {
 dependencies {
     //JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     //DB
     runtimeOnly 'com.mysql:mysql-connector-j'
     //Security
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     // assertj
     testImplementation 'org.assertj:assertj-core:3.23.1'
 
@@ -27,9 +28,30 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    //JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // OAuth2.0
+    implementation 'org.springframework.security:spring-security-oauth2-client:5.7.5'
+
+    //slf4j
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+
+    //GSon
+    implementation 'com.google.code.gson:gson:2.8.7'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // sms(coolsms)
+    implementation 'net.nurigo:sdk:4.2.7'
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // configuration annotation processor not configured 해결
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // Use ConfigurationProperties
 }
 
 tasks.named('test') {

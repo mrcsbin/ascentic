@@ -1,11 +1,10 @@
 package com.backend.order;
 
-import com.backend.member.Member;
-import com.backend.member.MemberRepository;
+import com.backend.member.entity.Member;
+import com.backend.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService{

@@ -1,6 +1,6 @@
 package com.backend.cart;
 
-import com.backend.member.Member;
+import com.backend.member.entity.Member;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

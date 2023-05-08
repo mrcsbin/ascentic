@@ -1,3 +1,107 @@
-h1 {
-    color: black;
+#login-wrap {
+  width: 60%;
+  margin: auto;
+}
+
+/* 로그인 박스*/
+#login-wrap .login-area {
+  width: 100%;
+}
+
+#login-wrap .login-area h1 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 100px 0 50px 0;
+  padding-left: 15%;
+}
+
+#login-wrap .login-area > * {
+  width: 50%;
+  margin: auto;
+}
+
+/* 인풋 박스*/
+#login-wrap .input-box {
+  margin: 30px auto;
+  text-align: center;
+}
+
+#login-wrap .input-box > * {
+  margin: 5px 0;
+}
+
+#login-wrap .input-box label {
+  text-align: left;
+  display: block;
+  padding-left: 15%;
+}
+
+#login-wrap .input-box input {
+  box-sizing: border-box;
+  padding: 0;
+  padding-left: 10px;
+  width: 70%;
+  height: 35px;
+  border: 1.5px solid black;
+}
+
+/* 로그인 버튼 */
+#login-wrap .submit-button-box {
+  text-align: center;
+}
+
+#login-wrap .submit-button {
+  cursor: pointer;
+  padding: 0px;
+  width: 70%;
+  border: 0px;
+  background-color: black;
+  color: white;
+  height: 40px;
+  margin: 0 auto 30px auto;
+}
+
+/* 이미지 로그인 버튼 박스 */
+#login-wrap .login-info-box span {
+  font-size: 1rem;
+}
+
+#login-wrap .login-info-box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#login-wrap .img-button-box {
+  width: 35%;
+  text-align: center;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+#login-wrap .img-button {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+/* 기타 버튼 */
+#login-wrap .etc-button-box a,
+#login-wrap .etc-button-box span {
+  font-size: 1rem;
+}
+
+#login-wrap .etc-button-box > a:first-child {
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+  padding-left: 15%;
+}
+
+#login-wrap .etc-button-box a:visited,
+#login-wrap .etc-button-box a {
+  text-decoration: none;
+  color: black;
 }

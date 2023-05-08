@@ -1,6 +1,6 @@
 package com.backend.wish;
 
-import com.backend.member.Member;
+import com.backend.member.entity.Member;
 import com.backend.product.Product;
 import com.backend.productOption.ProductOption;
 import jakarta.transaction.Transactional;

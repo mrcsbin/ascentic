@@ -1,7 +1,7 @@
 package com.backend.cart;
 
-import com.backend.member.Member;
-import com.backend.member.MemberRepository;
+import com.backend.member.entity.Member;
+import com.backend.member.repository.MemberRepository;
 import com.backend.productOption.ProductOption;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

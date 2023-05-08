@@ -1,6 +1,6 @@
 package com.backend.wish;
 
-import com.backend.member.MemberRepository;
+import com.backend.member.repository.MemberRepository;
 import com.backend.product.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

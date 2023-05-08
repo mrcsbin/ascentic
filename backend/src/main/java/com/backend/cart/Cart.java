@@ -1,7 +1,6 @@
 package com.backend.cart;
 
-import com.backend.member.Member;
-import com.backend.product.Product;
+import com.backend.member.entity.Member;
 import com.backend.productOption.ProductOption;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

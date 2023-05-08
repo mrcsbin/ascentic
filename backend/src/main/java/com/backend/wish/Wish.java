@@ -1,6 +1,6 @@
 package com.backend.wish;
 
-import com.backend.member.Member;
+import com.backend.member.entity.Member;
 import com.backend.product.Product;
 import jakarta.persistence.*;
 import lombok.Getter;

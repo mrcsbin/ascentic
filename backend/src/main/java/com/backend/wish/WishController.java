@@ -1,10 +1,6 @@
 package com.backend.wish;
 
-import com.backend.cart.CartServiceImpl;
-import com.backend.member.Member;
 import com.backend.product.Product;
-import org.hibernate.annotations.GeneratorType;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

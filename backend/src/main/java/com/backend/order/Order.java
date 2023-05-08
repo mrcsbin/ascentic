@@ -1,6 +1,6 @@
 package com.backend.order;
 
-import com.backend.member.Member;
+import com.backend.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 

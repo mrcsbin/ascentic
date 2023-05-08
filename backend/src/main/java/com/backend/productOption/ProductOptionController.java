@@ -1,7 +1,5 @@
 package com.backend.productOption;
 
-
-import com.backend.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

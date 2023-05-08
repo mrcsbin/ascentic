@@ -1,0 +1,76 @@
+#find-wrap {
+  width: 60%;
+  margin: auto;
+}
+
+/* id - pw 탭 */
+#find-wrap .find-tab {
+  width: 60%;
+  margin: 100px auto 50px auto;
+  display: flex;
+  font-size: 1.4rem;
+}
+
+#find-wrap .find-tab div {
+  margin: 0 5px 0 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 25%;
+  justify-content: center;
+}
+
+#find-wrap .find-tab .active {
+  background-color: #f2b6a0;
+  border-radius: 10px;
+}
+
+/* 조회 박스*/
+#find-wrap .find-area {
+  text-align: center;
+  margin: 50px auto;
+}
+
+#find-wrap .find-area .info-box h1 {
+  font-size: 2rem;
+  margin: 20px auto;
+}
+#find-wrap .find-area .info-box p {
+  font-size: 1.5rem;
+  margin: 20px auto 40px auto;
+}
+
+/* 인풋 박스 */
+#find-wrap .input-box input {
+  box-sizing: border-box;
+  display: block;
+  margin: 30px auto;
+  width: 50%;
+  height: 45px;
+  font-size: 1.2rem;
+  padding-left: 1%;
+}
+
+#find-wrap .button-box button {
+  cursor: pointer;
+  background-color: white;
+  border: 0;
+  font-size: 1.2rem;
+}
+
+/* 결과 */
+#find-wrap .find-area .result h1 {
+  margin: 50px;
+  font-size: 2rem;
+}
+
+#find-wrap .find-area .result span {
+  font-size: 1.2rem;
+}
+
+#find-wrap .find-area a:visited,
+#find-wrap .find-area a {
+  text-decoration: none;
+  color: grey;
+}

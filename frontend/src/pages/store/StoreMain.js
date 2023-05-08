@@ -10,6 +10,7 @@ import mainvideo from "../../assets/storemain.mp4";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
+  const [productList, setProductList] = useState(products);
   const [loading, setLoading] = useState(false);
 
   const params = useParams();
@@ -23,45 +24,52 @@ function StoreMain() {
   const openModal = () => {
     setModalOpen(true);
   };
-  const closeModal = ({ sortOption }, { prodcategory }) => {
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const handleModalData = (sortOption, prodcategory) => {
     setSortOption(sortOption);
     setProdcategory(prodcategory);
-    setModalOpen(false);
+    productCategory(products, prodcategory);
+    sortByOption(productList, sortOption);
   };
 
   function productCategory(products, prodcategory) {
     if (prodcategory === "all") {
+      setProductList(products);
       return;
     } else if (prodcategory === "best") {
       products.sort((a, b) => {
-        return b.prod_wish - a.prod_wish;
+        return b.prodWishCount - a.prodWishCount;
       });
-      products.slice(0, 12);
+      setProductList(products);
+      productList.slice(0, 12);
     } else {
-      setProducts(products.filter((p) => p.prod_category === prodcategory));
+      setProductList(products.filter((p) => p.prodCategory === prodcategory));
+      return;
     }
   }
 
-  function sortByOption(products, sortOption) {
+  function sortByOption(productList, sortOption) {
     if (sortOption == "wishCount") {
-      products.sort((a, b) => {
-        return b.prod_wish - a.prod_wish;
+      productList.sort((a, b) => {
+        return b.prodWishCount - a.prodWishCount;
       });
     } else if (sortOption == "latest") {
-      products.sort((a, b) => {
-        return b.prod_num - a.prod_num;
+      productList.sort((a, b) => {
+        return b.prodNum - a.prodNum;
       });
     } else if (sortOption == "highPrice") {
-      products.sort((a, b) => {
-        return b.prod_price - a.prod_price;
+      productList.sort((a, b) => {
+        return b.prodPrice - a.prodPrice;
       });
     } else if (sortOption == "lowPrice") {
-      products.sort((a, b) => {
-        return a.prod_price - b.prod_price;
+      productList.sort((a, b) => {
+        return a.prodPrice - b.prodPrice;
       });
     } else if (sortOption == "viewCount") {
-      products.sort((a, b) => {
-        return b.prod_vCount - a.prod_vCount;
+      productList.sort((a, b) => {
+        return b.prodReadCount - a.prodReadCount;
       });
     } else return;
   }
@@ -70,10 +78,9 @@ function StoreMain() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(
-          `http://localhost:8080/list?category=${category}`
-        );
+        const res = await axios.get(`/listscent?category=${category}`);
         setProducts(res.data);
+        setProductList(res.data);
         //console.log(products);
       } catch (e) {
         console.log(e);
@@ -108,12 +115,17 @@ function StoreMain() {
         <button onClick={openModal} className="filter">
           필터
         </button>
-        <FilterModal open={modalOpen} close={closeModal} header="필터" />
+        <FilterModal
+          open={modalOpen}
+          close={closeModal}
+          onModalData={handleModalData}
+          header="필터"
+          getSortOption={sortOption}
+          getProdcategory={prodcategory}
+        />
       </div>
-      {productCategory(products, prodcategory)}
-      <div className="prodnum">{products.length} 제품</div>
-      {sortByOption(products, sortOption)}
-      <CardList products={products} />
+      <div className="prodnum">{productList.length} 제품</div>
+      <CardList products={productList} />
     </div>
   );
 }

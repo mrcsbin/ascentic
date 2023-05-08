@@ -28,7 +28,7 @@ const CardList = ({ products }) => {
       <div className="Cardbox">
         <div className="cont">
           {currentProducts.map((product) => {
-            return <ProductCard product={product} />;
+            return <ProductCard key={product.prodNum} product={product} />;
           })}
         </div>
       </div>

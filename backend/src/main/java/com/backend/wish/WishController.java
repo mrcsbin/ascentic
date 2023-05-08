@@ -2,7 +2,6 @@ package com.backend.wish;
 
 import com.backend.cart.CartServiceImpl;
 import com.backend.member.Member;
-import com.backend.member.MemberRepository;
 import com.backend.product.Product;
 import org.hibernate.annotations.GeneratorType;
 import org.springframework.data.repository.query.Param;
@@ -31,7 +30,7 @@ public class WishController {
     }
 
     @GetMapping("/iswish")
-    public int isWish(@Param("prodNum") int prodNum, @Param("memberId") String memberId){
+    public int isWish(int prodNum, String memberId){
         int res = this.wishServiceImpl.isWish(prodNum, memberId);
         return res;
     }

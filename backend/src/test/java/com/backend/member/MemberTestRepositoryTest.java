@@ -1,6 +1,6 @@
 package com.backend.member;
 
-import jwt.MemberRepository;
+import com.backend.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 
 class MemberTestRepositoryTest {

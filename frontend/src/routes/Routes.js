@@ -1,3 +1,5 @@
+import { Route, Routes as BrowserRoutes } from "react-router-dom";
+
 import {
   Main,
   Login,
@@ -13,11 +15,7 @@ import {
   NotFound,
 } from "../pages/Pages";
 
-import { Route, Routes as BrowserRoutes } from "react-router-dom";
-
-// import { BROWSER_PATH } from "../constants/path";
-
-function RoutesTest() {
+function Routes() {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Main />}></Route>
@@ -45,4 +43,4 @@ function RoutesTest() {
   );
 }
 
-export default RoutesTest;
+export default Routes;

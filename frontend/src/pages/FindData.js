@@ -27,6 +27,7 @@ function FindId() {
       email: email,
     };
 
+
     axios
       .post("http://localhost:8080/member/find/id", findIdData)
       .then((response) => {

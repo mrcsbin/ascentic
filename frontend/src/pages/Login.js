@@ -1,27 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
-import axios from "axios";
 import Facebook from "../assets/facebook_logo.png";
 import KakaoTalk from "../assets/kakaotalk_logo.png";
 import Naver from "../assets/naver_logo.png";
 import { AUTH_URL } from "../constants/Url";
-
+import { login, getTokenInfo, userTest, adminTest } from "../api/MemberApi";
+import { setCookie, getCookie, removeCookie } from "../utils/Cookie";
+import Cookies from "js-cookie";
 /**
  * 문의는 mrcsbin ~!@#~!@#@~!$#
  */
 
 function Login() {
+  const navigate = useNavigate();
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+  })
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleClick();
-    }
-  };
-
-  const handleClick = () => {
+  const handleClick = async () => {
     if (id === "") {
       alert("아이디를 입력해주세요");
       return false;
@@ -30,26 +29,18 @@ function Login() {
       alert("비밀번호를 입력해주세요");
       return false;
     }
-    const member = {
-      id: id,
-      password: password,
-    };
-    axios
-      .post("http://localhost:8080/member/login", member)
-      .then((response) => {
-        if (response.data === "성공") {
-          window.location.href = "/";
-        } else {
-          alert("없수다");
-          setId("");
-          setPassword("");
-        }
-      })
-      .catch((e) => {
-        alert("없수다");
-        setId("");
-        setPassword("");
-      });
+    const token = await login(id, password);
+    if (token === "") {
+      setId("");
+      setPassword("");
+      alert("Login.js : 40 로그인 정보 없음MSG");
+      navigate("/login");
+    } else {
+      await getTokenInfo(getCookie("accessToken"));
+      await userTest(getCookie("accessToken"));
+      setUser(await getTokenInfo(getCookie("accessToken")));
+      navigate("/", { replace: true });
+    }
   };
 
   const handleSNSLogin = (url) => {
@@ -61,6 +52,12 @@ function Login() {
     // const test = new URL(url);
     // const code = test.searchParams.get("code");
     // alert(code);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleClick();
+    }
   };
 
   return (
@@ -77,7 +74,7 @@ function Login() {
             name="id"
             value={id}
             onChange={(e) => setId(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
           />
         </div>
         <div className="password-box input-box">
@@ -88,14 +85,14 @@ function Login() {
             name="pw"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyDown={handleKeyPress}
           />
         </div>
         <div className="submit-button-box button-box">
           <button
             className="submit-button button"
             type="button"
-            onClick={handleClick}
+            onClick={() => handleClick()}
           >
             로그인
           </button>

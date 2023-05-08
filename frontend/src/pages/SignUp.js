@@ -1,6 +1,5 @@
 import "../styles/SignUp.css";
 import React, { useState, useEffect } from "react";
-import "../styles/SignUp.css";
 import axios from "axios";
 import Correct from "../assets/correct.png";
 import Wrong from "../assets/wrong.png";
@@ -9,7 +8,6 @@ import { SIGNUP_ERROR_MESSAGE } from "../constants/Message";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Timer from "../components/common/Timer";
-import { Fade } from "reactstrap";
 function SignUp() {
   const [showCertificate, setShowCertificate] = useState(false);
 
@@ -46,6 +44,7 @@ function SignUp() {
     setFormData((prevFormData) => ({ ...prevFormData, phone: "" }));
     setIsPhoneDisabled(false);
   };
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isIdDisabled, setIsIdDisabled] = useState(false);
   const [isEmailDisabled, setIsEmailDisabled] = useState(false);

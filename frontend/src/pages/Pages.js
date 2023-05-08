@@ -11,7 +11,8 @@ const Main = lazy(() => import("./Main"));
 const SignUp = lazy(() => import("./SignUp"));
 const SignUpSuccess = lazy(() => import("./SignUpSuccess"));
 const MyPage = lazy(() => import("./MyPage"));
-const NotFound = lazy(() => import("./NotFound"));
+const NotFound = lazy(() => import("../components/common/NotFound"));
+
 export {
   Order,
   OrderComplete,

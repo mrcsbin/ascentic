@@ -1,6 +1,7 @@
-package com.backend.smsCertificate;
+package com.backend.smscertificate;
 
-import com.backend.member.MemberServiceImpl;
+
+import com.backend.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.Random;
 @RestController
 @RequestMapping("/smsapi")
 public class VerificationController {
-    private final MemberServiceImpl memberServiceImpl;
+    private final MemberServiceImpl memberService;
     private final RedisTemplate<String, String> redisTemplate;
     private final SmsCertificateController smsCertificateController;
 
@@ -73,7 +74,7 @@ public ResponseEntity<String> generateVerificationCode(@RequestBody String phone
 
         if (storedCode != null && storedCode.equals(code)) {
             // 인증번호가 일치하는 경우
-            if(memberServiceImpl.existPhone(phoneNumber)){
+            if(memberService.existPhone(phoneNumber)){
                 return ResponseEntity.ok("duplicateNum");
             }
             return ResponseEntity.ok("Ok");

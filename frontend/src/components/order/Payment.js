@@ -3,22 +3,6 @@ import { useState } from "react";
 
 // 결제 수단
 function Payment(props) {
-  function payKakao() {
-    // 카카오 페이 결제수단 선택
-  }
-  function payNaver() {
-    // 네이버 페이 결제수단 선택
-  }
-  function payCard() {
-    // 신용카드 결제수단 선택
-  }
-  function payDeposit() {
-    // 무통장 입금 결제수단 선택
-  }
-  function payAccount() {
-    // 실시간 계좌이체 결제수단 선택
-  }
-
   return (
     <div>
       <div className="sub_title">
@@ -28,11 +12,56 @@ function Payment(props) {
       {props.extend && (
         <div className="payment_method">
           <div>
-            <button onClick={payKakao}>카카오페이</button>
-            <button onClick={payNaver}>네이버페이</button>
-            <button onClick={payCard}>신용카드</button>
-            <button onClick={payDeposit}>무통장 입금</button>
-            <button onClick={payAccount}>실시간 계좌이체</button>
+            <button
+              onClick={() => props.handleKakao()}
+              disabled={props.payMethod.kakao}
+              style={{
+                backgroundColor: props.payMethod.kakao ? "black" : "",
+                color: props.payMethod.kakao ? "white" : "",
+              }}
+            >
+              카카오페이
+            </button>
+            <button
+              onClick={() => props.handleNaver()}
+              disabled={props.payMethod.naver}
+              style={{
+                backgroundColor: props.payMethod.naver ? "black" : "",
+                color: props.payMethod.naver ? "white" : "",
+              }}
+            >
+              네이버페이
+            </button>
+            <button
+              onClick={() => props.handleCard()}
+              disabled={props.payMethod.card}
+              style={{
+                backgroundColor: props.payMethod.card ? "black" : "",
+                color: props.payMethod.card ? "white" : "",
+              }}
+            >
+              신용카드
+            </button>
+            <button
+              onClick={() => props.handleDeposit()}
+              disabled={props.payMethod.deposit}
+              style={{
+                backgroundColor: props.payMethod.deposit ? "black" : "",
+                color: props.payMethod.deposit ? "white" : "",
+              }}
+            >
+              무통장 입금
+            </button>
+            <button
+              onClick={() => props.handleAccount()}
+              disabled={props.payMethod.account}
+              style={{
+                backgroundColor: props.payMethod.account ? "black" : "",
+                color: props.payMethod.account ? "white" : "",
+              }}
+            >
+              실시간 계좌이체
+            </button>
           </div>
           <div>
             고객님의 안전한 현금자산 거래를 위하여 하나은행과

@@ -42,7 +42,6 @@ function Order(props) {
 
   // +, - 버튼 클릭이벤트
   function handleExtendChange(type) {
-    console.log(extend.order);
     setExtend({
       ...extend,
       [type]: !extend[type],
@@ -134,6 +133,63 @@ function Order(props) {
   // ---------------------- DiscountBenefit -------------------------------------
 
   // ---------------------- Payment -------------------------------------
+  const [payMethod, setPayMethod] = useState({
+    kakao: true,
+    naver: false,
+    card: false,
+    deposit: false,
+    account: false,
+  });
+
+  function handleKakao() {
+    setPayMethod({
+      kakao: true,
+      naver: false,
+      card: false,
+      deposit: false,
+      account: false,
+    });
+  }
+
+  function handleNaver() {
+    setPayMethod({
+      kakao: false,
+      naver: true,
+      card: false,
+      deposit: false,
+      account: false,
+    });
+  }
+
+  function handleCard() {
+    setPayMethod({
+      kakao: false,
+      naver: false,
+      card: true,
+      deposit: false,
+      account: false,
+    });
+  }
+
+  function handleDeposit() {
+    setPayMethod({
+      kakao: false,
+      naver: false,
+      card: false,
+      deposit: true,
+      account: false,
+    });
+  }
+
+  function handleAccount() {
+    setPayMethod({
+      kakao: false,
+      naver: false,
+      card: false,
+      deposit: false,
+      account: true,
+    });
+  }
 
   // ---------------------- FinalPayment -------------------------------------
 
@@ -169,8 +225,14 @@ function Order(props) {
             changeSaveExtend={() => handleSaveChange("payment")}
           ></DiscountBenefit>
           <Payment
+            payMethod={payMethod}
             extend={extend.payment}
             changeExtend={() => handleExtendChange("payment")}
+            handleKakao={() => handleKakao()}
+            handleNaver={() => handleNaver()}
+            handleCard={() => handleCard()}
+            handleDeposit={() => handleDeposit()}
+            handleAccount={() => handleAccount()}
           ></Payment>
           <div className="order_notice">
             · 환경부 고시에 따라, 기본 쇼핑백이 제공되지 않습니다.

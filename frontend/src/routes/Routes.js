@@ -1,4 +1,4 @@
-import { Route, Routes as BrowserRoutes, Navigate } from "react-router-dom";
+import { Route, Routes as BrowserRoutes } from "react-router-dom";
 
 import {
   Main,
@@ -25,7 +25,7 @@ function Routes() {
       <Route path="/NotFound" element={<NotFound />} />
       <Route path="/login/kakao" element={<KakaoLogin />} />
 
-      <Route path="/member/find" element={<FindData />} />
+      <Route path="/member/find" element={<FindIdPw />} />
 
       <Route path="/signup" element={<SignUp />}></Route>
 

@@ -37,8 +37,8 @@ public class SecurityConfig {
 
                 //URL 관리
                 .authorizeRequests()
-                .requestMatchers("/member/admin/**").hasRole("ADMIN")
-                .requestMatchers("/member/user/**").hasRole("USER")
+//                .requestMatchers("/member/admin/**").hasRole("ADMIN")
+//                .requestMatchers("/member/user/**").hasRole("USER")
                 .anyRequest().permitAll()
                 .and()
 

@@ -37,8 +37,7 @@ function Login() {
       navigate("/login");
     } else {
       await getTokenInfo(getCookie("accessToken"));
-      await userTest(getCookie("accessToken"));
-      setUser(await getTokenInfo(getCookie("accessToken")));
+      await adminTest(getCookie("accessToken"));
       navigate("/", { replace: true });
     }
   };

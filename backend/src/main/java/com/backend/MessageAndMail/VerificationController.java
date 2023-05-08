@@ -1,4 +1,4 @@
-package com.backend.smscertificate;
+package com.backend.MessageAndMail;
 
 
 import com.backend.member.service.MemberServiceImpl;
@@ -22,7 +22,6 @@ public class VerificationController {
 
 @PostMapping("/sendCode")
 public ResponseEntity<String> generateVerificationCode(@RequestBody String phoneNumber) {
-    System.out.println("phoneNumber:"+phoneNumber);
     if (phoneNumber == null) {
         return ResponseEntity.badRequest().body("휴대폰 번호가 입력되지 않았습니다.");
     }
@@ -61,23 +60,25 @@ public ResponseEntity<String> generateVerificationCode(@RequestBody String phone
 
     @PostMapping("/checkCode")
     public ResponseEntity checkVerificationCode(@RequestBody HashMap<String, String> req) {
-        String phoneNumber = req.get("phoneNumber");
+        String phoneNumber = req.get("phone");
         String code= req.get("code");
-
         if (phoneNumber == null || code == null) {
             return ResponseEntity.badRequest().body(false);
         }
 
         // Redis에서 해당 휴대폰 번호에 대한 인증번호 조회
         String storedCode = redisTemplate.opsForValue().get(phoneNumber +":code");
-        System.out.println(phoneNumber + code);
+
 
         if (storedCode != null && storedCode.equals(code)) {
             // 인증번호가 일치하는 경우
             if(memberService.existPhone(phoneNumber)){
+                redisTemplate.delete(phoneNumber +":count");
                 return ResponseEntity.ok("duplicateNum");
             }
+            redisTemplate.delete(phoneNumber +":count");
             return ResponseEntity.ok("Ok");
+
         } else {
             // 인증번호가 일치하지 않는 경우
             return ResponseEntity.ok("Wrong");

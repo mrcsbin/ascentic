@@ -44,15 +44,15 @@ dependencies {
     //GSon
     implementation 'com.google.code.gson:gson:2.8.7'
 
-
-    // sms(coolsms)
+    //mail 발송
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    // sms 발송(coolsms)
     implementation 'net.nurigo:sdk:4.2.7'
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // configuration annotation processor not configured 해결
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor" // Use ConfigurationProperties
 }
-
 tasks.named('test') {
     useJUnitPlatform()
 }

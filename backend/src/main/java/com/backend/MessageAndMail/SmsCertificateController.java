@@ -1,4 +1,4 @@
-package com.backend.smscertificate;
+package com.backend.MessageAndMail;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;

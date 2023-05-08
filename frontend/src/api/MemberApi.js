@@ -70,20 +70,57 @@ export const adminTest = async (accessToken) => {
 };
 
 // ID 찾기
-export const findId = async (name, email) => {
+export const findId = async (name, phone) => {
   const response = await axios.post(`${MEMBER_API_URL}/find/id`, {
     name,
-    email,
+    phone,
   });
   return response.data;
 };
 
 // PW 찾기
-export const findPw = async (name, id, email) => {
+export const findPw = async (name, id, phone) => {
   const response = await axios.post(`${MEMBER_API_URL}/find/pw`, {
     name,
     id,
-    email,
+    phone,
   });
   return response.data;
+};
+
+//인증번호 발송
+export const sendCode = async (phone) => {
+  const response = await axios
+    .post("/smsapi/sendCode", phone, {
+      headers: { "Content-Type": "" },
+    })
+    .then((res) => {
+      console.log(res.data);
+      alert(res.data);
+      if (
+        res.data ===
+        "문자가 발송되었습니다. 3분안에 인증번호를 입력하세요. (1시간 이내에 같은 번호로는 3번까지 인증번호 요청이 가능합니다.)"
+      ) {
+        return true; //올바른 요청시 true반환
+      } else {
+        return false; //인증시간 초과 등의 이유로 서버응답이 다른 문구가 오면 false반환
+      }
+    });
+  return response;
+};
+
+//인증번호 비교
+export const checkCode = async (phone, code) => {
+  const response = await axios
+    .post(
+      "/smsapi/checkCode",
+      { phone, code },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+    .then((res) => {
+      return res.data;
+    });
+  return response;
 };

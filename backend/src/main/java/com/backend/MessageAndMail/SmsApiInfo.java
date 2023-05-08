@@ -1,4 +1,4 @@
-package com.backend.smscertificate;
+package com.backend.MessageAndMail;
 
 import lombok.Getter;
 import lombok.Setter;

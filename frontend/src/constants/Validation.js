@@ -21,7 +21,7 @@ export const validateName = (name) => {
 
 export const validateEmail = (email) => {
   const emailRegex =
-    /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   return !email || emailRegex.test(email);
 };
 //입력된 이메일 값이 이메일 주소의 형식에 맞는지
@@ -31,8 +31,7 @@ export const validatePhone = (phone) => {
 };
 
 export const validateForm = (formData) => {
-  const { id, password, confirmPassword, name, email, phone, infoAgree } =
-    formData;
+  const { id, password, confirmPassword, name, email, phone } = formData;
 
   const idError = !validateId(id);
   const [isValidPassword, isConfirmedPassword] = validatePassword(

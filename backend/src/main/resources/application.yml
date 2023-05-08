@@ -7,10 +7,14 @@ logging:
   level:
     com.backend: DEBUG
 
+smsapi:
+  key: NCSJWR1HCFQOGI9P
+  secret: 62U0TYOWLEC2O9HES0LEWTMRCX3HF7G2
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ascentic
+    url: jdbc:mysql://localhost:3306/ascentic?serverTimezone=Asia/Seoul
     username: root
     password: 123456
 
@@ -37,9 +41,14 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       # window
-      #      location: c:\\Project\\ascentic_file
+      location: c:\\Project\\ascentic_file
       # mac
       #location: /Users/sungbincho/Desktop/ascentic_file
       #location: /Users/hansic/Desktop/ascentic
       #location: /Users/jo4921/ascentic_file
       #location: /Users/user/ascentic
+
+  data:
+    redis:
+      host: localhost
+      port: 6379

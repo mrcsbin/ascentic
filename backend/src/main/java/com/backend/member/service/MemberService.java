@@ -24,5 +24,11 @@ public interface MemberService {
 
     String findPw(FindDataDto findDataDto);
 
-//    void changePw(FindDataDto findDataDto);
+    boolean insertMember(Member member);
+
+    boolean existMemberId(String memberId);
+
+    boolean existEmail(String email);
+
+    boolean existPhone(String phone);
 }

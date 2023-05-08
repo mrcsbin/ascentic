@@ -38,10 +38,39 @@ public class MemberServiceImpl implements MemberService {
                 .phone(signupDto.getPhone())
                 .password(passwordEncoder.encode(signupDto.getPassword()))
                 .role(Collections.singletonList("USER"))
-                .birth(signupDto.getBirth())
+                .birthDate(signupDto.getBirth())
                 .build();
 
         return memberRepository.save(member).getId();
+    }
+
+    @Override
+    public boolean insertMember(Member member) {
+        if (memberRepository.existsById(member.getId())) {
+            return false; // 이미 동일한 PK 값이 존재하면 false 반환
+        }
+        try {
+            memberRepository.save(member);
+            return true; // 삽입 성공 시 true 반환
+        } catch (Exception e) {
+            System.out.println(e);
+            return false; // 삽입 실패 시 false 반환
+        }
+    }
+
+    @Override
+    public boolean existMemberId(String memberId){
+        return memberRepository.existsById(memberId);
+    }
+
+    @Override
+    public boolean existEmail(String email){
+        return memberRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existPhone(String phone) {
+        return memberRepository.existsByPhone(phone);
     }
 
     @Override
@@ -128,7 +157,7 @@ public class MemberServiceImpl implements MemberService {
                 .email("admin@ascentic.com")
                 .image("관리자 이미지")
                 .name("관리자")
-                .birth("0101")
+                .birthDate("0101")
                 .phone("010-0000-0000")
                 .role(Collections.singletonList("ADMIN"))
                 .build();

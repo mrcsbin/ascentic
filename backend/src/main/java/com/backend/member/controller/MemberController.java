@@ -7,6 +7,7 @@ import com.backend.member.dto.SignupDto;
 import com.backend.member.entity.Member;
 import com.backend.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class MemberController {
 
     private final MemberServiceImpl memberService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/checktoken")
     public Member tokenValidate() {
@@ -42,6 +44,28 @@ public class MemberController {
     @PostMapping("/signup")
     public String join(@RequestBody SignupDto signupDto) {
         return memberService.join(signupDto);
+    }
+
+    //
+    @PostMapping("/insert")
+    public String insertMember(@RequestBody Member member) {
+        member.setPassword(member.getPassword(), passwordEncoder); // 암호화된 비밀번호를 저장
+        boolean result = memberService.insertMember(member);
+        if (result) {
+            return member.getName() + "님 회원 가입이 완료되었습니다.";
+        } else {
+            return "회원 가입에 실패하였습니다.";
+        }
+    }
+
+    @GetMapping("/idDuplicate/{memberId}")
+    public boolean existsMemberId(@PathVariable String memberId){
+        return memberService.existMemberId(memberId);
+    }
+
+    @GetMapping("/emailDuplicate/{memberEmail}")
+    public boolean existsEmail(@PathVariable String memberEmail) {
+        return memberService.existEmail(memberEmail);
     }
 
     // 회원 수정

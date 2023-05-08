@@ -57,4 +57,10 @@ public class Order {
 
     @Column(name = "order_state")
     private String orderState;
+
+    @Column(name = "order_price_sum")
+    private Integer orderPriceSum;
+
+    @Column(name = "ship_charge")
+    private Integer shipCharge;
 }

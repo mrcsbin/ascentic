@@ -4,19 +4,6 @@ import DaumPostcode from "react-daum-postcode";
 
 // 배송 정보
 function DeliveryInfo(props) {
-  // 주문자 정보 동일 버튼 이벤트
-  function getOrderInfo() {
-    // 주문자 정보 가져오기
-  }
-
-  // 최근 배송지 버튼 이벤트
-  function getLatestAddr() {
-    // 최근 배송지
-  }
-
-  // 주소 배송지 관련 state
-  const [mainAddress, setMainAddress] = useState(""); // 메인 주소
-  const [subAddress, setSubAddress] = useState(""); // 나미저 주소
   const [showAddressModal, setShowAddress] = useState(false); // 모달창을 띄우기 닫기 위한 state
 
   // 모달창 띄우기
@@ -26,7 +13,12 @@ function DeliveryInfo(props) {
 
   // 모달창에서 주소를 선택할 때
   function handleComplete(data) {
-    setMainAddress(data.address); // 메인 주소 set
+    // 메인주소 State set
+    props.changeShipInfo({
+      ...props.shipInfo,
+      mainAddress: data.address,
+    });
+
     setShowAddress(false); // 주소 검색 완료 후 모달 창을 닫음
   }
 
@@ -41,24 +33,43 @@ function DeliveryInfo(props) {
           <div className="recipient_content">
             <div>
               <div>수령인</div>
-              <button onClick={getOrderInfo}>주문자 정보와 동일</button>
+              <button onClick={props.getOrderInfo}>주문자 정보와 동일</button>
             </div>
-            <input type="text"></input>
+            <input
+              type="text"
+              value={props.shipInfo.shipName}
+              onChange={(e) =>
+                props.changeShipInfo({
+                  ...props.shipInfo,
+                  shipName: e.target.value,
+                })
+              }
+            ></input>
           </div>
           <div className="recipient_content">
             <div>연락처</div>
-            <input type="text" placeholder="예:01012345678"></input>
+            <input
+              type="text"
+              value={props.shipInfo.shipTel}
+              placeholder="예:01012345678"
+              onChange={(e) =>
+                props.changeShipInfo({
+                  ...props.shipInfo,
+                  shipTel: e.target.value,
+                })
+              }
+            ></input>
           </div>
           <div className="delivery_addr">
             <div>
               <div>배송 주소</div>
-              <button onClick={getLatestAddr}>최근 배송지</button>
+              <button onClick={props.getRecentAddress}>최근 배송지</button>
             </div>
             <div>
               <input
                 type="text"
                 placeholder="예) 서교동 아지오빌딩, 와우산로"
-                value={mainAddress}
+                value={props.shipInfo.mainAddress}
                 disabled={true}
               ></input>
               <button onClick={getAddresSearchModal}>검색</button>
@@ -66,13 +77,28 @@ function DeliveryInfo(props) {
             <div>
               <input
                 type="text"
+                value={props.shipInfo.subAddress}
                 placeholder="나머지 주소 입력"
-                onChange={(e) => setSubAddress(e.target.value)}
+                onChange={(e) =>
+                  props.changeShipInfo({
+                    ...props.shipInfo,
+                    subAddress: e.target.value,
+                  })
+                }
               ></input>
             </div>
             <div>
               <div>기사님께 전하는 메시지</div>
-              <input type="text" placeholder="안전하게 와주세요."></input>
+              <input
+                type="text"
+                onChange={(e) =>
+                  props.changeShipInfo({
+                    ...props.shipInfo,
+                    shipMessage: e.target.value,
+                  })
+                }
+                placeholder="ex) 안전하게 와주세요."
+              ></input>
             </div>
           </div>
           {showAddressModal && (

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 // import Cookies from "js-cookie";
 
 // 구매 과정 페이지
-function Order() {
+function Order(props) {
   // 컴포넌트 별 정리
   // ProductInfo:  url로 받아온 제품정보, 옵션, 수량, 가격
   // OrderInfo: useEffect => 세션값에 따른 주문자 정보(이메일, 이름, 연락처)
@@ -51,7 +51,6 @@ function Order() {
 
   // 저장 후 자동으로 다음 컴포넌트 확장
   function handleSaveChange(type) {
-    console.log(extend.order);
     setExtend({
       ...extend,
       [type]: true,
@@ -92,6 +91,46 @@ function Order() {
 
   // ---------------------- DeliveryInfo -------------------------------------
 
+  const [shipInfo, setShipInfo] = useState({
+    shipName: "", // 수령인
+    shipTel: "", // 연락처
+    mainAddress: "", // 메인배송지
+    subAddress: "", // 상세주소
+    shipMessage: "", // 기사님께 전하는 메시지
+  });
+
+  // 주문자 정보와 동일
+  function getOrderInfo() {
+    setShipInfo({
+      ...shipInfo,
+      shipName: order.name,
+      shipTel: order.tel,
+    });
+  }
+
+  // 최근 배송지
+  function getRecentAddress() {
+    async function fetchData() {
+      try {
+        const res = await axios.post("/recentaddr", { memberId: token });
+
+        setShipInfo({
+          ...shipInfo,
+          mainAddress: res.data.shipMainAddress,
+          subAddress: res.data.shipSubAddress,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }
+
+  // 배송 정보 변경
+  function changeShipInfo(updatedOrder) {
+    setShipInfo(updatedOrder);
+  }
+
   // ---------------------- DiscountBenefit -------------------------------------
 
   // ---------------------- Payment -------------------------------------
@@ -118,7 +157,11 @@ function Order() {
           ></OrderInfo>
           <DeliveryInfo
             extend={extend.delivery}
+            shipInfo={shipInfo}
             changeExtend={() => handleExtendChange("delivery")}
+            getOrderInfo={() => getOrderInfo()}
+            changeShipInfo={changeShipInfo}
+            getRecentAddress={getRecentAddress}
           ></DeliveryInfo>
           <DiscountBenefit
             extend={extend.disCount}

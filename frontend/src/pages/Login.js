@@ -7,7 +7,6 @@ import Naver from "../assets/naver_logo.png";
 import { AUTH_URL } from "../constants/Url";
 import { login, getTokenInfo, userTest, adminTest } from "../api/MemberApi";
 import { setCookie, getCookie, removeCookie } from "../utils/Cookie";
-import Cookies from "js-cookie";
 /**
  * 문의는 mrcsbin ~!@#~!@#@~!$#
  */
@@ -17,8 +16,7 @@ function Login() {
 
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState({
-  })
+  const [user, setUser] = useState({});
 
   const handleClick = async () => {
     if (id === "") {

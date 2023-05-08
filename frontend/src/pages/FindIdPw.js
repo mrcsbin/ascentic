@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/FindData.css";
+import "../styles/FindIdPw.css";
+import { findId, findPw } from "../api/MemberApi";
 
 /**
  * 문의는 mrcsbin !@#!@#!@#@!#@!#!@
@@ -13,7 +14,7 @@ function FindId() {
   const [email, setEmail] = useState("");
   const [getData, setGetData] = useState("");
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (name === "") {
       alert("이름을 입력해주세요");
       return false;
@@ -22,18 +23,9 @@ function FindId() {
       alert("이메일을 입력해주세요");
       return false;
     }
-    const findIdData = {
-      name: name,
-      email: email,
-    };
 
-
-    axios
-      .post("http://localhost:8080/member/find/id", findIdData)
-      .then((response) => {
-        console.log(response);
-        setGetData(response.data);
-      });
+    const id = await findId(name, email);
+    setGetData(id);
     setActionMode(1);
   };
 
@@ -91,7 +83,7 @@ function FindPassword() {
   const [email, setEmail] = useState("");
   const [getData, setGetData] = useState("");
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (name === "") {
       alert("이름을 입력하세요");
       return false;
@@ -104,16 +96,9 @@ function FindPassword() {
       alert("이메일을 입력하세요");
       return false;
     }
-    const findPwData = {
-      name: name,
-      id: id,
-      email: email,
-    };
-    axios
-      .post("http://localhost:8080/member/find/pw", findPwData)
-      .then((response) => {
-        setGetData(response.data);
-      });
+
+    const pw = await findPw(name, id, email);
+    setGetData(pw);
     setActionMode(1);
   };
 
@@ -171,7 +156,7 @@ function FindPassword() {
   );
 }
 
-function FindData() {
+function FindIdPw() {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.state.activeTab);
 
@@ -203,4 +188,4 @@ function FindData() {
   );
 }
 
-export default FindData;
+export default FindIdPw;

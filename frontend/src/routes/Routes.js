@@ -3,7 +3,7 @@ import { Route, Routes as BrowserRoutes } from "react-router-dom";
 import {
   Main,
   Login,
-  FindData,
+  FindIdPw,
   KakaoLogin,
   SignUp,
   SignUpSuccess,
@@ -21,10 +21,12 @@ function Routes() {
       <Route path="/" element={<Main />}></Route>
 
       <Route path="/login" element={<Login />}></Route>
+
       <Route path="/*" element={<NotFound />} />
+
       <Route path="/login/kakao" element={<KakaoLogin />} />
 
-      <Route path="/member/find" element={<FindData />} />
+      <Route path="/member/find" element={<FindIdPw />} />
 
       <Route path="/signup" element={<SignUp />}></Route>
 

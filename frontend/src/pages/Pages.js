@@ -6,7 +6,7 @@ const ProdDetail = lazy(() => import("./store/ProdDetail"));
 const StoreMain = lazy(() => import("./store/StoreMain"));
 const Login = lazy(() => import("./Login"));
 const KakaoLogin = lazy(() => import("../components/login/KakaoLogin"));
-const FindData = lazy(() => import("./FindData"));
+const FindIdPw = lazy(() => import("./FindIdPw"));
 const Main = lazy(() => import("./Main"));
 const SignUp = lazy(() => import("./SignUp"));
 const SignUpSuccess = lazy(() => import("./SignUpSuccess"));
@@ -20,7 +20,7 @@ export {
   StoreMain,
   Login,
   KakaoLogin,
-  FindData,
+  FindIdPw,
   Main,
   SignUp,
   SignUpSuccess,

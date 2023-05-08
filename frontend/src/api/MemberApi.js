@@ -79,10 +79,10 @@ export const findId = async (name, email) => {
 };
 
 // PW 찾기
-export const findPw = async (id, name, email) => {
+export const findPw = async (name, id, email) => {
   const response = await axios.post(`${MEMBER_API_URL}/find/pw`, {
-    id,
     name,
+    id,
     email,
   });
   return response.data;

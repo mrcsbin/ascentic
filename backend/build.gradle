@@ -47,6 +47,9 @@ dependencies {
     //mail 발송
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     // sms 발송(coolsms)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // sms(coolsms)
     implementation 'net.nurigo:sdk:4.2.7'
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'

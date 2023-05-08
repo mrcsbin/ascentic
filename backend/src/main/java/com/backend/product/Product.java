@@ -3,6 +3,7 @@ package com.backend.product;
 import com.backend.productImg.ProductImg;
 import com.backend.productOption.ProductOption;
 import com.backend.scent.Scent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Product {
     @Column(name = "prod_num")
     private Integer prodNum;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "scent_name")
     private Scent scent;
@@ -35,7 +37,7 @@ public class Product {
     private String prodCategory;
 
     @Column(name = "prod_price")
-    private String prodPrice;
+    private Integer prodPrice;
 
     @Column(name = "prod_stock")
     private Integer prodStock;

@@ -3,6 +3,7 @@ package com.backend.productImg;
 import com.backend.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,8 +30,8 @@ public class ProductImgController {
         productImgService.saveImages(uploadFiles, prodNum, prodImageType);
     }
 
-    @PostMapping("/getProdImg")
-    public ResponseEntity<UrlResource> downloadImg(@RequestParam("prodNum") Integer prodNum, @RequestParam("prodImageType") Integer prodImageType) throws MalformedURLException {
+    @GetMapping ("/getProdImg")
+    public ResponseEntity<UrlResource> downloadImg(Integer prodNum, Integer prodImageType) throws MalformedURLException {
         UrlResource resource = productImgService.findImage(prodNum, prodImageType);
         return ResponseEntity.ok().body(resource);
     }

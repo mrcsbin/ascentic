@@ -7,6 +7,7 @@ import Categories from "../../components/common/storemain/Categories";
 import FilterModal from "../../components/common/storemain/FilterModal";
 import mainimg from "../../assets/storemain.jpeg";
 import mainvideo from "../../assets/storemain.mp4";
+//JennieChan.webm도 assets에 넣어놨는데 mainVideo 어떠신가요..?
 
 function StoreMain() {
   const [products, setProducts] = useState([]);

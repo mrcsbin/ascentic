@@ -1,3 +1,44 @@
-h1 {
-    color: black;
+/*HSM*/
+#header-wrap {
+  width: 100%;
+}
+#header-wrap .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  padding: 5px;
+  margin: 0 20px 0 40px;
+}
+
+#header-wrap .navbarLogo {
+  list-style: none;
+  font-weight: bold;
+  font-size: 24px;
+  width: 10%;
+}
+
+#header-wrap .navbarMenu {
+  display: flex;
+  list-style: none;
+  width: 80%;
+}
+
+#header-wrap .navbarMenu li {
+  padding: 8px 12px;
+}
+
+#header-wrap .navbarMenu li:hover {
+  border-bottom: 3px solid black;
+}
+
+#header-wrap .navbarIcon {
+  list-style: none;
+  display: flex;
+  float: right;
+  /*width: 10%;*/
+}
+
+#header-wrap .navbarIcon li {
+  padding: 8px 12px;
 }

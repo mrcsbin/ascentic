@@ -1,11 +1,16 @@
 import {
-  MainPage,
-  LoginPage,
+  Main,
+  Login,
+  FindData,
+  KakaoLogin,
   SignUp,
+  SignUpSuccess,
+  MyPage,
   StoreMain,
   ProdDetail,
   OrderComplete,
   Order,
+  NotFound,
 } from "../pages/Pages";
 
 import { Route, Routes as BrowserRoutes } from "react-router-dom";
@@ -15,11 +20,19 @@ import { Route, Routes as BrowserRoutes } from "react-router-dom";
 function RoutesTest() {
   return (
     <BrowserRoutes>
-      <Route path="/" element={<MainPage />}></Route>
+      <Route path="/" element={<Main />}></Route>
 
-      <Route path="/login" element={<LoginPage />}></Route>
+      <Route path="/login" element={<Login />}></Route>
+      <Route path="/*" element={<NotFound />} />
+      <Route path="/login/kakao" element={<KakaoLogin />} />
+
+      <Route path="/member/find" element={<FindData />} />
 
       <Route path="/signup" element={<SignUp />}></Route>
+
+      <Route path="/signupsuccess" element={<SignUpSuccess />} />
+
+      <Route path="/mypage" element={<MyPage />} />
 
       <Route path="/order" element={<Order />}></Route>
 

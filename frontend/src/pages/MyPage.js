@@ -8,6 +8,10 @@ function MyPage() {
     setActiveTab(index);
   };
 
+  세줄세줄세줄
+  세줄세줄세줄
+  세줄세줄세줄
+
   return (
     <div className="mypage-wrap">
       <div className="info-area">

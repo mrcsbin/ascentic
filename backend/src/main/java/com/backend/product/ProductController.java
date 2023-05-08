@@ -2,6 +2,7 @@ package com.backend.product;
 
 import com.backend.productImg.ProductImg;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +38,16 @@ public class ProductController {
     public List<Product> getAll(){
         List<Product> all = productRepository.findAll();
         return all;
+    }
+
+    @GetMapping("/listscent")
+    public List<Product> getCategory(@Param("category") String category){
+        if (category.equals("all")){
+            List<Product> productList = productRepository.findAll();
+            return productList;
+        } else {
+            List<Product> productList = productRepository.findAllByScent(category);
+            return productList;
+        }
     }
 }

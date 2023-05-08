@@ -1,9 +1,11 @@
 package com.backend.order;
 
 import com.backend.member.entity.Member;
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -13,7 +15,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Integer insertOrder(OrderDTO orderDTO) {
-        Member member = memberRepository.findById(orderDTO.getMemberId()).orElse(null);
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        System.out.println(currentMemberId);
+        Member member = memberRepository.findById(currentMemberId).orElse(null);
         Order order =  orderRepository.save(Order.builder()
                     .member(member)
                     .orderEmail(orderDTO.getOrderEmail())
@@ -33,11 +37,13 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public AddressDTO getRecentAddr(String memberId) {
-        Order order = orderRepository.findFirstByMemberOrderByOrderIdDesc(memberRepository.findById(memberId).orElse(null));
+    public AddressDTO getRecentAddr() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        System.out.println(currentMemberId);
+        Order order = orderRepository.findFirstByMemberOrderByOrderIdDesc(memberRepository.findById(currentMemberId).orElse(null));
 
         return AddressDTO.builder()
-                .memberId(memberId)
+                .memberId(currentMemberId)
                 .shipMainAddress(order.getShipMainAddress())
                 .shipSubAddress(order.getShipSubAddress())
                 .build();

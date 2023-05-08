@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -12,44 +14,41 @@ import java.util.Date;
 @Entity
 @Table(name="memberTbl")
 @Getter @Setter
-@NotNull
 public class Member {
     @Id
-    @Column(name="memberUniqueId")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uniqueId;
-
-    @Column(name="memberId")
-    private String memberId;
-    @Column(name="memberPassword")
+    @Column(name="member_Id ")
+    private String id;
+    @Column(name="member_Password")
     private String password;
 
-    @Column(name="memberName")
+    @Column(name="member_Name", nullable = false)
     private String name;
-//
-//    @Column(name="memberIdentificationCode")
-//    private String identificationCode;
 
-    @Column(name="memberPhone")
+
+    @Column(name="member_Phone" )
     private String phone;
 
-    @Column(name="memberEmail")
+    @Column(name="member_Email" , nullable = false)
     private String email;
 
-    @Column(name="memberBirthDate")
-    private String memberBirthDate;
+    @Column(name="member_BirthDate")
+    private String birthDate;
 
-    @Column(name="memberSignUpTime")
+    @Column(name="member_SignUpTime")
     private LocalDateTime memberSignUpTime = LocalDateTime.now();
 
-    @Column(name="memberInfoYn")
+    @Column(name="member_Info_Yn", nullable = false)
     private boolean infoAgree;
 
-    @Column(name="memberSnsPushYn")
+    @Column(name="member_Sns_Push_Yn")
     private boolean snsPushYn;
 
-    @Column(name="memberEmailPushYn")
+    @Column(name="member_Email_Push_Yn")
     private boolean emailPushYn;
 
+
+    public void setPassword(String password, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
 }
 

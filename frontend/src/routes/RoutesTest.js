@@ -10,6 +10,7 @@ import {
   ProdDetail,
   OrderComplete,
   Order,
+  NotFound,
 } from "../pages/Pages";
 
 import { Route, Routes as BrowserRoutes } from "react-router-dom";
@@ -22,7 +23,7 @@ function RoutesTest() {
       <Route path="/" element={<Main />}></Route>
 
       <Route path="/login" element={<Login />}></Route>
-
+      <Route path="/*" element={<NotFound />} />
       <Route path="/login/kakao" element={<KakaoLogin />} />
 
       <Route path="/member/find" element={<FindData />} />

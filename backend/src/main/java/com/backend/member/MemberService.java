@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MemberService {
-    public Member insertMember(Member member);
+    boolean insertMember(Member member);
+
 
     boolean existMemberId(String memberId);
 

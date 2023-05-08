@@ -3,8 +3,10 @@ import "../styles/MainPage.css";
 import mainImage from "../assets/mainwide.jpg";
 function MainPage() {
   return (
-    <div>
-      <img className="backgroundImage" src={mainImage} />
+    <div className="main_page_real">
+      <div className="main_page">
+        <img className="backgroundImage" src={mainImage} alt="main_image" />
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
-    boolean existsByMemberId(String memberId);
+    boolean existsById(String id);
     boolean existsByEmail(String email);
     boolean existsByPhone(String phone);
 }

@@ -31,11 +31,12 @@ public class SmsCertificateController {
      */
 @PostMapping("/send-one")
     public SingleMessageSentResponse sendOne(String phoneNumber) {
+    System.out.println(phoneNumber);
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
         message.setFrom("01074152889");
         message.setTo(phoneNumber);
-        String storedCode = redisTemplate.opsForValue().get(phoneNumber);
+        String storedCode = redisTemplate.opsForValue().get(phoneNumber + ":code");
         message.setText("인증번호는 " + storedCode + "입니다.");
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));

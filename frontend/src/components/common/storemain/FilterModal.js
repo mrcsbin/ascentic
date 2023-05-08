@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../../../styles/StoreMain.css";
 import all from "../../../assets/productCategory/category_all.webp";
 import best from "../../../assets/productCategory/category_best.webp";
 import body from "../../../assets/productCategory/category_body.webp";
@@ -10,10 +11,11 @@ import perfume from "../../../assets/productCategory/category_perfume.webp";
 import shampoo from "../../../assets/productCategory/category_shampoo.webp";
 
 const FilterModal = (props) => {
-  const { open, close, header } = props;
+  const { open, close, header, onModalData, getSortOption, getProdcategory } =
+    props;
 
-  const [sortOption, setSortOption] = useState("latest");
-  const [prodcategory, setProdcategory] = useState("");
+  const [sortOption, setSortOption] = useState(getSortOption);
+  const [prodcategory, setProdcategory] = useState(getProdcategory);
 
   const ProductCategories = () => {
     const productCategoryList = [
@@ -28,12 +30,12 @@ const FilterModal = (props) => {
         image: best,
       },
       {
-        name: "perfume",
+        name: "향수",
         text: "향수",
         image: perfume,
       },
       {
-        name: "diffuser",
+        name: "디퓨저",
         text: "디퓨저",
         image: diffuser,
       },
@@ -65,7 +67,7 @@ const FilterModal = (props) => {
     ];
     const [showOption, setShowOption] = useState(true);
     const clickProdcategory = (e) => {
-      setProdcategory(e.target.value);
+      setProdcategory(e.currentTarget.value);
     };
 
     return (
@@ -73,25 +75,26 @@ const FilterModal = (props) => {
         <header>
           제품 카테고리
           {showOption === false ? (
-            <button onClick={() => setShowOption(!showOption)}>+</button>
+            <button onClick={() => setShowOption(true)}>+</button>
           ) : (
-            <button onClick={() => setShowOption(!showOption)}>-</button>
+            <button onClick={() => setShowOption(false)}>-</button>
           )}
         </header>
         {showOption === true ? (
           <div className="prodcategory">
             <ul>
-              {productCategoryList.map((c) => (
-                <li>
-                  <button value={c.name} onClick={clickProdcategory}>
-                    {/* 버튼focus - div에 value===prodcategory ? className변경 또는 style설정 */}
-                    <div className="cateimg_prod">
-                      <img src={c.image} alt=""></img>
-                    </div>
-                    {c.text}
-                  </button>
-                </li>
-              ))}
+              {productCategoryList &&
+                productCategoryList.map((c) => (
+                  <li key={c.name}>
+                    <button value={c.name} onClick={clickProdcategory}>
+                      {/* 버튼focus - div에 value===prodcategory ? className변경 또는 style설정 */}
+                      <div className="cateimg_prod">
+                        <img src={c.image} alt=""></img>
+                      </div>
+                      {c.text}
+                    </button>
+                  </li>
+                ))}
             </ul>
           </div>
         ) : null}
@@ -109,9 +112,9 @@ const FilterModal = (props) => {
         <header>
           정렬형식
           {showOption === false ? (
-            <button onClick={() => setShowOption(!showOption)}>+</button>
+            <button onClick={() => setShowOption(true)}>+</button>
           ) : (
-            <button onClick={() => setShowOption(!showOption)}>-</button>
+            <button onClick={() => setShowOption(false)}>-</button>
           )}
         </header>
         {showOption === true ? (
@@ -149,12 +152,12 @@ const FilterModal = (props) => {
     );
   };
   const handleReset = () => {
-    setSortOption("latest");
-    setProdcategory("all");
+    setSortOption(getSortOption);
+    setProdcategory(getProdcategory);
   };
-
-  const handleSave = () => {
-    close(sortOption, prodcategory);
+  const handleSubmit = () => {
+    onModalData(sortOption, prodcategory);
+    close();
   };
 
   return (
@@ -164,7 +167,7 @@ const FilterModal = (props) => {
         <section>
           <header>
             {header}
-            <button className="close" onClick={handleSave}>
+            <button className="close" onClick={close}>
               &times;
             </button>
           </header>
@@ -175,7 +178,7 @@ const FilterModal = (props) => {
           <button className="alldel" onClick={handleReset}>
             초기화
           </button>
-          <button className="filterresult" onClick={handleSave}>
+          <button className="filterresult" onClick={handleSubmit}>
             결과
           </button>
         </section>

@@ -1,77 +1,80 @@
 .notice-bar {
-  height: 30px;
-  background-color: black;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
+    height: 30px;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width:100%;
+    display: flex;
 }
 
-.hidden {
-  height: 0;
+.notice-bar .popup-btn {}
+
+.notice-bar .ignore-btn {}
+
+.notice-bar.hidden {
+    height: 0;
 }
 
-.close-btn {
-  position: absolute;
-  top: 5px;
-  right: 6px;
-  font-size: 15px;
-  font-weight: bold;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: white;
+.notice-bar .ignore-btn {
+    all: unset;
+    color: white;
+    background: transparent;
+    width: 10%;
 }
 
-.popup-btn {
-  all: unset;
-  color: white;
-  cursor: pointer;
+.notice-bar .close-btn {
+    font-size: 15px;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    width: 5%;
 }
 
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+.notice-bar .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
 }
 
-.popup-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  width: 300px;
-  height: 200px;
+.notice-bar .popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 400px;
+    height: 450px;
 }
 
-.popup-close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+.notice-bar .popup-link-btn {
+    all: unset;
+    width: 80%;
+    margin: 10px auto 5px auto;
+    background-color: black;
+    padding: 3px 0px;
 }
 
-.event-link {
-  color: blue;
-  text-decoration: underline;
-  cursor: pointer;
+.notice-bar .popup-link {
+    text-decoration: none;
+    color: white;
+    padding: 5px;
 }
 
-.ignore-btn {
-  all: unset;
-  cursor: pointer;
-  color: white;
-  background: transparent;
-  position: absolute;
-  top: 6.5px;
-  right: 50px;
+.notice-bar .popup-close-btn {
+    all: unset;
+    width: 80%;
+    margin: 5px auto 10px auto;
+    background-color: black;
+    padding: 3px 0px;
+    color: white;
+    cursor: pointer;
 }

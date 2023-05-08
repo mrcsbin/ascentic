@@ -10,8 +10,10 @@ import iconSearch from "../../assets/iconSearch.svg";
 
 const Header = () => {
   return (
-    <div id="header-wrap">
+    <div className="header-wrap">
+      {/* flexbox 부모 컨테이너 */}
       <nav className="navbar">
+        {/* flexbox 자식 컨테이너 #1 */}
         <div className="navbarLogo">
           <li>
             <Link to="/" style={{ textDecoration: "none", color: "black" }}>
@@ -19,6 +21,7 @@ const Header = () => {
             </Link>
           </li>
         </div>
+        {/* flexbox 자식 컨테이너 #2 */}
         <ul className="navbarMenu">
           <li>
             <Link
@@ -45,6 +48,7 @@ const Header = () => {
             </Link>
           </li>
         </ul>
+        {/* flexbox 자식 컨테이너 #3 */}
         <ul className="navbarIcon">
           <li>
             <img src={iconSearch} alt="iconSearch"></img>

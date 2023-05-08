@@ -2,9 +2,8 @@ import React from "react";
 import { useState } from "react";
 
 // 최종 결제금액
-function FinalPayment() {
+function FinalPayment(props) {
   // 동의 관련 state
-  const [allAgree, setAllAgree] = useState(false);
   const [checkValues, setCheckValues] = useState({
     check1: false,
     check2: false,
@@ -35,6 +34,7 @@ function FinalPayment() {
     const { check1, check2, check3, check4 } = checkValues;
 
     if (check1 && check2 && check3 && check4) {
+      props.buySubmit(); // 결제 진행
       alert("결제를 진행하겠습니다.");
     } else {
       alert("모두 동의가 필요합니다.");

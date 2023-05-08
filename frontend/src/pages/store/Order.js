@@ -141,6 +141,8 @@ function Order(props) {
     account: false,
   });
 
+  const [paymentMethod, setPaymentMethod] = useState("kokao");
+
   function handleKakao() {
     setPayMethod({
       kakao: true,
@@ -149,6 +151,7 @@ function Order(props) {
       deposit: false,
       account: false,
     });
+    setPaymentMethod("kokao");
   }
 
   function handleNaver() {
@@ -159,6 +162,7 @@ function Order(props) {
       deposit: false,
       account: false,
     });
+    setPaymentMethod("naver");
   }
 
   function handleCard() {
@@ -169,6 +173,7 @@ function Order(props) {
       deposit: false,
       account: false,
     });
+    setPaymentMethod("card");
   }
 
   function handleDeposit() {
@@ -179,6 +184,7 @@ function Order(props) {
       deposit: true,
       account: false,
     });
+    setPaymentMethod("deposit");
   }
 
   function handleAccount() {
@@ -189,9 +195,40 @@ function Order(props) {
       deposit: false,
       account: true,
     });
+    setPaymentMethod("account");
   }
 
   // ---------------------- FinalPayment -------------------------------------
+
+  const buySubmit = () => {
+    const requestData = {
+      memberId: token, // 주문자 id
+      orderEmail: order.email + "@" + order.domain, // 주문자 이메일
+      orderName: order.name, // 주문자 이름
+      orderTel: order.tel, // 주문자 연락처
+      shipName: shipInfo.shipName, // 수령인
+      shipTel: shipInfo.shipTel, // 연락처
+      shipMainAddress: shipInfo.mainAddress, // 메인주소
+      shipSubAddress: shipInfo.subAddress, // 상세주소
+      shipMessage: shipInfo.shipMessage, // 배송메시지
+      orderPayment: paymentMethod, // 결제 수단
+      orderPayInfo: "결제정보입니다!", // 카드번호, 결제관련 정보
+      orderPaymentState: false, // true: 결제완료, flase: 결제실패
+      orderState: "결제완료", // 결제완료, 배송준비중, 배송중, 배송완료
+    };
+
+    console.log(requestData);
+
+    axios
+      .post("/finishorder", requestData)
+      .then((response) => {
+        const orderNum = response.data; // 주문 번호를 받아온다.
+        console.log(orderNum);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div>
@@ -250,7 +287,7 @@ function Order(props) {
         </div>
 
         <div className="right">
-          <FinalPayment></FinalPayment>
+          <FinalPayment buySubmit={buySubmit}></FinalPayment>
         </div>
       </div>
     </div>

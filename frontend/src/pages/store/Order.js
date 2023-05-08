@@ -218,12 +218,49 @@ function Order(props) {
     };
 
     console.log(requestData);
+    let orderNum;
 
     axios
       .post("/finishorder", requestData)
       .then((response) => {
-        const orderNum = response.data; // 주문 번호를 받아온다.
+        orderNum = response.data; // 주문 번호를 받아온다.
         console.log(orderNum);
+
+        const product = [
+          { option: "3", count: 2 },
+          { option: "5", count: 1 },
+          { option: "4", count: 3 },
+        ];
+
+        const orderProd = [];
+        product.forEach((item, index) => {
+          orderProd.push({
+            orderId: orderNum, // 주문 번호
+            optionNum: item.option, // 옵션 번호(기본키)
+            prodcount: item.count, // 수량
+            orderState: false, // 주문 상태 true: 주문, flase 주문 취소
+          });
+        });
+
+        // 상품주문 만큼 서버에 요청을 한다.
+        for (let i = 0; i < orderProd.length; i++) {
+          const proddata = {
+            orderId: orderNum,
+            optionNum: orderProd[i].optionNum,
+            prodCount: orderProd[i].prodcount,
+            orderState: false,
+          };
+          console.log(proddata);
+
+          axios
+            .post("/finishorderprod", proddata)
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }
       })
       .catch((error) => {
         console.error(error);

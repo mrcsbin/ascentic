@@ -13,10 +13,24 @@ public class OrderServiceImpl implements OrderService{
     private final MemberRepository memberRepository;
 
     @Override
-    public Order insertOrder(String memberId, Order order) {
-        Member member = memberRepository.findById(memberId).orElse(null);
-        order.setMember(member);
-        return orderRepository.save(order);
+    public Integer insertOrder(OrderDTO orderDTO) {
+        Member member = memberRepository.findById(orderDTO.getMemberId()).orElse(null);
+        Order order =  orderRepository.save(Order.builder()
+                    .member(member)
+                    .orderEmail(orderDTO.getOrderEmail())
+                    .orderName(orderDTO.getOrderName())
+                    .orderTel(orderDTO.getOrderTel())
+                    .shipName(orderDTO.getShipName())
+                    .shipTel(orderDTO.getShipTel())
+                    .shipMainAddress(orderDTO.getShipMainAddress())
+                    .shipSubAddress(orderDTO.getShipSubAddress())
+                    .shipMessage(orderDTO.getShipMessage())
+                    .orderPayment(orderDTO.getOrderPayment())
+                    .orderPaymentInfo(orderDTO.getOrderPaymentInfo())
+                    .orderPaymentState(orderDTO.getOrderPaymentState())
+                    .orderState(orderDTO.getOrderState())
+                    .build());
+        return order.getOrderId();
     }
 
     @Override

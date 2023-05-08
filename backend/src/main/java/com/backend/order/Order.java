@@ -2,14 +2,14 @@ package com.backend.order;
 
 import com.backend.member.Member;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "tb_order")
 public class Order {
 
@@ -57,4 +57,10 @@ public class Order {
 
     @Column(name = "order_state")
     private String orderState;
+
+    @Column(name = "order_price_sum")
+    private Integer orderPriceSum;
+
+    @Column(name = "ship_charge")
+    private Integer shipCharge;
 }

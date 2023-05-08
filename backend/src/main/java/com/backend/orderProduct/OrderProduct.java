@@ -3,15 +3,15 @@ package com.backend.orderProduct;
 import com.backend.order.Order;
 import com.backend.productOption.ProductOption;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_order_prod")
+@Builder
 public class OrderProduct {
 
     @Id

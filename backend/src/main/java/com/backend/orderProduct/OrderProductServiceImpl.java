@@ -15,12 +15,17 @@ public class OrderProductServiceImpl implements OrderProductService{
     private final ProductOptionRepository productOptionRepository;
 
     @Override
-    public OrderProduct insetOrderProduct(Integer orderId, Integer optionNum, OrderProduct orderProduct) {
-        Order order = orderRepository.findById(orderId).orElse(null);
-        ProductOption productOption = productOptionRepository.findById(optionNum).orElse(null);
-        orderProduct.setOrder(order);
-        orderProduct.setProductOption(productOption);
+    public void insetOrderProduct(OrderProductDTO orderProductDTO) {
+        Order order = orderRepository.findById(orderProductDTO.getOrderId()).orElse(null);
+        ProductOption productOption = productOptionRepository.findById(orderProductDTO.getOptionNum()).orElse(null);
 
-        return orderProductRepository.save(orderProduct);
+        OrderProduct orderProduct = OrderProduct.builder()
+                .order(order)
+                .productOption(productOption)
+                .prodCount(orderProductDTO.getProdCount())
+                .orderState(orderProductDTO.isOrderState())
+                .build();
+
+        orderProductRepository.save(orderProduct);
     }
 }

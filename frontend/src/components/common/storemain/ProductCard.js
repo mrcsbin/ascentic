@@ -29,7 +29,7 @@ const ProductCard = (props) => {
           alt=""
         />
       </div>
-      <div className="Pintro">{props.product.prodInfo}</div>
+      <div className="Pinfo">{props.product.prodInfo}</div>
       <div className="Pname">{props.product.prodName}</div>
       <div className="Pprice">{productprice} 원</div>
     </NavLink>

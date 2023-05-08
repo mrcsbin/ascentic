@@ -7,6 +7,7 @@ import Categories from "../../components/common/storemain/Categories";
 import FilterModal from "../../components/common/storemain/FilterModal";
 import mainimg from "../../assets/storemain.jpeg";
 import mainvideo from "../../assets/storemain.mp4";
+import filterimg from "../../assets/filter.png";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
@@ -31,7 +32,6 @@ function StoreMain() {
     setSortOption(sortOption);
     setProdcategory(prodcategory);
     productCategory(products, prodcategory);
-    sortByOption(productList, sortOption);
   };
 
   function productCategory(products, prodcategory) {
@@ -74,6 +74,14 @@ function StoreMain() {
     } else return;
   }
 
+  const infologo = "[a]scentic";
+  const infotext =
+    "에이센틱과 함께 당신을 나타내는 향으로 일상을 가득 채워보세요.";
+  const infotext2 =
+    "기분, 날씨, 계절에 맞는 향의 변화에 따라 현재의 당신을 온전히 드러낼 수 있는 리듬을 부여합니다.";
+  const infotext3 =
+    "에이센틱 스토어에서 향과 함께 순간의 의미를 찾는 즐거움을 경험해보세요.";
+
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -109,22 +117,29 @@ function StoreMain() {
           <source src={mainvideo} type="video/mp4" />
         </video> */}
       </div>
-      <div className="infobox">소개글</div>
+      <div className="infobox">
+        <h2>{infologo}</h2>
+        <span>{infotext}</span>
+        <span>{infotext2}</span>
+        <span>{infotext3}</span>
+      </div>
       <Categories />
-      <div>
+      <div className="buttonBox">
         <button onClick={openModal} className="filter">
+          <img className="filterimg" src={filterimg} alt="" />
           필터
         </button>
-        <FilterModal
-          open={modalOpen}
-          close={closeModal}
-          onModalData={handleModalData}
-          header="필터"
-          getSortOption={sortOption}
-          getProdcategory={prodcategory}
-        />
+        <div className="prodnum">{productList.length} 제품</div>
       </div>
-      <div className="prodnum">{productList.length} 제품</div>
+      <FilterModal
+        open={modalOpen}
+        close={closeModal}
+        onModalData={handleModalData}
+        header="필터"
+        getSortOption={sortOption}
+        getProdcategory={prodcategory}
+      />
+      {sortByOption(productList, sortOption)}
       <CardList products={productList} />
     </div>
   );

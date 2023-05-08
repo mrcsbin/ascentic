@@ -56,7 +56,7 @@ const FilterModal = (props) => {
       },
       {
         name: "body",
-        text: "핸드앤바디워시",
+        text: "바디워시",
         image: body,
       },
       {
@@ -83,18 +83,22 @@ const FilterModal = (props) => {
         {showOption === true ? (
           <div className="prodcategory">
             <ul>
-              {productCategoryList &&
-                productCategoryList.map((c) => (
-                  <li key={c.name}>
-                    <button value={c.name} onClick={clickProdcategory}>
-                      {/* 버튼focus - div에 value===prodcategory ? className변경 또는 style설정 */}
-                      <div className="cateimg_prod">
-                        <img src={c.image} alt=""></img>
-                      </div>
-                      {c.text}
-                    </button>
-                  </li>
-                ))}
+              {productCategoryList.map((c) => (
+                <li key={c.name}>
+                  <button
+                    value={c.name}
+                    style={{
+                      borderColor: prodcategory == c.name ? "black" : "",
+                    }}
+                    onClick={clickProdcategory}
+                  >
+                    <div className="cateimg_prod">
+                      <img src={c.image} alt=""></img>
+                    </div>
+                    {c.text}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         ) : null}
@@ -103,6 +107,29 @@ const FilterModal = (props) => {
   };
 
   const SortOption = () => {
+    const sortOptionList = [
+      {
+        name: "latest",
+        text: "신상품순",
+      },
+      {
+        name: "viewCount",
+        text: "조회순",
+      },
+      {
+        name: "wishCount",
+        text: "인기순",
+      },
+      {
+        name: "highPrice",
+        text: "높은 가격순",
+      },
+      {
+        name: "lowPrice",
+        text: "낮은 가격순",
+      },
+    ];
+
     const [showOption, setShowOption] = useState(true);
     const clickSortOption = (e) => {
       setSortOption(e.target.value);
@@ -120,31 +147,20 @@ const FilterModal = (props) => {
         {showOption === true ? (
           <div className="sortoption">
             <ul>
-              <li>
-                <button value="latest" onClick={clickSortOption}>
-                  신상품순
-                </button>
-              </li>
-              <li>
-                <button value="viewCount" onClick={clickSortOption}>
-                  조회순
-                </button>
-              </li>
-              <li>
-                <button value="wishCount" onClick={clickSortOption}>
-                  인기순
-                </button>
-              </li>
-              <li>
-                <button value="highPrice" onClick={clickSortOption}>
-                  높은 가격순
-                </button>
-              </li>
-              <li>
-                <button value="lowPrice" onClick={clickSortOption}>
-                  낮은 가격순
-                </button>
-              </li>
+              {sortOptionList.map((s) => (
+                <li key={s.name}>
+                  <button
+                    value={s.name}
+                    style={{
+                      color: sortOption == s.name ? "white" : "",
+                      backgroundColor: sortOption == s.name ? "black" : "",
+                    }}
+                    onClick={clickSortOption}
+                  >
+                    {s.text}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         ) : null}
@@ -175,12 +191,14 @@ const FilterModal = (props) => {
             <ProductCategories />
             <SortOption />
           </main>
-          <button className="alldel" onClick={handleReset}>
-            초기화
-          </button>
-          <button className="filterresult" onClick={handleSubmit}>
-            결과
-          </button>
+          <footer>
+            <button className="alldel" onClick={handleReset}>
+              초기화
+            </button>
+            <button className="filterresult" onClick={handleSubmit}>
+              결과
+            </button>
+          </footer>
         </section>
       ) : null}
     </div>

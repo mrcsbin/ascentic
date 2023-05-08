@@ -1,80 +1,83 @@
 .notice-bar {
-    height: 30px;
-    background-color: black;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    width:100%;
-    display: flex;
+  padding-top: 5px;
+  height: 30px;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  display: flex;
 }
 
-.notice-bar .popup-btn {}
-
-.notice-bar .ignore-btn {}
-
-.notice-bar.hidden {
-    height: 0;
+.notice-bar .popup-btn {
 }
 
 .notice-bar .ignore-btn {
-    all: unset;
-    color: white;
-    background: transparent;
-    width: 10%;
+}
+
+.notice-bar.hidden {
+  height: 0;
+}
+
+.notice-bar .ignore-btn {
+  all: unset;
+  color: white;
+  background: transparent;
+  width: 10%;
 }
 
 .notice-bar .close-btn {
-    font-size: 15px;
-    font-weight: bold;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: white;
-    width: 5%;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 5%;
 }
 
 .notice-bar .popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .notice-bar .popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    width: 400px;
-    height: 450px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 400px;
+  height: 450px;
 }
 
 .notice-bar .popup-link-btn {
-    all: unset;
-    width: 80%;
-    margin: 10px auto 5px auto;
-    background-color: black;
-    padding: 3px 0px;
+  all: unset;
+  width: 80%;
+  margin: 10px auto 5px auto;
+  background-color: black;
+  padding: 3px 0px;
 }
 
 .notice-bar .popup-link {
-    text-decoration: none;
-    color: white;
-    padding: 5px;
+  text-decoration: none;
+  color: white;
+  padding: 5px;
 }
 
 .notice-bar .popup-close-btn {
-    all: unset;
-    width: 80%;
-    margin: 5px auto 10px auto;
-    background-color: black;
-    padding: 3px 0px;
-    color: white;
-    cursor: pointer;
+  all: unset;
+  width: 80%;
+  margin: 5px auto 10px auto;
+  background-color: black;
+  padding: 3px 0px;
+  color: white;
+  cursor: pointer;
 }

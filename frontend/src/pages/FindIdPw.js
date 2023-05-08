@@ -13,6 +13,7 @@ function FindId() {
   const [getData, setGetData] = useState("");
   const [showCertificate, setShowCertificate] = useState(false);
   const [codeOk, setCodeOk] = useState(false);
+  
   const getCode = async (phone) => {
     const res = await sendCode(phone);
     console.log(res);

@@ -1,6 +1,5 @@
 import axios from "axios";
-import Cookies from "js-cookie";
-import { setCookie, getCookie, removeCookie } from "../utils/Cookie";
+import { setCookie, getCookie, removeCookie } from "../utils/Cookies";
 
 const MEMBER_API_URL = "http://localhost:8080/member";
 
@@ -34,10 +33,6 @@ export const login = async (id, password) => {
     id,
     password,
   });
-  const { accessToken, refreshToken } = response.data;
-
-  setCookie("accessToken", accessToken);
-  setCookie("refreshToken", refreshToken);
   return response.data;
 };
 

@@ -1,4 +1,4 @@
-import { Route, Routes as BrowserRoutes, Navigate } from "react-router-dom";
+import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
 
 import {
   Main,
@@ -20,18 +20,26 @@ function Routes() {
     <BrowserRoutes>
       <Route path="/" element={<Main />}></Route>
 
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/*" element={<Navigate to="/NotFound" />} />
-      <Route path="/NotFound" element={<NotFound />} />
+      {/* <Route
+        path={isLoggedIn ? "/mypage" : "/login"}
+        element={isLoggedIn ? <MyPage /> : <Login />}
+      /> */}
+
+      <Route path="/login" element={<Login />} />
+
       <Route path="/login/kakao" element={<KakaoLogin />} />
+
+      <Route path="/mypage" element={<MyPage />} />
+
+      <Route path="/*" element={<Navigate to="/NotFound" />} />
+
+      <Route path="/NotFound" element={<NotFound />} />
 
       <Route path="/member/find" element={<FindIdPw />} />
 
       <Route path="/signup" element={<SignUp />}></Route>
 
       <Route path="/signupsuccess" element={<SignUpSuccess />} />
-
-      <Route path="/mypage" element={<MyPage />} />
 
       <Route path="/order" element={<Order />}></Route>
 

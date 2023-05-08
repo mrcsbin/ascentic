@@ -1,9 +1,9 @@
-import { Route, Routes as BrowserRoutes } from "react-router-dom";
+import { Route, Routes as BrowserRoutes, Navigate } from "react-router-dom";
 
 import {
   Main,
   Login,
-  FindData,
+  FindIdPw,
   KakaoLogin,
   SignUp,
   SignUpSuccess,

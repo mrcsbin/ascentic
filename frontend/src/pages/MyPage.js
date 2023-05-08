@@ -11,6 +11,9 @@ function MyPage() {
   세줄세줄세줄
   세줄세줄세줄
   세줄세줄세줄
+  세줄세줄세줄
+  세줄세줄세줄
+  세줄세줄세줄
 
   return (
     <div className="mypage-wrap">

@@ -13,6 +13,7 @@ import {
   OrderComplete,
   Order,
   NotFound,
+  Cart,
 } from "../pages/Pages";
 
 function Routes() {
@@ -30,6 +31,8 @@ function Routes() {
       <Route path="/login/kakao" element={<KakaoLogin />} />
 
       <Route path="/mypage" element={<MyPage />} />
+
+      <Route path="/cart" element={<Cart />} />
 
       <Route path="/*" element={<Navigate to="/NotFound" />} />
 

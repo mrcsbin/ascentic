@@ -12,24 +12,24 @@ import { getCookie, setCookie, removeCookie } from "../../utils/Cookies";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
 
-  useEffect(() => {
-    const checkTokenExpiration = () => {
-      const token = getCookie("accessToken");
-      if (!token && isLoggedIn) {
-        setIsLoggedIn(false);
-        window.location.replace("/");
-      }
-    };
-    checkTokenExpiration();
+  // useEffect(() => {
+  //   const checkTokenExpiration = () => {
+  //     const token = getCookie("accessToken");
+  //     if (!token && isLoggedIn) {
+  //       setIsLoggedIn(false);
+  //       window.location.replace("/");
+  //     }
+  //   };
+  //   checkTokenExpiration();
 
-    const interval = setInterval(() => {
-      checkTokenExpiration();
-    }, 1000);
+  //   const interval = setInterval(() => {
+  //     checkTokenExpiration();
+  //   }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [isLoggedIn]);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [isLoggedIn]);
 
   function handleLogout() {
     removeCookie("accessToken");
@@ -83,7 +83,7 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to={isLoggedIn ? "/mypage" : "/login"}
+              to="/login"
               style={{ textDecoration: "none" }}
             >
               <img src={iconUser} alt="iconMyPage"></img>

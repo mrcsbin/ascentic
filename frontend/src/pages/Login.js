@@ -106,7 +106,7 @@ function Login() {
     // token 에서 accessToken 과 refreshToken 파싱해서 저장
     const { accessToken, refreshToken } = token;
     // 만료시간 30분으로 설정
-    const expires = new Date(Date.now() + 30 * 60 * 1000);
+    const expires = new Date(Date.now() + 1 * 10 * 1000);
     if (token) {
       setCookie("accessToken", accessToken, { expires });
       setCookie("refreshToken", refreshToken, { expires });

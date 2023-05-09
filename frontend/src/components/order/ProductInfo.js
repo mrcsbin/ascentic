@@ -1,11 +1,10 @@
 import React from "react";
-import { useState } from "react";
-import Prod from "./Prod";
 
 // 주문 상품 정보
 function ProdInfo(props) {
   // 상품 수량(임시)
-  const [prodAmount, setProdAmount] = useState(3);
+  const prods = props.prods;
+  console.log(prods);
 
   return (
     <div>
@@ -15,8 +14,22 @@ function ProdInfo(props) {
       </div>
       {props.extend && (
         <div>
-          {[...Array(prodAmount)].map((_, i) => (
-            <Prod key={i} />
+          {prods.map((prod) => (
+            <div className="prod_info">
+              <img
+                src={`http://localhost:8080/getProdImg?prodNum=${prod.prodNum}&prodImageType=0`}
+                alt="상품이미지"
+              />
+              <div className="purchase_info">
+                <div>상품명 {prod.prodName}</div>
+                <div>
+                  {prod.prodOption} / {prod.prodeQunanity}
+                </div>
+              </div>
+              <div>
+                <div>{prod.prodPrice.toLocaleString()}원</div>
+              </div>
+            </div>
           ))}
         </div>
       )}

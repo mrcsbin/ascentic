@@ -71,6 +71,12 @@ body {
     height: 99px;
 }
 
+.purchase_info > div:nth-child(1){
+    font-weight: 600;
+    width: 250px;
+    font-size: 20px;
+}
+
 /* 상품 정보 */
 .prod_info > div {
     margin-top: 10px;

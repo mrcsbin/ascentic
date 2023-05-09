@@ -62,22 +62,24 @@ const categorylist = [
 const Categories = () => {
   return (
     <div className="categories">
-      {categorylist.map((c) => (
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "catebox-active" : "catebox"
-          }
-          key={c.name}
-          to={"/StoreMain" + c.text}
-        >
-          <div className="cateimgEffect">
-            <div className="cateimgbox">
-              <img className="cateimg" src={c.image} alt="" />
+      <div className="categoriesbox">
+        {categorylist.map((c) => (
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "catebox-active" : "catebox"
+            }
+            key={c.name}
+            to={"/StoreMain" + c.text}
+          >
+            <div className="cateimgEffect">
+              <div className="cateimgbox">
+                <img className="cateimg" src={c.image} alt="" />
+              </div>
             </div>
-          </div>
-          {c.name}
-        </NavLink>
-      ))}
+            {c.name}
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 };

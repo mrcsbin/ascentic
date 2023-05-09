@@ -1,17 +1,10 @@
 /* 폰트 */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
-@font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
 
 /* 메인 */
 .imagebox {
   width: 100vw;
-  height: 500px;
+  height: 30vw;
   overflow: hidden;
 }
 .imagebox img {
@@ -23,60 +16,397 @@
 }
 .infobox {
   width: 80vw;
-  margin: 0 auto;
-  padding: 50px 0;
+  margin: 0 auto 15px auto;
+  padding: 10px 0;
   text-align: center;
-  font-family: "Pretendard-Regular";
+}
+.infobox h2 {
+  width: 80vw;
+  margin: 30px auto;
+  padding: 0;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 2rem;
+  font-weight: bold;
+}
+.infobox span {
+  display: block;
+  width: 60vw;
+  margin: 7px auto;
+  padding: 0;
+  text-align: center;
+  font-size: 0.9rem;
+  font-family: "Pretendard";
+  font-weight: 400;
+}
+
+.buttonBox {
+  display: block;
+  width: 80vw;
+  height: 30px;
+  margin: 5px auto;
+}
+.buttonBox .filter {
+  text-decoration: none;
+  width: 70px;
+  height: 30px;
+  padding: 5px 8px;
+  float: left;
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: right;
+  border: 1px solid white;
+  background: transparent;
+  cursor: pointer;
+}
+.filterimg {
+  width: 20px;
+  float: left;
+}
+/* hover효과 이쁜걸로 */
+.filter:hover {
+  border: 1px solid #2f2f2f;
+}
+.buttonBox .prodnum {
+  display: block;
+  float: right;
+  margin-top: 13px;
+  font-size: 0.8rem;
+  font-family: "Pretendard";
+  font-weight: 500;
 }
 
 /* 카테고리 */
 .categories {
   width: 80vw;
+  height: 150px;
   display: block;
   margin: 0 auto;
   padding: 10px;
+  align-items: center;
+  overflow: hidden;
 }
-.catebox {
+@media (max-width: 1210px) {
+  .categories {
+    overflow: scroll;
+  }
+}
+.categoriesbox {
+  width: 990px;
   display: block;
-  padding: 10px;
-  float: left;
-  font-family: "Pretendard-Regular";
-  text-align: center;
-  text-decoration: none;
-  color: black;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
 }
+.catebox,
 .catebox-active {
   display: block;
-  padding: 10px;
+  padding: 0 10px;
+  width: 90px;
   float: left;
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
+  font-size: 0.85rem;
   text-align: center;
+  line-height: 1.1;
   text-decoration: none;
+  align-items: center;
   color: black;
 }
+.catebox:hover,
+.catebox-active {
+  font-weight: 600;
+}
 .cateimgEffect {
+  margin: 5px auto;
+  width: 90px;
+  height: 90px;
+  border: solid white 1px;
+  border-radius: 50%;
 }
 .catebox:hover .cateimgEffect,
 .catebox-active .cateimgEffect {
-  width: 110px;
-  height: 110px;
   border: solid black 1px;
-  border-radius: 50%;
 }
 .cateimgbox {
-  margin: 10px;
+  margin: 5px;
   padding: 0;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   overflow: hidden;
 }
 .cateimg {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
 }
 
 /* 모달 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.modal.openModal {
+  display: flex;
+  align-items: center;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+@keyframes modal-show {
+  from {
+    opacity: 0;
+    margin-top: -50px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.modal button {
+  outline: none;
+  cursor: pointer;
+  border: 0;
+}
+.modal > section {
+  width: 50vw;
+  min-width: 350px;
+  max-width: 650px;
+  height: 100%;
+  margin: 0 auto 0 0;
+  background-color: white;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  overflow: hidden;
+}
+.modal > section > header {
+  position: relative;
+  display: block;
+  padding: 20px 30px;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 300;
+  text-align: left;
+}
+.modal > section > header button {
+  position: absolute;
+  top: 7px;
+  right: 20px;
+  font-family: "Pretendard";
+  font-size: 2rem;
+  font-weight: 100;
+  color: black;
+  background-color: white;
+}
+.modal > section > main {
+  width: 80%;
+  margin: 0 auto;
+}
+.modal > section > main > div {
+  display: inline-block;
+  width: 100%;
+  border-bottom: 1px solid #dee2e6;
+}
+.modal > section > main > div > header {
+  position: relative;
+  display: block;
+  padding: 15px 10px;
+  font-family: "Pretendard";
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+}
+.modal > section > main > div > header > button {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  font-family: "Pretendard";
+  font-size: 2rem;
+  font-weight: 100;
+  background-color: white;
+}
+.modal > section > main ul {
+  display: inline-block;
+  width: 100%;
+  margin: 0 10px 20px 10px;
+}
+.modal > section > main ul li button {
+  display: block;
+  background-color: white;
+  font-family: "Pretendard";
+}
+.modal > section > main ul li {
+  float: left;
+}
+.prodcategory ul li button {
+  margin: 5px;
+  padding: 5px;
+  font-size: 0.8rem;
+  font-weight: 400;
+  border: 1px solid white;
+}
+.prodcategory ul li button:hover {
+  border: 1px solid black;
+}
+.cateimg_prod {
+  margin: 7px 5px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.cateimg_prod img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+.sortoption ul li button {
+  width: 100px;
+  height: 35px;
+  margin: 5px;
+  padding: 5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+}
+.sortoption ul li button:hover {
+  color: white;
+  background-color: black;
+}
+.modal > section > footer {
+  position: fixed;
+  width: 50vw;
+  min-width: 350px;
+  max-width: 650px;
+  height: 55px;
+  bottom: 0;
+  left: 0;
+  display: block;
+  border-top: 1px solid black;
+}
+.modal > section > footer > button {
+  width: 50%;
+  height: 55px;
+  padding: 10px 0;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+.alldel {
+  background-color: white;
+  color: black;
+}
+.filterresult {
+  background-color: black;
+  color: white;
+}
 
 /* 카드 */
+.Cardbox {
+  display: block;
+  width: 80vw;
+  margin: 0 auto;
+}
+.Cardbox .cont {
+  display: block;
+  margin: 0 auto;
+}
+@media (min-width: 1210px) {
+  .Cardbox .cont,
+  .buttonBox {
+    width: 1040px;
+  }
+}
+.Cardblock {
+  display: block;
+  padding: 5px;
+  margin-bottom: 10px;
+  float: left;
+  width: 250px;
+  overflow: hidden;
+  text-decoration: none;
+  font-family: "Pretendard";
+  color: black;
+}
+.CardImagebox {
+  margin: 0 0 10px 0;
+  padding: 0;
+  width: 250px;
+  height: 300px;
+  overflow: hidden;
+}
+.CardImagebox img {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+.Pinfo,
+.Pname,
+.Pprice {
+  margin: 0;
+  padding: 5px 10px;
+  font-family: "Pretendard";
+}
+.Pinfo {
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: black;
+}
+.Pname {
+  font-size: 1rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: black;
+}
+.Pprice {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: black;
+}
+.pagination {
+  display: inline-block;
+  width: 100vw;
+  height: 30px;
+  margin: 10px auto;
+  text-align: center;
+  align-items: center;
+}
+.pagination div {
+  display: inline-block;
+  cursor: pointer;
+  margin: 5px;
+  padding: 2px;
+  font-family: "Pretendard";
+  font-size: 0.85rem;
+  border: 1px solid;
+}
+.pagination div:hover {
+  border-color: black;
+}
+.pagination .numbtn {
+  width: 1rem;
+}
+.pagination .btn {
+  width: 2rem;
+}

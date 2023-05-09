@@ -8,7 +8,7 @@ import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import axios from "axios";
 import { useEffect } from "react";
-import { getCookie } from "../../utils/Cookie";
+import { getCookie } from "../../utils/Cookies";
 import { useLocation } from "react-router-dom";
 
 // 구매 과정 페이지
@@ -274,7 +274,7 @@ function Order(props) {
   };
 
   return (
-    <div>
+    <div className="order_wrap">
       {/* 주문/결제 타이틀 */}
       <div className="title">주문 / 결제</div>
       {/* 주문 정보 */}

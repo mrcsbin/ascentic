@@ -52,3 +52,16 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+  mail:
+    # Google smtp server 사용
+    host: smtp.gmail.com
+    port: 587
+    username: 2201skgotjd@gmail.com
+    password: pysbypycthfairxt
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true

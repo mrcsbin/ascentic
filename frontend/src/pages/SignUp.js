@@ -88,12 +88,12 @@ function SignUp() {
       });
   }
 
-  function checkCode(phoneNumber, code) {
+  function checkCode(phone, code) {
     console.log(code);
     return axios
       .post(
         "/smsapi/checkCode",
-        { phoneNumber, code },
+        { phone, code },
         {
           headers: { "Content-Type": "application/json" },
         }

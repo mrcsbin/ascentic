@@ -1,5 +1,6 @@
 package com.backend.member.service;
 
+import com.backend.MessageAndMail.MailController;
 import com.backend.member.dto.FindDataDto;
 import com.backend.member.dto.JwtTokenDto;
 import com.backend.member.dto.LoginDto;
@@ -12,6 +13,9 @@ import com.backend.member.repository.MemberRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +27,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class MemberServiceImpl implements MemberService {
-
+    private final MailController mailController;
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
     @Override
     @Transactional
     public String join(SignupDto signupDto) {
@@ -120,20 +123,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Member> findId(FindDataDto findDataDto) {
-        return memberRepository.findByNameAndEmail(findDataDto.getName(), findDataDto.getEmail());
+        return memberRepository.findByNameAndPhone(findDataDto.getName(), findDataDto.getPhone());
     }
 
     @Override
     @Transactional
     public String findPw(FindDataDto findDataDto) {
-        Optional<Member> member = memberRepository.findByNameAndIdAndEmail(findDataDto.getName(), findDataDto.getId(), findDataDto.getEmail());
+        Optional<Member> member = memberRepository.findByNameAndIdAndPhone(findDataDto.getName(), findDataDto.getId(), findDataDto.getPhone());
+        Optional<Member> sendTo = memberRepository.findEmailByPhone(findDataDto.getPhone());
         String tempPassword = TempPasswordGenerator.generateRandomPassword(10);
         if (member.isPresent()) {
             changeTempPw(member.get(), tempPassword);
-            return tempPassword;
+            // 이메일 전송
+            mailController.sendMail(sendTo.get(), tempPassword, findDataDto.getName());
+
         }
-        return null;
+        return "해당 회원이 존재하지 않습니다.";
     }
+
 
     @Transactional
     public void changeTempPw(Member member, String tempPassword) {

@@ -13,8 +13,10 @@ export const SIGNUP_ERROR_MESSAGE = {
   EMAIL: "입력된 이메일 값이 이메일 주소의 형식에 맞는지 확인하세요",
   INFOAGREE: "정보동의란 동의 했는지 확인하세요",
   PHONE_CERTIFICATE_WRONG: "인증번호가 틀렸습니다.",
+  NO_SUCH_PHONE: "해당 휴대폰 번호가 존재하지 않습니다",
   ID_DUPLICATE: "중복된 ID가 존재합니다",
   PHONE_DUPLICATE: "중복된 전화번호가 존재합니다",
   PHONE_TIMEOVER: "인증시간이 초과되었습니다. 다시 인증 바랍니다.",
   EMAIL_DUPLICATE: "중복된 이메일이가 존재합니다",
+  UNKNOWN: "알 수 없는 오류 입니다. 고객 서비스센터로 연락 주세요.",
 };

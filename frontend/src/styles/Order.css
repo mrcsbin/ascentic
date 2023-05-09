@@ -1,11 +1,7 @@
-
-/* 바디 세팅 */
-body {
-    margin-left: 227px;
-    margin-top: 55px;
-}
 /*------------------------------------- 여기부터 order 페이지 title -------------------*/
-
+/* .order_wrap {
+    margin: 0 auto;
+} */
 /* 주문 결제 */
 .title {
     width: 762px;

@@ -1,7 +1,9 @@
 package com.backend.cart;
 
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.productOption.ProductOption;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ public class CartController {
     }
     //추가: 같은 상품인 경우 개수만 증가하도록 조정
 
-    @PostMapping("/cart")
+
     public List<Cart> listCart(){
         List<Cart> cartlist = this.cartServiceImpl.listCart();
         return cartlist;

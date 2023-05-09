@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ProdDetail.css";
-import { getCookie } from "../utils/Cookie";
+import { getCookie } from "../utils/Cookies";
 
 function ProdDetailView({ productData, productOption, isWish }) {
   const navigate = useNavigate();

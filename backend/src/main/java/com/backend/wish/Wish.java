@@ -18,11 +18,11 @@ public class Wish {
     @Column(name = "wish_num")
     private Integer wishNum;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prod_num")
     private Product product;
 }

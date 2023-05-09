@@ -15,11 +15,11 @@ public interface WishRepository extends JpaRepository<Wish, Integer> {
     @Modifying //insert, update, delete시 사용
     @Query(value="delete from tb_wish where prod_num = :prodNum and member_id = :memberId",
             nativeQuery=true)
-    public void deleteWish(@Param("prodNum") int prodNum, @Param("memberId") String memberId);
+    public void deleteWish(@Param("prodNum") Integer prodNum, @Param("memberId") String memberId);
 
     @Query(value="select count(*) from tb_wish where prod_num = :prodNum and member_id = :memberId",
             nativeQuery=true)
-    public int isWish(@Param("prodNum") int prodNum, @Param("memberId") String memberId);
+    public int isWish(@Param("prodNum") Integer prodNum, @Param("memberId") String memberId);
 
 //    @Query(value="select * from tb_product where prod_num = (select prod_num from tb_wish where member_id = :memberId)",
 //            nativeQuery=true)

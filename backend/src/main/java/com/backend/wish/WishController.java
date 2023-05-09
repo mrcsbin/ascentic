@@ -1,39 +1,39 @@
 package com.backend.wish;
 
 import com.backend.product.Product;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping
+@RequiredArgsConstructor
 public class WishController {
 
-    private WishServiceImpl wishServiceImpl;
+    private final WishServiceImpl wishServiceImpl;
 
-    public WishController(WishServiceImpl wishServiceImpl){
-        this.wishServiceImpl = wishServiceImpl;
-    }
 
     @PostMapping("/addwish")
-    public void addWish(Product product, String memberId){
-       this.wishServiceImpl.addWish(product, memberId);
+    public void addWish(@RequestBody WishDTO wishDTO){
+        System.out.println(wishDTO.getProdNum());
+       this.wishServiceImpl.addWish(wishDTO.getProdNum());
     }
 
     @PostMapping("/delwish")
-    public void delWish(Product product, String memberId){
-        this.wishServiceImpl.delWish(product, memberId);
+    public void delWish(@RequestBody  WishDTO wishDTO){
+        this.wishServiceImpl.delWish(wishDTO.getProdNum());
     }
 
     @GetMapping("/iswish")
-    public int isWish(int prodNum, String memberId){
-        int res = this.wishServiceImpl.isWish(prodNum, memberId);
+    public int isWish(Integer prodNum){
+        int res = this.wishServiceImpl.isWish(prodNum);
         return res;
     }
 
     @PostMapping("/listwish")
-    public List<Wish> listWish(String memberId){
-        List<Wish> wishlist = this.wishServiceImpl.listWish(memberId);
+    public List<Wish> listWish(){
+        List<Wish> wishlist = this.wishServiceImpl.listWish();
         return wishlist;
     }
 

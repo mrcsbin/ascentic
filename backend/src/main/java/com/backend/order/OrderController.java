@@ -13,8 +13,8 @@ public class OrderController {
         return orderService.insertOrder(orderDTO);
     }
 
-    @PostMapping("/recentaddr") // 최근 배송지 가져오기
-    public AddressDTO getRecentAddr(@RequestBody AddressDTO addressDTO) {
-        return orderService.getRecentAddr(addressDTO.getMemberId());
+    @GetMapping("/recentaddr") // 최근 배송지 가져오기
+    public AddressDTO getRecentAddr() {
+        return orderService.getRecentAddr();
     }
 }

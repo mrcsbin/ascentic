@@ -1,3 +1,4 @@
+
 import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
 
 import {
@@ -51,6 +52,13 @@ function Routes() {
       <Route path="/proddetail" element={<ProdDetail />}></Route>
 
       <Route path="/storemain" element={<StoreMain />}></Route>
+
+      <Route exact path="/storemain/:category" element={<StoreMain />}></Route>
+
+      <Route
+        path="/store/productdetail/:prod_num"
+        element={<ProdDetail />}
+      ></Route>
     </BrowserRoutes>
   );
 }

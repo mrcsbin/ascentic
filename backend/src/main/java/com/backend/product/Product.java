@@ -1,9 +1,6 @@
 package com.backend.product;
 
-import com.backend.productImg.ProductImg;
-import com.backend.productOption.ProductOption;
 import com.backend.scent.Scent;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -11,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,7 +21,6 @@ public class Product {
     @Column(name = "prod_num")
     private Integer prodNum;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "scent_name")
     private Scent scent;
@@ -53,10 +48,4 @@ public class Product {
 
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
-
-//    @OneToMany(mappedBy = "product")  //mappedBy 는 걍 변수명으로 줘야됐던거임
-//    private List<ProductImg> productImg;
-
-//    @OneToMany(mappedBy = "product")
-//    private List<ProductOption> option;
 }

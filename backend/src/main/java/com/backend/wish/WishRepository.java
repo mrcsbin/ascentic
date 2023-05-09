@@ -1,8 +1,6 @@
 package com.backend.wish;
 
 import com.backend.member.entity.Member;
-import com.backend.product.Product;
-import com.backend.productOption.ProductOption;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

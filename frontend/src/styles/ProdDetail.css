@@ -1,3 +1,152 @@
 h1 {
-    color: black;
+  color: black;
+}
+
+.Wrapper-all {
+  width: 1720px;
+  height: 3282px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.img-and-content {
+  width: 1600px;
+  margin-top: 50px;
+  height: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid red;
+}
+
+.Img-scroll {
+  float: left;
+  width: 56%;
+  padding-left: 2%;
+  padding-right: 1%;
+  height: 100%;
+  margin-top: 3%;
+  overflow: auto;
+
+  font-size: 50px;
+  text-align: center;
+  background-color: #eee;
+}
+
+.img-box {
+  width: 100%;
+}
+
+.detail-section {
+  float: right;
+  width: 30%;
+  height: 34%;
+  padding: 3%;
+  margin-right: 2%;
+  /* background-color: aquamarine; */
+}
+
+.name-price p {
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 8%;
+  margin-bottom: 3%;
+  /* float: left; */
+}
+
+.name-price h2 {
+  font-size: 40px;
+  font-weight: 700;
+
+  margin-bottom: 7%;
+}
+
+.name-price span {
+  font-size: 36px;
+  float: right;
+  margin-top: 3%;
+}
+
+.name {
+  margin-top: 6%;
+}
+
+.name h2 {
+  float: left;
+}
+
+.name button {
+  float: right;
+  margin-top: 2%;
+}
+
+.clear-both {
+  clear: both;
+}
+
+.scent-content {
+  font-size: 24px;
+  /* border: 3px solid red; */
+  margin-top: 10%;
+}
+
+.scent-content p {
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+.detail-quantity p {
+  font-size: 27px;
+  width: 80%;
+  float: left;
+  margin-bottom: 5%;
+}
+
+.button {
+  /* width: 40%; */
+  float: right;
+  margin-bottom: 1px;
+  font-size: 27px;
+}
+
+.order-cart {
+  font-size: 40px;
+}
+
+.order-cart button {
+  width: 47%;
+  margin: 2%;
+  font-size: 28px;
+  background-color: black;
+  color: white;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+.prodOption {
+  font-size: 30px;
+  width: 30%;
+  /* padding: 4%; */
+  float: left;
+  margin-bottom: 8%;
+}
+
+.additional-content {
+}
+
+hr {
+  color: black;
+}
+
+.prod-info-modal {
+  font-size: 28px;
+}
+
+.prod-info-modal button {
+  border: none;
+  font-size: 40px;
+  background-color: transparent;
+  cursor: pointer;
+  float: right;
 }

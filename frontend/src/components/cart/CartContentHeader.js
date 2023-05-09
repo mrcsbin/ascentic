@@ -27,6 +27,9 @@ const ContentHeaderWrap = styled.div`
 `;
 
 const ContentHeader = styled.div`
+  font-size: 14px;
+  line-height: 26px;
+  font-weight: 500;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -45,13 +48,16 @@ const SelectLabel = styled.label`
   margin: 0;
 `;
 
-const SelectCheck = styled.input`
+const SelectCheck = styled.input``;
 
+const SelectSpan = styled.span`
+  font-size: 14px;
+  line-height: 26px;
+  color: rgb(51, 51, 51);
 `;
 
-const SelectSpan = styled.span``;
-
 const DeleteButton = styled.button`
+  cursor: pointer;
   overflow: visible;
   background-color: transparent;
   border: none;

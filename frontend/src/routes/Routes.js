@@ -51,6 +51,7 @@ function Routes() {
       <Route path="/proddetail" element={<ProdDetail />}></Route>
 
       <Route path="/storemain" element={<StoreMain />}></Route>
+      
     </BrowserRoutes>
   );
 }

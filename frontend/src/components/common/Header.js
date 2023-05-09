@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/Header.css";
 import { Link } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
@@ -12,9 +12,29 @@ import { getCookie, setCookie, removeCookie } from "../../utils/Cookies";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
 
+  useEffect(() => {
+    const checkTokenExpiration = () => {
+      const token = getCookie("accessToken");
+      if (!token && isLoggedIn) {
+        setIsLoggedIn(false);
+        window.location.replace("/");
+      }
+    };
+    checkTokenExpiration();
+
+    const interval = setInterval(() => {
+      checkTokenExpiration();
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isLoggedIn]);
+
   function handleLogout() {
     removeCookie("accessToken");
     setIsLoggedIn(false);
+    window.location.replace("/");
   }
 
   return (

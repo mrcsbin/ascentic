@@ -103,15 +103,15 @@ function Login() {
     }
     // 로그인 정보로 토큰 생성
     const token = await login(id, password);
-    console.log(token);
     // token 에서 accessToken 과 refreshToken 파싱해서 저장
     const { accessToken, refreshToken } = token;
-
+    // 만료시간 30분으로 설정
+    const expires = new Date(Date.now() + 30 * 60 * 1000);
     if (token) {
-      setCookie("accessToken", accessToken);
-      setCookie("refreshToken", refreshToken);
+      setCookie("accessToken", accessToken, { expires });
+      setCookie("refreshToken", refreshToken, { expires });
       await getTokenInfo(getCookie("accessToken"));
-      navigate("/", { replace: false });
+      navigate("/", { replace: true });
       window.location.reload();
     } else {
       setId("");

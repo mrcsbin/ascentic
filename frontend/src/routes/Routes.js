@@ -1,4 +1,4 @@
-import { Route, Routes as BrowserRoutes, Navigate } from "react-router-dom";
+import { Route, Routes as BrowserRoutes, Navigate } from 'react-router-dom';
 
 import {
   Main,
@@ -13,7 +13,7 @@ import {
   OrderComplete,
   Order,
   NotFound,
-} from "../pages/Pages";
+} from '../pages/Pages';
 
 function Routes() {
   return (
@@ -42,6 +42,11 @@ function Routes() {
       <Route path="/storemain" element={<StoreMain />}></Route>
 
       <Route exact path="/storemain/:category" element={<StoreMain />}></Route>
+
+      <Route
+        path="/store/productdetail/:prod_num"
+        element={<ProdDetail />}
+      ></Route>
     </BrowserRoutes>
   );
 }

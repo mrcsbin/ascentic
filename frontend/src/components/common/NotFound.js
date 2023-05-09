@@ -1,5 +1,5 @@
 import React from "react";
-import error from "../../assets/404error.json";
+import error from "../../assets/404error2.json";
 import Lottie from "react-lottie";
 import "../../styles/NotFound.css";
 import { Link } from "react-router-dom";

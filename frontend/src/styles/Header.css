@@ -1,44 +1,42 @@
-/*HSM*/
-#header-wrap {
-  width: 100%;
-}
-#header-wrap .navbar {
+/* HSM */
+/* flexbox 부모 컨테이너 */
+.header-wrap .navbar {
+  height: 45px;
+  list-style: none;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap : nowrap;
+  justify-content: flex-start;
   align-items: center;
   background-color: transparent;
-  padding: 5px;
-  margin: 0 20px 0 40px;
 }
-
-#header-wrap .navbarLogo {
-  list-style: none;
+/* flexbox 자식 컨테이너 #1 */
+.header-wrap .navbarLogo {
+  order: 1;
+  flex-grow: 0.3;
   font-weight: bold;
-  font-size: 24px;
-  width: 10%;
+  font-size: 25px;
+  padding-left: 28px;
 }
-
-#header-wrap .navbarMenu {
+/* flexbox 자식 컨테이너 #2 */
+.header-wrap .navbarMenu {
+  order: 2;
+  flex-grow: 8.7;
   display: flex;
-  list-style: none;
-  width: 80%;
+  flex-direction: row;
+  font-size: 18px;
 }
-
-#header-wrap .navbarMenu li {
-  padding: 8px 12px;
+.header-wrap .navbarMenu li {
+  padding: 0px 14px;
 }
-
-#header-wrap .navbarMenu li:hover {
-  border-bottom: 3px solid black;
-}
-
-#header-wrap .navbarIcon {
-  list-style: none;
+/* flexbox 자식 컨테이너 #3 */
+.header-wrap .navbarIcon {
+  order: 3;
+  flex-grow: 1;
   display: flex;
-  float: right;
-  /*width: 10%;*/
+  justify-content: flex-end;
+  padding-right: 25px;
 }
-
-#header-wrap .navbarIcon li {
-  padding: 8px 12px;
+.header-wrap .navbarIcon li {
+  padding: 0px 15px;
 }

@@ -118,7 +118,7 @@ public class MemberController {
         if (tempPw == null) {
             return "찾으시는 정보가 없습니다.";
         } else {
-            return tempPw;
+            return "가입하실때 사용하셨던 이메일로 임시 비밀번호가 발급되었습니다.";
         }
     }
 

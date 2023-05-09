@@ -1,0 +1,119 @@
+.notice-bar {
+  height: 30px;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  display: flex;
+}
+
+.notice-bar .popup-btn {
+  all : unset;
+  cursor: pointer;
+  color: white;
+  padding: 7px 0px;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+
+.notice-bar .wrapper {
+  position: absolute;
+  top: 7px;
+  right: 1%;
+  display: inline;
+}
+
+.notice-bar .ignore-btn {
+  all: unset; 
+  color: white;
+  background: transparent;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.notice-bar .close-btn {
+  all: unset;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.notice-bar.hidden {
+  height: 0;
+}
+
+.notice-bar .popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+/* popup창 flexbox 부모 컨테이너 */
+.notice-bar .popup-content {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 400px;
+  height: 450px;
+  border-radius : 12px;
+  display: flex;
+  flex-flow: column;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+/* popup창 flexbox 자식 컨테이너 #1 */
+.notice-bar .popupDiscount {
+  order: 0;
+}
+/* popup창 flexbox 자식 컨테이너 #2 */
+.notice-bar .popup-text {
+  order: 1;
+  justify-content: space-around;
+}
+/* popup창 flexbox 자식 컨테이너 #3 */
+.notice-bar .popup-link-box {
+  order: 2;
+  display: flex;
+  flex-flow: column;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  width: 80%;
+}
+.notice-bar .popup-link-btn {
+  all: unset;
+  background-color: black;
+  width: 100%;
+  border-radius: 6px;
+  padding: 5px 0px;
+  margin: 0px 0px 3px 0px;
+  cursor: pointer;
+}
+.notice-bar .popup-link {
+  all: unset;
+  color: white;
+}
+.notice-bar .popup-close-btn {
+  all: unset;
+  background-color: black;
+  color: white;
+  width: 100%;
+  border-radius: 6px;
+  padding: 5px 0px;
+  margin: 3px 0px 15px 0px;
+  cursor: pointer;
+}

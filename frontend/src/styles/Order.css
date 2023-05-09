@@ -1,3 +1,582 @@
-h1 {
+/*------------------------------------- 여기부터 order 페이지 title -------------------*/
+/* .order_wrap {
+    margin: 0 auto;
+} */
+/* 주문 결제 */
+.title {
+    width: 762px;
+    height: 60px;
+    font-size: 32px;
+}
+
+/*------------------------------------- 여기부터 order 페이지 body -------------------*/
+/* order 페이지 바디 */
+.order_body {
+    display: flex;
+}
+  
+
+/* order 페이지 오른쪽 요소 */
+.right {
+    margin-left: 142px;
+}
+
+
+/* order 페이지 왼쪽 요소들의 제목(주문상품정보, 주문자 정보, 배송정보, 할인 혜택, 결제수단) */
+.sub_title {
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 719px;
+    height: 27px;
+    font-weight: 700;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 28px;
+
+    border-top: 1px solid #D9D9D9;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+}
+
+/* + - 확장 버튼 */
+.sub_title > button {
+    border: none ;
+    font-size: 30px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+/*------------------------------------- 여기부터 주분 상품 정보 -------------------*/
+
+/* 주문 상품 컴포넌트 */
+.prod_info {
+    
+    font-size: 24px;
+    margin-left: 40px;
+    margin-top: 46px;
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 10px;
+    width: 638px;
+    height: 100px;
+    display: flex;
+}
+
+/* 상품 이미지 */
+.prod_info > img {
+    width: 99px;
+    height: 99px;
+}
+
+.purchase_info > div:nth-child(1){
+    font-weight: 600;
+    width: 250px;
+    font-size: 20px;
+}
+
+/* 상품 정보 */
+.prod_info > div {
+    margin-top: 10px;
+    margin-left: 33px;
+    width: 254px;
+    height: 69px;
+    /* border: 1px solid; */
+}
+
+.prod_info > div > div{
+    margin-bottom: 21px;
+}
+
+/* 상품명, 옵션, 수량 */
+.prod_info > div > div{
+    margin-bottom: 21px;
+}
+
+/* 가격 정보 */
+.prod_info > div:nth-child(3) > div{
+    margin-left: 130px;
+    /* color: red; */
+}
+
+/*------------------------------------- 여기부터 주문자 정보 -------------------*/
+
+/* 주문자 정보 전체 */
+.order_form {
+    margin-top: 30px;
+    margin-left: 60px;
+    width: 609px;
+    height: 500px;
+    /* border: 1px solid; */
+}
+
+
+/* 이메일과 이메일 폼 */
+.email_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 이메일 폼 제목 */
+.email_content > div{
+    margin-left: 5px;
+}
+
+/* 이메일 폼 */
+.email_content > input{
+    width: 143px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 이메일 폼 */
+.email_content > select{
+    width: 150px;
+    height: 36px;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+/* 이름과 이름 입력 폼 */
+.name_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 이름 폼 제목 */
+.name_content > div{
+    margin-left: 5px;
+}
+
+/* 이름 폼 */
+.name_content > input {
+    width: 490px;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    letter-spacing: 5px;
+    padding-left: 15px;
+}
+
+/* 연락처와 연락처 입력 폼 */
+.phone_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 연락처 폼 제목 */
+.phone_content > div{
+    margin-left: 5px;
+}
+
+/* 연락처 폼 */
+.phone_content > input {
+    width: 380px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 연락처 인증 버튼 */
+.phone_content > button {
+    background-color: white;
+    margin-top: 5px;
+    width: 107px;
+    height: 38px;
+}
+
+/* 동의하기 */
+.order_info_agree {
+    margin-top: 40px;
+    margin-left: 60px;
+    /* border: 1px solid; */
+    width: 515px;
+    height: 120px;
+}
+
+/* 모두 동의 */
+.order_info_agree > div:nth-child(1) {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* 나머지 동의 */
+.order_info_agree > div{
+    margin-top: 8px;
+}
+
+/* 저장하고 다음 단계로 버튼 */
+.order_form > button {
+    margin-left: 60px;
+    color: white;
+    background-color: black;
+    width: 515px;
+    height: 50px;
+    font-size: 18px;
+}
+
+/* ----------------------------- 여기 부터 배송 정보 -------------------------------*/
+
+/* 배송 정보 폼 */
+.delivery_form {
+    margin-top: 30px;
+    margin-left: 60px;
+    width: 609px;
+    height: 400px;
+    /* border: 1px solid; */
+}
+
+/* 수령인제목과 수령인 입력 폼 */
+.recipient_content {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+/* 수령인 폼 제목과 주문자 정보와 동일 버튼*/
+.recipient_content > div{
+    /* border: 1px solid; */
+    margin-left: 5px;
+    width: 510px;
+}
+
+/* 수령인 폼 제목 */
+.recipient_content > div > div{
+    float: left;
+}
+
+/* 주문자 정보와 동일 버튼 */
+.recipient_content > div > button{
+    border: none;
+    color: black;
+    float: right;
+    background-color: white;
+    font-size: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* 수령인 폼 */
+.recipient_content > input {
+    width: 490px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 배송주소제목과 배송주소 입력 폼 */
+.delivery_addr {
+    margin-top: 30px;
+    margin-left: 50px;
+    clear: both;
+}
+
+.delivery_addr > div{
+    /* border: 1px solid; */
+    margin-left: 5px;
+    width: 510px;
+    /* float: left; */
+    clear: both;
+}
+
+/* 배송주소 제목 */
+.delivery_addr > div:nth-child(1) > div {
+    float: left;
+}
+
+/* 주문자 정보와 동일 버튼 */
+.delivery_addr > div:nth-child(1) > button {
+    border: none;
+    color: black;
+    float: right;
+    background-color: white;
+    font-size: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* 메인 배송주소 입력 폼 */
+.delivery_addr > div:nth-child(2) > input {
+    width: 350px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 검색 */
+.delivery_addr > div:nth-child(2) > button {
+    width: 135px;
+    height: 36px;
+    font-size: 14px;
+    margin-top: 5px;
+    border: 1px solid;
+    background-color: white;
+}
+
+/* 나머지 주소입력 입력 폼 */
+.delivery_addr > div:nth-child(3) > input {
+    width: 490px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+/* 기사님께 전하는 메시지 */
+.delivery_addr > div:nth-child(4) > div {
+    float: left;
+    margin-top: 40px;
+}
+
+/* 기사님께 전하는 메시지 입력 폼 */
+.delivery_addr > div:nth-child(4) > input {
+    width: 490px;
+    height: 30px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-right: 4px;
+    padding-left: 15px;
+}
+
+
+/* 모달창이 뜰 때 백그라운드  */
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* 모달창 */
+  .modal {
+    width: 400px;
+    height: 430px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    z-index: 999;
+  }
+
+/* ---------------------------        여기 부터 할인 혜택 --------------------*/
+
+/* 할인 혜택 폼 */
+.discount_benifit_form {
+    margin-top: 50px;
+    margin-left: 110px;
+    width: 609px;
+    height: 280px;
+    /* border: 1px solid; */
+}
+
+/* 보유포인트, 포인트 사용 */
+.discount_benifit_form > div > div {
+    margin-left: 5px;
+    margin-top: 30px;
+}
+
+/* 보유포인트 입력폼 */
+.discount_benifit_form > div:nth-child(1) > input {
+    width: 490px;
+    height: 30px;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-right: 15px;
+}
+
+/*  포인트 사용 입력폼 */
+.discount_benifit_form > div:nth-child(2) > input {
+    width: 350px;
+    height: 30px;
+    font-size: 16px;
+    margin-left: 4px;
+    margin-top: 5px;
+    margin-right: 4px;
+    padding-right: 15px;
+}
+
+/* 포인트 사용 버튼 */
+.discount_benifit_form > div:nth-child(2) > button {
+    width: 135px;
+    height: 36px;
+    font-size: 14px;
+    margin-top: 4px;
+    background-color: white;
+}
+
+/* 할인 혜택 안내문 */
+.discount_benifit_form > div:nth-child(3) {
+    margin-top: 12px;
+    margin-left: 10px;
+    color: #CFA614;
+}
+
+/* 저장하고 다음 단계로 버튼 */
+.discount_benifit_form > button {
+    margin-top: 30px;
+    color: white;
+    background-color: black;
+    width: 515px;
+    height: 50px;
+    font-size: 18px;
+}
+
+/* ---------------------------        여기 부터 결제 수단 --------------------------------*/
+/* 할인 혜택 폼 */
+.payment_method {
+    margin-top: 50px;
+    margin-left: 110px;
+    width: 515px;
+    height: 450px;
+    /* border: 1px solid; */
+}
+
+/* 결제수단 버튼(네이버, 카카오 등등) */
+.payment_method > div > button {
+    margin-top: 7px;
+    background-color: white;
+    width: 515px;
+    height: 50px;
+    font-size: 18px;
+}
+
+/* 결제 수단 안내문 */
+.payment_method > :nth-child(2) {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* 서비스 가입사실 확인 링크 */
+.payment_method > :nth-child(2) > a {
     color: black;
 }
+
+/* ---------------------------        여기 부터 주문/결제 페이지 안내문 --------------------*/
+
+/* 주문/결제 페이지 안내문 */
+.order_notice {
+    color: red;
+    font-size: 10px;
+    margin-top: 40px;
+    margin-left: 10px;
+    width: 719px;
+    height: 150px;
+    border-top: 1px solid #D9D9D9;
+    padding-top: 40px;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+}
+
+/* 안내문 링크 */
+.order_notice > a {
+    color: #CFA614;
+}
+
+
+/* ---------------------------        여기 부터 최종 결제 금액 --------------------*/
+
+/* 최종결제금액  */
+.final_sub_title {
+    margin-top: 20px;
+    margin-left: 10px;
+    border: none;
+    width: 562px;
+    height: 27px;
+    font-weight: 700;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 28px;
+
+    border-top: 1px solid #D9D9D9;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+}
+
+/* 주문금액, 배송비, 할인 금액, 총 금액을 감싸는 태그 */
+.final_content > div {
+    border-bottom: 1px solid #D9D9D9;
+    transform: matrix(1, 0, -0.01, 1, 0, 0);
+    /* background-color: aqua; */
+    width: 562px;
+    height: 53px;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* 주문금액, 배송비, 할인금액 */
+.final_content > div > div:nth-child(1) {
+    margin-top: 15px;
+    float: left;
+}
+
+/* 총금액 */
+.final_content > div > div:nth-child(2) {
+    margin-top: 15px;
+    float: right;
+}
+
+/* 총금액 : 가격 */
+.final_content > div:nth-child(4)  {
+    font-weight: 700;
+    font-size: 28px;
+}
+
+/* 최종 결제 금액 동의 태크*/
+.final_agree {
+    /* border: 1px solid; */
+    width: 562px;
+    height: 185px;
+    margin-left: 20px;
+    margin-top: 26px;
+}
+
+/* 모두 동의합니다 */
+.final_agree > div:nth-child(1) {
+    margin-bottom: 30px;
+}
+
+/* 나머지 동의 */
+.final_agree > div {
+    margin-bottom: 15px;
+}
+
+/* 구매하기 버튼 */
+#buy_btn {
+    margin-left: 20px;
+    background-color: black;
+    width: 529px;
+    height: 98px;
+    font-size: 25px;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+

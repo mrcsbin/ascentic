@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/Loading.css";
 import Lottie from "react-lottie";
 import { Link } from "react-router-dom";
-import loading from "../../assets/loading.json";
+import loading from "../../assets/perfume.mp4";
 function Loading() {
   const defaultOptions = {
     loop: true,
@@ -14,7 +14,7 @@ function Loading() {
   };
   return (
     <div className="loading-container">
-      <Lottie options={defaultOptions} height={300} width={300} />
+      <video id="loading-video" src={loading} autoPlay loop muted></video>
 
       <Link to="/">
         <button className="main-page-btn">메인 페이지로 이동하기</button>

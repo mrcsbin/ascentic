@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface WishService {
 
-    public void addWish(Product product, String memberId);
+    public void addWish(Integer prodNum);
 
-    public void delWish(Product product, String memberId);
+    public void delWish(Integer prodNum);
 
-    public int isWish(int prodNum, String memberId);
+    public int isWish(Integer prodNum);
 
-    public List<Wish> listWish(String memberId);
+    public List<Wish> listWish();
 }

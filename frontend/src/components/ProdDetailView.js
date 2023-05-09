@@ -1,19 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/ProdDetail.css';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/ProdDetail.css";
+import { getCookie } from "../utils/Cookie";
 
 function ProdDetailView({ productData, productOption, isWish }) {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [onWish, setOnWish] = useState();
   const [prodOption, setProdOption] = useState();
-  const [OptionForOrder, setOptionForOrder] = useState(
-    productOption[0].prodOption
-  );
   const [ProdInfoModal, setProdInfoModal] = useState(false);
   const [deliInfoModal, setDeliInfoModal] = useState(false);
-  let wishAlready;
 
   //이미지 배열 가져오기
   const [imgArr, setImgArr] = useState([]);
@@ -21,11 +18,28 @@ function ProdDetailView({ productData, productOption, isWish }) {
     const fetchProductData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/getProdImgDetailPage/6/0`
+          `http://localhost:8080/getProdImgDetailPage/${productData.prodNum}/1`
         );
         setImgArr(res.data);
+        await axios
+          .get(`/iswish?prodNum=${productData.prodNum}`, {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          })
+          .then((response) => {
+            if (response.data == 1) {
+              setOnWish(true);
+            } else {
+              setOnWish(false);
+            }
+            console.log("onwish" + response.data);
+          })
+          .catch((e) => {
+            console.error(e);
+          });
       } catch (e) {
-        console.log('여기도 문제였음', e);
+        console.log(e);
       }
     };
     fetchProductData();
@@ -33,7 +47,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
 
   //수량 설정
   function QuantButton(x) {
-    if (x == '+') setQuantity(quantity + 1);
+    if (x == "+") setQuantity(quantity + 1);
     else if (quantity > 1) setQuantity(quantity - 1);
   }
 
@@ -41,74 +55,76 @@ function ProdDetailView({ productData, productOption, isWish }) {
 
   // 주문창으로 이동
   const handleOrderClick = () => {
-    setOptionForOrder({
-      prodNum: productData.prodNum,
-      prodName: productData.prodName,
-      prodPrice: productData.prodPrice,
+    const dataForOrder = {
       prodQuantity: quantity,
       prodOption: prodOption,
-      prodOptionNum: productOption.prodOptionNum,
-    });
-    navigate(`/order`, { OptionForOrder });
+    };
+    navigate(`/order`, { state: dataForOrder });
   };
 
   // 장바구니 페이지 이동
   const handleCartClick = () => {
-    setOptionForOrder({
-      prodNum: productData.prodNum,
-      prodName: productData.prodName,
-      prodPrice: productData.prodPrice,
+    const dataForCart = {
       prodQuantity: quantity,
       prodOption: prodOption,
-      prodOptionNum: productOption.prodOptionNum,
-    });
-    navigate(`/cart`, { OptionForOrder });
+    };
+    navigate(`/cart`, { state: dataForCart });
   };
 
   // 찜하기 구현
   const handleWishClick = () => {
-    onWish ? (wishAlready = 'add') : (wishAlready = 'del'); //찜했다 안했다 하기 위함
-    axios
-      .post(`/${wishAlready}wish`) // url별로 추가/삭제 백에서 처리
-      // .then((response) => {
-      //   if (response.data === 1) {
-      //     setOnWish(true);
-      //   } else {
-      //     setOnWish(false);
-      //   }
-      // })
-      .catch((e) => {
-        console.log(e);
-      });
-    setOnWish(!onWish);
+    if (onWish == true) {
+      //찜했다 안했다 하기 위함
+      axios
+        .post(
+          `/delwish`,
+          { prodNum: productData.prodNum },
+          {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          }
+        ) // url별로 추가/삭제 백에서 처리
+        .then(() => {
+          setOnWish(!onWish);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else {
+      axios
+        .post(
+          `/addwish`,
+          { prodNum: productData.prodNum },
+          {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          }
+        ) // url별로 추가/삭제 백에서 처리
+        .then(() => {
+          setOnWish(!onWish);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    }
   };
-
-  //처음에 위시 되어있는지 받아옴  // Todo 회원 아이디 추가해야됨
-  // useEffect(() => {
-  //   axios
-  //     .get('/iswish')
-  //     .then((response) => {
-  //       if (response.data >= 1) {
-  //         setOnWish(true);
-  //       } else {
-  //         setOnWish(false);
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //     });
-  // }, []);
 
   //옵션 고르는 버튼(이미지로 표시해야되나?)
   const Optioncard = (options) => {
     // console.log('this is in OptionCard', options);
     //아니 여기서 왜 options.options 로 써야되는지 모르겠음
     const option = options.options.prodOption;
+
     return (
       <button
         className="prodOption"
         onClick={() => {
-          setProdOption(options.options.prodOption);
+          setProdOption(
+            options.options
+            // console.log(options.options.optionNum)
+          );
         }}
       >
         {option}
@@ -119,7 +135,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
   //가격에 쉼표 넣기
   function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return num.toString().replace(regexp, ',');
+    return num.toString().replace(regexp, ",");
   }
 
   //실제 화면
@@ -151,7 +167,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
             <p>{productData.prodCategory}</p>
             <div className="name">
               <h2>{productData.prodName}</h2>
-              <button onClick={() => handleWishClick}>찜하기</button>
+              <button onClick={handleWishClick}>찜하기</button>
             </div>
             <div className="clear-both"></div>
             <span>{addComma(productData.prodPrice)}원</span>
@@ -175,10 +191,10 @@ function ProdDetailView({ productData, productOption, isWish }) {
           <div className="detail-quantity">
             <p>수량</p>
             <div className="button">
-              <button onClick={() => QuantButton('-')}> - </button>
+              <button onClick={() => QuantButton("-")}> - </button>
               {/* to do : 화살표로 대체 */}
               {quantity}
-              <button onClick={() => QuantButton('+')}> + </button>
+              <button onClick={() => QuantButton("+")}> + </button>
             </div>
           </div>
           <div className="clear-both"></div>

@@ -1,37 +1,47 @@
 package com.backend.wish;
 
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.product.Product;
+import com.backend.product.ProductRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WishServiceImpl implements WishService{
 
-    private WishRepository wishRepository;
-    private MemberRepository memberRepository;
+    private final WishRepository wishRepository;
+    private final MemberRepository memberRepository;
+    private final ProductRepository productRepository;
 
-    public void addWish(Product product, String memberId){
+    public void addWish(Integer prodNum){
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        System.out.println(currentMemberId);
         Wish wish = new Wish();
-        wish.setProduct(product);
-        wish.setMember(this.memberRepository.findById(memberId).orElse(null));
+        wish.setProduct(productRepository.findById(prodNum).orElse(null));
+        wish.setMember(this.memberRepository.findById(currentMemberId).orElse(null));
         this.wishRepository.save(wish);
     }
 
-    public void delWish(Product product, String memberId){
-        this.wishRepository.deleteWish(product.getProdNum(),memberId);
+    public void delWish(Integer prodNum){
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        this.wishRepository.deleteWish(prodNum,currentMemberId);
     }
 
-    public int isWish(int prodNum, String memberId){
-        int res = this.wishRepository.isWish(prodNum, memberId);
+    public int isWish(Integer prodNum){
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        System.out.println(currentMemberId);
+        int res = this.wishRepository.isWish(prodNum, currentMemberId);
         return res;
     }
 
-    public List<Wish> listWish(String memberId){
-        List<Wish> wishlist = this.wishRepository.findAllByMember(this.memberRepository.findById(memberId).orElse(null));
+    public List<Wish> listWish(){
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        List<Wish> wishlist = this.wishRepository.findAllByMember(this.memberRepository.findById(currentMemberId).orElse(null));
         return wishlist;
     }
 }

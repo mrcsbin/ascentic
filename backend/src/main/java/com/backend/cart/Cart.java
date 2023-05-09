@@ -20,7 +20,7 @@ public class Cart {
     @Column(name = "cart_num")
     private Integer cartNum;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "option_num")
     private ProductOption productOption;
 
@@ -28,7 +28,7 @@ public class Cart {
 //    @JoinColumn(name = "prod_num")
 //    private Product product;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 

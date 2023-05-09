@@ -1,14 +1,24 @@
 import styled from "styled-components";
+import { CartItemCard } from "./CartItemCard";
 
-function CartItemList() {
+export const CartContents = () => {
   return (
-    <>
-      <CartItemCard>
-
-      </CartItemCard>
-    </>
+    <CartContentsWrap>
+      <CartContentHeader />
+      <CartItemCard />
+    </CartContentsWrap>
   );
-}
+};
+
+const CartContentsWrap = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  flex: 0 0 66.666666%;
+  max-width: 66.666666%;
+  padding: 0 20px;
+`;
 
 function CartContentHeader() {
   return (
@@ -25,27 +35,6 @@ function CartContentHeader() {
     </ContentHeaderWrap>
   );
 }
-
-export const CartContents = () => {
-  return (
-    <CartContentsWrap>
-      <CartContentHeader></CartContentHeader>
-      <CartList>
-        <CartItemList></CartItemList>
-      </CartList>
-    </CartContentsWrap>
-  );
-};
-
-const CartContentsWrap = styled.div`
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  min-height: 1px;
-  flex: 0 0 66.666666%;
-  max-width: 66.666666%;
-  padding: 0 20px;
-`;
 
 const ContentHeaderWrap = styled.div`
   box-sizing:border-box;
@@ -83,8 +72,3 @@ const DeleteButton = styled.button`
   font-size: 16px;
   font-weight: 600;
 `;
-
-const CartList = styled.ul``;
-
-const CartItemCard = styled.li``;
-

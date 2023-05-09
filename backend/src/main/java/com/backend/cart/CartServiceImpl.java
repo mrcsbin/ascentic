@@ -14,15 +14,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final MemberRepository memberRepository;
 
     private final ProductOptionRepository productOptionRepository;
-//    private ProductRepository productRepository;
 
     @Override
-    public void addCart(CartDTO cartDTO){
+    public void addCart(CartDTO cartDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Optional<Member> member = this.memberRepository.findById(currentMemberId);
         if (member.isPresent()) { //isPresent: null인지 아닌지 검사
@@ -38,14 +37,14 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public List<Cart> listCart(){
+    public List<Cart> listCart() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         List<Cart> cartlist = this.cartRepository.findAllByMember(this.memberRepository.findById(currentMemberId).orElse(null));
         return cartlist; //사진이랑 상품 정보는?...
     }
 
     @Override
-    public void deleteCart(ProductOption productOption){
+    public void deleteCart(ProductOption productOption) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         this.cartRepository.deleteCart(productOption.getOptionNum(), currentMemberId);
     }

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function Content() {
@@ -16,8 +17,12 @@ function Content() {
         <RightSpan>- 1,000 원</RightSpan>
       </ContentsBox>
       <Amounts>
-        <LeftSpan style={{ fontWeight: 900, fontSize: 20 }}>결제 예정금액&nbsp;</LeftSpan>
-        <RightSpan style={{ fontWeight: 900, fontSize: 20 }}>12,000 원</RightSpan>
+        <LeftSpan style={{ fontWeight: 900, fontSize: 20 }}>
+          결제 예정금액&nbsp;
+        </LeftSpan>
+        <RightSpan style={{ fontWeight: 900, fontSize: 20 }}>
+          12,000 원
+        </RightSpan>
       </Amounts>
     </>
   );
@@ -30,7 +35,9 @@ export const CartSideBar = () => {
         <SideBarContent>
           <Content />
         </SideBarContent>
-        <OrderButton type="button"> 구매하기</OrderButton>
+        <Link to="/order">
+          <OrderButton type="button">구매하기</OrderButton>
+        </Link>
       </SideBarContainer>
     </SideBarWrap>
   );
@@ -76,8 +83,7 @@ const Amounts = styled.div`
   justify-content: space-between;
 `;
 
-const LeftSpan = styled.div`
-`;
+const LeftSpan = styled.div``;
 
 const RightSpan = styled.div`
   font-weight: 700;

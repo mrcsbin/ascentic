@@ -4,6 +4,7 @@ import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.productOption.ProductOption;
+import com.backend.productOption.ProductOptionRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,21 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService{
     private final CartRepository cartRepository;
     private final MemberRepository memberRepository;
+
+    private final ProductOptionRepository productOptionRepository;
 //    private ProductRepository productRepository;
 
     @Override
-    public void addCart(ProductOption productOption, int prodCount){
+    public void addCart(CartDTO cartDTO){
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Optional<Member> member = this.memberRepository.findById(currentMemberId);
         if (member.isPresent()) { //isPresent: null인지 아닌지 검사
-            Cart cart = new Cart();
-            cart.setProductOption(productOption);
-//            cart.setProduct(productRepository.findById(productOption.getProduct()));
-            cart.setMember(member.get());
-            cart.setProdCount(prodCount);
-            this.cartRepository.save(cart);
+            Cart cart = Cart.builder()
+                    .productOption(productOptionRepository.findById(cartDTO.getOptionNum()).orElse(null))
+                    .member(member.get())
+                    .prodCount(cartDTO.getProdCount())
+                    .build();
+            cartRepository.save(cart);
         } else {
 //            throw new DataNotFoundException("member not found");
         }

@@ -65,10 +65,22 @@ function ProdDetailView({ productData, productOption, isWish }) {
   // 장바구니 페이지 이동
   const handleCartClick = () => {
     const dataForCart = {
-      prodQuantity: quantity,
-      prodOption: prodOption,
+      optionNum: prodOption.optionNum,
+      prodCount: quantity,
     };
-    navigate(`/cart`, { state: dataForCart });
+
+    console.log(dataForCart);
+
+    axios
+      .post("/addcart", dataForCart, {
+        headers: {
+          Authorization: "Bearer " + getCookie("accessToken"),
+        },
+      })
+      .then(() => {
+        // navigate(`/cart`, { state: dataForCart });
+      })
+      .catch((error) => {});
   };
 
   // 찜하기 구현

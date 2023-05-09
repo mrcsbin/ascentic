@@ -28,7 +28,7 @@ const CardList = ({ products }) => {
       <div className="Cardbox">
         <div className="cont">
           {currentProducts.map((product) => {
-            return <ProductCard product={product} />;
+            return <ProductCard key={product.prodNum} product={product} />;
           })}
         </div>
       </div>
@@ -36,7 +36,12 @@ const CardList = ({ products }) => {
         {currentPage - 3 <= 0 ? (
           ""
         ) : (
-          <div onClick={() => handlePageChange(currentPage - 3)}>이전</div>
+          <div
+            className="btn"
+            onClick={() => handlePageChange(currentPage - 3)}
+          >
+            이전
+          </div>
         )}
         {Array.from({ length: totalPages }, (_, i) => i + 1)
           .filter(
@@ -44,26 +49,36 @@ const CardList = ({ products }) => {
               pageNumber > currentPage - 3 && pageNumber < currentPage + 3
           )
           .map((pageNumber) => (
-            <button
+            <div
+              className="numbtn"
               key={pageNumber}
               onClick={() => handlePageChange(pageNumber)}
+              style={{
+                pointerEvents: pageNumber == currentPage ? "none" : "auto",
+                borderColor: pageNumber == currentPage ? "black" : "white",
+              }}
             >
               {pageNumber}
-            </button>
+            </div>
           ))}
-        {currentPage + 3 <= totalPages ? (
+        {currentPage + 3 > totalPages ? (
           ""
         ) : (
-          <div onClick={() => handlePageChange(currentPage + 3)}>다음</div>
+          <div
+            className="btn"
+            onClick={() => handlePageChange(currentPage + 3)}
+          >
+            다음
+          </div>
         )}
       </div>
       <div>
         {products.length === 0 ? (
           <div style={{ margin: "100px auto" }}>
-            <center style={{ fontSize: "25px" }}>
+            <center style={{ fontSize: "20px", fontFamily: "Pretendard" }}>
               판매 중인 상품이 없습니다.
             </center>
-            <div style={{ height: "600px" }}></div>
+            <div style={{ height: "100px" }}></div>
           </div>
         ) : (
           " "

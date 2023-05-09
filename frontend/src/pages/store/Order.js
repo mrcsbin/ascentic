@@ -40,14 +40,11 @@ function Order(props) {
 
   // ---------------------- ProductInfo -------------------------------------
   const location = useLocation();
-  console.log("oreder");
-  console.log(location.state);
-
   const products = [
     // 서버로 전송할 정보
     {
       option: location.state.prodOption.optionNum,
-      count: location.state.prodOption.prodeQunanity,
+      count: location.state.prodQuantity,
     },
   ];
 
@@ -76,26 +73,26 @@ function Order(props) {
   }
 
   // 회원 정보 조회
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await axios.get("/get_member", null, {
-          headers: {
-            Authorization: "Bearer " + getCookie("accessToken"),
-          },
-        });
-        const { memberEmail, name, tel } = res.data;
-        setOrder({
-          email: memberEmail,
-          name,
-          tel,
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const res = await axios.get("/get_member", null, {
+  //         headers: {
+  //           Authorization: "Bearer " + getCookie("accessToken"),
+  //         },
+  //       });
+  //       const { memberEmail, name, tel } = res.data;
+  //       setOrder({
+  //         email: memberEmail,
+  //         name,
+  //         tel,
+  //       });
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
 
   // ---------------------- DeliveryInfo -------------------------------------
 
@@ -230,7 +227,7 @@ function Order(props) {
       orderState: "결제완료", // 결제완료, 배송준비중, 배송중, 배송완료
     };
 
-    console.log(requestData);
+    // console.log(requestData);
     let orderNum;
 
     axios
@@ -241,20 +238,13 @@ function Order(props) {
       })
       .then((response) => {
         orderNum = response.data; // 주문 번호를 받아온다.
-        console.log(orderNum);
-
-        // const product = [
-        //   { option: "3", count: 2 },
-        //   { option: "5", count: 1 },
-        //   { option: "4", count: 3 },
-        // ];
 
         const orderProd = [];
         products.forEach((item, index) => {
           orderProd.push({
             orderId: orderNum, // 주문 번호
             optionNum: item.option, // 옵션 번호(기본키)
-            prodcount: item.count, // 수량
+            prodCount: item.count, // 수량
             orderState: false, // 주문 상태 true: 주문, flase 주문 취소
           });
         });
@@ -264,10 +254,9 @@ function Order(props) {
           const proddata = {
             orderId: orderNum,
             optionNum: orderProd[i].optionNum,
-            prodCount: orderProd[i].prodcount,
+            prodCount: orderProd[i].prodCount,
             orderState: false,
           };
-          console.log(proddata);
 
           axios
             .post("/finishorderprod", proddata)

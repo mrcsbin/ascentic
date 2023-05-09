@@ -4,7 +4,7 @@ import React from "react";
 function ProdInfo(props) {
   // 상품 수량(임시)
   const prods = props.prods;
-  console.log(prods);
+  // console.log(prods);
 
   return (
     <div>

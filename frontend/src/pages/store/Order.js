@@ -8,29 +8,11 @@ import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import axios from "axios";
 import { useEffect } from "react";
-// import Cookies from "js-cookie";
+import { getCookie } from "../../utils/Cookie";
+import { useLocation } from "react-router-dom";
 
 // 구매 과정 페이지
 function Order(props) {
-  // 컴포넌트 별 정리
-  // ProductInfo:  url로 받아온 제품정보, 옵션, 수량, 가격
-  // OrderInfo: useEffect => 세션값에 따른 주문자 정보(이메일, 이름, 연락처)
-  // DeliveryInfo: 없음,
-  // 주문자 정보와 동일 클릭시 주문자 정보 가져오기, 최근배송지 클릭시 session id에 해당하는 최근배송지 불러오기
-  // DiscountBenefit: 없음
-  // FinalPayment: 없음, 클릭시 해당 결제수단의 state값을 가지고 있고
-  // FinalPayment: 주문금액, 배송비 총금액
-  // 구매하기 클릭시
-  // 1. 주문자정보, 배송정보, 총금액, 배송비, 결제방법 서버로 전송
-  // 2. 주문번호 받아와서 상품1개씩 묶어서 서버로 전송
-
-  // 인증 토큰 읽는 방법
-  // npm install js-cookie 쿠키 라이브러리
-  // const token = localStorage.getItem("autoToken"); // 로컬 스토리지, authToken = 키
-  // const token = Cookies.get("autoToken"); // 쿠키
-  localStorage.setItem("autoToken", "kim123"); // 임시
-  const token = localStorage.getItem("autoToken");
-
   // +, - 확장응 위한 State
   const [extend, setExtend] = useState({
     prod: true,
@@ -57,6 +39,29 @@ function Order(props) {
   }
 
   // ---------------------- ProductInfo -------------------------------------
+  const location = useLocation();
+  console.log("oreder");
+  console.log(location.state);
+
+  const products = [
+    // 서버로 전송할 정보
+    {
+      option: location.state.prodOption.optionNum,
+      count: location.state.prodOption.prodeQunanity,
+    },
+  ];
+
+  const prods = [
+    {
+      prodName: location.state.prodOption.product.prodName,
+      prodOption: location.state.prodOption.prodOption,
+      prodeQunanity: location.state.prodQuantity,
+      prodPrice:
+        location.state.prodOption.product.prodPrice *
+        location.state.prodQuantity, // 수량  x 가격
+      prodNum: location.state.prodOption.product.prodNum,
+    },
+  ];
 
   // ---------------------- OrderInfo -------------------------------------
   const [order, setOrder] = useState({
@@ -74,7 +79,11 @@ function Order(props) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get("/get_member", { params: { token } });
+        const res = await axios.get("/get_member", null, {
+          headers: {
+            Authorization: "Bearer " + getCookie("accessToken"),
+          },
+        });
         const { memberEmail, name, tel } = res.data;
         setOrder({
           email: memberEmail,
@@ -111,7 +120,11 @@ function Order(props) {
   function getRecentAddress() {
     async function fetchData() {
       try {
-        const res = await axios.post("/recentaddr", { memberId: token });
+        const res = await axios.get("/recentaddr", {
+          headers: {
+            Authorization: "Bearer " + getCookie("accessToken"),
+          },
+        });
 
         setShipInfo({
           ...shipInfo,
@@ -202,7 +215,7 @@ function Order(props) {
 
   const buySubmit = () => {
     const requestData = {
-      memberId: token, // 주문자 id
+      // memberId: token, // 주문자 id
       orderEmail: order.email + "@" + order.domain, // 주문자 이메일
       orderName: order.name, // 주문자 이름
       orderTel: order.tel, // 주문자 연락처
@@ -221,19 +234,23 @@ function Order(props) {
     let orderNum;
 
     axios
-      .post("/finishorder", requestData)
+      .post("/finishorder", requestData, {
+        headers: {
+          Authorization: "Bearer " + getCookie("accessToken"),
+        },
+      })
       .then((response) => {
         orderNum = response.data; // 주문 번호를 받아온다.
         console.log(orderNum);
 
-        const product = [
-          { option: "3", count: 2 },
-          { option: "5", count: 1 },
-          { option: "4", count: 3 },
-        ];
+        // const product = [
+        //   { option: "3", count: 2 },
+        //   { option: "5", count: 1 },
+        //   { option: "4", count: 3 },
+        // ];
 
         const orderProd = [];
-        product.forEach((item, index) => {
+        products.forEach((item, index) => {
           orderProd.push({
             orderId: orderNum, // 주문 번호
             optionNum: item.option, // 옵션 번호(기본키)
@@ -277,6 +294,7 @@ function Order(props) {
           <ProductInfo
             extend={extend.prod}
             changeExtend={() => handleExtendChange("prod")}
+            prods={prods}
           ></ProductInfo>
           <OrderInfo
             extend={extend.order}

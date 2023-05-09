@@ -40,6 +40,8 @@ function Routes() {
       <Route path="/proddetail" element={<ProdDetail />}></Route>
 
       <Route path="/storemain" element={<StoreMain />}></Route>
+
+      <Route exact path="/storemain/:category" element={<StoreMain />}></Route>
     </BrowserRoutes>
   );
 }

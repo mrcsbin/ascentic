@@ -10,6 +10,8 @@ import java.net.MalformedURLException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -32,6 +34,21 @@ public class ProductImgServiceImpl implements ProductImgService {
         UrlResource urlResource = new UrlResource("file:" + uploadDir + "/" + img.getProdSaveName());
         return urlResource;
     }
+
+
+    //같은 타입의 이미지를 여러장 뽑을 때 사용
+    public List<String> findImages(Integer prodNum, Integer prodImageType) throws MalformedURLException {
+        // DB에서 prodNum과 prodImageType에 해당하는 모든 ProductImg(이미지번호, 상품번호, 이미지저장명, 이미지 업로드명, 이미지 업로드 날짜, 이미지 타입)를 조회
+        List<ProductImg> images = prodImgRepository.findAllByProdNumAndProdImageType(prodNum, prodImageType);
+
+        List<String> imageNames = new ArrayList<>();
+        for (ProductImg img : images) {
+            imageNames.add("file:" + uploadDir + "/" + img.getProdSaveName());
+        }
+
+        return imageNames;
+    }
+
 
     // 상품이미지를 등록할 때
     public void saveImages(MultipartFile[] uploadFiles, Integer prodNum, Integer prodImageType) throws IOException {

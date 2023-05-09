@@ -35,4 +35,17 @@ public class ProductImgController {
         UrlResource resource = productImgService.findImage(prodNum, prodImageType);
         return ResponseEntity.ok().body(resource);
     }
+
+    @GetMapping("/getProdImgDetailPage/{prodNum}/{prodImageType}")
+    public ResponseEntity<List<String>> downloadImages(@PathVariable("prodNum") Integer prodNum, @PathVariable("prodImageType") Integer prodImageType) throws MalformedURLException {
+        List<String> resources = productImgService.findImages(prodNum, prodImageType);
+        return ResponseEntity.ok().body(resources);
+    }
+
+    //이미지 리스트에서 한장씩 다운받을때 사용
+    @RequestMapping({"/download"})
+    public ResponseEntity<UrlResource> download(@RequestParam("img") String stored) throws MalformedURLException {
+        UrlResource resource = new UrlResource(stored);
+        return ResponseEntity.ok().body(resource);
+    }
 }

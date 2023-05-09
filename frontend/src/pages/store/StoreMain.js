@@ -86,7 +86,9 @@ function StoreMain() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`/listscent?category=${category}`);
+        const res = await axios.get(
+          `http://localhost:8080/listscent?category=${category}`
+        );
         setProducts(res.data);
         setProductList(res.data);
         //console.log(products);

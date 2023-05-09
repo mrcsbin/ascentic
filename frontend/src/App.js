@@ -1,35 +1,45 @@
-// import MainPage from "./pages/MainPage";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Suspense } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { getCookie } from "./utils/Cookies";
+import { useState, useEffect } from "react";
 import "./styles/Reset.css";
-import RoutesTest from "./routes/RoutesTest";
-// import Login from "./pages/LoginPage";
-// import SignUp from "./pages/SignUp";
-// import Order from "./pages/store/Order";
-// import OrderComplete from "./pages/store/OrderComplete";
-// import ProdDetail from "./pages/store/ProdDetail";
-// import StoreMain from "./pages/store/StoreMain";
+import Routes from "./routes/Routes";
+import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
+import Notice from "./components/common/Notice";
+import Loading from "./components/common/Loading";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
+
+  useEffect(() => {
+    const checkTokenExpiration = () => {
+      const token = getCookie("accessToken");
+      if (!token && isLoggedIn) {
+        setIsLoggedIn(false);
+        window.location.replace("/");
+      }
+    };
+    checkTokenExpiration();
+
+    const interval = setInterval(() => {
+      checkTokenExpiration();
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isLoggedIn]);
+
   return (
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<MainPage />}></Route>
-
-    //     <Route path="/login" element={<Login />}></Route>
-
-    //     <Route path="/Signup" element={<SignUp />}></Route>
-
-    //     <Route path="/Order" element={<Order />}></Route>
-
-    //     <Route path="/OrderComplete" element={<OrderComplete />}></Route>
-
-    //     <Route path="/ProdDetail" element={<ProdDetail />}></Route>
-
-    //     <Route path="/StoreMain" element={<StoreMain />}></Route>
-    //   </Routes>
-    // </Router>
     <Router>
-      <RoutesTest></RoutesTest>
+      <Notice />
+      <Header />
+      {/* lazy() 사용시 서스펜스 적용 안하면 오류발생함 */}
+      <Suspense fallback={<Loading />}>
+        <Routes isLoggedIn={isLoggedIn}></Routes>
+      </Suspense>
+      <Footer />
     </Router>
   );
 }

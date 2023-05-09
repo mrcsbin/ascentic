@@ -1,3 +1,42 @@
-h1 {
-    color: black;
+/* HSM */
+/* flexbox 부모 컨테이너 */
+.header-wrap .navbar {
+  height: 45px;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap : nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+}
+/* flexbox 자식 컨테이너 #1 */
+.header-wrap .navbarLogo {
+  order: 1;
+  flex-grow: 0.3;
+  font-weight: bold;
+  font-size: 25px;
+  padding-left: 28px;
+}
+/* flexbox 자식 컨테이너 #2 */
+.header-wrap .navbarMenu {
+  order: 2;
+  flex-grow: 8.7;
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+}
+.header-wrap .navbarMenu li {
+  padding: 0px 14px;
+}
+/* flexbox 자식 컨테이너 #3 */
+.header-wrap .navbarIcon {
+  order: 3;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 25px;
+}
+.header-wrap .navbarIcon li {
+  padding: 0px 15px;
 }

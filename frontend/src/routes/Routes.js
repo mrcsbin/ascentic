@@ -17,22 +17,23 @@ import {
   Cart,
 } from "../pages/Pages";
 
-function Routes() {
+function Routes({ isLoggedIn }) {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Main />}></Route>
 
-      {/* <Route
-        path={isLoggedIn ? "/mypage" : "/login"}
-        element={isLoggedIn ? <MyPage /> : <Login />}
-      /> */}
-
-      <Route path="/login" element={<Login />} />
+      <Route
+        path="/login"
+        element={isLoggedIn ? <Navigate to="/mypage" /> : <Login />}
+      />
 
       <Route path="/login/kakao" element={<KakaoLogin />} />
 
-      <Route path="/mypage" element={<MyPage />} />
-
+      <Route
+        path="/mypage"
+        element={isLoggedIn ? <MyPage /> : <Navigate to="/login" />}
+      />
+      
       <Route path="/cart" element={<Cart />} />
 
       <Route path="/*" element={<Navigate to="/NotFound" />} />

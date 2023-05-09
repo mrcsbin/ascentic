@@ -19,42 +19,36 @@ export const CartContentHeader = () => {
 const ContentHeaderWrap = styled.div`
   box-sizing:border-box;
   display:flex;
-  font-weight:500;
+  font-weight:600;
   align-items:center;
   justify-content-space-between;
-  margin: 0;
-  padding: 20px 10px;
+  padding: 20px 10px 20px 0;
+  border-bottom: 1.5px solid black;
 `;
 
 const ContentHeader = styled.div`
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  line-height: 26px;
 `;
 
 const SelectLabel = styled.label`
   align-items: center;
   vertical-align: top;
-  position: relative;
   display: inline-flex;
-  font-size: 14px;
-  line-height: 26px;
-  padding: 0px;
-  color: rgb(51, 51, 51);
-  box-sizing: border-box;
-  margin: 0;
 `;
 
 const SelectCheck = styled.input`
-
+transform: scale(1.2);
 `;
 
-const SelectSpan = styled.span``;
+const SelectSpan = styled.span`
+  font-size: 16px;
+  margin: 0 5px;
+`;
 
 const DeleteButton = styled.button`
-  overflow: visible;
+  cursor: pointer;
   background-color: transparent;
   border: none;
-  font-size: 14px;
-  color: #333;
+  font-size: 16px;
+  font-weight:600;
 `;

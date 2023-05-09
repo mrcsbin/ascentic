@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/Header.css";
 import { Link } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
@@ -15,6 +15,7 @@ const Header = () => {
   function handleLogout() {
     removeCookie("accessToken");
     setIsLoggedIn(false);
+    window.location.replace("/");
   }
 
   return (
@@ -63,14 +64,14 @@ const Header = () => {
           </li>
           <li>
             <Link
-              to={isLoggedIn ? "/mypage" : "/login"}
+              to="/login"
               style={{ textDecoration: "none" }}
             >
               <img src={iconUser} alt="iconMyPage"></img>
             </Link>
           </li>
           <li>
-            <Link to="/order" style={{ textDecoration: "none" }}>
+            <Link to="/cart" style={{ textDecoration: "none" }}>
               <img src={iconBag} alt="iconBag"></img>
             </Link>
           </li>

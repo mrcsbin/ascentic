@@ -12,25 +12,6 @@ import { getCookie, setCookie, removeCookie } from "../../utils/Cookies";
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
 
-  // useEffect(() => {
-  //   const checkTokenExpiration = () => {
-  //     const token = getCookie("accessToken");
-  //     if (!token && isLoggedIn) {
-  //       setIsLoggedIn(false);
-  //       window.location.replace("/");
-  //     }
-  //   };
-  //   checkTokenExpiration();
-
-  //   const interval = setInterval(() => {
-  //     checkTokenExpiration();
-  //   }, 1000);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [isLoggedIn]);
-
   function handleLogout() {
     removeCookie("accessToken");
     setIsLoggedIn(false);
@@ -90,7 +71,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link to="/order" style={{ textDecoration: "none" }}>
+            <Link to="/cart" style={{ textDecoration: "none" }}>
               <img src={iconBag} alt="iconBag"></img>
             </Link>
           </li>

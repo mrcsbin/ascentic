@@ -4,6 +4,7 @@ import com.backend.subscribeMember.SubscribeMember;
 import com.backend.subscribeProduct.SubscribeProduct;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -43,8 +44,9 @@ public class SubscribeSend {
     @Column(name = "sb_send_review")
     private String sbSendReview;
 
+//    @CreationTimestamp
     @Column(name = "sb_send_paydate")
-    private LocalDate sbSendPayDate;
+    private LocalDate sbSendPayDate; //정기결제가 인식되면 객체생성? 또는 미리 만들어 놓고 결제되면 결제일만 추가?
 
     @Column(name = "sb_send_payment")
     private String sbSendPayment;

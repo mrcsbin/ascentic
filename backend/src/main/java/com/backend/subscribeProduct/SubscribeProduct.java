@@ -3,9 +3,16 @@ package com.backend.subscribeProduct;
 import com.backend.scent.Scent;
 import com.backend.subscribeSend.SubscribeSend;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "tb_subscribe_prod")
 public class SubscribeProduct {
     @Id

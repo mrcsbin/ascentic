@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "tb_subscribe_member")
 public class SubscribeMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

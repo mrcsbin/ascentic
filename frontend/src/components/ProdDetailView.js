@@ -72,7 +72,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
     console.log(dataForCart);
 
     axios
-      .post("/cart", dataForCart, {
+      .post("/cart/addv2", dataForCart, {
         headers: {
           Authorization: "Bearer " + getCookie("accessToken"),
         },

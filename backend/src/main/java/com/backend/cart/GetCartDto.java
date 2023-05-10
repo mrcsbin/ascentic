@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CartDtoTest {
+public class GetCartDto {
     private String prodImage;
     private String prodName;
     private String prodOption;

@@ -28,6 +28,5 @@ public class Cart {
 
     @Column(name = "prod_count")
     private Integer prodCount;
-
 }
 

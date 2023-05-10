@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
 import iconSearch from "../../assets/iconSearch.svg";
-import { getCookie, setCookie, removeCookie } from "../../utils/Cookies";
+import { getCookie, removeCookie } from "../../utils/Cookies";
 import Loading from "./Loading";
 
 //HSM

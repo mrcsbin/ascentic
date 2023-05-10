@@ -1,6 +1,7 @@
 package com.backend.cart;
 
 import com.backend.member.entity.Member;
+import com.backend.productOption.ProductOption;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
 
@@ -15,9 +17,13 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 
     @Transactional
     @Modifying //insert, update, delete시 사용
-    @Query(value="delete from tb_cart where option_num = :optionNum and member_id = :memberId",
-            nativeQuery=true)
+    @Query(value = "delete from tb_cart where option_num = :optionNum and member_id = :memberId",
+            nativeQuery = true)
     public void deleteCart(@Param("optionNum") int optionNum, @Param("memberId") String memberId);
 
     public List<Cart> findAllByMember(Member member);
+
+    List<Cart> findByMemberId(String memberId);
+
+    Optional<Cart> findByMemberIdAndProductOption(String memberId, ProductOption productOption);
 }

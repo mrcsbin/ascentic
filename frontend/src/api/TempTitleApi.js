@@ -3,7 +3,7 @@ import axios from "axios";
 const MEMBER_API_URL = "http://localhost:8080/cart";
 
 export const getUserCart = async (accessToken) => {
-  const response = await axios.get(`${MEMBER_API_URL}`, {
+  const response = await axios.get(`${MEMBER_API_URL}/getv2`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

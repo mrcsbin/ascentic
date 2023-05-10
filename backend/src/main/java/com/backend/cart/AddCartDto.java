@@ -3,7 +3,7 @@ package com.backend.cart;
 import lombok.*;
 
 @Getter
-public class CartAddDto {
+public class AddCartDto {
     private int prodCount;
     private int optionNum;
 }

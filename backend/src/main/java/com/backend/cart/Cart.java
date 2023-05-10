@@ -22,7 +22,7 @@ public class Cart {
     @JoinColumn(name = "option_num")
     private ProductOption productOption;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 

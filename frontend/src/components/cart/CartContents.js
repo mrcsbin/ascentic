@@ -1,14 +1,35 @@
 import styled from "styled-components";
 import { CartItemCard } from "./CartItemCard";
 
-export const CartContents = () => {
+// export const CartContents = ({ cartItems }) => {
+//   console.log("CartContents.js");
+//   console.log(cartItems);
+//   return (
+//     <CartContentsWrap>
+//       <CartContentHeader />
+//       <CartItemCard cartItems={cartItems} />
+//     </CartContentsWrap>
+//   );
+// };
+
+export const CartContents = ({ cartItems }) => {
+  console.log("CartContents.js");
+  console.log(cartItems);
   return (
     <CartContentsWrap>
       <CartContentHeader />
-      <CartItemCard />
+      <CartContentBody>
+        {cartItems.map((item, index) => (
+          <CartItemCard key={index} item={item} />
+        ))}
+      </CartContentBody>
     </CartContentsWrap>
   );
 };
+
+const CartContentBody = styled.ul`
+  border-bottom: 1px solid black;
+`;
 
 const CartContentsWrap = styled.div`
   box-sizing: border-box;

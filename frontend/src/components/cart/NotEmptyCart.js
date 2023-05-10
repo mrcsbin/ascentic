@@ -3,14 +3,16 @@ import { CartContents } from "./CartContents";
 import { CartSideBar } from "./CartSideBar";
 
 
-export const NotEmptyCart = () => {
+export const NotEmptyCart = ({cartItems}) => {
+  console.log("NotEmptyCart.js")
+  console.log(cartItems)
   return (
     <CartWrap className="cart-wrap">
       <CartHeader className="cart-header">장바구니</CartHeader>
       <CartContainer className="cart-container">
         <CartBox className="cart-box">
-          <CartContents/>
-          <CartSideBar />
+          <CartContents cartItems={cartItems}/>
+          <CartSideBar cartItems={cartItems}/>
         </CartBox>
       </CartContainer>
     </CartWrap>

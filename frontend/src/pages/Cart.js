@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { EmptyCart } from "../components/cart/EmptyCart";
 import { NotEmptyCart } from "../components/cart/NotEmptyCart";
-import { getUserCart } from "../api/TempTitleApi";
+import { getCart } from "../api/CartApi";
 import { getCookie } from "../utils/Cookies";
 import Loading from "../components/common/Loading";
 
@@ -12,10 +12,11 @@ function Cart() {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      const cartItems = await getUserCart(getCookie("accessToken"));
+      const cartItems = await getCart(getCookie("accessToken"));
       setCartItems(cartItems);
       setIsCartEmpty(cartItems.length === 0);
       setIsLoading(false);
+      console.log("Cart.js")
       console.log(cartItems)
     };
     fetchCartItems();
@@ -25,7 +26,7 @@ function Cart() {
     return <Loading />;
   }
 
-  return <>{isCartEmpty ? <EmptyCart /> : <NotEmptyCart />}</>;
+  return <>{isCartEmpty ? <EmptyCart /> : <NotEmptyCart cartItems={cartItems}/>}</>;
 }
 
 export default Cart;

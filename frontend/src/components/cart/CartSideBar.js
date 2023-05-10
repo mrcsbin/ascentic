@@ -28,7 +28,9 @@ function Content() {
   );
 }
 
-export const CartSideBar = () => {
+export const CartSideBar = ({cartItems}) => {
+  console.log("CartSideBar.js")
+  console.log(cartItems)
   return (
     <SideBarWrap>
       <SideBarContainer>

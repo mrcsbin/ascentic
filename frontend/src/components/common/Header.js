@@ -5,17 +5,32 @@ import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
 import iconSearch from "../../assets/iconSearch.svg";
 import { getCookie, setCookie, removeCookie } from "../../utils/Cookies";
+import Loading from "./Loading";
 
 //HSM
 //RouteTest.js 에 임시로 연결
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   function handleLogout() {
     removeCookie("accessToken");
     setIsLoggedIn(false);
     window.location.replace("/");
+  }
+
+  useEffect(() => {
+    const fetchLoginStatus = async () => {
+      const isCookie = await getCookie("accessToken");
+      setIsLoggedIn(!!isCookie);
+      setIsLoading(false);
+    };
+    fetchLoginStatus();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -63,10 +78,7 @@ const Header = () => {
             <img src={iconSearch} alt="iconSearch"></img>
           </li>
           <li>
-            <Link
-              to="/login"
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="/login" style={{ textDecoration: "none" }}>
               <img src={iconUser} alt="iconMyPage"></img>
             </Link>
           </li>

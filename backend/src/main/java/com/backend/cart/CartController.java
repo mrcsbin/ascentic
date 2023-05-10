@@ -15,8 +15,8 @@ public class CartController {
 
     @GetMapping
     public List<Cart> getCart() {
-        List<Cart> carts = cartServiceImpl.listCart();
-        return carts;
+        List<Cart> cartList = cartServiceImpl.listCart();
+        return cartList;
     }
 
     @PostMapping
@@ -28,11 +28,6 @@ public class CartController {
     @DeleteMapping
     public void deleteCart(ProductOption productOption) {
         this.cartServiceImpl.deleteCart(productOption);
-    }
-
-    public List<Cart> listCart() {
-        List<Cart> cartlist = this.cartServiceImpl.listCart();
-        return cartlist;
     }
 
 }

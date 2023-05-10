@@ -19,6 +19,7 @@ public class CartServiceImpl implements CartService {
     private final MemberRepository memberRepository;
 
     private final ProductOptionRepository productOptionRepository;
+//    private ProductRepository productRepository;
 
     @Override
     public void addCart(CartDTO cartDTO) {

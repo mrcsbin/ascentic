@@ -18,7 +18,7 @@ public class Cart {
     @Column(name = "cart_num")
     private Integer cartNum;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "option_num")
     private ProductOption productOption;
 

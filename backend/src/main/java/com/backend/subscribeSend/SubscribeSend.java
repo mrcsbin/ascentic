@@ -3,10 +3,16 @@ package com.backend.subscribeSend;
 import com.backend.subscribeMember.SubscribeMember;
 import com.backend.subscribeProduct.SubscribeProduct;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "tb_subscribe_send")
 public class SubscribeSend {
     @Id

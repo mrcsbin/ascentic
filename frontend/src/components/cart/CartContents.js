@@ -1,45 +1,6 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { CartItemCard } from "./CartItemCard";
-
-// export const CartContents = ({ cartItems }) => {
-//   console.log("CartContents.js");
-//   console.log(cartItems);
-//   return (
-//     <CartContentsWrap>
-//       <CartContentHeader />
-//       <CartItemCard cartItems={cartItems} />
-//     </CartContentsWrap>
-//   );
-// };
-
-export const CartContents = ({ cartItems }) => {
-  console.log("CartContents.js");
-  console.log(cartItems);
-  return (
-    <CartContentsWrap>
-      <CartContentHeader />
-      <CartContentBody>
-        {cartItems.map((item, index) => (
-          <CartItemCard key={index} item={item} />
-        ))}
-      </CartContentBody>
-    </CartContentsWrap>
-  );
-};
-
-const CartContentBody = styled.ul`
-  border-bottom: 1px solid black;
-`;
-
-const CartContentsWrap = styled.div`
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  min-height: 1px;
-  flex: 0 0 66.666666%;
-  max-width: 66.666666%;
-  padding: 0 20px;
-`;
 
 function CartContentHeader() {
   return (
@@ -57,6 +18,22 @@ function CartContentHeader() {
   );
 }
 
+export const CartContents = () => {
+  const cartItems = useSelector((state) => state.cart.cartItem);
+
+  return (
+    <CartContentsWrap>
+      <CartContentHeader />
+      <CartContentBody>
+        {cartItems.map((item, index) => (
+          <CartItemCard key={index} item={item} />
+        ))}
+      </CartContentBody>
+    </CartContentsWrap>
+  );
+};
+
+// CartContentHeader
 const ContentHeaderWrap = styled.div`
   box-sizing:border-box;
   display:flex;
@@ -93,3 +70,19 @@ const DeleteButton = styled.button`
   font-size: 16px;
   font-weight: 600;
 `;
+
+// CartContents
+const CartContentBody = styled.ul`
+  border-bottom: 1px solid black;
+`;
+
+const CartContentsWrap = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  flex: 0 0 66.666666%;
+  max-width: 66.666666%;
+  padding: 0 20px;
+`;
+

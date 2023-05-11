@@ -2,23 +2,21 @@ import styled from "styled-components";
 import { CartContents } from "./CartContents";
 import { CartSideBar } from "./CartSideBar";
 
-
-export const NotEmptyCart = ({cartItems}) => {
-  console.log("NotEmptyCart.js")
-  console.log(cartItems)
+export const NotEmptyCart = () => {
   return (
     <CartWrap className="cart-wrap">
       <CartHeader className="cart-header">장바구니</CartHeader>
       <CartContainer className="cart-container">
         <CartBox className="cart-box">
-          <CartContents cartItems={cartItems}/>
-          <CartSideBar cartItems={cartItems}/>
+          <CartContents />
+          <CartSideBar />
         </CartBox>
       </CartContainer>
     </CartWrap>
   );
 };
 
+// NotEmptyCart
 const CartWrap = styled.div`
   position: relative;
 `;

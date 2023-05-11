@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setCookie, getCookie, removeCookie } from "../utils/Cookies";
 
 const MEMBER_API_URL = "http://localhost:8080/member";
 

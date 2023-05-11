@@ -52,6 +52,15 @@ public class Taste {
     @Column(name = "taste_test5")
     private Integer tasteTest5;
 
+    @Column(name = "first_place")
+    private String firstPlace;
+
+    @Column(name = "second_place")
+    private String secondPlace;
+
+    @Column(name = "third_place")
+    private String thirdPlace;
+
     @CreationTimestamp
     @Column(name = "taste_date")
     private LocalDateTime tasteDate;

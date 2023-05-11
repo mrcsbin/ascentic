@@ -14,6 +14,11 @@ public class SubscribeSendController {
 
     private final SubscribeSendServiceImpl subscribeSendServiceImpl;
 
+    @PostMapping("/insertSubsSend")
+    public void insertSubsSend(@RequestBody SubsSendInsertDTO subsSendInsertDTO){
+        subscribeSendServiceImpl.insertSubsSend(subsSendInsertDTO);
+    }
+
     @PostMapping("/subscribeReview")
     public void insertSubsReview(@RequestBody SubsReviewDTO subsReviewDTO) {
         subscribeSendServiceImpl.insertSubsReview(subsReviewDTO);

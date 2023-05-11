@@ -27,7 +27,7 @@ public class SubscribeSend {
 
     @ManyToOne
     @JoinColumn(name = "sp_num")
-    private SubscribeProduct sbSubscribeProduct;
+    private SubscribeProduct subscribeProduct;
 
     @Column(name = "sb_send_start")
     private LocalDate sbSendStart;

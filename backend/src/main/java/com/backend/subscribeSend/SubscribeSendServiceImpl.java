@@ -7,6 +7,7 @@ import com.backend.order.AddressDTO;
 import com.backend.order.Order;
 import com.backend.subscribeMember.SubscribeMember;
 import com.backend.subscribeMember.SubscribeMemberRepository;
+import com.backend.subscribeProduct.SubscribeProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,17 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
     private final SubscribeSendRepository subscribeSendRepository;
     private final MemberRepository memberRepository;
     private final SubscribeMemberRepository subscribeMemberRepository;
+    private final SubscribeProductRepository subscribeProductRepository;
+
+    @Override
+    public void insertSubsSend(SubsSendInsertDTO subsSendInsertDTO){
+        SubscribeSend subscribeSend = SubscribeSend.builder()
+                 .subscribeMember(subscribeMemberRepository.findById(subsSendInsertDTO.getSbMemberNum()).orElse(null))
+                .subscribeProduct(subscribeProductRepository.findById(subsSendInsertDTO.getSpNum()).orElse(null))
+                        .build();
+        subscribeSendRepository.save(subscribeSend);
+    }
+
     @Override
     public void insertSubsReview(SubsReviewDTO subsReviewDTO){
         subscribeSendRepository.updateReview(subsReviewDTO);
@@ -48,9 +60,9 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
                     .sbPay(subssend.getSubscribeMember().getSbPay())
                     .sbPaymentDay(subssend.getSubscribeMember().getSbPaymentDay())
                     .tasteResult(subssend.getSubscribeMember().getTasteResult())
-                    .spScent(subssend.getSbSubscribeProduct().getSpScent())
-                    .spPrice(subssend.getSbSubscribeProduct().getSpPrice())
-                    .spIntro(subssend.getSbSubscribeProduct().getSpIntro())
+                    .spScent(subssend.getSubscribeProduct().getSpScent())
+                    .spPrice(subssend.getSubscribeProduct().getSpPrice())
+                    .spIntro(subssend.getSubscribeProduct().getSpIntro())
                     .sbSendStart(subssend.getSbSendStart())
                     .sbSendEnd(subssend.getSbSendEnd())
                     .sbSendPostcode(subssend.getSbSendPostcode())

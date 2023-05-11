@@ -38,6 +38,10 @@ export const CartSideBar = () => {
   const cartItems = useSelector((state) => state.cart.cartItem);
   const dispatch = useDispatch();
 
+  const checkItem = useSelector((state) => state.cart.checkedItems);
+  const isNotItems = checkItem.length === 0;
+  
+
   const clickHandler = () => {
     dispatch("/order 로 상품정보 보내는 api 호출");
   };
@@ -49,7 +53,11 @@ export const CartSideBar = () => {
           <Contents cartItems={cartItems} />
         </SideBarContent>
         <Link>
-          <OrderButton type="button" onClick={clickHandler}>
+          <OrderButton
+            type="button"
+            onClick={clickHandler}
+            disabled={isNotItems}
+          >
             구매하기
           </OrderButton>
         </Link>
@@ -92,6 +100,9 @@ const OrderButton = styled.button`
   font-weight: 800;
   border-radius: 7px;
   cursor: pointer;
+  :disabled {
+    cursor: default;
+  }
 `;
 
 // CartSideBar

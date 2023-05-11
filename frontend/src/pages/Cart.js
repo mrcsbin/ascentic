@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { EmptyCart } from "../components/cart/EmptyCart";
 import { NotEmptyCart } from "../components/cart/NotEmptyCart";
-import { getCart } from "../api/CartApi";
-import { getCookie } from "../utils/Cookies";
 import Loading from "../components/common/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartItems } from "../store/modules/cart";
 
 function Cart() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCartEmpty, setIsCartEmpty] = useState(true);
-  const [cartItems, setCartItems] = useState([]);
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.cart.loading);
+  const cartItems = useSelector((state) => state.cart.cartItem);
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      const cartItems = await getCart(getCookie("accessToken"));
-      setCartItems(cartItems);
-      setIsCartEmpty(cartItems.length === 0);
-      setIsLoading(false);
-      console.log("Cart.js")
-      console.log(cartItems)
-    };
-    fetchCartItems();
-  }, []);
+    dispatch(fetchCartItems());
+  }, [dispatch]);
 
-  if (isLoading) {
+  if (loading) {
     return <Loading />;
   }
 
-  return <>{isCartEmpty ? <EmptyCart /> : <NotEmptyCart cartItems={cartItems}/>}</>;
+  return <>{cartItems.length ? <NotEmptyCart /> : <EmptyCart />}</>;
 }
 
 export default Cart;

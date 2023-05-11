@@ -1,20 +1,57 @@
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { CartItemCard } from "./CartItemCard";
+import {
+  removeCartItem,
+  fetchCartItems,
+  toggleAllCheckItem,
+} from "../../store/modules/cart";
 
-// export const CartContents = ({ cartItems }) => {
-//   console.log("CartContents.js");
-//   console.log(cartItems);
-//   return (
-//     <CartContentsWrap>
-//       <CartContentHeader />
-//       <CartItemCard cartItems={cartItems} />
-//     </CartContentsWrap>
-//   );
-// };
+function CartContentHeader() {
+  const cartItems = useSelector((state) => state.cart.cartItem);
+  const checkedItems = useSelector((state) => state.cart.checkedItems);
+  const dispatch = useDispatch();
 
-export const CartContents = ({ cartItems }) => {
-  console.log("CartContents.js");
-  console.log(cartItems);
+  const isAllChecked = cartItems.every((item) =>
+    checkedItems.includes(item.cartNum)
+  );
+
+  const handleDeleteClick = () => {
+    checkedItems.forEach((cartNum) => {
+      dispatch(removeCartItem(cartNum)).then(() => dispatch(fetchCartItems()));
+    });
+  };
+
+  const handleChange = () => {
+    dispatch(toggleAllCheckItem());
+  };
+
+  return (
+    <ContentHeaderWrap className="contentHeader-wrap">
+      <ContentHeader className="contentHeader">
+        <SelectLabel>
+          <SelectCheck
+            type="checkbox"
+            checked={isAllChecked}
+            onChange={handleChange}
+          ></SelectCheck>
+          <SelectSpan>전체선택&nbsp;&nbsp;&nbsp;&nbsp;</SelectSpan>
+        </SelectLabel>
+        <DeleteButton
+          className="header-delete-button"
+          type="button"
+          onClick={handleDeleteClick}
+        >
+          선택삭제
+        </DeleteButton>
+      </ContentHeader>
+    </ContentHeaderWrap>
+  );
+}
+
+export const CartContents = () => {
+  const cartItems = useSelector((state) => state.cart.cartItem);
+
   return (
     <CartContentsWrap>
       <CartContentHeader />
@@ -27,36 +64,7 @@ export const CartContents = ({ cartItems }) => {
   );
 };
 
-const CartContentBody = styled.ul`
-  border-bottom: 1px solid black;
-`;
-
-const CartContentsWrap = styled.div`
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  min-height: 1px;
-  flex: 0 0 66.666666%;
-  max-width: 66.666666%;
-  padding: 0 20px;
-`;
-
-function CartContentHeader() {
-  return (
-    <ContentHeaderWrap className="contentHeader-wrap">
-      <ContentHeader className="contentHeader">
-        <SelectLabel>
-          <SelectCheck type="checkbox"></SelectCheck>
-          <SelectSpan>전체선택&nbsp;&nbsp;&nbsp;&nbsp;</SelectSpan>
-        </SelectLabel>
-        <DeleteButton className="header-delete-button" type="button">
-          선택삭제
-        </DeleteButton>
-      </ContentHeader>
-    </ContentHeaderWrap>
-  );
-}
-
+// CartContentHeader
 const ContentHeaderWrap = styled.div`
   box-sizing:border-box;
   display:flex;
@@ -92,4 +100,19 @@ const DeleteButton = styled.button`
   border: none;
   font-size: 16px;
   font-weight: 600;
+`;
+
+// CartContents
+const CartContentBody = styled.ul`
+  border-bottom: 1px solid black;
+`;
+
+const CartContentsWrap = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  flex: 0 0 66.666666%;
+  max-width: 66.666666%;
+  padding: 0 20px;
 `;

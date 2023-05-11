@@ -1,7 +1,6 @@
 package com.backend.subscribeMember;
 
 import com.backend.member.entity.Member;
-import com.backend.tasteRes.TasteRes;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,6 +40,4 @@ public class SubscribeMember {
 
     @Column(name = "taste_result")
     private String tasteResult;
-
-
 }

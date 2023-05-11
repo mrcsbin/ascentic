@@ -1,5 +1,4 @@
-
-import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
+import { Routes as BrowserRoutes, Route, Navigate } from 'react-router-dom';
 
 import {
   Main,
@@ -15,7 +14,11 @@ import {
   Order,
   NotFound,
   Cart,
-} from "../pages/Pages";
+  ExpMain,
+  ExpSubs,
+  ExpSubsManage,
+  ExpTaste,
+} from '../pages/Pages';
 
 function Routes({ isLoggedIn }) {
   return (
@@ -33,7 +36,7 @@ function Routes({ isLoggedIn }) {
         path="/mypage"
         element={isLoggedIn ? <MyPage /> : <Navigate to="/login" />}
       />
-      
+
       <Route path="/cart" element={<Cart />} />
 
       <Route path="/*" element={<Navigate to="/NotFound" />} />
@@ -59,6 +62,17 @@ function Routes({ isLoggedIn }) {
       <Route
         path="/store/productdetail/:prod_num"
         element={<ProdDetail />}
+      ></Route>
+
+      <Route path="/exp" element={<ExpMain></ExpMain>}></Route>
+
+      <Route path="/exp/taste" element={<ExpTaste></ExpTaste>}></Route>
+
+      <Route path="/exp/subs" element={<ExpSubs></ExpSubs>}></Route>
+
+      <Route
+        path="/exp/subsmanage"
+        element={<ExpSubsManage></ExpSubsManage>}
       ></Route>
     </BrowserRoutes>
   );

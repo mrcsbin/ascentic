@@ -1,7 +1,6 @@
 package com.backend.subscribeMember;
 
 import com.backend.member.entity.Member;
-import com.backend.tasteRes.TasteRes;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
 function Contents({ cartItems }) {
-  const prices = cartItems.map((item) => item.prodPrice * item.prodCount);
+  const checkedItem = useSelector((state) => state.cart.checkedItems);
+
+  const prices = cartItems
+    .filter((item) => checkedItem.includes(item.cartNum))
+    .map((item) => item.prodPrice * item.prodCount);
   const totalPrice = prices.reduce((acc, curr) => acc + curr, 0);
   const shippingFee = 3000;
   const discountAmount = 3000;
@@ -16,11 +20,19 @@ function Contents({ cartItems }) {
       </ContentsBox>
       <ContentsBox>
         <LeftSpan>배송비&nbsp;</LeftSpan>
-        <RightSpan>+ {shippingFee} 원</RightSpan>
+        {totalPrice === 0 ? (
+          <RightSpan> 0 원</RightSpan>
+        ) : (
+          <RightSpan>+ {shippingFee} 원</RightSpan>
+        )}
       </ContentsBox>
       <ContentsBox>
         <LeftSpan>할인금액&nbsp;</LeftSpan>
-        <RightSpan>- {discountAmount} 원</RightSpan>
+        {totalPrice === 0 ? (
+          <RightSpan> 0 원</RightSpan>
+        ) : (
+          <RightSpan> - {discountAmount} 원</RightSpan>
+        )}
       </ContentsBox>
       <Amounts>
         <LeftSpan style={{ fontWeight: 900, fontSize: 20 }}>
@@ -36,11 +48,10 @@ function Contents({ cartItems }) {
 
 export const CartSideBar = () => {
   const cartItems = useSelector((state) => state.cart.cartItem);
+  const checkedItem = useSelector((state) => state.cart.checkedItems);
   const dispatch = useDispatch();
 
-  const checkItem = useSelector((state) => state.cart.checkedItems);
-  const isNotItems = checkItem.length === 0;
-  
+  const isNotItems = checkedItem.length === 0;
 
   const clickHandler = () => {
     dispatch("/order 로 상품정보 보내는 api 호출");

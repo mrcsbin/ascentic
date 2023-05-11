@@ -18,17 +18,17 @@ public class SubscribeProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sp_num")
-    private Integer spNum;
+    private Integer sbProdNum;
 
     @OneToOne
     @JoinColumn(name = "sp_scent")
-    private Scent spScent;
+    private Scent scentName;
 
     @Column(name = "sp_price")
-    private String spPrice;
+    private String sbProdPrice;
 
     @Column(name = "sp_intro")
-    private String spIntro;
+    private String sbProdIntro;
 
     // 돌아가면 삭제
 //    @OneToMany(mappedBy = "subscribeProduct")

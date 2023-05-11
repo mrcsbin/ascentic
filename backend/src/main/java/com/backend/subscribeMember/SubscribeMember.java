@@ -41,6 +41,4 @@ public class SubscribeMember {
 
     @Column(name = "taste_result")
     private String tasteResult;
-
-
 }

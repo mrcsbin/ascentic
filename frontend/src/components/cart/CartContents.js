@@ -1,16 +1,47 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { CartItemCard } from "./CartItemCard";
+import {
+  removeCartItem,
+  fetchCartItems,
+  toggleAllCheckItem,
+} from "../../store/modules/cart";
 
 function CartContentHeader() {
+  const cartItems = useSelector((state) => state.cart.cartItem);
+  const checkedItems = useSelector((state) => state.cart.checkedItems);
+  const dispatch = useDispatch();
+
+  const isAllChecked = cartItems.every((item) =>
+    checkedItems.includes(item.cartNum)
+  );
+
+  const handleDeleteClick = () => {
+    checkedItems.forEach((cartNum) => {
+      dispatch(removeCartItem(cartNum)).then(() => dispatch(fetchCartItems()));
+    });
+  };
+
+  const handleChange = () => {
+    dispatch(toggleAllCheckItem());
+  };
+
   return (
     <ContentHeaderWrap className="contentHeader-wrap">
       <ContentHeader className="contentHeader">
         <SelectLabel>
-          <SelectCheck type="checkbox"></SelectCheck>
+          <SelectCheck
+            type="checkbox"
+            checked={isAllChecked}
+            onChange={handleChange}
+          ></SelectCheck>
           <SelectSpan>전체선택&nbsp;&nbsp;&nbsp;&nbsp;</SelectSpan>
         </SelectLabel>
-        <DeleteButton className="header-delete-button" type="button">
+        <DeleteButton
+          className="header-delete-button"
+          type="button"
+          onClick={handleDeleteClick}
+        >
           선택삭제
         </DeleteButton>
       </ContentHeader>
@@ -85,4 +116,3 @@ const CartContentsWrap = styled.div`
   max-width: 66.666666%;
   padding: 0 20px;
 `;
-

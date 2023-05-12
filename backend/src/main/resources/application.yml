@@ -65,3 +65,4 @@ spring:
           starttls:
             enable: true
           auth: true
+

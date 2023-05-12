@@ -1,65 +1,58 @@
-
 import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
 
-import {
-  Main,
-  Login,
-  FindIdPw,
-  KakaoLogin,
-  SignUp,
-  SignUpSuccess,
-  MyPage,
-  StoreMain,
-  ProdDetail,
-  OrderComplete,
-  Order,
-  NotFound,
-  Cart,
-} from "../pages/Pages";
+import * as Pages from "../pages/Pages";
 
 function Routes({ isLoggedIn }) {
   return (
     <BrowserRoutes>
-      <Route path="/" element={<Main />}></Route>
+      <Route path="/" element={<Pages.Main />}></Route>
 
       <Route
         path="/login"
-        element={isLoggedIn ? <Navigate to="/mypage" /> : <Login />}
+        element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
       />
 
-      <Route path="/login/kakao" element={<KakaoLogin />} />
+      <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
 
       <Route
         path="/mypage"
-        element={isLoggedIn ? <MyPage /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Pages.MyPage /> : <Navigate to="/login" />}
       />
-      
-      <Route path="/cart" element={<Cart />} />
+
+      <Route path="/cart" element={<Pages.Cart />} />
 
       <Route path="/*" element={<Navigate to="/NotFound" />} />
 
-      <Route path="/NotFound" element={<NotFound />} />
+      <Route path="/NotFound" element={<Pages.NotFound />} />
 
-      <Route path="/member/find" element={<FindIdPw />} />
+      <Route path="/member/find" element={<Pages.FindIdPw />} />
 
-      <Route path="/signup" element={<SignUp />}></Route>
+      <Route path="/signup" element={<Pages.SignUp />}></Route>
 
-      <Route path="/signupsuccess" element={<SignUpSuccess />} />
+      <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
 
-      <Route path="/order" element={<Order />}></Route>
+      <Route path="/order" element={<Pages.Order />}></Route>
 
-      <Route path="/ordercomplete" element={<OrderComplete />}></Route>
+      <Route path="/ordercomplete" element={<Pages.OrderComplete />}></Route>
 
-      <Route path="/proddetail" element={<ProdDetail />}></Route>
+      <Route path="/proddetail" element={<Pages.ProdDetail />}></Route>
 
-      <Route path="/storemain" element={<StoreMain />}></Route>
+      <Route path="/storemain" element={<Pages.StoreMain />}></Route>
 
-      <Route exact path="/storemain/:category" element={<StoreMain />}></Route>
+      <Route path="/admin" element={<Pages.Admin />} />
+
+      <Route
+        exact
+        path="/storemain/:category"
+        element={<Pages.StoreMain />}
+      ></Route>
 
       <Route
         path="/store/productdetail/:prod_num"
-        element={<ProdDetail />}
+        element={<Pages.ProdDetail />}
       ></Route>
+
+      <Route path="/admin" element={<Pages.Admin />} />
     </BrowserRoutes>
   );
 }

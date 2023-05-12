@@ -63,10 +63,7 @@ const Header = () => {
             <img src={iconSearch} alt="iconSearch"></img>
           </li>
           <li>
-            <Link
-              to="/login"
-              style={{ textDecoration: "none" }}
-            >
+            <Link to="/login" style={{ textDecoration: "none" }}>
               <img src={iconUser} alt="iconMyPage"></img>
             </Link>
           </li>

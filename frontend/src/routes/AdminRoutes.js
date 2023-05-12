@@ -6,8 +6,8 @@ function AdminRoutes() {
     <BrowserRoutes>
       <Route path="/" element={<Main />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/*" element={<Navigate to="/NotFound" />} />
-      <Route path="/NotFound" element={<NotFound />} />
+      {/* <Route path="/*" element={<Navigate to="/NotFound" />} />
+      <Route path="/NotFound" element={<NotFound />} /> */}
     </BrowserRoutes>
   );
 }

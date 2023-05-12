@@ -5,15 +5,9 @@ import { Tab } from "../components/mypage/Tab";
 import { Content } from "../components/mypage/Contents";
 
 function MyPage() {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleClick = (index) => {
-    setActiveTab(index);
-  };
-
   return (
     <MyPageWrap>
-        <Profile />
+      <Profile />
       <ContentWrap>
         <Tab></Tab>
         <Content></Content>
@@ -30,8 +24,9 @@ const MyPageWrap = styled.div`
   box-sizing: border-box;
 `;
 
-
-const ContentWrap = styled.div``;
+const ContentWrap = styled.div`
+  display: flex;
+`;
 
 /*
       <div className="info-img-box">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { Profile } from "../components/mypage/Profile";
 
 function MyPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -9,22 +10,42 @@ function MyPage() {
   };
 
   return (
-    <MyPageWrap className="mypage-wrap">
-      <div className="info-area">
-        <div className="info-img-box">
-          <div>
-            <p>마이 페이지</p>
-          </div>
-          <div>
-            <img src="asd" alt="" />
-          </div>
+    <MyPageWrap>
+      <ProfileWrap>
+        <Profile />
+      </ProfileWrap>
+    </MyPageWrap>
+  );
+}
+
+export default MyPage;
+
+const MyPageWrap = styled.div`
+  height: 100vh;
+  width: 100%;
+  margin: 0px auto;
+  box-sizing: border-box;
+`;
+
+const ProfileWrap = styled.div`
+  padding: 0px 240px;
+  background: wheat;
+`;
+
+/*
+      <div className="info-img-box">
+        <div>
+          <p>마이 페이지</p>
         </div>
-        <div className="name-box">
-          <p>닉네임01 바꿔야함</p>
-          <button>개인 정보 수정</button>
+        <div>
+          <img src="asd" alt="" />
         </div>
-        <div>회원 등급</div>
       </div>
+      <div className="name-box">
+        <p>닉네임01 바꿔야함</p>
+        <button>개인 정보 수정</button>
+      </div>
+      <div>회원 등급</div>
       <div className="side-box">
         <div className="big-tab">
           <h1>나의 쇼핑</h1>
@@ -109,10 +130,4 @@ function MyPage() {
         </div>
       </div>
       <div className="main-area"></div>
-    </MyPageWrap>
-  );
-}
-
-export default MyPage;
-
-const MyPageWrap = styled.div``;
+*/

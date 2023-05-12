@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Profile } from "../components/mypage/Profile";
+import { Tab } from "../components/mypage/Tab";
+import { Content } from "../components/mypage/Contents";
 
 function MyPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -11,9 +13,11 @@ function MyPage() {
 
   return (
     <MyPageWrap>
-      <ProfileWrap>
         <Profile />
-      </ProfileWrap>
+      <ContentWrap>
+        <Tab></Tab>
+        <Content></Content>
+      </ContentWrap>
     </MyPageWrap>
   );
 }
@@ -21,16 +25,13 @@ function MyPage() {
 export default MyPage;
 
 const MyPageWrap = styled.div`
-  height: 100vh;
   width: 100%;
   margin: 0px auto;
   box-sizing: border-box;
 `;
 
-const ProfileWrap = styled.div`
-  padding: 0px 240px;
-  background: wheat;
-`;
+
+const ContentWrap = styled.div``;
 
 /*
       <div className="info-img-box">

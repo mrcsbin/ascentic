@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/MyPage.css";
+import styled from "styled-components";
 
 function MyPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -9,7 +9,7 @@ function MyPage() {
   };
 
   return (
-    <div className="mypage-wrap">
+    <MyPageWrap className="mypage-wrap">
       <div className="info-area">
         <div className="info-img-box">
           <div>
@@ -109,8 +109,10 @@ function MyPage() {
         </div>
       </div>
       <div className="main-area"></div>
-    </div>
+    </MyPageWrap>
   );
 }
 
 export default MyPage;
+
+const MyPageWrap = styled.div``;

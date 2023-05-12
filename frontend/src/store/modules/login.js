@@ -47,7 +47,7 @@ const loginSlice = createSlice({
       const { accessToken, refreshToken } = action.payload;
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
-      const expires = new Date(Date.now() + 1 * 5 * 1000);
+      const expires = new Date(Date.now() + 30 * 60 * 1000);
       if (action.payload) {
         setCookie("accessToken", accessToken, { expires });
         setCookie("refreshToken", refreshToken, { expires });

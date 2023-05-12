@@ -15,15 +15,11 @@ import { setIsLogin } from "../../store/modules/login";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const isLoggedIn = useSelector((state) => state.login.isLogin);
-  console.log(isLoggedIn);
 
-  async function handleLogout() {
+  function handleLogout() {
     removeCookie("accessToken");
-    await dispatch(setIsLogin(false));
-    setIsLoading(false);
+    dispatch(setIsLogin(false));
     navigate("/", { replace: true });
   }
 
@@ -32,15 +28,10 @@ const Header = () => {
       const token = getCookie("accessToken");
       if (token) {
         await dispatch(setIsLogin(true));
-        setIsLoading(false);
       }
     };
     checkLoginStatus();
   }, [dispatch]);
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <div className="header-wrap">

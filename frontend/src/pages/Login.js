@@ -51,24 +51,6 @@ function Login() {
     }
   };
 
-  // .then(getMemberInfo(getCookie("accessToken")))
-  // .catch(setId(""), setPassword(""), alert("틀렸수다"));
-  // const token = await login(id, password);
-  // const { accessToken, refreshToken } = token;
-  // const expires = new Date(Date.now() + 30 * 60 * 1000);
-  // if (token) {
-  //   setCookie("accessToken", accessToken, { expires });
-  //   setCookie("refreshToken", refreshToken, { expires });
-  // await getMemberInfo(getCookie("accessToken")).then(
-  //     navigate("/", { replace: true }),
-  //     setIsLogin(true)
-  //   );
-  // } else {
-  // setId("");
-  // setPassword("");
-  // alert("틀렸수다");
-  // }
-
   const handleSNSLogin = (url) => {
     if (url === "") {
       alert("아직 미구현이라능");

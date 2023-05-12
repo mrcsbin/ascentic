@@ -11,10 +11,10 @@ import java.util.List;
 public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, Integer> {
 
     @Transactional
-    @Query(value="update tb_subscribe_send SET sb_send_score = :sbSendScore, " +
-            "sb_send_review = :sbSendReview where sb_send_num = :sbSendNum",
+    @Query(value="update tb_subscribe_send SET sb_send_score = :sb_send_score, " +
+            "sb_send_review = :sb_send_review where sb_send_num = :sb_send_num",
             nativeQuery=true)
-    void updateReview(SubsReviewDTO subsReviewDTO);
+    void updateReview(Integer sb_send_num, Integer sb_send_score, String sb_send_review);
 
     List<SubscribeSend> findAllBySubscribeMember(SubscribeMember subscribeMember);
 }

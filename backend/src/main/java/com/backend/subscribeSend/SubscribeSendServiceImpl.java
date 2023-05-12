@@ -1,13 +1,10 @@
 package com.backend.subscribeSend;
 
-import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
-import com.backend.order.AddressDTO;
-import com.backend.order.Order;
+import com.backend.subscribeMember.SbMemberRepository;
 import com.backend.subscribeMember.SubscribeMember;
-import com.backend.subscribeMember.SubscribeMemberRepository;
-import com.backend.subscribeProduct.SubscribeProductRepository;
+import com.backend.subscribeProduct.SbProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,21 +17,24 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
 
     private final SubscribeSendRepository subscribeSendRepository;
     private final MemberRepository memberRepository;
-    private final SubscribeMemberRepository subscribeMemberRepository;
-    private final SubscribeProductRepository subscribeProductRepository;
+    private final SbMemberRepository sbMemberRepository;
+    private final SbProductRepository sbProductRepository;
 
     @Override
     public void insertSubsSend(SubsSendInsertDTO subsSendInsertDTO){
         SubscribeSend subscribeSend = SubscribeSend.builder()
-                 .subscribeMember(subscribeMemberRepository.findById(subsSendInsertDTO.getSbMemberNum()).orElse(null))
-                .subscribeProduct(subscribeProductRepository.findById(subsSendInsertDTO.getSpNum()).orElse(null))
+                 .subscribeMember(sbMemberRepository.findById(subsSendInsertDTO.getSbMemberNum()).orElse(null))
+                .subscribeProduct(sbProductRepository.findById(subsSendInsertDTO.getSpNum()).orElse(null))
                         .build();
         subscribeSendRepository.save(subscribeSend);
     }
 
     @Override
     public void insertSubsReview(SubsReviewDTO subsReviewDTO){
-        subscribeSendRepository.updateReview(subsReviewDTO);
+        Integer sbSendNum = subsReviewDTO.getSbSendNum();
+        Integer sbSendScore = subsReviewDTO.getSbSendScore();
+        String sbSendReview = subsReviewDTO.getSbSendReview();
+        subscribeSendRepository.updateReview(sbSendNum, sbSendScore, sbSendReview);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
         System.out.println(currentMemberId);
         //예전 구독상품에 대해서는 조회 불가. 탭따로만들거나 없는 기능으로
         //구독멤버레퍼지토리에 SubscribeMember findByMember(Member member); 추가;
-        SubscribeMember subsMember = subscribeMemberRepository
+        SubscribeMember subsMember = sbMemberRepository
                 .findByMember(memberRepository.findById(currentMemberId).orElse(null));
 
         List<SubscribeSend> subslist = subscribeSendRepository
@@ -60,9 +60,9 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
                     .sbPay(subssend.getSubscribeMember().getSbPay())
                     .sbPaymentDay(subssend.getSubscribeMember().getSbPaymentDay())
                     .tasteResult(subssend.getSubscribeMember().getTasteResult())
-                    .spScent(subssend.getSubscribeProduct().getSpScent())
-                    .spPrice(subssend.getSubscribeProduct().getSpPrice())
-                    .spIntro(subssend.getSubscribeProduct().getSpIntro())
+                    .spScent(subssend.getSubscribeProduct().getScentName())
+                    .spPrice(subssend.getSubscribeProduct().getSbProdPrice())
+                    .spIntro(subssend.getSubscribeProduct().getSbProdIntro())
                     .sbSendStart(subssend.getSbSendStart())
                     .sbSendEnd(subssend.getSbSendEnd())
                     .sbSendPostcode(subssend.getSbSendPostcode())

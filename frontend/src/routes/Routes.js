@@ -1,4 +1,7 @@
-
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLogin } from "../store/modules/login";
+import { getCookie } from "../utils/Cookies";
 import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
 
 import {
@@ -17,7 +20,30 @@ import {
   Cart,
 } from "../pages/Pages";
 
-function Routes({ isLoggedIn }) {
+function Routes() {
+  const isLoggedIn = useSelector((state) => state.login.isLogin);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const checkTokenExpiration = () => {
+      const token = getCookie("accessToken");
+      if (!token && isLoggedIn) {
+        dispatch(setIsLogin(false));
+        alert("세션이 만료되었습니다. 다시 로그인해주세요");
+        window.location.replace("/");
+      }
+    };
+    checkTokenExpiration();
+
+    const interval = setInterval(() => {
+      checkTokenExpiration();
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isLoggedIn]);
+
   return (
     <BrowserRoutes>
       <Route path="/" element={<Main />}></Route>
@@ -33,7 +59,7 @@ function Routes({ isLoggedIn }) {
         path="/mypage"
         element={isLoggedIn ? <MyPage /> : <Navigate to="/login" />}
       />
-      
+
       <Route path="/cart" element={<Cart />} />
 
       <Route path="/*" element={<Navigate to="/NotFound" />} />

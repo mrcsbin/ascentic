@@ -36,7 +36,7 @@ export const login = async (id, password) => {
 };
 
 // 토큰으로 유저 정보 받아옴
-export const getTokenInfo = async (accessToken) => {
+export const getMemberInfo = async (accessToken) => {
   const response = await axios.get(`${MEMBER_API_URL}/checktoken`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

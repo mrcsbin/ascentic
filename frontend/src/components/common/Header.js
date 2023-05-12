@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Header.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
 import iconSearch from "../../assets/iconSearch.svg";
 import { getCookie, removeCookie } from "../../utils/Cookies";
 import Loading from "./Loading";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLogin } from "../../store/modules/login";
 
 //HSM
 //RouteTest.js 에 임시로 연결
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.login.isLogin);
 
   function handleLogout() {
     removeCookie("accessToken");
-    setIsLoggedIn(false);
-    window.location.replace("/");
+    dispatch(setIsLogin(false));
+    navigate("/", { replace: true });
   }
 
   useEffect(() => {
-    const fetchLoginStatus = async () => {
-      const isCookie = await getCookie("accessToken");
-      setIsLoggedIn(!!isCookie);
-      setIsLoading(false);
+    const checkLoginStatus = async () => {
+      const token = getCookie("accessToken");
+      if (token) {
+        await dispatch(setIsLogin(true));
+      }
     };
-    fetchLoginStatus();
-  }, []);
-
-  if (isLoading) {
-    return <Loading />;
-  }
+    checkLoginStatus();
+  }, [dispatch]);
 
   return (
     <div className="header-wrap">

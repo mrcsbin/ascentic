@@ -11,9 +11,12 @@ import { useEffect } from "react";
 import { getCookie } from "../../utils/Cookies";
 import { useLocation } from "react-router-dom";
 import { getMemberInfo } from "../../api/OrderApi";
+import { useSelector } from "react-redux";
 
 // 구매 과정 페이지
 function Order(props) {
+const test = useSelector((state) => state.cart.checkedItems)
+console.log(test);
   // +, - 확장응 위한 State
   const [extend, setExtend] = useState({
     prod: true,

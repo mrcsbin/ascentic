@@ -9,7 +9,6 @@ function Cart() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.cart.loading);
   const cartItems = useSelector((state) => state.cart.cartItem);
-
   useEffect(() => {
     dispatch(fetchCartItems());
   }, [dispatch]);

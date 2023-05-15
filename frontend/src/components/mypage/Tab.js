@@ -34,10 +34,10 @@ export const Tab = () => {
         </TabList>
         <TabList>
           <TabBody
-            clicked={clickedDiv === "찜"}
-            onClick={() => tabClickHandle("찜")}
+            clicked={clickedDiv === "좋아요"}
+            onClick={() => tabClickHandle("좋아요")}
           >
-            찜 목록
+            좋아요
           </TabBody>
         </TabList>
         <TabList>

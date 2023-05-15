@@ -12,7 +12,7 @@ export const Content = () => {
     <ContentArea>
       {activeTab === "주문" && <OrderList />}
       {activeTab === "후기" && <Review />}
-      {activeTab === "찜" && <WishList />}
+      {activeTab === "좋아요" && <WishList />}
       {activeTab === "구독" && <Subscribe />}
     </ContentArea>
   );

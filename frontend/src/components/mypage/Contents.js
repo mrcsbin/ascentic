@@ -4,6 +4,7 @@ import { OrderList } from "./shopping/OrderList";
 import { Review } from "./shopping/Review";
 import { WishList } from "./shopping/WishList";
 import { Subscribe } from "./shopping/Subscribe";
+import { Update } from "./Update";
 
 export const Content = () => {
   const activeTab = useSelector((state) => state.mypage.activeTab);
@@ -14,6 +15,7 @@ export const Content = () => {
       {activeTab === "후기" && <Review />}
       {activeTab === "좋아요" && <WishList />}
       {activeTab === "구독" && <Subscribe />}
+      {activeTab === "개인정보수정" && <Update />}
     </ContentArea>
   );
 };

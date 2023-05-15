@@ -33,9 +33,9 @@ export const Profile = () => {
         <ProfileInfoBox>
           <ProfileInfoContainer>
             <ProfileName>섬빔섬빔</ProfileName>
-            <ProfileChangeParaBox>
+            {/* <ProfileChangeParaBox>
               <ProfileChangePara>개인 정보 수정</ProfileChangePara>
-            </ProfileChangeParaBox>
+            </ProfileChangeParaBox> */}
           </ProfileInfoContainer>
           <PointContainer>
             <PointHeader>포인트</PointHeader>

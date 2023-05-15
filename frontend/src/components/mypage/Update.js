@@ -1,24 +1,82 @@
 import styled from "styled-components";
+import { updateMember, deleteMember, getMemberInfo } from "../../api/MemberApi";
+import { useState, useEffect } from "react";
+import { getCookie } from "../../utils/Cookies";
 
 export const Update = () => {
+  const [userInfo, setUserInfo] = useState({
+    id: "",
+    email: "",
+    name: "",
+    nickname: "",
+  });
+
+  const [newUserInfo, setNewUserInfo] = useState({
+    id: userInfo.id,
+    email: userInfo.email,
+    name: userInfo.name,
+    nickname: userInfo.nickname,
+    password: userInfo.password,
+    passwordCheck: "",
+  });
+
+  useEffect(() => {
+    const fetchMemberInfo = async () => {
+      const accessToken = getCookie("accessToken");
+      const getInfo = await getMemberInfo(accessToken);
+      const { password, ...infoWithoutPassword } = getInfo;
+      setUserInfo((prevState) => ({
+        ...prevState,
+        ...infoWithoutPassword,
+      }));
+    };
+    fetchMemberInfo();
+  }, []);
+
+  const handleChange = (e) => {
+    setUserInfo((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const updateClickHandle = async () => {
+    console.log(newUserInfo);
+    // const res = await updateMember();
+  };
+
+  const withdrawClickHandle = async () => {
+    const res = await deleteMember();
+  };
+
   return (
     <UpdateFormWrap>
       <Box>
         <Label>이름</Label>
         <InputBox>
-          <DisabledInput>섬빔</DisabledInput>
+          <DisabledInput readOnly value={userInfo.name} />
         </InputBox>
       </Box>
       <Box>
         <Label>아이디</Label>
         <InputBox>
-          <DisabledInput>mrcsbin2</DisabledInput>
+          <DisabledInput readOnly value={userInfo.id} />
+        </InputBox>
+      </Box>
+      <Box>
+        <Label>이메일</Label>
+        <InputBox>
+          <DisabledInput readOnly value={userInfo.email} />
         </InputBox>
       </Box>
       <Box>
         <Label>현재 비밀번호</Label>
         <InputBox>
-          <Input type="password"></Input>
+          <Input
+            type="password"
+            value={userInfo.password}
+            onChange={handleChange}
+          ></Input>
         </InputBox>
       </Box>
       <Box>
@@ -28,14 +86,25 @@ export const Update = () => {
             type="password"
             placeholder="새 비밀번호"
             style={{ marginBottom: 25 }}
+            value={userInfo.password}
+            onChange={handleChange}
           ></Input>
-          <Input type="password" placeholder="새 비밀번호 확인"></Input>
+          <Input
+            type="password"
+            placeholder="새 비밀번호 확인"
+            value={userInfo.passwordCheck}
+            onChange={handleChange}
+          ></Input>
         </InputBox>
       </Box>
       <Box>
         <Label>별명</Label>
         <InputBox>
-          <Input type="text"></Input>
+          <Input
+            type="text"
+            value={userInfo.nickname}
+            onChange={handleChange}
+          ></Input>
         </InputBox>
       </Box>
       <Box>
@@ -48,21 +117,16 @@ export const Update = () => {
             <UploadButton>업로드</UploadButton>
           </UploadButtonBox>
           <InputBox>
-            <Input></Input>
+            <Input onChange={handleChange}></Input>
           </InputBox>
         </ProfileContainer>
       </Box>
-      <Box>
-        <Label>이메일</Label>
-        <InputBox>
-          <Input></Input>
-        </InputBox>
-      </Box>
+
       <ButtonBox>
-        <UpdateButton>수정</UpdateButton>
+        <UpdateButton onClick={updateClickHandle}>수정</UpdateButton>
       </ButtonBox>
       <ButtonBox>
-        <WithdrawButton>회원탈퇴</WithdrawButton>
+        <WithdrawButton onClick={withdrawClickHandle}>회원탈퇴</WithdrawButton>
       </ButtonBox>
     </UpdateFormWrap>
   );
@@ -87,7 +151,7 @@ const Label = styled.div`
   width: 40%;
 `;
 
-const DisabledInput = styled.div`
+const DisabledInput = styled.input`
   width: 70%;
   padding: 10px;
   box-sizing: border-box;

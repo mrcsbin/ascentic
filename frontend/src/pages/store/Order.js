@@ -10,13 +10,18 @@ import axios from "axios";
 import { useEffect } from "react";
 import { getCookie } from "../../utils/Cookies";
 import { useLocation } from "react-router-dom";
-import { getMemberInfo } from "../../api/OrderApi";
+import { getMemberInfo, getProductInfo } from "../../api/OrderApi";
 import { useSelector } from "react-redux";
 
 // 구매 과정 페이지
 function Order(props) {
-const test = useSelector((state) => state.cart.checkedItems)
-console.log(test);
+  // const cartNum = useSelector((state) => state.cart.checkedItems);
+  // useEffect(() => {
+  //   const fetchProductData = async () => {
+  //     const productList = await getProductInfo(cartNum);
+  //   };
+  //   fetchProductData();
+  // }, []);
   // +, - 확장응 위한 State
   const [extend, setExtend] = useState({
     prod: true,

@@ -54,7 +54,8 @@ export const CartSideBar = () => {
   const isNotItems = checkedItem.length === 0;
 
   const clickHandler = () => {
-    dispatch("/order 로 상품정보 보내는 api 호출");
+    
+    // dispatch("/order 로 상품정보 보내는 api 호출");
   };
 
   return (
@@ -63,11 +64,12 @@ export const CartSideBar = () => {
         <SideBarContent>
           <Contents cartItems={cartItems} />
         </SideBarContent>
-        <Link>
+        <Link to="/order">
           <OrderButton
             type="button"
             onClick={clickHandler}
             disabled={isNotItems}
+            
           >
             구매하기
           </OrderButton>

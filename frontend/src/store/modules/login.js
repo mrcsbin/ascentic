@@ -58,6 +58,7 @@ const loginSlice = createSlice({
       console.log("인증 중");
     },
     [fetchMemberByToken.fulfilled]: (state, action) => {
+      console.log(action.payload);
       state.loading = false;
       if (action.payload) {
         state.isLogin = true;

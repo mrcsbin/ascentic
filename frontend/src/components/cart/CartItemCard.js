@@ -60,10 +60,10 @@ export const CartItemCard = ({ item }) => {
         checked={isChecked}
         onChange={handleToggleCheck}
       />
-      <ItemImageLink href="/cart">
+      <ItemImageLink href={`store/productdetail/${item.prodNum}`}>
         <ItemImage src={TEST_IMAGE} alt="상품 이미지" />
       </ItemImageLink>
-      <ItemLink href="/cart">
+      <ItemLink href={`store/productdetail/${item.prodNum}`}>
         <ItemTitle>{item.prodName}</ItemTitle>
         <ItemOption>{item.prodOption}</ItemOption>
       </ItemLink>

@@ -11,18 +11,22 @@ export const 회원가입 = async (e) => {
 };
 
 // 회원 수정
-export const updateMember = async (id, name, email) => {
-  const response = await axios.post(`${MEMBER_API_URL}/${id}`, {
-    /* data */
+export const updateMember = async (id, name, email, image, nickname, password, newPassword) => {
+  const response = await axios.patch(`${MEMBER_API_URL}/${id}`, {
+    id,
+    name,
+    email,
+    image,
+    nickname,
+    password,
+    newPassword
   });
   return response.data;
 };
 
 // 회원 삭제
-export const deleteMember = async (id, name, email) => {
-  const response = await axios.post(`${MEMBER_API_URL}/${id}`, {
-    /* data */
-  });
+export const deleteMember = async (id) => {
+  const response = await axios.delete(`${MEMBER_API_URL}/${id}/v2`, {});
   return response.data;
 };
 

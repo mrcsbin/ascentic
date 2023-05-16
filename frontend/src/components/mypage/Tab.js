@@ -68,10 +68,18 @@ export const Tab = () => {
         <TabHeader>고객 서비스</TabHeader>
         <TabList>
           <TabBody
-            clicked={clickedDiv === "개인정보수정"}
-            onClick={() => tabClickHandle("개인정보수정")}
+            clicked={clickedDiv === "회원정보수정"}
+            onClick={() => tabClickHandle("회원정보수정")}
           >
-            개인정보수정
+            회원정보수정
+          </TabBody>
+        </TabList>
+        <TabList>
+          <TabBody
+            clicked={clickedDiv === "알림 설정"}
+            onClick={() => tabClickHandle("알림 설정")}
+          >
+            알림 설정
           </TabBody>
         </TabList>
         <TabList>
@@ -79,9 +87,6 @@ export const Tab = () => {
         </TabList>
         <TabList>
           <TabBody>1:1 문의 내역</TabBody>
-        </TabList>
-        <TabList>
-          <TabBody>공지사항</TabBody>
         </TabList>
       </TabBox>
     </TabArea>

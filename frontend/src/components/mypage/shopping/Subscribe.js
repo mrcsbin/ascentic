@@ -1,9 +1,20 @@
 import styled from "styled-components";
 
 export const Subscribe = () => {
-    return (
-        <div>
-            <div>구독관리</div>
-        </div>
-    )
-}
+  return (
+    <Wrap>
+      <ContentHeader>구독관리</ContentHeader>
+    </Wrap>
+  );
+};
+
+const Wrap = styled.div`
+  border-bottom: 2px solid black;
+`;
+
+const ContentHeader = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 700;
+  border-bottom: 2px solid black;
+`;

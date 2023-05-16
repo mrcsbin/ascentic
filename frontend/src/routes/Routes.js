@@ -18,6 +18,7 @@ import {
   Order,
   NotFound,
   Cart,
+  Withdrawal,
 } from "../pages/Pages";
 
 function Routes() {
@@ -71,6 +72,8 @@ function Routes() {
       <Route path="/signup" element={<SignUp />}></Route>
 
       <Route path="/signupsuccess" element={<SignUpSuccess />} />
+
+      <Route path="/goodbye" element={<Withdrawal />} />
 
       <Route path="/order" element={<Order />}></Route>
 

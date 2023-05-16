@@ -26,8 +26,56 @@
   flex-direction: row;
   font-size: 18px;
 }
-.header-wrap .navbarMenu li {
+.header-wrap .navbarMenu > li {
   padding: 0px 14px;
+}
+/* flexbox 자식 컨테이너 #2 - 소메뉴 */
+.header-wrap .navbarMenu .submenu a {
+  text-decoration: none;
+  color : white;
+}
+.header-wrap .navbarMenu .menu2-1 .menu2-1-box {
+  margin: 13.5px 0px;
+}
+.header-wrap .navbarMenu .menu2-2 .menu2-2-box {
+  margin: 13.5px 0px;
+}
+.header-wrap .navbarMenu .menu2-3 .menu2-3-box {
+  margin: 13.5px 0px;
+}
+/* flexbox 자식 컨테이너 #2 - 소메뉴 hover */
+.header-wrap .navbar .navbarMenu .submenu {
+  background: black;
+  color: white;
+  display: none;
+  z-index: 999;
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  left: 0;
+  list-style: none;
+  font-size: 18px;
+}
+.header-wrap .menu2-1:hover .submenu,
+.header-wrap .menu2-2:hover .submenu,
+.header-wrap .menu2-3:hover .submenu {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-wrap .navbar .navbarMenu .submenu .sub-content {
+  margin: 0 auto;
+  display: flex;
+}
+.header-wrap .navbar .navbarMenu .submenu .sub-content > ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.header-wrap .navbar .navbarMenu .submenu .sub-content>ul>li {
+  margin: 0 40px;
 }
 /* flexbox 자식 컨테이너 #3 */
 .header-wrap .navbarIcon {
@@ -40,3 +88,65 @@
 .header-wrap .navbarIcon li {
   padding: 0px 15px;
 }
+/* 검색창 css */
+.header-wrap .search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+.header-wrap .search-wrap {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 12px;
+  display: flex;
+  width: 80%;
+  height: 25%;
+}
+.header-wrap .search-wrap form{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  margin: auto;
+}
+.header-wrap .search-wrap input[type=text] {
+  border: 0;
+  outline: none;
+  border-bottom: black solid 1px;
+  font-size: 35px;
+  padding: 0px 30px;
+  text-align: center;
+  width: 100%;
+  background: transparent;
+}
+.header-wrap .search-wrap input:focus::placeholder {
+  color: transparent;
+}
+.header-wrap .search-wrap .search-img {
+  border:0;
+  background:transparent;
+}
+.header-wrap .search .close-btn {
+  all: unset;
+  cursor: pointer;
+  color: black;
+  position: relative;
+  left: 80%;
+  font-size: 30px;
+  white-space: nowrap;
+}
+/*
+.header-wrap .menu2-1 .img{
+  display: none;
+}
+.header-wrap .menu2-1:hover .img {
+  display: block;
+} */

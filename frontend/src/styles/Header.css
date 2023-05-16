@@ -32,7 +32,7 @@
 /* flexbox 자식 컨테이너 #2 - 소메뉴 */
 .header-wrap .navbarMenu .submenu a {
   text-decoration: none;
-  color : white;
+  color: white;
 }
 .header-wrap .navbarMenu .menu2-1 .menu2-1-box {
   margin: 13.5px 0px;
@@ -74,7 +74,7 @@
   justify-content: space-around;
   align-items: center;
 }
-.header-wrap .navbar .navbarMenu .submenu .sub-content>ul>li {
+.header-wrap .navbar .navbarMenu .submenu .sub-content > ul > li {
   margin: 0 40px;
 }
 /* flexbox 자식 컨테이너 #3 */
@@ -109,7 +109,7 @@
   width: 80%;
   height: 25%;
 }
-.header-wrap .search-wrap form{
+.header-wrap .search-wrap form {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -117,7 +117,7 @@
   align-items: center;
   margin: auto;
 }
-.header-wrap .search-wrap input[type=text] {
+.header-wrap .search-wrap input[type="text"] {
   border: 0;
   outline: none;
   border-bottom: black solid 1px;
@@ -131,17 +131,17 @@
   color: transparent;
 }
 .header-wrap .search-wrap .search-img {
-  border:0;
-  background:transparent;
+  border: 0;
+  background: transparent;
 }
 .header-wrap .search .close-btn {
   all: unset;
   cursor: pointer;
   color: black;
   position: relative;
-  left: 80%;
   font-size: 30px;
   white-space: nowrap;
+  margin-left: 5%;
 }
 /*
 .header-wrap .menu2-1 .img{

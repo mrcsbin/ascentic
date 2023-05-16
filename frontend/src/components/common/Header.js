@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../styles/Header.css";
 import { Link, useLocation } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
@@ -26,7 +26,19 @@ const Header = () => {
   const handlehideSearch = () => {
     setShowSearch(false);
   };
+  const searchRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setShowSearch(false);
+      }
+    }
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   function handleLogout() {
     removeCookie("accessToken");
     setIsLoggedIn(false);
@@ -170,7 +182,7 @@ const Header = () => {
       </nav>
       {/* 검색창 */}
       {showSearch && (
-        <div className="search">
+        <div className="search" ref={searchRef}>
           <div className="search-wrap">
             {/* 0512 form 삭제하기 -> css 재작업 */}
             <form>

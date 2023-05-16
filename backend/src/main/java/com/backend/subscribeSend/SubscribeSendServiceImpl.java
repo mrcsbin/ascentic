@@ -56,7 +56,6 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
                     .sbSendNum(subssend.getSbSendNum())
                     .sbStartDate(subssend.getSubscribeMember().getSbStartDate())
                     .sbEndDate(subssend.getSubscribeMember().getSbEndDate())
-                    .sbPeriod(subssend.getSubscribeMember().getSbPeriod())
                     .sbPay(subssend.getSubscribeMember().getSbPay())
                     .sbPaymentDay(subssend.getSubscribeMember().getSbPaymentDay())
                     .tasteResult(subssend.getSubscribeMember().getTasteResult())

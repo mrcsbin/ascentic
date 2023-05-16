@@ -18,7 +18,11 @@ const ExpSubs = () => {
     const fetchData = async () => {
       const result = await requestTasteRes(accessToken); // api 함수 호출
       console.log(result);
-      setTasteRes(result.firstPlace); // 결과를 state에 저장
+      if (result.data === undefined) {
+        setTasteRes("하이");
+      } else {
+        setTasteRes(result.firstPlace); // 결과를 state에 저장
+      }
     };
 
     fetchData();

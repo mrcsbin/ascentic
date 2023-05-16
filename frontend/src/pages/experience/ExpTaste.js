@@ -4,7 +4,6 @@ import axios from "axios";
 import { getCookie } from "../../utils/Cookies";
 import TestResult from "../../components/ExpTasteRes";
 import "../../styles/ExpTaste.css";
-import sky from "../../assets/expTasteTest/sky.mp4";
 import nightsky from "../../assets/expTasteTest/nightsky.mp4";
 
 const ExpTaste = () => {

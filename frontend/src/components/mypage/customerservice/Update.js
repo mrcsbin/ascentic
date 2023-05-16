@@ -6,7 +6,6 @@ import {
 } from "../../../api/MemberApi";
 import { useState, useEffect, useRef } from "react";
 import { getCookie, removeCookie } from "../../../utils/Cookies";
-import DEFAULT_USER_IMAGE from "../../../assets/mypage/user.png";
 
 export const Update = () => {
   const fileInput = useRef(null);
@@ -25,7 +24,7 @@ export const Update = () => {
       const getInfo = await getMemberInfo(accessToken);
       const { name, id, email, nickname, image } = getInfo;
       if (getInfo.image) {
-        setImage({ image });
+        setImage(image);
       } else {
         setImage(DefaultProfileImageURL);
       }
@@ -50,6 +49,13 @@ export const Update = () => {
         (window.location.href = "/")
       );
     }
+  };
+
+  const updateHandle = async () => {
+    await updateMember(id, name, email, image, nickname).then(
+      alert("회원정보가 수정되었습니다."),
+      (window.location.href = "/mypage")
+    );
   };
 
   return (
@@ -97,53 +103,47 @@ export const Update = () => {
             <DisabledInput readOnly value={email} />
           </InputBox>
         </Box>
-        {/* <Box>
+        <Box>
           <Label>현재 비밀번호</Label>
           <InputBox>
-            <Input
-              type="password"
-              value={userInfo.password}
-              onChange={handleChange}
-            ></Input>
+            <Input type="password" placeholder="현재 비밀번호"></Input>
           </InputBox>
-        </Box> */}
-        {/* <Box>
+        </Box>
+        <Box>
           <Label>새 비밀번호</Label>
           <InputBox>
-            <Input
-              type="password"
-              placeholder="새 비밀번호"
-              style={{ marginBottom: 25 }}
-              value={userInfo.newPassword}
-              onChange={handleChange}
-            ></Input>
-            <Input
-              type="password"
-              placeholder="새 비밀번호 확인"
-              value={userInfo.newPasswordCheck}
-              onChange={handleChange}
-            ></Input>
+            <Input type="password" placeholder="새 비밀번호"></Input>
           </InputBox>
-        </Box> */}
+        </Box>
+        <Box>
+          <Label></Label>
+          <InputBox>
+            <Input type="password" placeholder="새 비밀번호 확인"></Input>
+          </InputBox>
+        </Box>
         <Box>
           <Label>닉네임</Label>
           <InputBox>
-            <Input type="text"></Input>
+            <Input
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            ></Input>
           </InputBox>
         </Box>
-        <ButtonBox>
-          <UpdateButton>수정</UpdateButton>
-        </ButtonBox>
-        <ButtonBox>
+        <UpdateButtonBox>
+          <UpdateButton onClick={updateHandle}>수정하기</UpdateButton>
+        </UpdateButtonBox>
+        <WithdrawalButtonBox>
           <WithdrawButton onClick={withdrawHandle}>회원탈퇴</WithdrawButton>
-        </ButtonBox>
+        </WithdrawalButtonBox>
       </UpdateFormWrap>
     </Wrap>
   );
 };
 
 const Wrap = styled.div`
-  border-bottom: 2px solid black;
+  // border-bottom: 2px solid black;
 `;
 
 const ContentHeader = styled.div`
@@ -154,7 +154,7 @@ const ContentHeader = styled.div`
 `;
 
 const UpdateFormWrap = styled.div`
-  padding: 20px 100px 40px 160px;
+  padding: 20px 100px 0px 160px;
 `;
 
 const Box = styled.div`
@@ -164,7 +164,7 @@ const Box = styled.div`
 `;
 
 const Label = styled.div`
-  padding-left: 50px;
+  // padding-left: 50px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -183,7 +183,7 @@ const DisabledInput = styled.input`
 `;
 
 const InputBox = styled.div`
-  padding-right: 50px;
+  // padding-right: 50px;
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -232,7 +232,9 @@ const ProfileImage = styled.img`
   border-radius: 50%;
 `;
 
-const ButtonBox = styled.div`
+const UpdateButtonBox = styled.div`
+margin-top: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   background-color: black;
@@ -250,9 +252,20 @@ const UpdateButton = styled.button`
   cursor: pointer;
 `;
 
+const WithdrawalButtonBox = styled.div`
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  padding: 0 50px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  border-radius: 5px;
+`;
+
 const WithdrawButton = styled.button`
+  font-size: 12px;
   color: grey;
-  background-color: black;
+  background: white;
   border: none;
   cursor: pointer;
 `;

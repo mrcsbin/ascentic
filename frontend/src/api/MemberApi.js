@@ -20,7 +20,7 @@ export const updateMember = async (id, name, email) => {
 
 // 회원 삭제
 export const deleteMember = async (id) => {
-  const response = await axios.post(`${MEMBER_API_URL}/${id}`, {
+  const response = await axios.delete(`${MEMBER_API_URL}/${id}/v2`, {
     /* data */
   });
   return response.data;

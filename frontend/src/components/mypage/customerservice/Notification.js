@@ -5,8 +5,6 @@ export const Notification = () => {
   const [emailPushYn, setEmailPushYn] = useState(false);
   const [snsPushYn, setSnsPushYn] = useState(false);
 
-  console.log(emailPushYn);
-
   return (
     <Wrap>
       <ContentHeader>알림 설정</ContentHeader>

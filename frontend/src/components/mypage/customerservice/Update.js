@@ -5,7 +5,7 @@ import {
   getMemberInfo,
 } from "../../../api/MemberApi";
 import { useState, useEffect, useRef } from "react";
-import { getCookie } from "../../../utils/Cookies";
+import { getCookie, removeCookie } from "../../../utils/Cookies";
 import DEFAULT_USER_IMAGE from "../../../assets/mypage/user.png";
 
 export const Update = () => {
@@ -37,10 +37,19 @@ export const Update = () => {
     fetchMemberInfo();
   }, []);
 
-  const onChange = (event) => {
+  const changeHandle = (event) => {
     const imageFile = event.target.files[0];
     const imageUrl = URL.createObjectURL(imageFile);
     setImage(imageUrl);
+  };
+
+  const withdrawHandle = async () => {
+    if (window.confirm("정말 회원 탈퇴를 진행하시겠습니까?")) {
+      await deleteMember(id).then(
+        removeCookie("accessToken"),
+        (window.location.href = "/")
+      );
+    }
   };
 
   return (
@@ -55,11 +64,10 @@ export const Update = () => {
             <ImageInputContainer>
               <ImageUpload
                 type="file"
-                style={{ display: "none" }}
                 accept="image/*"
-                name="profileImage"
+                name="image"
                 ref={fileInput}
-                onChange={onChange}
+                onChange={changeHandle}
               ></ImageUpload>
               <ImageLabel
                 onClick={() => {
@@ -127,7 +135,7 @@ export const Update = () => {
           <UpdateButton>수정</UpdateButton>
         </ButtonBox>
         <ButtonBox>
-          <WithdrawButton>회원탈퇴</WithdrawButton>
+          <WithdrawButton onClick={withdrawHandle}>회원탈퇴</WithdrawButton>
         </ButtonBox>
       </UpdateFormWrap>
     </Wrap>
@@ -213,23 +221,8 @@ const ImageLabel = styled.div`
   }
 `;
 
-const ImageUpload = styled.input``;
-
-const UploadButtonBox = styled.div`
-  text-align: center;
-  width: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0 10px;
-`;
-
-const UploadButton = styled.div`
-  box-sizing: border-box;
-  padding: 15px 4px;
-  border-radius: 10px;
-  background-color: black;
-  color: white;
+const ImageUpload = styled.input`
+  display: none;
 `;
 
 const ProfileImage = styled.img`
@@ -254,10 +247,12 @@ const UpdateButton = styled.button`
   border: none;
   color: white;
   background-color: black;
+  cursor: pointer;
 `;
 
 const WithdrawButton = styled.button`
   color: grey;
   background-color: black;
   border: none;
+  cursor: pointer;
 `;

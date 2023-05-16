@@ -1,5 +1,6 @@
 package com.backend.taste;
 
+import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class TasteServiceImpl implements TasteService {
     private final MemberRepository memberRepository;
 
     @Override
-    public String tasteResProgress(TasteDTO tasteDTO) {
+    public TasteResultDTO tasteResProgress(TasteDTO tasteDTO) {
         // 테스트 코드를 위해서 임시로 memberId 설정
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 //        String currentMemberId = "kka12345";
@@ -25,8 +26,18 @@ public class TasteServiceImpl implements TasteService {
         String secondPlace = result.get(1);
         String thirdPlace = result.get(2);
 
+        Member currentMember = memberRepository.findById(currentMemberId).orElse(null);
+
+        if (currentMember==null){
+            return TasteResultDTO.builder()
+                    .firstPlace("null")
+                    .secondPlace("null")
+                    .thirdPlace("null")
+                    .build();
+        }
+
         Taste taste = Taste.builder()
-                .member(memberRepository.findById(currentMemberId).orElse(null))
+                .member(currentMember)
                 .tasteAgree(tasteDTO.getTasteAgree())
                 .tasteName(tasteDTO.getTasteName())
                 .tasteGender(tasteDTO.getTasteGender())
@@ -42,8 +53,12 @@ public class TasteServiceImpl implements TasteService {
                 .build();
 
         Taste tasteRes = tasteRepository.save(taste);
+        return TasteResultDTO.builder()
+                    .firstPlace(tasteRes.getFirstPlace())
+                    .secondPlace(tasteRes.getSecondPlace())
+                    .thirdPlace(tasteRes.getThirdPlace())
+                    .build();
 
-        return tasteRes.getFirstPlace();
     }
 
     @Override
@@ -53,11 +68,20 @@ public class TasteServiceImpl implements TasteService {
 
         Taste taste = tasteRepository.findDistinctTopByMemberOrderByTasteNumDesc(memberRepository.findById(currentMemberId).orElse(null));
 
-        return TasteResultDTO.builder()
-                .firstPlace(taste.getFirstPlace())
-                .secondPlace(taste.getSecondPlace())
-                .thirdPlace(taste.getThirdPlace())
-                .build();
+        if ((memberRepository.findById(currentMemberId).orElse(null)==null)
+                |(taste==null)) {
+            return TasteResultDTO.builder()
+                    .firstPlace("null")
+                    .secondPlace("null")
+                    .thirdPlace("null")
+                    .build();
+        } else {
+            return TasteResultDTO.builder()
+                    .firstPlace(taste.getFirstPlace())
+                    .secondPlace(taste.getSecondPlace())
+                    .thirdPlace(taste.getThirdPlace())
+                    .build();
+        }
     }
 
     private int[] findTestCheck(Integer test1, Integer test2, Integer test3, Integer test4, Integer test5) {

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class AdminPostServiceImpl implements AdminPostService {
@@ -14,6 +16,17 @@ public class AdminPostServiceImpl implements AdminPostService {
     @Override
     public AdminPost createAdminPost(AdminPost post) {
         return adminPostRepository.save(post);
+    }
+
+    @Override
+    public List<AdminPost> getAdminPostsByCategory(String category) {
+        if (category.equals("event")) {
+            return adminPostRepository.findByPostCategory(category);
+        } else if (category.equals("news")) {
+            return adminPostRepository.findByPostCategory(category);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -32,10 +45,16 @@ public class AdminPostServiceImpl implements AdminPostService {
     }
 
     @Override
-    public void deleteAdminPost(Long id) {
+    public boolean deleteAdminPost(Long id) {
         AdminPost post = adminPostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
-        adminPostRepository.delete(post);
+        try {
+            adminPostRepository.delete(post);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
+
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public class ResourceNotFoundException extends RuntimeException {

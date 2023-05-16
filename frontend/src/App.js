@@ -8,6 +8,7 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Notice from "./components/common/Notice";
 import Loading from "./components/common/Loading";
+import AdminNav from "./admin/AdminNav";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <Router>
+      <AdminNav />
       <Notice />
       <Header />
       {/* lazy() 사용시 서스펜스 적용 안하면 오류발생함 */}

@@ -3,21 +3,19 @@ package com.backend.adminPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,12 +37,27 @@ public class AdminPostController {
         return adminPostService.createAdminPost(adminPost);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/posts")
+    public List<AdminPost> getPosts(String category) {
+        return adminPostService.getAdminPostsByCategory(category);
+    }
+
+    @GetMapping("/post/{id}")
     public AdminPost getPost(@PathVariable Long id) {
         return adminPostService.getAdminPost(id);
     }
+    @DeleteMapping("/post/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
+        // 게시물 삭제 로직 구현
+        boolean deleted = adminPostService.deleteAdminPost(id);
 
-    @PutMapping("/{id}")
+        if (deleted) {
+            return ResponseEntity.ok().body("Post deleted successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to delete post");
+        }
+    }
+    @PutMapping("/{id}") //멱등성
     public AdminPost updatePost(@PathVariable Long id, @RequestBody AdminPost adminPost) {
         return adminPostService.updateAdminPost(id, adminPost);
     }

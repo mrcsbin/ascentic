@@ -1,0 +1,70 @@
+/* Noto Sans KR */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+/* Nanum Gothic */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+/* Gothic A1 */
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap");
+
+/* Black Han Sans */
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+
+/* 폰트 스타일 */
+.ql-font-Noto-Sans {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.ql-font-Roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.ql-font-Open-Sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+.ql-font-Gugi {
+  font-family: "Gugi", cursive;
+}
+.ql-editor strong {
+  font-weight: bold;
+}
+.ql-editor em {
+  font-style: italic;
+}
+
+.QuillContainer {
+  height: 90%;
+}
+.ql-editor {
+  min-height: 150px !important;
+  max-height: 150px;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+.CalendarContainer {
+  z-index: 999;
+}
+
+.NameCategory {
+  display: flex;
+  flex-direction: column;
+}
+
+.NameCategory input,
+.NameCategory select {
+  margin-bottom: 10px;
+}
+
+.CalendarContainer {
+  margin-left: 20px;
+}
+
+.NameCategory {
+  margin-bottom: 10px;
+}
+
+.CalendarContainer {
+  margin-left: 0;
+}

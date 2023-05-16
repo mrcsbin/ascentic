@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Header.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
 import iconSearch from "../../assets/iconSearch.svg";
 import { getCookie, setCookie, removeCookie } from "../../utils/Cookies";
 
-//HSM
-//RouteTest.js 에 임시로 연결
-
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie("accessToken"));
+  const location = useLocation();
 
   function handleLogout() {
     removeCookie("accessToken");
     setIsLoggedIn(false);
     window.location.replace("/");
   }
+
+  // "/admin" 산하의 페이지에는 Header 컴포넌트를 렌더링하지 않음
+  if (location.pathname.startsWith("/admin")) return null;
 
   return (
     <div className="header-wrap">

@@ -13,7 +13,7 @@ const SignUpSuccess = lazy(() => import("./SignUpSuccess"));
 const MyPage = lazy(() => import("./MyPage"));
 const NotFound = lazy(() => import("../components/common/NotFound"));
 const Cart = lazy(() => import("./Cart"));
-const Admin = lazy(() => import("../admin/AdminPage"));
+const Admin = lazy(() => import("../admin/Admin"));
 
 export {
   Order,

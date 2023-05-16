@@ -1,6 +1,5 @@
 package com.backend.subscribeMember;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,15 +12,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubscribeMemberDto {
-    private LocalDate sbStartDate;
-
-    private LocalDate sbEndDate;
-
-    private String sbPeriod;
-
-    private String sbPay;
-
-    private Integer sbPaymentDay;
-
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String memberName;
+    private String memberTel;
+    private String mainAddress;
+    private String subAddress;
+    private String shipMessage;
+    private String paymentMethod;
+    private Integer monthPaymentDate;
+    private Integer price;
     private String tasteResult;
 }

@@ -29,14 +29,29 @@ public class SubscribeMember {
     @Column(name = "sb_end_date")
     private LocalDate sbEndDate;
 
-    @Column(name = "sb_period")
-    private String sbPeriod;
+    @Column(name = "sb_member_name")
+    private String sbMemberName;
+
+    @Column(name = "sb_member_tel")
+    private String sbMemberTel;
+
+    @Column(name = "sb_main_addr")
+    private String sbMainAddr;
+
+    @Column(name = "sb_sub_addr")
+    private String sbSubAddr;
+
+    @Column(name = "sb_ship_message")
+    private String sbShipMessage;
 
     @Column(name = "sb_pay")
     private String sbPay;
 
     @Column(name = "sb_payment_day")
     private Integer sbPaymentDay;
+
+    @Column(name = "sb_price")
+    private Integer sbPrice;
 
     @Column(name = "taste_result")
     private String tasteResult;

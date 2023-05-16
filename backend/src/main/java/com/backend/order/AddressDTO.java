@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class AddressDTO {
-    private String memberId;
     private String shipMainAddress;
     private String shipSubAddress;
 }

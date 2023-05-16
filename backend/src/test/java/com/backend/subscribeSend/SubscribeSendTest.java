@@ -1,20 +1,10 @@
 package com.backend.subscribeSend;
 
-import com.backend.MessageAndMail.MailController;
-import com.backend.member.dto.JwtTokenDto;
-import com.backend.member.dto.LoginDto;
-import com.backend.member.jwt.JwtTokenProvider;
-import com.backend.member.repository.MemberRepository;
+
 import com.backend.member.service.MemberServiceImpl;
-import com.backend.subscribeMember.SubscribeMemberRepository;
-import com.backend.subscribeProduct.SubscribeProductRepository;
-import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static org.mockito.Mockito.mock;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class SubscribeSendTest {

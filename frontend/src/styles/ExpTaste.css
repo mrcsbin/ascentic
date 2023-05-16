@@ -24,7 +24,10 @@
   height: fit-content;
 
   top: 0;
-  margin: 10vw 20vw 10vw 20vw;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 10vw auto;
   padding: 10px 0;
   text-align: center;
   border: 1px solid white;
@@ -86,24 +89,40 @@
 /* 취향테스트 시작 페이지 TasteTestStart */
 .tasteTest {
   display: flex;
+  position: relative;
   width: 100vw;
+  height: 100%;
+  overflow: hidden;
+}
+.tasteTest > .mainvideo {
+  width: 100vw;
+  object-fit: cover;
+  object-position: center;
+  z-index: -10;
 }
 .testcontentbox {
   display: flex;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: fit-content;
   height: fit-content;
 
-  margin: 5vw auto;
-  padding: 6vw 15vw;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-width: 730px;
+  margin: auto auto;
+  padding: 5vw 5vw;
   text-align: center;
   border: 1px solid black;
-  z-index: 10;
+  background-color: white;
+  opacity: 0.95;
 }
 .maintext {
-  margin: 1.5vw auto;
+  margin: 0.5vw auto 1.5vw auto;
   padding: 0;
   text-align: center;
   font-family: "Pretendard";
@@ -199,7 +218,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .orderBtnbox {
-  margin: 2vw auto;
+  margin: 1.5vw auto 0 auto;
 }
 .orderBtnbox > .beforebtn {
   margin: 0 0.6vw;
@@ -248,8 +267,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .testcontentbox > .testimgBtnbox > .testimgBtn {
   width: 200px;
-  margin: 3vw 0.6vw;
-  padding: 0.8rem 0;
+  margin: 1.5vw 1.5vw;
+  padding: 0;
   text-align: center;
   cursor: pointer;
   border: 1.5px solid white;
@@ -260,35 +279,60 @@ input[type="number"]::-webkit-outer-spin-button {
 .testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg,
 .testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg {
   position: relative;
-  margin: 10px auto;
-  width: 180px;
-  height: 150px;
+  margin: 0.7rem auto;
+  width: 200px;
+  height: 130px;
   border-radius: 3px;
   overflow: hidden;
 }
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg2,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg2 {
+  position: relative;
+  margin: 0.7rem auto;
+  width: 200px;
+  height: 130px;
+  border-radius: 3px;
+  overflow: visible;
+}
 .testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg > img,
 .testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg > img {
-  width: 180px;
+  width: 200px;
+  height: 130px;
   object-fit: cover;
+  object-position: center;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg2 > img,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg2 > img {
+  width: 130px;
+  height: 130px;
+  object-fit: scale-down;
   object-position: center;
 }
 .testcontentbox > .testimgBtnbox > .testimgBtn:hover,
 .testimgBtn-active {
   width: 200px;
-  margin: 3vw 0.6vw;
-  padding: 0.8rem 0;
+  margin: 1.5vw 1.5vw;
+  padding: 0;
   text-align: center;
   cursor: pointer;
   border: 1.5px solid white;
-  border-bottom: 1.5px solid black;
   background-color: white;
+  font-size: 1rem;
+  border-top: 1.5px solid black;
   color: black;
   font-weight: 700;
-  font-size: 1rem;
 }
 .testcontentbox > .testimgBtnbox > .testimgBtn:hover > .testBtnimg > img,
 .testimgBtn-active > .testBtnimg > img {
-  opacity: 0.8;
-  transform: scale(1.07);
+  transform: scale(1.05);
   transition: all 0.3s;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn:hover > .testBtnimg2 > img,
+.testimgBtn-active > .testBtnimg2 > img {
+  transform: scale(1.02);
+  transition: all 0.3s;
+}
+.enneartext {
+  font-size: 0.8rem;
+  font-weight: 700;
 }

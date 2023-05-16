@@ -11,12 +11,15 @@ export const 회원가입 = async (e) => {
 };
 
 // 회원 수정
-export const updateMember = async (id, name, email, image, nickname) => {
+export const updateMember = async (id, name, email, image, nickname, password, newPassword) => {
   const response = await axios.patch(`${MEMBER_API_URL}/${id}`, {
+    id,
     name,
     email,
     image,
     nickname,
+    password,
+    newPassword
   });
   return response.data;
 };

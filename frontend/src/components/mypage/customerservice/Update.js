@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   updateMember,
   deleteMember,
@@ -14,6 +14,9 @@ export const Update = () => {
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordCheck, setNewPasswordCheck] = useState("");
 
   const DefaultProfileImageURL =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -52,7 +55,16 @@ export const Update = () => {
   };
 
   const updateHandle = async () => {
-    await updateMember(id, name, email, image, nickname).then(
+    // 예외 아직 XX
+    await updateMember(
+      id,
+      name,
+      email,
+      image,
+      nickname,
+      password,
+      newPassword
+    ).then(
       alert("회원정보가 수정되었습니다."),
       (window.location.href = "/mypage")
     );
@@ -66,6 +78,11 @@ export const Update = () => {
           <ProfileContainer>
             <ImageBox>
               <ProfileImage src={image} alt="프로필 이미지" />
+              {image === DefaultProfileImageURL ? null : (
+                <DeleteButton onClick={() => setImage(DefaultProfileImageURL)}>
+                  삭제하기
+                </DeleteButton>
+              )}
             </ImageBox>
             <ImageInputContainer>
               <ImageUpload
@@ -106,19 +123,38 @@ export const Update = () => {
         <Box>
           <Label>현재 비밀번호</Label>
           <InputBox>
-            <Input type="password" placeholder="현재 비밀번호"></Input>
+            <Input
+              type="password"
+              placeholder="현재 비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></Input>
           </InputBox>
         </Box>
         <Box>
           <Label>새 비밀번호</Label>
           <InputBox>
-            <Input type="password" placeholder="새 비밀번호"></Input>
+            <Input
+              type="password"
+              placeholder="새 비밀번호"
+              onChange={(e) => setNewPassword(e.target.value)}
+            ></Input>
+            {newPassword === newPasswordCheck ? null : (
+              <Warning>비밀번호가 일치하지 않습니다.</Warning>
+            )}
           </InputBox>
         </Box>
         <Box>
           <Label></Label>
           <InputBox>
-            <Input type="password" placeholder="새 비밀번호 확인"></Input>
+            <Input
+              type="password"
+              placeholder="새 비밀번호 확인"
+              onChange={(e) => setNewPasswordCheck(e.target.value)}
+            ></Input>
+            {newPassword === newPasswordCheck ? null : (
+              <Warning>비밀번호가 일치하지 않습니다.</Warning>
+            )}
           </InputBox>
         </Box>
         <Box>
@@ -183,6 +219,7 @@ const DisabledInput = styled.input`
 `;
 
 const InputBox = styled.div`
+  position: relative;
   // padding-right: 50px;
   width: 70%;
   display: flex;
@@ -205,6 +242,14 @@ const ImageBox = styled.div`
   width: 180px;
   height: 180px;
   border-radius: 50%;
+  ${(props) =>
+    !props.isChecked &&
+    css`
+      ::hover {
+        width: 500px;
+        height: 500px;
+      }
+    `}
 `;
 
 const ProfileContainer = styled.div``;
@@ -232,8 +277,20 @@ const ProfileImage = styled.img`
   border-radius: 50%;
 `;
 
+const DeleteButton = styled.div`
+  background-color: #fff;
+  color: #333;
+  opacity: 0;
+  transition: opacity 0.3s;
+  cursor: pointer;
+  text-align: center;
+  ${ImageBox}:hover & {
+    opacity: 1;
+  }
+`;
+
 const UpdateButtonBox = styled.div`
-margin-top: 50px;
+  margin-top: 50px;
   height: 50px;
   display: flex;
   justify-content: center;
@@ -253,7 +310,6 @@ const UpdateButton = styled.button`
 `;
 
 const WithdrawalButtonBox = styled.div`
-  height: 50px;
   display: flex;
   justify-content: center;
   padding: 0 50px;
@@ -268,4 +324,22 @@ const WithdrawButton = styled.button`
   background: white;
   border: none;
   cursor: pointer;
+`;
+
+const Warning = styled.div`
+  padding: 5px;
+  position: absolute;
+  top: 100%;
+  font-size: 12px;
+  color: red;
+  opacity: 0;
+  animation: fade-in 0.3s ease-in forwards;
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;

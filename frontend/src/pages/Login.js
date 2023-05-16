@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Facebook from "../assets/facebook_logo.png";
-import KakaoTalk from "../assets/kakaotalk_logo.png";
-import Naver from "../assets/naver_logo.png";
+import Facebook from "../assets/login/facebook_logo.png";
+import KakaoTalk from "../assets/login/kakaotalk_logo.png";
+import Naver from "../assets/login/naver_logo.png";
 import { AUTH_URL } from "../constants/Url";
 import "../styles/Login.css";
 import { getCookie } from "../utils/Cookies";

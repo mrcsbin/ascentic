@@ -1,75 +1,74 @@
 import styled from "styled-components";
 import { updateMember, deleteMember, getMemberInfo } from "../../api/MemberApi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getCookie } from "../../utils/Cookies";
+import DEFAULT_USER_IMAGE from "../../assets/mypage/user.png";
 
 export const Update = () => {
-  const [userInfo, setUserInfo] = useState({
-    id: "",
-    email: "",
-    name: "",
-    nickname: "",
-  });
-
-  const [newUserInfo, setNewUserInfo] = useState({
-    id: userInfo.id,
-    email: userInfo.email,
-    name: userInfo.name,
-    nickname: userInfo.nickname,
-    password: userInfo.password,
-    passwordCheck: "",
-  });
-
+  const fileInput = useRef(null);
+  const [image, setImage] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  );
   useEffect(() => {
     const fetchMemberInfo = async () => {
       const accessToken = getCookie("accessToken");
       const getInfo = await getMemberInfo(accessToken);
-      const { password, ...infoWithoutPassword } = getInfo;
-      setUserInfo((prevState) => ({
-        ...prevState,
-        ...infoWithoutPassword,
-      }));
+      const { name, id, email, nickname, image } = getInfo;
     };
     fetchMemberInfo();
   }, []);
 
-  const handleChange = (e) => {
-    setUserInfo((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const updateClickHandle = async () => {
-    console.log(newUserInfo);
-    // const res = await updateMember();
-  };
-
-  const withdrawClickHandle = async () => {
-    const res = await deleteMember();
+  const onChange = (event) => {
+    const imageFile = event.target.files[0];
+    const imageUrl = URL.createObjectURL(imageFile);
+    setImage(imageUrl);
   };
 
   return (
     <UpdateFormWrap>
       <Box>
+        <ProfileContainer>
+          <ImageBox>
+            <ProfileImage src={image} alt="" />
+          </ImageBox>
+          <ImageInputContainer>
+            <ImageUpload
+              type="file"
+              style={{ display: "none" }}
+              accept="image/*"
+              name="profileImage"
+              ref={fileInput}
+              onChange={onChange}
+            ></ImageUpload>
+            <ImageLabel
+              onClick={() => {
+                fileInput.current.click();
+              }}
+            >
+              프로필 이미지 변경
+            </ImageLabel>
+          </ImageInputContainer>
+        </ProfileContainer>
+      </Box>
+      <Box>
         <Label>이름</Label>
         <InputBox>
-          <DisabledInput readOnly value={userInfo.name} />
+          <DisabledInput />
         </InputBox>
       </Box>
       <Box>
         <Label>아이디</Label>
         <InputBox>
-          <DisabledInput readOnly value={userInfo.id} />
+          <DisabledInput />
         </InputBox>
       </Box>
       <Box>
         <Label>이메일</Label>
         <InputBox>
-          <DisabledInput readOnly value={userInfo.email} />
+          <DisabledInput />
         </InputBox>
       </Box>
-      <Box>
+      {/* <Box>
         <Label>현재 비밀번호</Label>
         <InputBox>
           <Input
@@ -78,65 +77,47 @@ export const Update = () => {
             onChange={handleChange}
           ></Input>
         </InputBox>
-      </Box>
-      <Box>
+      </Box> */}
+      {/* <Box>
         <Label>새 비밀번호</Label>
         <InputBox>
           <Input
             type="password"
             placeholder="새 비밀번호"
             style={{ marginBottom: 25 }}
-            value={userInfo.password}
+            value={userInfo.newPassword}
             onChange={handleChange}
           ></Input>
           <Input
             type="password"
             placeholder="새 비밀번호 확인"
-            value={userInfo.passwordCheck}
+            value={userInfo.newPasswordCheck}
             onChange={handleChange}
           ></Input>
         </InputBox>
-      </Box>
+      </Box> */}
       <Box>
-        <Label>별명</Label>
+        <Label>닉네임</Label>
         <InputBox>
-          <Input
-            type="text"
-            value={userInfo.nickname}
-            onChange={handleChange}
-          ></Input>
+          <Input type="text"></Input>
         </InputBox>
       </Box>
-      <Box>
-        <Label>프로필 사진</Label>
-        <ProfileContainer>
-          <ImageBox>
-            <ProfileImage />
-          </ImageBox>
-          <UploadButtonBox>
-            <UploadButton>업로드</UploadButton>
-          </UploadButtonBox>
-          <InputBox>
-            <Input onChange={handleChange}></Input>
-          </InputBox>
-        </ProfileContainer>
-      </Box>
-
       <ButtonBox>
-        <UpdateButton onClick={updateClickHandle}>수정</UpdateButton>
+        <UpdateButton>수정</UpdateButton>
       </ButtonBox>
       <ButtonBox>
-        <WithdrawButton onClick={withdrawClickHandle}>회원탈퇴</WithdrawButton>
+        <WithdrawButton>회원탈퇴</WithdrawButton>
       </ButtonBox>
     </UpdateFormWrap>
   );
 };
 
 const UpdateFormWrap = styled.div`
-  padding: 40px 100px 40px 160px;
+  padding: 20px 100px 40px 160px;
 `;
 
 const Box = styled.div`
+  justify-content: center;
   display: flex;
   margin: 30px 0;
 `;
@@ -180,14 +161,26 @@ const Input = styled.input`
 
 const ImageBox = styled.div`
   border: 1px solid black;
-  width: 80px;
-  height: 80px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
 `;
 
-const ProfileContainer = styled.div`
-  display: flex;
+const ProfileContainer = styled.div``;
+
+const ImageInputContainer = styled.div``;
+
+const ImageLabel = styled.div`
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  text-align: center;
+  :hover {
+    font-weight: 800;
+  }
 `;
+
+const ImageUpload = styled.input``;
 
 const UploadButtonBox = styled.div`
   text-align: center;
@@ -206,7 +199,12 @@ const UploadButton = styled.div`
   color: white;
 `;
 
-const ProfileImage = styled.img``;
+const ProfileImage = styled.img`
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+`;
 
 const ButtonBox = styled.div`
   display: flex;

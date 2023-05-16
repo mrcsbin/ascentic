@@ -4,6 +4,8 @@ import axios from "axios";
 import { getCookie } from "../../utils/Cookies";
 import TestResult from "../../components/ExpTasteRes";
 import "../../styles/ExpTaste.css";
+import sky from "../../assets/expTasteTest/sky.mp4";
+import nightsky from "../../assets/expTasteTest/nightsky.mp4";
 
 const ExpTaste = () => {
   const [taste, setTaste] = useState({
@@ -24,7 +26,7 @@ const ExpTaste = () => {
   function handleData(e) {
     setTaste({
       ...taste,
-      [e.target.name]: Number(e.currentTarget.value),
+      [e.currentTarget.name]: Number(e.currentTarget.value),
     });
   }
 
@@ -65,17 +67,11 @@ const ExpTaste = () => {
   return (
     <div>
       {activeComp === 0 && (
-        <ExpTestMain
-          taste={taste}
-          resultData={resultData}
-          handleData={handleData}
-          setActiveComp={setActiveComp}
-        />
+        <ExpTestMain resultData={resultData} setActiveComp={setActiveComp} />
       )}
       {activeComp === 1 && (
         <TasteTestStart
           taste={taste}
-          resultData={resultData}
           handleData={handleData}
           setTaste={setTaste}
           setActiveComp={setActiveComp}
@@ -84,7 +80,6 @@ const ExpTaste = () => {
       {activeComp === 2 && (
         <TasteTest1
           taste={taste}
-          resultData={resultData}
           handleData={handleData}
           setActiveComp={setActiveComp}
         />
@@ -92,7 +87,6 @@ const ExpTaste = () => {
       {activeComp === 3 && (
         <TasteTest2
           taste={taste}
-          resultData={resultData}
           handleData={handleData}
           setActiveComp={setActiveComp}
         />
@@ -100,7 +94,6 @@ const ExpTaste = () => {
       {activeComp === 4 && (
         <TasteTest3
           taste={taste}
-          resultData={resultData}
           handleData={handleData}
           setActiveComp={setActiveComp}
         />
@@ -108,7 +101,6 @@ const ExpTaste = () => {
       {activeComp === 5 && (
         <TasteTest4
           taste={taste}
-          resultData={resultData}
           handleData={handleData}
           setActiveComp={setActiveComp}
         />
@@ -116,7 +108,6 @@ const ExpTaste = () => {
       {activeComp === 6 && (
         <TasteTest5
           taste={taste}
-          resultData={resultData}
           handleData={handleData}
           setActiveComp={setActiveComp}
         />
@@ -143,24 +134,27 @@ const ExpTaste = () => {
   );
 };
 
-const ExpTestMain = ({ resultData, handleData, setActiveComp }) => {
+const ExpTestMain = ({ resultData, setActiveComp }) => {
   //파일 따로 생성 (백엔드 axios 연결 필요 - 받아오기)
   return (
     <div>
       <div className="startTaste">
-        <img src="#" alt="" />
-        <div className="content1">
+        {/* <img src="#" alt="" /> */}
+        <video className="mainvideo" loop autoPlay muted>
+          <source src={nightsky} type="video/mp4" />
+        </video>
+        <div className="contentbox">
           <h2>[a]scentic</h2>
           <h3>자신의 향을 찾기 위한 여정</h3>
           <span>취향을 통해 자신을 발견해보세요.</span>
           <span>에이센틱과 함께 당신의 취향을 찾고</span>
           <span>원하는 분위기와 느낌을 가져보세요.</span>
-        </div>
-        <div className="buttonbox">
           {resultData.firstPlace === "null" ? (
-            <button onClick={() => setActiveComp(1)}>찾아보기</button>
+            <div className="buttonbox">
+              <button onClick={() => setActiveComp(1)}>찾아보기</button>
+            </div>
           ) : (
-            <div>
+            <div className="buttonbox">
               <button onClick={() => setActiveComp(1)}>다시하기</button>
               <button onClick={() => setActiveComp(8)} result={resultData}>
                 결과 확인하기
@@ -173,18 +167,14 @@ const ExpTestMain = ({ resultData, handleData, setActiveComp }) => {
   );
 };
 
-const TasteTestStart = ({
-  taste,
-  resultData,
-  handleData,
-  setTaste,
-  setActiveComp,
-}) => {
+const TasteTestStart = ({ taste, handleData, setTaste, setActiveComp }) => {
   console.log(taste);
   return (
-    <div>
-      <div>
-        <div>에이센틱이 회원님을 어떻게 부르면 좋을까요?</div>
+    <div className="tasteTest">
+      <div className="testcontentbox">
+        <div className="maintext">
+          에이센틱이 회원님을 어떻게 부르면 좋을까요?
+        </div>
         <input
           type="text"
           placeholder="닉네임"
@@ -197,9 +187,10 @@ const TasteTestStart = ({
             })
           }
         />
-        <div>
-          <div>성별</div>
+        <div className="testcontent">
+          <div className="label">성별</div>
           <button
+            className={taste.tasteGender === "man" ? "btnG-active" : "btnG"}
             value="man"
             name="tasteGender"
             onClick={(e) =>
@@ -212,6 +203,7 @@ const TasteTestStart = ({
             남성
           </button>
           <button
+            className={taste.tasteGender === "woman" ? "btnG-active" : "btnG"}
             value="woman"
             name="tasteGender"
             onClick={(e) =>
@@ -224,20 +216,21 @@ const TasteTestStart = ({
             여성
           </button>
         </div>
-        <div>
-          <div>나이</div>
+        <div className="testcontent">
+          <div className="label">나이</div>
           <input
             type="number"
             name="tasteAge"
+            min={8}
             value={taste.tasteAge}
             onChange={handleData}
           />
         </div>
-        <div>
-          <div>개인정보수집동의</div>
+        <div className="testcontent">
           <input
             type="checkbox"
             name="tasteAgree"
+            id="tasteAgree"
             checked={taste.tasteAgree}
             onChange={(e) =>
               setTaste({
@@ -246,174 +239,359 @@ const TasteTestStart = ({
               })
             }
           />
+          <label for="tasteAgree">
+            개인정보수집동의: 본 문항은 결과에는 영향이 없으며 통계목적으로만
+            사용됩니다.
+          </label>
         </div>
-        <button onClick={() => setActiveComp(0)}>이전</button>
-        <button
-          disabled={
-            (taste.tasteName === "") |
-            (taste.tasteAge === "") |
-            (taste.tasteGender === "") |
-            (taste.tasteAgree === "")
-              ? true
-              : false
-          }
-          onClick={() => setActiveComp(2)}
-        >
-          다음
-        </button>
+        <div className="orderBtnbox">
+          <button className="beforebtn" onClick={() => setActiveComp(0)}>
+            이전
+          </button>
+          <button
+            className="nextbtn"
+            disabled={
+              (taste.tasteName === "") |
+              (taste.tasteAge === "") |
+              (taste.tasteGender === "") |
+              (taste.tasteAgree === "")
+                ? true
+                : false
+            }
+            onClick={() => setActiveComp(2)}
+          >
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-const TasteTest1 = ({ taste, resultData, handleData, setActiveComp }) => {
+const TasteTest1 = ({ taste, handleData, setActiveComp }) => {
   console.log(taste);
   return (
-    <div>
-      <div>
-        <div>더 좋아하는 장소의 향을 선택해주세요.</div>
-        <button value={1} name="tasteTest1" onClick={handleData}>
-          <img src="#" alt="" />
-          도시
-        </button>
-        <button value={2} name="tasteTest1" onClick={handleData}>
-          <img src="#" alt="" />
-          자연
-        </button>
-        <button onClick={() => setActiveComp(1)}>이전</button>
-        <button
-          disabled={taste.tasteTest1 === "" ? true : false}
-          onClick={() => setActiveComp(3)}
-        >
-          다음
-        </button>
+    <div className="tasteTest">
+      <div className="testcontentbox">
+        <div className="maintext">더 좋아하는 장소의 향을 선택해주세요.</div>
+        <div className="testimgBtnbox">
+          <button
+            className={
+              taste.tasteTest1 === 1 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={1}
+            name="tasteTest1"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img
+                src="https://images.pexels.com/photos/1980720/pexels-photo-1980720.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt=""
+              />
+            </div>
+            도시
+          </button>
+          <button
+            className={
+              taste.tasteTest1 === 2 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={2}
+            name="tasteTest1"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img
+                src="https://images.pexels.com/photos/1980720/pexels-photo-1980720.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt=""
+              />
+            </div>
+            자연
+          </button>
+        </div>
+        <div className="orderBtnbox">
+          <button className="beforebtn" onClick={() => setActiveComp(1)}>
+            이전
+          </button>
+          <button
+            className="nextbtn"
+            disabled={taste.tasteTest1 === "" ? true : false}
+            onClick={() => setActiveComp(3)}
+          >
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-const TasteTest2 = ({ taste, resultData, handleData, setActiveComp }) => {
+const TasteTest2 = ({ taste, handleData, setActiveComp }) => {
   return (
-    <div>
-      <div>
-        <div>나타내고 싶은 분위기를 선택해주세요.</div>
-        <button value={1} name="tasteTest2" onClick={handleData}>
-          <img src="#" alt="" />
-          우아함
-        </button>
-        <button value={2} name="tasteTest2" onClick={handleData}>
-          <img src="#" alt="" />
-          시원함
-        </button>
-        <button value={3} name="tasteTest2" onClick={handleData}>
-          <img src="#" alt="" />
-          발랄함
-        </button>
-        <button onClick={() => setActiveComp(2)}>이전</button>
-        <button
-          disabled={taste.tasteTest2 === "" ? true : false}
-          onClick={() => setActiveComp(4)}
-        >
-          다음
-        </button>
+    <div className="tasteTest">
+      <div className="testcontentbox">
+        <div className="maintext">나타내고 싶은 분위기를 선택해주세요.</div>
+        <div className="testimgBtnbox">
+          <button
+            className={
+              taste.tasteTest2 === 1 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={1}
+            name="tasteTest2"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            우아함
+          </button>
+          <button
+            className={
+              taste.tasteTest2 === 2 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={2}
+            name="tasteTest2"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            시원함
+          </button>
+          <button
+            className={
+              taste.tasteTest2 === 3 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={3}
+            name="tasteTest2"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            발랄함
+          </button>
+        </div>
+        <div className="orderBtnbox">
+          <button className="beforebtn" onClick={() => setActiveComp(2)}>
+            이전
+          </button>
+          <button
+            className="nextbtn"
+            disabled={taste.tasteTest2 === "" ? true : false}
+            onClick={() => setActiveComp(4)}
+          >
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-const TasteTest3 = ({ taste, resultData, handleData, setActiveComp }) => {
+const TasteTest3 = ({ taste, handleData, setActiveComp }) => {
   return (
-    <div>
-      <div>
-        <div>원하는 인상의 느낌을 선택해주세요.</div>
-        <button value={1} name="tasteTest3" onClick={handleData}>
-          <img src="#" alt="" />
-          이미지가 확실하고 강렬한 인상을 주는 느낌 수정하자..
-        </button>
-        <button value={2} name="tasteTest3" onClick={handleData}>
-          <img src="#" alt="" />
-          차분하고 부드러운 느낌
-        </button>
-        <button onClick={() => setActiveComp(3)}>이전</button>
-        <button
-          disabled={taste.tasteTest3 === "" ? true : false}
-          onClick={() => setActiveComp(5)}
-        >
-          다음
-        </button>
+    <div className="tasteTest">
+      <div className="testcontentbox">
+        <div className="maintext">원하는 향의 인상을 선택해주세요.</div>
+        <div className="testimgBtnbox">
+          <button
+            className={
+              taste.tasteTest3 === 1 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={1}
+            name="tasteTest3"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            이미지가 확실하고 강렬한 인상
+          </button>
+          <button
+            className={
+              taste.tasteTest3 === 2 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={2}
+            name="tasteTest3"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            차분하고 부드러운 인상
+          </button>
+        </div>
+        <div className="orderBtnbox">
+          <button className="beforebtn" onClick={() => setActiveComp(3)}>
+            이전
+          </button>
+          <button
+            className="nextbtn"
+            disabled={taste.tasteTest3 === "" ? true : false}
+            onClick={() => setActiveComp(5)}
+          >
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-const TasteTest4 = ({ taste, resultData, handleData, setActiveComp }) => {
+const TasteTest4 = ({ taste, handleData, setActiveComp }) => {
   return (
-    <div>
-      <div>
-        <div>자신의 성격을 선택해주세요.</div>
-        <div>각 성격마다 설명 필요할듯요</div>
-        <button value={1} name="tasteTest4" onClick={handleData}>
-          <img src="#" alt="" />
-          본능형
-        </button>
-        <button value={2} name="tasteTest4" onClick={handleData}>
-          <img src="#" alt="" />
-          감정형
-        </button>
-        <button value={3} name="tasteTest4" onClick={handleData}>
-          <img src="#" alt="" />
-          사고형
-        </button>
-        <button onClick={() => setActiveComp(4)}>이전</button>
-        <button
-          disabled={taste.tasteTest4 === "" ? true : false}
-          onClick={() => setActiveComp(6)}
-        >
-          다음
-        </button>
+    <div className="tasteTest">
+      <div className="testcontentbox">
+        <div className="maintext">
+          자신의 성격유형(애니어그램)을 선택해주세요.
+        </div>
+        {/* 성격 설명 추후 모달로 수정해도 좋을듯 */}
+        <div>본능형: 감정형: 사고형: </div>
+        <div className="testimgBtnbox">
+          <button
+            className={
+              taste.tasteTest4 === 1 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={1}
+            name="tasteTest4"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            본능형
+          </button>
+          <button
+            className={
+              taste.tasteTest4 === 2 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={2}
+            name="tasteTest4"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            감정형
+          </button>
+          <button
+            className={
+              taste.tasteTest4 === 3 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={3}
+            name="tasteTest4"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            사고형
+          </button>
+        </div>
+        <div className="orderBtnbox">
+          <button className="beforebtn" onClick={() => setActiveComp(4)}>
+            이전
+          </button>
+          <button
+            className="nextbtn"
+            disabled={taste.tasteTest4 === "" ? true : false}
+            onClick={() => setActiveComp(6)}
+          >
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-const TasteTest5 = ({
-  taste,
-  resultData,
-  handleData,
-  setActiveComp,
-  setResultData,
-}) => {
+const TasteTest5 = ({ taste, handleData, setActiveComp }) => {
   console.log(taste);
 
   return (
-    <div>
-      <div>
-        <div>싫어하는 향을 선택해주세요.</div>
-        <button value={1} name="tasteTest5" onClick={handleData}>
-          <img src="#" alt="" />
-          물내음
-        </button>
-        <button value={2} name="tasteTest5" onClick={handleData}>
-          <img src="#" alt="" />풀
-        </button>
-        <button value={3} name="tasteTest5" onClick={handleData}>
-          <img src="#" alt="" />
-          시나몬
-        </button>
-        <button value={4} name="tasteTest5" onClick={handleData}>
-          <img src="#" alt="" />
-          과일
-        </button>
-        <button value={5} name="tasteTest5" onClick={handleData}>
-          <img src="#" alt="" />
-          남자스킨향
-        </button>
-        <button onClick={() => setActiveComp(5)}>이전</button>
-        {/* taste에 모든 답변이 존재해야 결과 저장 */}
-        <button
-          disabled={taste.tasteTest5 === "" ? true : false}
-          onClick={() => setActiveComp(7)}
-        >
-          결과보기
-        </button>
+    <div className="tasteTest">
+      <div className="testcontentbox">
+        <div className="maintext">싫어하는 향을 선택해주세요.</div>
+        <div className="testimgBtnbox">
+          <button
+            className={
+              taste.tasteTest5 === 1 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={1}
+            name="tasteTest5"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            물내음
+          </button>
+          <button
+            className={
+              taste.tasteTest5 === 2 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={2}
+            name="tasteTest5"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            풀
+          </button>
+          <button
+            className={
+              taste.tasteTest5 === 3 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={3}
+            name="tasteTest5"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            시나몬
+          </button>
+        </div>
+        <div className="testimgBtnbox">
+          <button
+            className={
+              taste.tasteTest5 === 4 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={4}
+            name="tasteTest5"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            과일
+          </button>
+          <button
+            className={
+              taste.tasteTest5 === 5 ? "testimgBtn-active" : "testimgBtn"
+            }
+            value={5}
+            name="tasteTest5"
+            onClick={handleData}
+          >
+            <div className="testBtnimg">
+              <img src="#" alt="" />
+            </div>
+            남자스킨향
+          </button>
+        </div>
+        <div className="orderBtnbox">
+          <button className="beforebtn" onClick={() => setActiveComp(5)}>
+            이전
+          </button>
+          {/* taste에 모든 답변이 존재해야 결과 저장 */}
+          <button
+            className="nextbtn"
+            disabled={taste.tasteTest5 === "" ? true : false}
+            onClick={() => setActiveComp(7)}
+          >
+            결과보기
+          </button>
+        </div>
       </div>
     </div>
   );

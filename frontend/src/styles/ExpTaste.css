@@ -1,0 +1,294 @@
+/* 폰트 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+
+/* 취향테스트 메인 페이지 ExpTestMain */
+.startTaste {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+}
+.startTaste > .mainvideo {
+  width: 100vw;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+.contentbox {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
+  top: 0;
+  margin: 10vw 20vw 10vw 20vw;
+  padding: 10px 0;
+  text-align: center;
+  border: 1px solid white;
+  z-index: 10;
+}
+.contentbox > h2 {
+  width: 50vw;
+  margin: 5vw auto 0 auto;
+  padding: 0;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: white;
+}
+.contentbox > h3 {
+  margin: 2vw auto;
+  padding: 0;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: white;
+}
+.contentbox > span {
+  display: block;
+  margin: 7px auto;
+  padding: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-family: "Pretendard";
+  font-weight: 400;
+  color: white;
+}
+.buttonbox {
+  display: flex;
+  flex-direction: row;
+  margin: 3vw auto 5vw auto;
+  padding: 0;
+  text-align: center;
+}
+.buttonbox > button {
+  display: block;
+  margin: 0 1rem;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: "Pretendard";
+  font-weight: 500;
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+}
+.buttonbox > button:hover {
+  background: rgba(256, 256, 256, 10%);
+}
+
+/* 취향테스트 시작 페이지 TasteTestStart */
+.tasteTest {
+  display: flex;
+  width: 100vw;
+}
+.testcontentbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
+  margin: 5vw auto;
+  padding: 6vw 15vw;
+  text-align: center;
+  border: 1px solid black;
+  z-index: 10;
+}
+.maintext {
+  margin: 1.5vw auto;
+  padding: 0;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 400;
+  color: black;
+}
+.testcontentbox > input {
+  margin: 1vw auto;
+  width: 150px;
+  height: auto;
+  line-height: normal;
+  padding: 0.6rem 0.6rem;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 700;
+  color: black;
+  border: 0;
+  border-bottom: 1.5px solid black;
+  border-radius: 0;
+  outline-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.testcontentbox > .testcontent {
+  margin: 1vw auto;
+  font-family: "Pretendard";
+  font-weight: 500;
+  color: black;
+}
+.testcontentbox > .testcontent > .label {
+  margin: 1.5vw auto;
+  font-size: 1rem;
+}
+.testcontentbox > .testcontent > .btnG {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: 1.5px solid white;
+  border-bottom: 1.5px solid #d0cfcf;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.testcontentbox > .testcontent > .btnG:hover,
+.testcontentbox > .testcontent > .btnG:focus,
+.btnG-active {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: 1.5px solid white;
+  border-bottom: 1.5px solid black;
+  color: black;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.testcontent > input[type="number"] {
+  width: 100px;
+  height: auto;
+  line-height: normal;
+  padding: 0.6rem 0.6rem;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: black;
+  border: 0;
+  border-bottom: 1.5px solid black;
+  border-radius: 0;
+  outline-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.testcontent > input[type="checkbox"] + label {
+  display: inline-block;
+  margin: 1vw auto;
+  font-weight: 400;
+  cursor: pointer;
+}
+.testcontent > input[type="checkbox"]:checked {
+  background-color: #666666;
+}
+
+.orderBtnbox {
+  margin: 2vw auto;
+}
+.orderBtnbox > .beforebtn {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #afadad;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+.orderBtnbox > .nextbtn {
+  width: 200px;
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: black;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+.orderBtnbox > .nextbtn:disabled {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgb(72, 72, 72);
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* 사진 버튼이 들어가는 취향테스트 페이지 TasteTest1 */
+.testcontentbox > .testimgBtnbox {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn {
+  width: 200px;
+  margin: 3vw 0.6vw;
+  padding: 0.8rem 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid white;
+  background-color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg {
+  position: relative;
+  margin: 10px auto;
+  width: 180px;
+  height: 150px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg > img,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg > img {
+  width: 180px;
+  object-fit: cover;
+  object-position: center;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn:hover,
+.testimgBtn-active {
+  width: 200px;
+  margin: 3vw 0.6vw;
+  padding: 0.8rem 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid white;
+  border-bottom: 1.5px solid black;
+  background-color: white;
+  color: black;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn:hover > .testBtnimg > img,
+.testimgBtn-active > .testBtnimg > img {
+  opacity: 0.8;
+  transform: scale(1.07);
+  transition: all 0.3s;
+}

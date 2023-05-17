@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
 import expCard1 from "../../assets/expSubs/expCard1.png";
 import expCard2 from "../../assets/expSubs/expCard2.png";

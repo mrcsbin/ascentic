@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sameOrderInfo, updateShip } from "../../store/modules/order";
 import { requestRecentAddr } from "../../api/OrderApi";
 import { getCookie } from "../../utils/Cookies";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 // 배송 정보
 const DeliveryInfo = () => {

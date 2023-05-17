@@ -175,7 +175,7 @@ const LoginHeaderBox = styled.div`
 const LoginHeader = styled.h1`
   font-size: 1.6rem;
   font-weight: bold;
-  margin: 100px 0 50px 0;
+  // margin: 100px 0 50px 0;
   padding-left: 15%;
 `;
 

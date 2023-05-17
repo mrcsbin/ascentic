@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { requestApplySubs } from "../../api/SubsMemberApi";
 import { getCookie } from "../../utils/Cookies";

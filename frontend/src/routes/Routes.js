@@ -45,7 +45,6 @@ function Routes() {
         path="/mypage"
         element={isLoggedIn ? <Pages.MyPage /> : <Navigate to="/login" />}
       />
-
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
@@ -69,6 +68,18 @@ function Routes() {
         path="/store/productdetail/:prod_num"
         element={<Pages.ProdDetail />}
       ></Route>
+
+      <Route path="/exp" element={<Pages.ExpMain></Pages.ExpMain>}></Route>
+
+      <Route path="/exp/taste" element={<Pages.ExpTaste></Pages.ExpTaste>}></Route>
+
+      <Route path="/exp/subs" element={<Pages.ExpSubs></Pages.ExpSubs>}></Route>
+
+      <Route
+        path="/exp/subsmanage"
+        element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
+      ></Route>
+                                  
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
       <Route path="/admin" element={<AdminPages.Admin />} />
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Facebook from "../assets/login/facebook_logo.png";
 import KakaoTalk from "../assets/login/kakaotalk_logo.png";
@@ -12,6 +12,7 @@ import { fetchTokenByLogin, fetchMemberByToken } from "../store/modules/login";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const idInputRef = useRef(null);
@@ -39,6 +40,8 @@ function Login() {
     if (!checkInput(password, pwInputRef, setIsPwEmpty)) {
       return;
     }
+
+    // 로그인 정보로 토큰 생성
     await dispatch(fetchTokenByLogin({ id, password }));
     if (getCookie("accessToken")) {
       await dispatch(fetchMemberByToken()).then(() => {

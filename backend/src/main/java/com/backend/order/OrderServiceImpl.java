@@ -17,7 +17,9 @@ public class OrderServiceImpl implements OrderService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         System.out.println(currentMemberId);
         Member member = memberRepository.findById(currentMemberId).orElse(null);
-        Order order = orderRepository.save(Order.builder()
+
+
+        Order order =  orderRepository.save(Order.builder()
                 .member(member)
                 .orderEmail(orderDTO.getOrderEmail())
                 .orderName(orderDTO.getOrderName())
@@ -30,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
                 .orderPayment(orderDTO.getOrderPayment())
                 .orderPaymentInfo(orderDTO.getOrderPaymentInfo())
                 .orderPaymentState(orderDTO.getOrderPaymentState())
+                .orderPriceSum(orderDTO.getOrderPriceSum())
+                .shipCharge(orderDTO.getShipCharge())
                 .orderState(orderDTO.getOrderState())
                 .build());
         return order.getOrderId();
@@ -42,7 +46,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findFirstByMemberOrderByOrderIdDesc(memberRepository.findById(currentMemberId).orElse(null));
 
         return AddressDTO.builder()
-                .memberId(currentMemberId)
                 .shipMainAddress(order.getShipMainAddress())
                 .shipSubAddress(order.getShipSubAddress())
                 .build();

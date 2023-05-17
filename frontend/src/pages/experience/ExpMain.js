@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 import mainImg from "../../assets/expMain/expMaiImg1.png";
 import { Link } from "react-router-dom";
 

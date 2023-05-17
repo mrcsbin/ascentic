@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePoint } from "../../store/modules/order";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 // 할인 혜택
 const DiscountBenefit = () => {

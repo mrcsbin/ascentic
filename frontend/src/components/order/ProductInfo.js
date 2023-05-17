@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 // 주문 상품 정보
 const ProductInfo = (props) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPayMethod } from "../../store/modules/order";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 // 결제 수단
 const Payment = () => {

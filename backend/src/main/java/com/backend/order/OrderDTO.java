@@ -21,5 +21,7 @@ public class OrderDTO {
     private String orderPayment;
     private String orderPaymentInfo;
     private Boolean orderPaymentState;
+    private Integer orderPriceSum;
+    private Integer shipCharge;
     private String orderState;
 }

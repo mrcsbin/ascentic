@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { getTokenInfo, login } from "../api/MemberApi";
 import Facebook from "../assets/facebook_logo.png";
@@ -74,6 +74,7 @@ const WarningText = styled.div`
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const idInputRef = useRef(null);
@@ -111,8 +112,14 @@ function Login() {
       setCookie("accessToken", accessToken, { expires });
       setCookie("refreshToken", refreshToken, { expires });
       await getTokenInfo(getCookie("accessToken"));
-      navigate("/", { replace: true });
-      window.location.reload();
+      if (location.state) {
+        navigate(location.state.pathname, {
+          state: location.state,
+        });
+      } else {
+        navigate("/", { replace: true });
+        window.location.reload();
+      }
     } else {
       setId("");
       setPassword("");

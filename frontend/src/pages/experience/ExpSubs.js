@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 import ExpGuide from "../../components/ExpSubs/ExpGuide";
 import { useState } from "react";
 import DeliveryInfo from "../../components/order/DeliveryInfo";

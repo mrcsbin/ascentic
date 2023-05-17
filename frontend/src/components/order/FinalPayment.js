@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { requestOrder } from "../../api/OrderApi";
 import { getCookie } from "../../utils/Cookies";
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 // 최종 결제금액
 const FinalPayment = (props) => {

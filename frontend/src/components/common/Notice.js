@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Notice.css";
 import popupDiscount from "../../assets/popupDiscount.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Notice() {
   const [showNotice, setShowNotice] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+  const location = useLocation();
 
   // 공지사항을 닫습니다
   const handleHideNotice = () => {
@@ -18,10 +19,12 @@ function Notice() {
     localStorage.setItem("hideUntil", now + 24 * 60 * 60 * 1000);
     setShowNotice(false);
   };
+
   // 팝업 열기
   const handleShowPopup = () => {
     setShowPopup(true);
   };
+
   // 팝업 닫기
   const handleHidePopup = () => {
     setShowPopup(false);
@@ -40,6 +43,9 @@ function Notice() {
       }
     }
   }, []);
+
+  // "/admin" 산하의 페이지에는 Notice 컴포넌트를 렌더링하지 않음
+  if (location.pathname.startsWith("/admin")) return null;
 
   return (
     <div
@@ -74,6 +80,7 @@ function Notice() {
               <p>7/1 까지 신규가입하시는 모든분께 할인쿠폰을 드립니다.</p>
               <p>*일부 상품에는 적용이 불가합니다.</p>
             </div>
+
             {/* content 하단 */}
             <div className="popup-link-box">
               <button className="popup-link-btn">

@@ -18,16 +18,15 @@ public class Cart {
     @Column(name = "cart_num")
     private Integer cartNum;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "option_num")
     private ProductOption productOption;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
     @Column(name = "prod_count")
     private Integer prodCount;
-
 }
 

@@ -6,6 +6,7 @@ import { WishList } from "./shopping/WishList";
 import { Subscribe } from "./shopping/Subscribe";
 import { Update } from "./customerservice/Update";
 import { Notification } from "./customerservice/Notification";
+import { InquiryList } from "./customerservice/InquiryList";
 
 export const Content = () => {
   const activeTab = useSelector((state) => state.mypage.activeTab);
@@ -18,6 +19,7 @@ export const Content = () => {
       {activeTab === "구독" && <Subscribe />}
       {activeTab === "회원정보수정" && <Update />}
       {activeTab === "알림 설정" && <Notification />}
+      {activeTab === "1:1 문의 내역" && <InquiryList />}
     </ContentArea>
   );
 };

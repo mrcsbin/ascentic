@@ -20,6 +20,7 @@ import fruit5 from "../../assets/expTasteTest/5fruit.webp";
 import grass5 from "../../assets/expTasteTest/5grass.jpg";
 import manskin5 from "../../assets/expTasteTest/5manskincare.jpg";
 import water5 from "../../assets/expTasteTest/5water1.jpg";
+import sky from "../../assets/expTasteTest/sky.mp4";
 
 const ExpTaste = () => {
   const [taste, setTaste] = useState({

@@ -1,11 +1,13 @@
 import React from "react";
 import "../../styles/Footer.css";
-import { Link } from "react-router-dom";
-
-//HSM
-//RouteTest.js 에 임시로 연결
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+
+  // "/admin" 산하의 페이지에는 Footer 컴포넌트를 렌더링하지 않음
+  if (location.pathname.startsWith("/admin")) return null;
+
   return (
     <div className="footer">
       {/* <hr className="footerSeparator" /> */}

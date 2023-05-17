@@ -3,6 +3,9 @@ package com.backend.order;
 import com.backend.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -63,4 +66,8 @@ public class Order {
 
     @Column(name = "ship_charge")
     private Integer shipCharge;
+
+    @CreationTimestamp
+    @Column(name = "orderDate", nullable = false)
+    private LocalDateTime orderDate;
 }

@@ -1,24 +1,47 @@
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-
-function CartItemList() {
-  return (
-    <>
-      <CartItemCard>
-
-      </CartItemCard>
-    </>
-  );
-}
+import { CartItemCard } from "./CartItemCard";
+import {
+  removeCartItem,
+  fetchCartItems,
+  toggleAllCheckItem,
+} from "../../store/modules/cart";
 
 function CartContentHeader() {
+  const cartItems = useSelector((state) => state.cart.cartItem);
+  const checkedItems = useSelector((state) => state.cart.checkedItems);
+  const dispatch = useDispatch();
+
+  const isAllChecked = cartItems.every((item) =>
+    checkedItems.includes(item.cartNum)
+  );
+
+  const handleDeleteClick = () => {
+    checkedItems.forEach((cartNum) => {
+      dispatch(removeCartItem(cartNum)).then(() => dispatch(fetchCartItems()));
+    });
+  };
+
+  const handleChange = () => {
+    dispatch(toggleAllCheckItem());
+  };
+
   return (
     <ContentHeaderWrap className="contentHeader-wrap">
       <ContentHeader className="contentHeader">
         <SelectLabel>
-          <SelectCheck type="checkbox"></SelectCheck>
+          <SelectCheck
+            type="checkbox"
+            checked={isAllChecked}
+            onChange={handleChange}
+          ></SelectCheck>
           <SelectSpan>전체선택&nbsp;&nbsp;&nbsp;&nbsp;</SelectSpan>
         </SelectLabel>
-        <DeleteButton className="header-delete-button" type="button">
+        <DeleteButton
+          className="header-delete-button"
+          type="button"
+          onClick={handleDeleteClick}
+        >
           선택삭제
         </DeleteButton>
       </ContentHeader>
@@ -27,26 +50,21 @@ function CartContentHeader() {
 }
 
 export const CartContents = () => {
+  const cartItems = useSelector((state) => state.cart.cartItem);
+
   return (
     <CartContentsWrap>
-      <CartContentHeader></CartContentHeader>
-      <CartList>
-        <CartItemList></CartItemList>
-      </CartList>
+      <CartContentHeader />
+      <CartContentBody>
+        {cartItems.map((item, index) => (
+          <CartItemCard key={index} item={item} />
+        ))}
+      </CartContentBody>
     </CartContentsWrap>
   );
 };
 
-const CartContentsWrap = styled.div`
-  box-sizing: border-box;
-  position: relative;
-  width: 100%;
-  min-height: 1px;
-  flex: 0 0 66.666666%;
-  max-width: 66.666666%;
-  padding: 0 20px;
-`;
-
+// CartContentHeader
 const ContentHeaderWrap = styled.div`
   box-sizing:border-box;
   display:flex;
@@ -84,7 +102,17 @@ const DeleteButton = styled.button`
   font-weight: 600;
 `;
 
-const CartList = styled.ul``;
+// CartContents
+const CartContentBody = styled.ul`
+  border-bottom: 1px solid black;
+`;
 
-const CartItemCard = styled.li``;
-
+const CartContentsWrap = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  flex: 0 0 66.666666%;
+  max-width: 66.666666%;
+  padding: 0 20px;
+`;

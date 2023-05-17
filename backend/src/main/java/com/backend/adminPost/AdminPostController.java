@@ -25,10 +25,7 @@ public class AdminPostController {
 
     @Autowired
     public AdminPostController(AdminPostService adminPostService) {
-        File directory = new File(uploadPath + "\\admin_mainimg");
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }//admin_mainimg 폴더 없으면 생성
+
         this.adminPostService = adminPostService;
     }
 
@@ -52,9 +49,19 @@ public class AdminPostController {
         boolean deleted = adminPostService.deleteAdminPost(id);
 
         if (deleted) {
-            return ResponseEntity.ok().body("Post deleted successfully");
+            return ResponseEntity.ok().body("삭제 성공");
         } else {
-            return ResponseEntity.badRequest().body("Failed to delete post");
+            return ResponseEntity.badRequest().body("삭제 실패");
+        }
+    }
+    @GetMapping("/getevent")
+    public AdminPost getLatestPost() {
+        String category = "event";
+        List<AdminPost> posts = adminPostService.getAdminPostsByCategory(category);
+        if (!posts.isEmpty()) {
+            return posts.get(posts.size() - 1); // 마지막 글을 반환
+        } else {
+            return null; // 글이 없을 경우 null 반환 또는 예외 처리
         }
     }
     @PutMapping("/{id}") //멱등성
@@ -64,7 +71,7 @@ public class AdminPostController {
     @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
-    @PostMapping("/mainimg")
+    @PostMapping("/mainimg") //uploadPath 안에 admin_mainimg 폴더 추가필요!!!!!
     public ResponseEntity<String> uploadMainImage(@RequestParam("image") MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -92,7 +99,7 @@ public class AdminPostController {
         UrlResource resource = new UrlResource(filePath.toUri());
         return ResponseEntity.ok().body(resource);
 }
-//    <img src={`http://localhost:8080/admin/download?img=${selectedImage}`} alt="대표 이미지"style={{ maxWidth: "300px" }}/> 리액트 메인이미지 불러오기
+//    <img src={`http://localhost:8080/admin/download?img=${selectedImage}`} alt="대표 이미지"style={{ maxWidth: "300px" }}/> 리액트에서 이벤트 메인이미지 불러오기
 }
 
 

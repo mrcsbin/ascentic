@@ -22,9 +22,11 @@ function NewsList(props) {
 
   const handleDelete = async (postId) => {
     try {
-      const response = await axios.delete(`/admin/post/${postId}`);
-      console.log(response.data); // 성공적으로 삭제된 경우 메시지 출력
-      // 삭제 후 필요한 동작 수행
+      if (window.confirm("삭제하시겠습니까?")) {
+        const res = await axios.delete(`/admin/post/${postId}`);
+        console.log(res);
+        window.location.reload();
+      }
     } catch (error) {
       console.error(error);
     }

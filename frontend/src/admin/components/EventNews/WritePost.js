@@ -19,6 +19,7 @@ const WritePost = ({ postEdit }) => {
   const [postCategory, setPostCategory] = useState("");
   const [postStatus, setPostStatus] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [postCoreMessage, setPostCoreMessage] = useState("");
   const [eventDateRange, setEventDateRange] = useState([
     {
       startDate: new Date(),
@@ -41,6 +42,7 @@ const WritePost = ({ postEdit }) => {
         setPostStatus("");
         setContent(postData.postContent);
         setSelectedImage(postData.postImage);
+        setPostCoreMessage(postData.postCoreMessage);
         setEventDateRange([
           {
             startDate: new Date(postData.eventStartDate),
@@ -63,12 +65,14 @@ const WritePost = ({ postEdit }) => {
       postCategory,
       postTitle,
       postContent: content,
-      postStatus,
+      postStatus: postStatus,
       postImage: selectedImage,
+      postCoreMessage: postCoreMessage,
       eventStartDate: eventDateRange[0].startDate,
       eventEndDate: eventDateRange[0].endDate,
     };
     console.log(data);
+    if (postStatus === "") return;
     let message = "";
     switch (postStatus) {
       case 0:
@@ -113,9 +117,7 @@ const WritePost = ({ postEdit }) => {
   };
 
   useEffect(() => {
-    if (postId) {
-      handleSave();
-    }
+    handleSave();
   }, [postStatus]);
 
   const mainImageUpload = (e) => {
@@ -260,6 +262,12 @@ const WritePost = ({ postEdit }) => {
           placeholder="제목"
           value={postTitle}
           onChange={(e) => setPostTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="한줄 메시지"
+          value={postCoreMessage}
+          onChange={(e) => setPostCoreMessage(e.target.value)}
         />
         <select
           value={postCategory}

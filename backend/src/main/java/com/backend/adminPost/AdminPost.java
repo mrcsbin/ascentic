@@ -25,7 +25,8 @@ public class AdminPost {
 
     @Column(nullable = false, name = "admin_post_title")
     private String postTitle;
-
+    @Column(nullable = false, name = "admin_post_core_message")
+    private String postCoreMessage;
     @Column(nullable = false, name = "admin_post_content", columnDefinition = "TEXT")
     private String postContent;
 

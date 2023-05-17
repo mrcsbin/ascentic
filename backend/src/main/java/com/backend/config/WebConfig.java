@@ -10,8 +10,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000")
-                .allowCredentials(true)
-                .allowedMethods("GET", "POST") // 필요한 HTTP 메서드를 지정합니다
-                .allowedHeaders("*"); // 필요한 헤더를 지정합니다
+                .allowedMethods("GET", "POST", "PUT", "DELETE","PATCH")
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 }

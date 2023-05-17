@@ -86,7 +86,12 @@ export const Tab = () => {
           <TabBody>고객센터</TabBody>
         </TabList>
         <TabList>
-          <TabBody>1:1 문의 내역</TabBody>
+          <TabBody
+            clicked={clickedDiv === "1:1 문의 내역"}
+            onClick={() => tabClickHandle("1:1 문의 내역")}
+          >
+            1:1 문의 내역
+          </TabBody>
         </TabList>
       </TabBox>
     </TabArea>

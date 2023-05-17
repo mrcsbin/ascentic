@@ -17,4 +17,8 @@ public class LastSbMemberDTO {
     private Integer sbPaymentDay;
 
     private String memberName;
+
+    private String mainAddress;
+
+    private String subAddress;
 }

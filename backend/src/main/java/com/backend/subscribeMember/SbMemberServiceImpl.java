@@ -57,6 +57,8 @@ public class SbMemberServiceImpl implements SbMemberService {
                 .sbPay(lastSbMemberByMemberId.getSbPay())
                 .sbPaymentDay(lastSbMemberByMemberId.getSbPaymentDay())
                 .memberName(member.getName())
+                .mainAddress(lastSbMemberByMemberId.getSbMainAddr())
+                .subAddress(lastSbMemberByMemberId.getSbSubAddr())
                 .build();
         return lastSbMemberDTO;
     }

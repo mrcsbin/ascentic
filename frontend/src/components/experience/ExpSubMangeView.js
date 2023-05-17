@@ -80,6 +80,10 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
   // if (filterProd.length >= 1) {
   //   showSubsInfo = true;
   // }
+  function addComma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ',');
+  }
 
   const SubsInfo = () => {
     if (filterProd.length >= 1) {
@@ -101,23 +105,31 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
               </div>
               <div className="intro-price">
                 {filterProd[0].spIntro}
-                {filterProd[0].spPrice}
+                <span>{addComma(filterProd[0].spPrice)}원</span>
               </div>
             </div>
           </div>
-          <div className="rating-component"></div>
-          <RatingComponent
-            score={filterProd[0].sbSendScore}
-            review={filterProd[0].sbSendReview}
-          ></RatingComponent>
+          <div className="clear-both"></div>
+          <div className="rating-component">
+            <RatingComponent
+              score={filterProd[0].sbSendScore}
+              review={filterProd[0].sbSendReview}
+            ></RatingComponent>
+          </div>
 
-          <div>{filterProd[0].sbSendReview}</div>
-          <div>{filterProd[0].sbSendPostcode}</div>
-          <div>{filterProd[0].sbSendEnd}</div>
+          <div className="address">
+            <span>배송지 주소</span>
+            <p>{sbMember.mainAddress}</p>
+            <p>{sbMember.subAddress}</p>
+          </div>
+          <div>
+            <span>송장번호가 ERD에 없음</span>
+          </div>
+          <div className="clear-both"></div>
         </div>
       );
     } else {
-      return <div>요청하신 자료가 존재하지 않습니다</div>;
+      return <div className="no-info">요청하신 자료가 존재하지 않습니다</div>;
     }
   };
 

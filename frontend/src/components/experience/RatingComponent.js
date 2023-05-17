@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const RatingForm = styled.form`
   .wrapper {
     display: block;
-    font-size: 30px;
+    font-size: 20px;
     height: auto;
   }
 
@@ -42,13 +42,15 @@ const RatingForm = styled.form`
   }
 
   #reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #d3d3d3;
-    border-radius: 5px;
-    font-size: 16px;
+    width: 90%;
+    height: 20px;
+    // box-sizing: border-box;
+    margin-top: 1.3%;
+    border-bottom: solid 1.5px #d3d3d3;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    font-size: 18px;
     resize: none;
   }
 `;
@@ -74,11 +76,7 @@ const RatingComponent = ({ score, review }) => {
     };
 
     try {
-      // Replace with your own API endpoint
-      const response = await axios.post(
-        'http://example.com/reviews',
-        reviewData
-      );
+      const response = await axios.get('/reviews', reviewData);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -141,7 +139,7 @@ const RatingComponent = ({ score, review }) => {
         </fieldset>
         <div>
           <textarea
-            className="col-auto form-control"
+            // className="col-auto form-control"
             type="text"
             id="reviewContents"
             value={reviewText}

@@ -10,9 +10,18 @@ import axios from "axios";
 import { useEffect } from "react";
 import { getCookie } from "../../utils/Cookies";
 import { useLocation } from "react-router-dom";
+import { getMemberInfo, getProductInfo } from "../../api/OrderApi";
+import { useSelector } from "react-redux";
 
 // 구매 과정 페이지
 function Order(props) {
+  // const cartNum = useSelector((state) => state.cart.checkedItems);
+  // useEffect(() => {
+  //   const fetchProductData = async () => {
+  //     const productList = await getProductInfo(cartNum);
+  //   };
+  //   fetchProductData();
+  // }, []);
   // +, - 확장응 위한 State
   const [extend, setExtend] = useState({
     prod: true,
@@ -61,22 +70,31 @@ function Order(props) {
   ];
 
   // ---------------------- OrderInfo -------------------------------------
+
   const [order, setOrder] = useState({
-    email: "example",
-    domain: "naver.com",
-    name: "김기자",
-    tel: "01012341234",
+    email: "",
+    domain: "",
+    name: "",
+    tel: "",
   });
 
   function changeOrder(updatedOrder) {
     setOrder(updatedOrder);
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const memberInfo = await getMemberInfo(getCookie("accessToken"));
+      setOrder(memberInfo);
+    };
+    fetchData();
+  }, []);
+
   // 회원 정보 조회
   // useEffect(() => {
   //   async function fetchData() {
   //     try {
-  //       const res = await axios.get("/get_member", null, {
+  //       const res = await axios.get("/order/getuser", {
   //         headers: {
   //           Authorization: "Bearer " + getCookie("accessToken"),
   //         },

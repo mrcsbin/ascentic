@@ -1,76 +1,14 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getTokenInfo, login } from "../api/MemberApi";
-import Facebook from "../assets/facebook_logo.png";
-import KakaoTalk from "../assets/kakaotalk_logo.png";
-import Naver from "../assets/naver_logo.png";
+import Facebook from "../assets/login/facebook_logo.png";
+import KakaoTalk from "../assets/login/kakaotalk_logo.png";
+import Naver from "../assets/login/naver_logo.png";
 import { AUTH_URL } from "../constants/Url";
 import "../styles/Login.css";
-import { getCookie, setCookie } from "../utils/Cookies";
-
-const LoginWrap = styled.div`
-  width: 60%;
-  margin: auto;
-`;
-
-const LoginArea = styled.div`
-  width: 100%;
-`;
-
-const LoginHeaderBox = styled.div`
-  width: 50%;
-  margin: auto;
-`;
-
-const LoginHeader = styled.h1`
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin: 100px 0 50px 0;
-  padding-left: 15%;
-`;
-
-const InputBox = styled.div`
-  margin: 30px auto;
-  text-align: center;
-  width: 50%;
-`;
-
-const Label = styled.label`
-  text-align: left;
-  display: block;
-  padding-left: 15%;
-`;
-
-const Input = styled.input`
-  border: 1.5px solid;
-  box-sizing: border-box;
-  padding: 0;
-  padding-left: 10px;
-  width: 70%;
-  height: 35px;
-`;
-
-const ButtonBox = styled.div`
-  text-align: center;
-  width: 50%;
-  margin: auto;
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  padding: 0px;
-  width: 70%;
-  border: 0px;
-  background-color: black;
-  color: white;
-  height: 40px;
-  margin: 0 auto 30px auto;
-`;
-
-const WarningText = styled.div`
-  color: red;
-`;
+import { getCookie } from "../utils/Cookies";
+import { useDispatch } from "react-redux";
+import { fetchTokenByLogin, fetchMemberByToken } from "../store/modules/login";
 
 function Login() {
   const navigate = useNavigate();
@@ -80,7 +18,7 @@ function Login() {
   const pwInputRef = useRef(null);
   const [isIdEmpty, setIsIdEmpty] = useState(false);
   const [isPwEmpty, setIsPwEmpty] = useState(false);
-  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
 
   // 입력칸 비었는지 확인
   const checkInput = (data, ref, setIsEmpty) => {
@@ -101,18 +39,11 @@ function Login() {
     if (!checkInput(password, pwInputRef, setIsPwEmpty)) {
       return;
     }
-    // 로그인 정보로 토큰 생성
-    const token = await login(id, password);
-    // token 에서 accessToken 과 refreshToken 파싱해서 저장
-    const { accessToken, refreshToken } = token;
-    // 만료시간 30분으로 설정
-    const expires = new Date(Date.now() + 10 * 60 * 1000);
-    if (token) {
-      setCookie("accessToken", accessToken, { expires });
-      setCookie("refreshToken", refreshToken, { expires });
-      await getTokenInfo(getCookie("accessToken"));
-      navigate("/", { replace: true });
-      window.location.reload();
+    await dispatch(fetchTokenByLogin({ id, password }));
+    if (getCookie("accessToken")) {
+      await dispatch(fetchMemberByToken()).then(() => {
+        navigate("/", { replace: true });
+      });
     } else {
       setId("");
       setPassword("");
@@ -223,3 +154,66 @@ function Login() {
 }
 
 export default Login;
+
+const LoginWrap = styled.div`
+  width: 60%;
+  margin: auto;
+`;
+
+const LoginArea = styled.div`
+  width: 100%;
+`;
+
+const LoginHeaderBox = styled.div`
+  width: 50%;
+  margin: auto;
+`;
+
+const LoginHeader = styled.h1`
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin: 100px 0 50px 0;
+  padding-left: 15%;
+`;
+
+const InputBox = styled.div`
+  margin: 30px auto;
+  text-align: center;
+  width: 50%;
+`;
+
+const Label = styled.label`
+  text-align: left;
+  display: block;
+  padding-left: 15%;
+`;
+
+const Input = styled.input`
+  border: 1.5px solid;
+  box-sizing: border-box;
+  padding: 0;
+  padding-left: 10px;
+  width: 70%;
+  height: 35px;
+`;
+
+const ButtonBox = styled.div`
+  text-align: center;
+  width: 50%;
+  margin: auto;
+`;
+
+const Button = styled.button`
+  cursor: pointer;
+  padding: 0px;
+  width: 70%;
+  border: 0px;
+  background-color: black;
+  color: white;
+  height: 40px;
+  margin: 0 auto 30px auto;
+`;
+
+const WarningText = styled.div`
+  color: red;
+`;

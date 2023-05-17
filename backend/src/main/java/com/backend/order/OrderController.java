@@ -17,4 +17,11 @@ public class OrderController {
     public AddressDTO getRecentAddr() {
         return orderService.getRecentAddr();
     }
+
+    @GetMapping("/order/getuser")
+    public MemberInfoDto getUserInfo() {
+        MemberInfoDto memberInfo = orderService.getMemberInfo();
+        System.out.println("모르곘다");
+        return memberInfo;
+    }
 }

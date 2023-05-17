@@ -44,6 +44,7 @@ export const requestRecentAddr = async (accessToken) => {
   } catch (error) {
     console.error(error);
   }
+};
 
 export const getMemberInfo = async (accessToken) => {
   const response = await axios.get(`${ORDER_API_URL}/order/getuser`, {
@@ -56,7 +57,7 @@ export const getMemberInfo = async (accessToken) => {
 
 export const getProductInfo = async (cartNum) => {
   const queryParam = cartNum.map((cartNum) => `cartNum=${cartNum}`).join("&");
-  const response = await axios.get(`${ORDER_API_URL}/order?${queryParam}`,);
+  const response = await axios.get(`${ORDER_API_URL}/order?${queryParam}`);
 
   return response.data;
 };

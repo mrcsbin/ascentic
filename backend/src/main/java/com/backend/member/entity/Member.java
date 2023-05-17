@@ -57,6 +57,9 @@ public class Member {
     @Setter
     private List<String> role = new ArrayList<>();
 
+    @Column(name = "member_nickname")
+    private String nickname;
+
 //    @Column
 //    @Enumerated(EnumType.STRING)
 //    private Authority authority;
@@ -70,7 +73,7 @@ public class Member {
 //    private Set<Authority> authorities;
 
     @Builder
-    public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role) {
+    public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role, String nickname) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -79,6 +82,7 @@ public class Member {
         this.birthDate = birthDate;
         this.image = image;
         this.role = role;
+        this.nickname = nickname;
     }
 
     public void ChangeEncodedPassword(String password) {

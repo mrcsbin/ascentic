@@ -1,0 +1,84 @@
+/* AdminEventNews.css */
+.admin-event-news-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem;
+}
+.admin-event-news {
+  padding-left: 15%;
+}
+.navbar {
+  background-color: #333;
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.menu-item {
+  padding: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #555;
+}
+
+.menu-item.active {
+  background-color: #fff;
+  color: #333;
+}
+
+.event-list {
+  margin-top: 2rem;
+}
+
+.news-list {
+  margin-top: 2rem;
+}
+
+.write-post {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.write-post label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.write-post label input,
+.write-post label textarea {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+
+.write-post label textarea {
+  height: 10rem;
+}
+
+.write-post button[type="submit"] {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.write-post button[type="submit"]:hover {
+  background-color: #555;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 
-function AdminAnalysis() {
+function AdminSubscribeManagement() {
   return (
     <div>
       <h2>구독 관리 페이지</h2>
@@ -9,4 +9,4 @@ function AdminAnalysis() {
   );
 }
 
-export default AdminAnalysis;
+export default AdminSubscribeManagement;

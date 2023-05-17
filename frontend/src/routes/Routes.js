@@ -3,23 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "../store/modules/login";
 import { getCookie } from "../utils/Cookies";
 import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
-
-import {
-  Main,
-  Login,
-  FindIdPw,
-  KakaoLogin,
-  SignUp,
-  SignUpSuccess,
-  MyPage,
-  StoreMain,
-  ProdDetail,
-  OrderComplete,
-  Order,
-  NotFound,
-  Cart,
-  Withdrawal,
-} from "../pages/Pages";
+import * as Pages from "../pages/Pages";
+import * as AdminPages from "../admin/components/AdminPages";
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
@@ -47,48 +32,64 @@ function Routes() {
 
   return (
     <BrowserRoutes>
-      <Route path="/" element={<Main />}></Route>
+      <Route path="/" element={<Pages.Main />}></Route>
 
       <Route
         path="/login"
-        element={isLoggedIn ? <Navigate to="/mypage" /> : <Login />}
+        element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
       />
 
-      <Route path="/login/kakao" element={<KakaoLogin />} />
+      <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
 
       <Route
         path="/mypage"
-        element={isLoggedIn ? <MyPage /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Pages.MyPage /> : <Navigate to="/login" />}
       />
 
-      <Route path="/cart" element={<Cart />} />
-
+      <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
+      <Route path="/NotFound" element={<Pages.NotFound />} />
+      <Route path="/member/find" element={<Pages.FindIdPw />} />
+      <Route path="/signup" element={<Pages.SignUp />}></Route>
+      <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
 
-      <Route path="/NotFound" element={<NotFound />} />
+      <Route path="/goodbye" element={<Pages.Withdrawal />} />
 
-      <Route path="/member/find" element={<FindIdPw />} />
-
-      <Route path="/signup" element={<SignUp />}></Route>
-
-      <Route path="/signupsuccess" element={<SignUpSuccess />} />
-
-      <Route path="/goodbye" element={<Withdrawal />} />
-
-      <Route path="/order" element={<Order />}></Route>
-
-      <Route path="/ordercomplete" element={<OrderComplete />}></Route>
-
-      <Route path="/proddetail" element={<ProdDetail />}></Route>
-
-      <Route path="/storemain" element={<StoreMain />}></Route>
-
-      <Route exact path="/storemain/:category" element={<StoreMain />}></Route>
+      <Route path="/order" element={<Pages.Order />}></Route>
+      <Route path="/ordercomplete" element={<Pages.OrderComplete />}></Route>
+      <Route path="/proddetail" element={<Pages.ProdDetail />}></Route>
+      <Route path="/storemain" element={<Pages.StoreMain />}></Route>
+      <Route
+        exact
+        path="/storemain/:category"
+        element={<Pages.StoreMain />}
+      ></Route>
 
       <Route
         path="/store/productdetail/:prod_num"
-        element={<ProdDetail />}
+        element={<Pages.ProdDetail />}
       ></Route>
+      {/* ---------------------------------Admin pages.... ------------------------------------------*/}
+      <Route path="/admin" element={<AdminPages.Admin />} />
+
+      <Route path="/admin/analysis" element={<AdminPages.AdminAnalysis />} />
+      <Route
+        path="/admin/customerservice"
+        element={<AdminPages.AdminCustomerService />}
+      />
+      <Route path="/admin/eventnews" element={<AdminPages.AdminEventNews />} />
+      <Route
+        path="/admin/membermanagement"
+        element={<AdminPages.AdminMemberManagement />}
+      />
+      <Route
+        path="/admin/storemanagement"
+        element={<AdminPages.AdminStoreManagement />}
+      />
+      <Route
+        path="/admin/subscribemanagement"
+        element={<AdminPages.AdminSubscribeManagement />}
+      />
     </BrowserRoutes>
   );
 }

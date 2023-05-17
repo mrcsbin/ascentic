@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const ORDER_API_URL = "http://localhost:8080";
+
 // 주문 요청
 export const requestOrder = async (accessToken, requestData, products) => {
   try {
@@ -42,4 +44,19 @@ export const requestRecentAddr = async (accessToken) => {
   } catch (error) {
     console.error(error);
   }
+
+export const getMemberInfo = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/getuser`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const getProductInfo = async (cartNum) => {
+  const queryParam = cartNum.map((cartNum) => `cartNum=${cartNum}`).join("&");
+  const response = await axios.get(`${ORDER_API_URL}/order?${queryParam}`,);
+
+  return response.data;
 };

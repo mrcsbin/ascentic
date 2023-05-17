@@ -6,7 +6,7 @@ export const EmptyCart = () => {
     <EmptyCartWrap>
       <EmptyCartContainer>
         <EmptyImage src={test} alt="임시 이미지 입니다 !!!!!!!!!!!!!!!" />
-        <GoShoppingButton href="/storemain">스토어로 가기 </GoShoppingButton>
+        <GoShoppingButton href="/storemain">스토어로 가기</GoShoppingButton>
       </EmptyCartContainer>
     </EmptyCartWrap>
   );

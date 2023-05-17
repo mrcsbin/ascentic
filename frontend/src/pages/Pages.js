@@ -17,6 +17,7 @@ const ExpMain = lazy(() => import('./experience/ExpMain'));
 const ExpSubs = lazy(() => import('./experience/ExpSubs'));
 const ExpSubsManage = lazy(() => import('./experience/ExpSubsManage'));
 const ExpTaste = lazy(() => import('./experience/ExpTaste'));
+const Withdrawal = lazy(() => import("./Withdrawal"));
 
 export {
   Order,
@@ -36,4 +37,5 @@ export {
   ExpSubs,
   ExpSubsManage,
   ExpTaste,
+  Withdrawal,
 };

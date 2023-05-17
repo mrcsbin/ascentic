@@ -1,5 +1,4 @@
 import axios from "axios";
-import { setCookie, getCookie, removeCookie } from "../utils/Cookies";
 
 const MEMBER_API_URL = "http://localhost:8080/member";
 
@@ -12,18 +11,22 @@ export const 회원가입 = async (e) => {
 };
 
 // 회원 수정
-export const updateMember = async (id, name, email) => {
-  const response = await axios.post(`${MEMBER_API_URL}/${id}`, {
-    /* data */
+export const updateMember = async (id, name, email, image, nickname, password, newPassword) => {
+  const response = await axios.patch(`${MEMBER_API_URL}/${id}`, {
+    id,
+    name,
+    email,
+    image,
+    nickname,
+    password,
+    newPassword
   });
   return response.data;
 };
 
 // 회원 삭제
-export const deleteMember = async (id, name, email) => {
-  const response = await axios.post(`${MEMBER_API_URL}/${id}`, {
-    /* data */
-  });
+export const deleteMember = async (id) => {
+  const response = await axios.delete(`${MEMBER_API_URL}/${id}/v2`, {});
   return response.data;
 };
 
@@ -37,7 +40,7 @@ export const login = async (id, password) => {
 };
 
 // 토큰으로 유저 정보 받아옴
-export const getTokenInfo = async (accessToken) => {
+export const getMemberInfo = async (accessToken) => {
   const response = await axios.get(`${MEMBER_API_URL}/checktoken`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

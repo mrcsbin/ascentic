@@ -5,11 +5,10 @@ import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
 
@@ -18,6 +17,7 @@ public class OrderServiceImpl implements OrderService{
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         System.out.println(currentMemberId);
         Member member = memberRepository.findById(currentMemberId).orElse(null);
+
 
         Order order =  orderRepository.save(Order.builder()
                 .member(member)
@@ -48,6 +48,20 @@ public class OrderServiceImpl implements OrderService{
         return AddressDTO.builder()
                 .shipMainAddress(order.getShipMainAddress())
                 .shipSubAddress(order.getShipSubAddress())
+                .build();
+    }
+
+    @Override
+    public MemberInfoDto getMemberInfo() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member findMember = memberRepository.findById(currentMemberId)
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        String[] emailParts = findMember.getEmail().split("@");
+        return MemberInfoDto.builder()
+                .email(emailParts[0])
+                .domain(emailParts[1])
+                .name(findMember.getName())
+                .tel(findMember.getPhone())
                 .build();
     }
 }

@@ -81,8 +81,33 @@ const ExpTaste = () => {
 
   return (
     <div>
-      {activeComp === 0 ? (
-        <ExpTestMain resultData={resultData} setActiveComp={setActiveComp} />
+      {(activeComp === 0) | (activeComp === 7) | (activeComp === 8) ? (
+        <>
+          {activeComp === 0 && (
+            <ExpTestMain
+              resultData={resultData}
+              setActiveComp={setActiveComp}
+            />
+          )}
+          {/* 설문 후 결과 저장 및 불러오기 */}
+          {activeComp === 7 && (
+            <ToTestResult
+              taste={taste}
+              resultData={resultData}
+              setActiveComp={setActiveComp}
+              setResultData={setResultData}
+            />
+          )}
+          {/* 위에서 불러온 결과 창으로 보여주기 */}
+          {activeComp === 8 && (
+            <TestResult
+              taste={taste}
+              resultData={resultData}
+              setActiveComp={setActiveComp}
+              setResultData={setResultData}
+            />
+          )}
+        </>
       ) : (
         <div className="tasteTest">
           <video className="mainvideo" loop autoPlay muted>
@@ -132,24 +157,6 @@ const ExpTaste = () => {
             />
           )}
         </div>
-      )}
-      {/* 설문 후 결과 저장 및 불러오기 */}
-      {activeComp === 7 && (
-        <ToTestResult
-          taste={taste}
-          resultData={resultData}
-          setActiveComp={setActiveComp}
-          setResultData={setResultData}
-        />
-      )}
-      {/* 위에서 불러온 결과 창으로 보여주기 */}
-      {activeComp === 8 && (
-        <TestResult
-          taste={taste}
-          resultData={resultData}
-          setActiveComp={setActiveComp}
-          setResultData={setResultData}
-        />
       )}
     </div>
   );

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "../../styles/Header.css";
-import { Link, useNavigate } from "react-router-dom";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
 import iconSearch from "../../assets/iconSearch.svg";
 import { getCookie, removeCookie } from "../../utils/Cookies";
-import Loading from "./Loading";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "../../store/modules/login";
 
@@ -18,7 +16,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLogin);
   const location = useLocation();
-  if (location.pathname.startsWith("/admin")) return null;
+
   function handleLogout() {
     removeCookie("accessToken");
     dispatch(setIsLogin(false));
@@ -34,7 +32,9 @@ const Header = () => {
     };
     checkLoginStatus();
   }, [dispatch]);
-
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
   return (
     <div className="header-wrap">
       {/* flexbox 부모 컨테이너 */}

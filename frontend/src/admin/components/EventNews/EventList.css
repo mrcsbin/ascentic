@@ -1,13 +1,19 @@
 .event-list-wrapper {
     width: 100%;
 }
-
+.event-list-wrapper .event-list h1 {
+    text-align: center;
+    font-size: 2.5vw;
+    margin-top: 0;
+    margin-bottom: 1vw;
+}
 .event-list-wrapper .event-list .selected-status {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-bottom: 1vw;
 }
 
 .event-list-wrapper .event-list .post-grid table {

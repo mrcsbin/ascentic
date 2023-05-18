@@ -1,0 +1,131 @@
+.event-list-wrapper {
+    width: 100%;
+}
+.event-list-wrapper .event-list h1 {
+    text-align: center;
+    font-size: 2.5vw;
+    margin-top: 0;
+    margin-bottom: 1vw;
+}
+.event-list-wrapper .event-list .selected-status {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1vw;
+}
+
+.event-list-wrapper .event-list .post-grid table {
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 3vw;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post {
+    position: relative;
+    margin: 0.5vw;
+    overflow: hidden;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post-img {
+    overflow: hidden;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td img {
+    width: 22vw;
+    height: 27vw;
+    transition: 362ms;
+    transition-timing-function: ease-in-out;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post img:hover {
+    transform: scale(1.2);
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-status {
+    position: absolute;
+    top: 0.5vw;
+    right: 0.5vw;
+    padding: 0.8vw;
+    background-color: white;
+    opacity: 0.8;
+    font-size: 1.3vw;
+    font-weight: bold;
+    border-radius: 0.8vw;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom .post-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom .post-left .left-top {
+    width: 4vw;
+    padding: 0.2vw;
+    border: 1px solid black;
+    font-size: 0.8vw;
+    margin-top: 0.3vw;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom .post-left .left-center {
+    font-size: 2vw;
+    text-align: left;
+    margin-top: 0.3vw;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom .post-left .left-bottom {
+    font-size: 0.8vw;
+    text-align: left;
+    margin-top: 0.3vw;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom .post-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-list-wrapper .event-list .post-grid table tbody tr td .post .post-bottom .post-right button {
+    all: unset;
+    cursor: pointer;
+    border: 1px black solid;
+    padding: 0.2vw 0.6vw;
+    margin: 0.2vw 0vw;
+    color: white;
+    background-color: black;
+}
+
+/* 페이지네이션 css */
+.event-list-wrapper .event-list .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.event-list-wrapper .event-list .pagination .btn {
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.event-list-wrapper .event-list .pagination .numbtn {
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.event-list-wrapper .event-list .pagination .numbtn:hover {
+    background-color: #f9f9f9;
+}

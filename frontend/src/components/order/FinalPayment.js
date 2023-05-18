@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { requestOrder } from "../../api/OrderApi";
 import { getCookie } from "../../utils/Cookies";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 // 최종 결제금액
 const FinalPayment = (props) => {
@@ -47,6 +48,8 @@ const FinalPayment = (props) => {
     return acc + cur.prodPrice;
   }, 0);
 
+  const nav = useNavigate();
+
   // order 요청 데이터
   const requestData = {
     // memberId: token, // 주문자 id
@@ -76,6 +79,7 @@ const FinalPayment = (props) => {
       try {
         const orderNum = await requestOrder(accessToken, requestData, products);
         console.log("주문 성공");
+        nav("/ordercomplete");
       } catch (e) {
         console.error(e);
       }

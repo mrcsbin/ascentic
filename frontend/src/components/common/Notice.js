@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Notice.css";
-import popupDiscount from "../../assets/popupDiscount.svg";
 import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 function Notice() {
   const [showNotice, setShowNotice] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+  const [postData, setPostData] = useState(null);
+
   const location = useLocation();
 
   // 공지사항을 닫습니다
@@ -31,17 +33,17 @@ function Notice() {
   };
 
   useEffect(() => {
-    const hideUntil = localStorage.getItem("hideUntil");
-    if (hideUntil) {
-      const now = new Date().getTime();
-      const midnight = new Date();
-      midnight.setHours(24, 0, 0, 0); // 자정 시각 설정
-      if (now < hideUntil && now < midnight.getTime()) {
-        setShowNotice(false);
-      } else {
-        localStorage.removeItem("hideUntil"); // 자정을 넘어가면 localStorage에서 hideUntil제거
+    const fetchLatestEventPost = async () => {
+      try {
+        const response = await axios.get("/admin/getevent");
+        const latestPost = response.data;
+        setPostData(latestPost);
+      } catch (error) {
+        console.error("Error fetching latest event post:", error);
       }
-    }
+    };
+
+    fetchLatestEventPost();
   }, []);
 
   // "/admin" 산하의 페이지에는 Notice 컴포넌트를 렌더링하지 않음
@@ -53,7 +55,7 @@ function Notice() {
       style={{ display: showNotice ? "block" : "none" }}
     >
       <button className="popup-btn" onClick={handleShowPopup}>
-        <div>신규가입 시 10% 할인쿠폰 제공</div>
+        <div>{postData?.postTitle}</div>
       </button>
       <div className="wrapper">
         <button className="ignore-btn" onClick={handleClickIgnore}>
@@ -64,23 +66,30 @@ function Notice() {
         </button>
       </div>
 
-      {showPopup && (
+      {showPopup && postData && (
         <div className="popup">
           <div className="popup-content">
-            {/* content 상단 */}
-            <img src={popupDiscount} alt="popupDiscount"></img>
-            {/* content 중단 */}
+            <img
+              src={`http://localhost:8080/admin/download?img=${postData.postImage}`}
+              className="popupImage"
+              alt="popupDiscount"
+            />
             <div className="popup-text">
               <p>
-                <span style={{ fontWeight: "bold" }}>
-                  신규가입 시 10% 할인쿠폰 발급가능
-                </span>
+                <span style={{ fontWeight: "bold" }}>{postData.postTitle}</span>
               </p>
               <br />
-              <p>7/1 까지 신규가입하시는 모든분께 할인쿠폰을 드립니다.</p>
-              <p>*일부 상품에는 적용이 불가합니다.</p>
-            </div>
+              <div>
+                <p>
+                  {postData.postCoreMessage.split(".").slice(0, 1).join(".") +
+                    "."}
+                </p>
 
+                <p>
+                  {postData.postCoreMessage.split(".").slice(1, 2).join(".")}
+                </p>
+              </div>
+            </div>
             {/* content 하단 */}
             <div className="popup-link-box">
               <button className="popup-link-btn">

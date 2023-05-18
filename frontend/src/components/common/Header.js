@@ -5,7 +5,6 @@ import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
 import iconSearch from "../../assets/iconSearch.svg";
 import { getCookie, removeCookie } from "../../utils/Cookies";
-import Loading from "./Loading";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "../../store/modules/login";
 import arrow from "../../assets/menu_arrow.svg";
@@ -14,6 +13,9 @@ import arrow from "../../assets/menu_arrow.svg";
 //RouteTest.js 에 임시로 연결
 
 const Header = () => {
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLogin);
@@ -47,7 +49,6 @@ const Header = () => {
     };
     checkLoginStatus();
   }, [dispatch]);
-  if (location.pathname.startsWith("/admin")) return null;
 
   return (
     <div className="header-wrap">

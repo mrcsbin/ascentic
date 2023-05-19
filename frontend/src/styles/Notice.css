@@ -9,7 +9,7 @@
 }
 
 .notice-bar .popup-btn {
-  all : unset;
+  all: unset;
   cursor: pointer;
   color: white;
   padding: 7px 0px;
@@ -25,7 +25,7 @@
 }
 
 .notice-bar .ignore-btn {
-  all: unset; 
+  all: unset;
   color: white;
   background: transparent;
   cursor: pointer;
@@ -65,7 +65,7 @@
   background-color: #fff;
   width: 400px;
   height: 450px;
-  border-radius : 12px;
+  border-radius: 12px;
   display: flex;
   flex-flow: column;
   flex-direction: column;
@@ -116,4 +116,7 @@
   padding: 5px 0px;
   margin: 3px 0px 15px 0px;
   cursor: pointer;
+}
+.popupImage {
+  width: 250px;
 }

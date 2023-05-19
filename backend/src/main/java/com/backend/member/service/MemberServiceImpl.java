@@ -28,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+
     @Override
     @Transactional
     public String join(SignupDto signupDto) {
@@ -59,12 +60,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean existMemberId(String memberId){
+    public boolean existMemberId(String memberId) {
         return memberRepository.existsById(memberId);
     }
 
     @Override
-    public boolean existEmail(String email){
+    public boolean existEmail(String email) {
         return memberRepository.existsByEmail(email);
     }
 
@@ -159,12 +160,84 @@ public class MemberServiceImpl implements MemberService {
                 .id("admin")
                 .password(passwordEncoder.encode("admin"))
                 .email("admin@ascentic.com")
-                .image("관리자 이미지")
+                .image("profileimage1")
                 .name("관리자")
                 .birthDate("0101")
-                .phone("010-0000-0000")
+                .phone("010-1234-1234")
                 .role(Collections.singletonList("ADMIN"))
                 .build();
         memberRepository.save(member);
+
+        Member member1 = Member.builder()
+                .id("mrcsbin")
+                .password(passwordEncoder.encode("1234"))
+                .email("test1@ascentic.com")
+                .image("profileimage1")
+                .name("조성빈")
+                .birthDate("0101")
+                .phone("010-0000-0000")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member1);
+
+        Member member2 = Member.builder()
+                .id("hansic")
+                .password(passwordEncoder.encode("1234"))
+                .email("test2@ascentic.com")
+                .image("profileimage1")
+                .name("조한식")
+                .birthDate("0101")
+                .phone("010-0000-0001")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member2);
+
+        Member member3 = Member.builder()
+                .id("kkm")
+                .password(passwordEncoder.encode("1234"))
+                .email("test3@ascentic.com")
+                .image("profileimage1")
+                .name("강경민")
+                .birthDate("0101")
+                .phone("010-0000-0002")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member3);
+
+        Member member4 = Member.builder()
+                .id("nhs")
+                .password(passwordEncoder.encode("1234"))
+                .email("test4@ascentic.com")
+                .image("profileimage1")
+                .name("나해성")
+                .birthDate("0101")
+                .phone("010-0000-0003")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member4);
+
+        Member member5 = Member.builder()
+                .id("jce")
+                .password(passwordEncoder.encode("1234"))
+                .email("test5@ascentic.com")
+                .image("profileimage1")
+                .name("전채은")
+                .birthDate("0101")
+                .phone("010-0000-0004")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member5);
+
+        Member member6 = Member.builder()
+                .id("hsm")
+                .password(passwordEncoder.encode("1234"))
+                .email("test6@ascentic.com")
+                .image("profileimage1")
+                .name("황성민")
+                .birthDate("0101")
+                .phone("010-0000-0005")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member4);
     }
 }

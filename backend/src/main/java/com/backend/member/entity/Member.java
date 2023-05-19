@@ -39,16 +39,16 @@ public class Member {
     @Column(name = "member_image")
     private String image;
 
-    @Column(name="member_SignUpTime")
+    @Column(name = "member_SignUpTime")
     private LocalDate memberSignUpTime = LocalDate.now();
 
-    @Column(name="member_Info_Yn", nullable = false)
+    @Column(name = "member_Info_Yn", nullable = false)
     private boolean infoAgree;
 
-    @Column(name="member_Sns_Push_Yn")
+    @Column(name = "member_Sns_Push_Yn")
     private boolean snsPushYn;
 
-    @Column(name="member_Email_Push_Yn")
+    @Column(name = "member_Email_Push_Yn")
     private boolean emailPushYn;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -56,9 +56,6 @@ public class Member {
     @CollectionTable(name = "member_role_tbl", joinColumns = @JoinColumn(name = "member_id"))
     @Setter
     private List<String> role = new ArrayList<>();
-
-    @Column(name = "member_nickname")
-    private String nickname;
 
 //    @Column
 //    @Enumerated(EnumType.STRING)
@@ -73,7 +70,7 @@ public class Member {
 //    private Set<Authority> authorities;
 
     @Builder
-    public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role, String nickname) {
+    public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -82,7 +79,6 @@ public class Member {
         this.birthDate = birthDate;
         this.image = image;
         this.role = role;
-        this.nickname = nickname;
     }
 
     public void ChangeEncodedPassword(String password) {

@@ -1,6 +1,6 @@
 package com.backend.member.service;
 
-import com.backend.MessageAndMail.MailController;
+import com.backend.MessageAndMail.controller.MailController;
 import com.backend.member.dto.FindDataDto;
 import com.backend.member.dto.JwtTokenDto;
 import com.backend.member.dto.LoginDto;
@@ -13,9 +13,6 @@ import com.backend.member.repository.MemberRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

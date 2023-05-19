@@ -3,6 +3,7 @@ package com.backend.subscribeSend;
 
 import com.backend.member.service.MemberServiceImpl;
 
+import com.backend.subscribeSend.service.SubscribeSendServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

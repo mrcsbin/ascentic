@@ -1,12 +1,10 @@
 package com.backend.subscribeMember;
 
-import com.backend.member.entity.Member;
 import com.backend.member.repository.MemberRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.backend.subscribeMember.repository.SbMemberRepository;
+import com.backend.subscribeMember.service.SbMemberServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest

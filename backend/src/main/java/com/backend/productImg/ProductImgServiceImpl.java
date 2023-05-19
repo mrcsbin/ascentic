@@ -43,7 +43,7 @@ public class ProductImgServiceImpl implements ProductImgService {
 
         List<String> imageNames = new ArrayList<>();
         for (ProductImg img : images) {
-            imageNames.add("file:" + uploadDir + "/" + img.getProdSaveName());
+            imageNames.add(img.getProdSaveName());
         }
 
         return imageNames;

@@ -31,15 +31,15 @@ public class ProductImgController {
     }
 
     @GetMapping ("/getProdImg")
-    public ResponseEntity<UrlResource> downloadImg(Integer prodNum, Integer prodImageType) throws MalformedURLException {
+    public ResponseEntity<UrlResource> downloadImg(@Param("prodNum") Integer prodNum, @Param("prodImageType") Integer prodImageType) throws MalformedURLException {
         UrlResource resource = productImgService.findImage(prodNum, prodImageType);
         return ResponseEntity.ok().body(resource);
     }
 
     @GetMapping("/getProdImgDetailPage/{prodNum}/{prodImageType}")
-    public ResponseEntity<List<String>> downloadImages(@PathVariable("prodNum") Integer prodNum, @PathVariable("prodImageType") Integer prodImageType) throws MalformedURLException {
+    public List<String> downloadImages(@PathVariable("prodNum") Integer prodNum, @PathVariable("prodImageType") Integer prodImageType) throws MalformedURLException {
         List<String> resources = productImgService.findImages(prodNum, prodImageType);
-        return ResponseEntity.ok().body(resources);
+        return resources;
     }
 
     //이미지 리스트에서 한장씩 다운받을때 사용

@@ -1,7 +1,7 @@
 package com.backend.cart.entity;
 
 import com.backend.member.entity.Member;
-import com.backend.productOption.entity.ProductOption;
+import com.backend.productoption.entity.ProductOption;
 import jakarta.persistence.*;
 import lombok.*;
 

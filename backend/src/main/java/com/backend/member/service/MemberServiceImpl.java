@@ -1,6 +1,6 @@
 package com.backend.member.service;
 
-import com.backend.MessageAndMail.controller.MailController;
+import com.backend.messageandmail.controller.MailController;
 import com.backend.member.dto.FindDataDto;
 import com.backend.member.dto.JwtTokenDto;
 import com.backend.member.dto.LoginDto;

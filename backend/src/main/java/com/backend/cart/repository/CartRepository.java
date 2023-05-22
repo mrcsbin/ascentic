@@ -2,7 +2,7 @@ package com.backend.cart.repository;
 
 import com.backend.cart.entity.Cart;
 import com.backend.member.entity.Member;
-import com.backend.productOption.entity.ProductOption;
+import com.backend.productoption.entity.ProductOption;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

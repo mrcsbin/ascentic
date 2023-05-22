@@ -6,8 +6,8 @@ insert into tb_cart (cart_num, prod_count, member_id, option_num)
 values (3, 1, 'hansic', 3);
 insert into tb_cart (cart_num, prod_count, member_id, option_num)
 values (4, 1, 'hansic', 4);
-insert into tb_cart (cart_num, prod_count, member_id, option_num)
-values (5, 1, 'hansic', 5);
+# insert into tb_cart (cart_num, prod_count, member_id, option_num)
+# values (5, 1, 'hansic', 5);
 insert into tb_cart (cart_num, prod_count, member_id, option_num)
 values (6, 1, 'hansic', 6);
 

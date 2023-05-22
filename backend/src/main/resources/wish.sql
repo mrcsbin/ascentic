@@ -1,6 +1,14 @@
 INSERT INTO tb_wish (wish_num, member_id, prod_num) VALUES
-(1, 'member1', 1),
-(2, 'member2', 2),
-(3, 'member3', 3),
-(4, 'member4', 4),
-(5, 'member5', 5);
+(1, 'sungbin', 1),
+(2, 'hansic', 2),
+(3, 'haesung', 3),
+(4, 'kyungmin', 4),
+(5, 'chaeeun', 5),
+(6, 'sungmin', 6);
+
+
+
+
+
+
+

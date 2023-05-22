@@ -5,11 +5,20 @@ import "../../styles/StoreMain.css";
 import CardList from "../../components/common/storemain/CardList";
 import Categories from "../../components/common/storemain/Categories";
 import FilterModal from "../../components/common/storemain/FilterModal";
-import mainimg from "../../assets/storemain.jpeg";
+import mainimg from "../../assets/storemain.webp";
 import mainvideo from "../../assets/storemain.mp4";
-//JennieChan.webm도 assets에 넣어놨는데 mainVideo 어떠신가요..?
 import filterimg from "../../assets/filter.png";
-
+import logo from "../../assets/ascentic_logo_b.svg";
+import video1 from "../../assets/storeMain/1.webm";
+import video2 from "../../assets/storeMain/2.webm";
+import img1 from "../../assets/storeMain/213.jpg";
+import img2 from "../../assets/storeMain/flowers.jpg";
+import img3 from "../../assets/storeMain/lifestyle.jpg";
+import img4 from "../../assets/storeMain/soap.jpg";
+import img5 from "../../assets/storeMain/4541.jpg";
+import img6 from "../../assets/storeMain/spa.jpg";
+import img7 from "../../assets/storeMain/spa2.jpg";
+import img8 from "../../assets/storeMain/spa3.jpg";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
@@ -19,6 +28,7 @@ function StoreMain() {
   const params = useParams();
   // 카테고리가 선택되지 않았으면 기본값 all로 사용
   const category = params.category || "all";
+  const encodecategory = escape(category);
 
   const [sortOption, setSortOption] = useState("latest");
   const [prodcategory, setProdcategory] = useState("all");
@@ -53,30 +63,29 @@ function StoreMain() {
   }
 
   function sortByOption(productList, sortOption) {
-    if (sortOption == "wishCount") {
+    if (sortOption === "wishCount") {
       productList.sort((a, b) => {
         return b.prodWishCount - a.prodWishCount;
       });
-    } else if (sortOption == "latest") {
+    } else if (sortOption === "latest") {
       productList.sort((a, b) => {
         return b.prodNum - a.prodNum;
       });
-    } else if (sortOption == "highPrice") {
+    } else if (sortOption === "highPrice") {
       productList.sort((a, b) => {
         return b.prodPrice - a.prodPrice;
       });
-    } else if (sortOption == "lowPrice") {
+    } else if (sortOption === "lowPrice") {
       productList.sort((a, b) => {
         return a.prodPrice - b.prodPrice;
       });
-    } else if (sortOption == "viewCount") {
+    } else if (sortOption === "viewCount") {
       productList.sort((a, b) => {
         return b.prodReadCount - a.prodReadCount;
       });
     } else return;
   }
 
-  const infologo = "[a]scentic";
   const infotext =
     "에이센틱과 함께 당신을 나타내는 향으로 일상을 가득 채워보세요.";
   const infotext2 =
@@ -89,11 +98,10 @@ function StoreMain() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:8080/listscent?category=${category}`
+          `http://localhost:8080/listscent?category=${encodecategory}`
         );
         setProducts(res.data);
-        setProductList(res.data);
-        //console.log(products);
+        productCategory(res.data, prodcategory);
       } catch (e) {
         console.log(e);
       }
@@ -116,13 +124,31 @@ function StoreMain() {
   return (
     <div>
       <div className="imagebox">
-        <img src={mainimg} alt="" />
-        {/* <video loop autoPlay muted>
-          <source src={mainvideo} type="video/mp4" />
-        </video> */}
+        {category === "all" && (
+          <video loop autoPlay muted>
+            <source src={video1} type="video/webm" />
+          </video>
+        )}
+        {category === "Animal" && (
+          <video loop autoPlay muted>
+            <source src={mainvideo} type="video/mp4" />
+          </video>
+        )}
+        {category === "Watery&Powdery" && (
+          <video loop autoPlay muted>
+            <source src={video2} type="video/webm" />
+          </video>
+        )}
+        {category === "Woody" && <img src={img1} alt="" />}
+        {category === "Mossy" && <img src={img2} alt="" />}
+        {category === "Herbal&Green" && <img src={img3} alt="" />}
+        {category === "Floral" && <img src={img4} alt="" />}
+        {category === "Citrus" && <img src={img5} alt="" />}
+        {category === "Fruity" && <img src={img6} alt="" />}
+        {category === "Special" && <img src={img7} alt="" />}
       </div>
       <div className="infobox">
-        <h2>{infologo}</h2>
+        <img src={logo} alt="ascentic_logo" />
         <span>{infotext}</span>
         <span>{infotext2}</span>
         <span>{infotext3}</span>

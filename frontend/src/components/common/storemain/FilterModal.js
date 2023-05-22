@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../../../styles/StoreMain.css";
 import all from "../../../assets/productCategory/category_all.webp";
 import best from "../../../assets/productCategory/category_best.webp";
@@ -88,7 +88,7 @@ const FilterModal = (props) => {
                   <button
                     value={c.name}
                     style={{
-                      borderColor: prodcategory == c.name ? "black" : "",
+                      borderColor: prodcategory === c.name ? "black" : "",
                     }}
                     onClick={clickProdcategory}
                   >
@@ -152,8 +152,8 @@ const FilterModal = (props) => {
                   <button
                     value={s.name}
                     style={{
-                      color: sortOption == s.name ? "white" : "",
-                      backgroundColor: sortOption == s.name ? "black" : "",
+                      color: sortOption === s.name ? "white" : "",
+                      backgroundColor: sortOption === s.name ? "black" : "",
                     }}
                     onClick={clickSortOption}
                   >

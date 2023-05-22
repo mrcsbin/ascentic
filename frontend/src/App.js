@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./styles/Reset.css";
 import Routes from "./routes/Routes";
-import Header from "./components/common/Header";
+
 import Footer from "./components/common/Footer";
 import Notice from "./components/common/Notice";
 import Loading from "./components/common/Loading";

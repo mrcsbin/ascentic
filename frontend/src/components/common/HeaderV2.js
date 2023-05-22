@@ -21,12 +21,20 @@ const HeaderV2 = () => {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
   const location = useLocation();
   const [hoverMenu, setHoverMenu] = useState("");
-
+  const [isDarkMode, setIsDarkMode] = useState(false);
   // 검색창
   const [showSearch, setShowSearch] = useState(false);
+
   // 소메뉴 펼치기
   const [showMenu1, setShowMenu1] = useState(false);
   // 검색창 켜기
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", updateScroll);
+  });
   const handleshowSearch = () => {
     setShowSearch(true);
   };
@@ -40,6 +48,15 @@ const HeaderV2 = () => {
     dispatch(setIsLogin(false));
     navigate("/", { replace: true });
   }
+  useEffect(() => {
+    if (location.pathname.startsWith("/exp")) {
+      setIsDarkMode(true);
+      console.log("다크모드 : " + isDarkMode);
+    } else {
+      setIsDarkMode(false);
+      console.log("다크모드 : " + isDarkMode);
+    }
+  }, [isDarkMode, location.pathname]);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -51,15 +68,111 @@ const HeaderV2 = () => {
     checkLoginStatus();
   }, [dispatch]);
   if (location.pathname.startsWith("/admin")) return null;
-
+  //isDarkMode leftBox CenterBox RightBox 단에서 props로 주니까 보라색으로 이상하게 바뀜요,,, 그래서 styledLink로,,
   return (
-    <Wrap className="header-wrap">
+    <Wrap
+      className={`header-wrap-${
+        scrollPosition < 100 ? "original-header" : "change-header"
+      }`}
+      isDarkMode={isDarkMode}
+      hoverMenu={hoverMenu}
+    >
       <TopContainer>
-        <LeftBox></LeftBox>
+        <LeftBox>
+          <StyledLink to="/" isDarkMode={isDarkMode}>
+            [a]scentic
+          </StyledLink>
+        </LeftBox>
         <CenterBox>
-          <StyledLink to="/">[a]scentic</StyledLink>
+          <MenuContainer>
+            <MenuBox>
+              <StyledLink
+                to="/exp"
+                isDarkMode={isDarkMode}
+                onMouseEnter={() => {
+                  setHoverMenu("체험");
+                }}
+              >
+                <Menu>체 험</Menu>
+              </StyledLink>
+            </MenuBox>
+            <MenuBox>
+              <StyledLink
+                to="/StoreMain/"
+                isDarkMode={isDarkMode}
+                onMouseEnter={() => setHoverMenu("스토어")}
+              >
+                <Menu>스 토 어</Menu>
+              </StyledLink>
+            </MenuBox>
+            <MenuBox>
+              <StyledLink
+                isDarkMode={isDarkMode}
+                to="/proddetail"
+                onMouseEnter={() => setHoverMenu("커뮤니티")}
+              >
+                <Menu>커 뮤 니 티</Menu>
+              </StyledLink>
+            </MenuBox>
+          </MenuContainer>
+
+          <ExpSubMenuContainer
+            isMenuHovered={hoverMenu === "체험"}
+            onMouseLeave={() => setHoverMenu("")}
+          >
+            <CategoryBox>
+              <CategoryItem>
+                <StyledLink to="/exp" isDarkMode={isDarkMode}>
+                  <SubMenu>구독 소개</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+              <CategoryItem>
+                <StyledLink to="/exp/taste" isDarkMode={isDarkMode}>
+                  <SubMenu>취향 테스트</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+              <CategoryItem>
+                <StyledLink to="/exp/subs" isDarkMode={isDarkMode}>
+                  <SubMenu>구독 신청</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+              <CategoryItem>
+                <StyledLink to="/exp/subsmanage" isDarkMode={isDarkMode}>
+                  <SubMenu>구독 관리</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+            </CategoryBox>
+          </ExpSubMenuContainer>
+
+          <CommunitySubMenuContainer
+            isMenuHovered={hoverMenu === "커뮤니티"}
+            onMouseLeave={() => setHoverMenu("")}
+          >
+            <CategoryBox>
+              <CategoryItem>
+                <StyledLink to="/" isDarkMode={isDarkMode}>
+                  <SubMenu>뉴스</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+              <CategoryItem>
+                <StyledLink to="/" isDarkMode={isDarkMode}>
+                  <SubMenu>공지사항</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+              <CategoryItem>
+                <StyledLink to="/" isDarkMode={isDarkMode}>
+                  <SubMenu>이벤트</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+              <CategoryItem>
+                <StyledLink to="/" isDarkMode={isDarkMode}>
+                  <SubMenu>게시판</SubMenu>
+                </StyledLink>
+              </CategoryItem>
+            </CategoryBox>
+          </CommunitySubMenuContainer>
         </CenterBox>
-        <RightBox>
+        <RightBox isDarkMode={isDarkMode}>
           <IconBox>
             <Icon
               src={iconSearch}
@@ -69,18 +182,18 @@ const HeaderV2 = () => {
             ></Icon>
           </IconBox>
           <IconBox>
-            <StyledLink to="/login">
+            <StyledLink to="/login" isDarkMode={isDarkMode}>
               <Icon src={iconUser} alt="iconMyPage"></Icon>
             </StyledLink>
           </IconBox>
           <IconBox>
-            <StyledLink to="/cart">
+            <StyledLink to="/cart" isDarkMode={isDarkMode}>
               <Icon src={iconBag} alt="iconBag"></Icon>
             </StyledLink>
           </IconBox>
           {isLoggedIn ? (
             <IconBox>
-              <StyledLink to="/">
+              <StyledLink to="/" isDarkMode={isDarkMode}>
                 <Icon
                   src={LOGOUT_ICON}
                   alt="로그아웃"
@@ -91,86 +204,6 @@ const HeaderV2 = () => {
           ) : null}
         </RightBox>
       </TopContainer>
-
-      <MenuContainer>
-        <MenuBox>
-          <StyledLink to="/exp" onMouseEnter={() => setHoverMenu("체험")}>
-            <Menu>체 험</Menu>
-          </StyledLink>
-        </MenuBox>
-        <MenuBox>
-          <StyledLink
-            to="/storemain"
-            onMouseEnter={() => setHoverMenu("스토어")}
-          >
-            <Menu>스 토 어</Menu>
-          </StyledLink>
-        </MenuBox>
-        <MenuBox>
-          <StyledLink
-            to="/proddetail"
-            onMouseEnter={() => setHoverMenu("커뮤니티")}
-          >
-            <Menu>커 뮤 니 티</Menu>
-          </StyledLink>
-        </MenuBox>
-      </MenuContainer>
-
-      <ExpSubMenuContainer
-        isMenuHovered={hoverMenu === "체험"}
-        onMouseLeave={() => setHoverMenu("")}
-      >
-        <CategoryBox>
-          <CategoryItem>
-            <StyledLink to="/exp">
-              <SubMenu>구독 소개</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-          <CategoryItem>
-            <StyledLink to="/exp/taste">
-              <SubMenu>취향 테스트</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-          <CategoryItem>
-            <StyledLink to="/exp/subs">
-              <SubMenu>구독 신청</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-          <CategoryItem>
-            <StyledLink to="/exp/subsmanage">
-              <SubMenu>구독 관리</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-        </CategoryBox>
-      </ExpSubMenuContainer>
-
-      <CommunitySubMenuContainer
-        isMenuHovered={hoverMenu === "커뮤니티"}
-        onMouseLeave={() => setHoverMenu("")}
-      >
-        <CategoryBox>
-          <CategoryItem>
-            <StyledLink to="/">
-              <SubMenu>뉴스</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-          <CategoryItem>
-            <StyledLink to="/">
-              <SubMenu>공지사항</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-          <CategoryItem>
-            <StyledLink to="/">
-              <SubMenu>이벤트</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-          <CategoryItem>
-            <StyledLink to="/">
-              <SubMenu>게시판</SubMenu>
-            </StyledLink>
-          </CategoryItem>
-        </CategoryBox>
-      </CommunitySubMenuContainer>
 
       {/* {showSearch && (
         <SearchWrap>
@@ -226,8 +259,24 @@ const HeaderV2 = () => {
 export default HeaderV2;
 
 const Wrap = styled.div`
-  position: relative;
-  height: 170px;
+  position: fixed;
+  height: ${({ hoverMenu }) => (hoverMenu === "" ? "75px" : "140px")};
+
+  z-index: 999;
+  transition: height 0.5s ease;
+  width: 100%;
+  font-weight: bold;
+
+  &.header-wrap-original-header {
+    background-color: transparent;
+    transition: background-color 0.5s ease;
+  }
+
+  &.header-wrap-change-header {
+    background-color: ${({ isDarkMode }) =>
+      isDarkMode ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.7)"};
+    transition: background-color 0.5s ease;
+  }
 `;
 
 const TopContainer = styled.div`
@@ -238,6 +287,8 @@ const TopContainer = styled.div`
 const LeftBox = styled.div`
   margin: 15px auto;
   width: 25%;
+  font-weight: bold;
+  font-size: 40px;
 `;
 
 const CenterBox = styled.div`
@@ -249,15 +300,17 @@ const CenterBox = styled.div`
 `;
 
 const RightBox = styled.div`
-  margin: 15px auto;
+  margin: auto;
   width: 25%;
   display: flex;
   justify-content: end;
+  filter: ${({ isDarkMode }) =>
+    isDarkMode ? "brightness(0) invert(1)" : "none"};
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: ${({ isDarkMode }) => (isDarkMode ? "white;" : "black;")};
 `;
 
 const IconBox = styled.div`
@@ -279,9 +332,9 @@ const MenuContainer = styled.div`
 `;
 
 const MenuBox = styled.div`
-  padding: 0px 30px;
+  padding: 10px 30px;
   text-align: center;
-  width: 6%;
+  width: 15%;
 `;
 
 const Menu = styled.div``;
@@ -300,7 +353,8 @@ const fadeIn = keyframes`
 const ExpSubMenuContainer = styled.div`
   z-index: 1;
   box-sizing: border-box;
-  padding: 20px 0px;
+  margin-top: 15px;
+  padding: 25px 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   border-top: 1px solid rgba(0, 0, 0, 0.3);
   display: none;
@@ -351,18 +405,22 @@ const CommunitySubMenuContainer = styled.div`
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
+
 `};
 `;
 
 const CategoryBox = styled.div`
   margin: 0 auto;
-  width: 30%;
+  width: 40%;
   display: flex;
   justify-content: space-evenly;
   text-decoration: none;
 `;
 
-const CategoryItem = styled.div``;
+const CategoryItem = styled.div`
+  margin: 0 10px;
+  width: auto;
+`;
 
 const SubMenu = styled.div`
   font-size: 15px;

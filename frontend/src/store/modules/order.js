@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   extend: {
     prod: true,
-    order: false,
+    order: true,
     delivery: false,
     disCount: false,
     payment: false,

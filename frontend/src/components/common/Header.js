@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import "../../styles/Header.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
@@ -54,7 +54,9 @@ const Header = () => {
     };
     checkLoginStatus();
   }, [dispatch]);
-
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
   return (
     <div className="header-wrap">
       {/* flexbox 부모 컨테이너 */}

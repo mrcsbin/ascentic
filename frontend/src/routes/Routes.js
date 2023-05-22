@@ -30,6 +30,8 @@ function Routes() {
     };
   }, [isLoggedIn]);
 
+
+function Routes({ isLoggedIn }) {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Pages.Main />}></Route>
@@ -46,22 +48,13 @@ function Routes() {
         element={isLoggedIn ? <Pages.MyPage /> : <Navigate to="/login" />}
       />
 
-      <Route path="/cart" element={<Pages.Cart />} />
-      <Route path="/*" element={<Navigate to="/NotFound" />} />
-      <Route path="/NotFound" element={<Pages.NotFound />} />
-      <Route path="/member/find" element={<Pages.FindIdPw />} />
-      <Route path="/signup" element={<Pages.SignUp />}></Route>
-      <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
-      <Route
-        path="/mypage"
-        element={isLoggedIn ? <Pages.MyPage /> : <Navigate to="/login" />}
-      />
-      <Route path="/cart" element={<Pages.Cart />} />
-      <Route path="/*" element={<Navigate to="/NotFound" />} />
-      <Route path="/NotFound" element={<Pages.NotFound />} />
-      <Route path="/member/find" element={<Pages.FindIdPw />} />
-      <Route path="/signup" element={<Pages.SignUp />}></Route>
-      <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
+
+        <Route path="/cart" element={<Pages.Cart />} />
+        <Route path="/*" element={<Navigate to="/NotFound" />} />
+        <Route path="/NotFound" element={<Pages.NotFound />} />
+        <Route path="/member/find" element={<Pages.FindIdPw />} />
+        <Route path="/signup" element={<Pages.SignUp />}></Route>
+        <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
 
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
 

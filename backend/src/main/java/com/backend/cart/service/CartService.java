@@ -2,7 +2,7 @@ package com.backend.cart.service;
 
 import com.backend.cart.dto.AddCartDto;
 import com.backend.cart.entity.Cart;
-import com.backend.productOption.entity.ProductOption;
+import com.backend.productoption.entity.ProductOption;
 
 import java.util.List;
 

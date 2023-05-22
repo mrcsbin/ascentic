@@ -169,7 +169,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         Member member1 = Member.builder()
-                .id("mrcsbin")
+                .id("sungbin")
                 .password(passwordEncoder.encode("1234"))
                 .email("test1@ascentic.com")
                 .image("profileimage1")
@@ -193,7 +193,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member2);
 
         Member member3 = Member.builder()
-                .id("kkm")
+                .id("kyungmin")
                 .password(passwordEncoder.encode("1234"))
                 .email("test3@ascentic.com")
                 .image("profileimage1")
@@ -205,7 +205,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member3);
 
         Member member4 = Member.builder()
-                .id("nhs")
+                .id("haesung")
                 .password(passwordEncoder.encode("1234"))
                 .email("test4@ascentic.com")
                 .image("profileimage1")
@@ -217,7 +217,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member4);
 
         Member member5 = Member.builder()
-                .id("jce")
+                .id("chaeeun")
                 .password(passwordEncoder.encode("1234"))
                 .email("test5@ascentic.com")
                 .image("profileimage1")
@@ -229,7 +229,7 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member5);
 
         Member member6 = Member.builder()
-                .id("hsm")
+                .id("sungmin")
                 .password(passwordEncoder.encode("1234"))
                 .email("test6@ascentic.com")
                 .image("profileimage1")
@@ -238,6 +238,6 @@ public class MemberServiceImpl implements MemberService {
                 .phone("010-0000-0005")
                 .role(Collections.singletonList("USER"))
                 .build();
-        memberRepository.save(member4);
+        memberRepository.save(member6);
     }
 }

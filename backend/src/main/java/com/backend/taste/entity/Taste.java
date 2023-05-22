@@ -28,9 +28,6 @@ public class Taste {
     @Column(name = "taste_agree")
     private Boolean tasteAgree;
 
-    @Column(name = "taste_name")
-    private String tasteName;
-
     @Column(name = "taste_gender")
     private String tasteGender;
 

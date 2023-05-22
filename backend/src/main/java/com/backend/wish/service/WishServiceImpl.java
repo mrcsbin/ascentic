@@ -15,15 +15,13 @@ import java.util.List;
 public class WishServiceImpl implements WishService{
 
     private final WishRepository wishRepository;
-    private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
 
     public void addWish(Integer prodNum){
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        System.out.println(currentMemberId);
         Wish wish = new Wish();
         wish.setProduct(productRepository.findById(prodNum).orElse(null));
-        wish.setMember(this.memberRepository.findById(currentMemberId).orElse(null));
+        wish.setMember(currentMemberId);
         this.wishRepository.save(wish);
     }
 
@@ -41,7 +39,7 @@ public class WishServiceImpl implements WishService{
 
     public List<Wish> listWish(){
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        List<Wish> wishlist = this.wishRepository.findAllByMember(this.memberRepository.findById(currentMemberId).orElse(null));
+        List<Wish> wishlist = this.wishRepository.findAllByMember(currentMemberId);
         return wishlist;
     }
 }

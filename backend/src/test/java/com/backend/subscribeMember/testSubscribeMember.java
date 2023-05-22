@@ -17,9 +17,9 @@ public class testSubscribeMember {
 //            (mock(TasteRepository.class), mock(TasteResRepository.class));
 //    @Test
 //    public void testAdd(){
-//        SubscribeMember subscribeMember = new SubscribeMember();
-//        subscribeMember.setSbMemberNum(22);
-//        sbMemberService.sbMemberAdd(subscribeMember);
+//        SubscribeMember subscribeMember.sql = new SubscribeMember();
+//        subscribeMember.sql.setSbMemberNum(22);
+//        sbMemberService.sbMemberAdd(subscribeMember.sql);
 //
 //        assertThat(22).isEqualTo(sbMemberService.findSbMember(22).getSbMemberNum());
 //    }

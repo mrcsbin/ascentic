@@ -18,9 +18,9 @@ public class Wish {
     @Column(name = "wish_num")
     private Integer wishNum;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
-    private Member member;
+
+    @Column(name = "member_id")
+    private String member;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prod_num")

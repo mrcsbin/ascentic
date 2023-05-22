@@ -26,5 +26,5 @@ public interface WishRepository extends JpaRepository<Wish, Integer> {
 //            nativeQuery=true)
 //    public List<Product> listWish(String memberId);
 
-    public List<Wish> findAllByMember(Member member);
+    public List<Wish> findAllByMember(String memberId);
 }

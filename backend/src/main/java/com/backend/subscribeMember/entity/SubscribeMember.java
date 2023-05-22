@@ -19,9 +19,8 @@ public class SubscribeMember {
     @Column(name = "sb_member_num")
     private Integer sbMemberNum;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     @Column(name = "sb_start_date")
     private LocalDate sbStartDate;

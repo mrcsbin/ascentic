@@ -1,14 +1,14 @@
 package com.backend.subscribeMember.service;
 
-import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
-import com.backend.subscribeMember.entity.SubscribeMember;
 import com.backend.subscribeMember.dto.LastSbMemberDTO;
 import com.backend.subscribeMember.dto.SubscribeMemberDto;
+import com.backend.subscribeMember.entity.SubscribeMember;
 import com.backend.subscribeMember.repository.SbMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 
 @RequiredArgsConstructor
@@ -23,11 +23,10 @@ public class SbMemberServiceImpl implements SbMemberService {
 
         // 토큰으로 멤버 가져옴
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Member memberNow = this.memberRepository.findById(currentMemberId).orElse(null);
+//        Member memberNow = this.memberRepository.findById(currentMemberId).orElse(null);
 
         // 구독회원 빌드
         SubscribeMember subscribeMember = SubscribeMember.builder()
-                .member(memberNow)
                 .sbStartDate(subscribeMemberDto.getStartDate())
                 .sbEndDate(subscribeMemberDto.getEndDate())
                 .sbMemberName(subscribeMemberDto.getMemberName())
@@ -39,6 +38,7 @@ public class SbMemberServiceImpl implements SbMemberService {
                 .sbPaymentDay(subscribeMemberDto.getMonthPaymentDate())
                 .sbPrice(subscribeMemberDto.getPrice())
                 .tasteResult(subscribeMemberDto.getTasteResult())
+                .memberId(currentMemberId)
                 .build();
 
         //  저장
@@ -50,7 +50,6 @@ public class SbMemberServiceImpl implements SbMemberService {
 
         // 토큰으로 멤버아이디 가져옴
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Member member = memberRepository.findById(currentMemberId).orElse(null);
 
         // 멤버 아이디로 마지막 구독정보 가져옴
         SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getLastSbMemberByMemberId(currentMemberId);
@@ -59,7 +58,7 @@ public class SbMemberServiceImpl implements SbMemberService {
                 .sbEndDate(lastSbMemberByMemberId.getSbEndDate())
                 .sbPay(lastSbMemberByMemberId.getSbPay())
                 .sbPaymentDay(lastSbMemberByMemberId.getSbPaymentDay())
-                .memberName(member.getName())
+                .memberName(lastSbMemberByMemberId.getSbMemberName())
                 .mainAddress(lastSbMemberByMemberId.getSbMainAddr())
                 .subAddress(lastSbMemberByMemberId.getSbSubAddr())
                 .build();
@@ -75,7 +74,6 @@ public class SbMemberServiceImpl implements SbMemberService {
     public void endSubscription(){
         // 토큰으로 멤버아이디 가져옴
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Member memberNow = this.memberRepository.findById(currentMemberId).orElse(null);
 
         //  구독 진행중인 데이터 가져옴
         SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getLastSbMemberByMemberId(currentMemberId);

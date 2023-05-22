@@ -1,6 +1,7 @@
 package com.backend.productImg;
 
 import com.backend.product.ProductRepository;
+import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;

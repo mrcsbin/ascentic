@@ -31,7 +31,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
             },
           })
           .then((response) => {
-            if (response.data == 1) {
+            if (response.data === 1) {
               setOnWish(true);
             } else {
               setOnWish(false);
@@ -168,6 +168,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
           {/* 이미지 여러장 출력 */}
           {imgArr.map((imgUrl, index) => {
             return (
+
               <div className="img-box" key={index}>
                 <img
                   key={index}
@@ -175,6 +176,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
                   alt="이미지 손상됨"
                 />
               </div>
+
             );
           })}
 

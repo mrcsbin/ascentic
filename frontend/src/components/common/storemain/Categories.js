@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../../styles/StoreMain.css";
+
 import all from "../../../assets/category/floral2.webp";
 import animal from "../../../assets/category/animal.webp";
 import citrus from "../../../assets/category/citrus.webp";
@@ -64,7 +65,6 @@ const categorylist = [
     image: special,
   },
 ];
-
 const Categories = () => {
   return (
     <div className="categories">

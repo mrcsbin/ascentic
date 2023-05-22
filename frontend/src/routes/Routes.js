@@ -155,6 +155,8 @@ function Routes() {
     };
   }, [isLoggedIn]);
 
+
+function Routes({ isLoggedIn }) {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Pages.Main />}></Route>
@@ -181,12 +183,14 @@ function Routes() {
         }
       />
 
+
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
       <Route path="/member/find" element={<Pages.FindIdPw />} />
       <Route path="/signup" element={<Pages.SignUp />}></Route>
       <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
+
 
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
 
@@ -221,6 +225,8 @@ function Routes() {
         path="/exp/subsmanage"
         element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
       ></Route>
+
+
 
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
       <Route path="/admin" element={<AdminPages.Admin />} />

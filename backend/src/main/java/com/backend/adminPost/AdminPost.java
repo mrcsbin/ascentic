@@ -40,6 +40,6 @@ public class AdminPost {
     @Column(name = "admin_post_start_date")
     private LocalDate eventStartDate;
 
-    @Column(name = "admin_post__end_date")
+    @Column(name = "admin_post_end_date")
     private LocalDate eventEndDate;
 }

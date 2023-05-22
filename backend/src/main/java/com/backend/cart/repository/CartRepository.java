@@ -13,21 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
-
-    public List<Cart> findByMember(Member member);
-
-    @Transactional
-    @Modifying //insert, update, delete시 사용
-    @Query(value = "delete from tb_cart where option_num = :optionNum and member_id = :memberId",
-            nativeQuery = true)
-    public void deleteCart(@Param("optionNum") int optionNum, @Param("memberId") String memberId);
-
-    public List<Cart> findAllByMember(Member member);
-
     List<Cart> findByMemberId(String memberId);
 
     Optional<Cart> findByMemberIdAndProductOption(String memberId, ProductOption productOption);
 
     Optional<Cart> findByMemberIdAndCartNum(String memberId, Integer cartNum);
-
 }

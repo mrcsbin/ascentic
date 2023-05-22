@@ -89,7 +89,6 @@ public class MemberController {
         return id + "님 그동안 이용해주셔서 감사합니다.";
     }
 
-
     // 로그인
     @PostMapping("/login")
     public JwtTokenDto doLogin(@RequestBody LoginDto loginDto) {

@@ -17,35 +17,18 @@ public class CartController {
 
     private final CartServiceImpl cartServiceImpl;
 
-    @GetMapping
-    public List<Cart> getCart() {
-        List<Cart> cartList = cartServiceImpl.listCart();
-        return cartList;
-    }
-
-    @PostMapping
-    public void addCart(@RequestBody AddCartDto cartAddDto) {
-        this.cartServiceImpl.addCart(cartAddDto);
-    }
-    //추가: 같은 상품인 경우 개수만 증가하도록 조정
-
-    @DeleteMapping
-    public void deleteCart(ProductOption productOption) {
-        this.cartServiceImpl.deleteCart(productOption);
-    }
-
-    @GetMapping("/getv2")
+    @GetMapping("/get")
     public List<GetCartDto> getCartV2() {
-        return cartServiceImpl.getCartV2();
+        return cartServiceImpl.getCart();
     }
 
-    @PostMapping("/addv2")
+    @PostMapping("/add")
     public void addCartV2(@RequestBody AddCartDto cartAddDto) {
-        cartServiceImpl.addCartV2(cartAddDto);
+        cartServiceImpl.addCart(cartAddDto);
     }
 
-    @DeleteMapping("/delv2/{cartNum}")
+    @DeleteMapping("/del/{cartNum}")
     public void deleteCartV3(@PathVariable Integer cartNum) {
-        cartServiceImpl.deleteCartV2(cartNum);
+        cartServiceImpl.deleteCart(cartNum);
     }
 }

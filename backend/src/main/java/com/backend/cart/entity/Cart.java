@@ -22,9 +22,8 @@ public class Cart {
     @JoinColumn(name = "option_num")
     private ProductOption productOption;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     @Column(name = "prod_count")
     private Integer prodCount;

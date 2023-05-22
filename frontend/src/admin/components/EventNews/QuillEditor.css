@@ -33,9 +33,9 @@
   font-style: italic;
 }
 
-.QuillContainer {
+/* .QuillContainer {
   height: 90%;
-}
+} */
 .ql-editor {
   min-height: 700px !important;
   max-height: 700px;
@@ -47,24 +47,84 @@
   z-index: 999;
 }
 
-.NameCategory {
+/* .NameCategory {
   display: flex;
   flex-direction: column;
-}
+} */
 
-.NameCategory input,
-.NameCategory select {
+
+/* .NameCategory select {
   margin-bottom: 10px;
-}
+} */
 
 .CalendarContainer {
   margin-left: 20px;
 }
 
-.NameCategory {
+/* .NameCategory {
   margin-bottom: 10px;
-}
+} */
 
 .CalendarContainer {
   margin-left: 0;
+}
+
+/* 추가 변경부분 */
+.QuillContainer .NameCategory {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.QuillContainer .NameCategory h1 {
+  text-align: center;
+  font-size: 2vw;
+  margin-top: 0;
+  margin-bottom: 1vw;
+}
+.QuillContainer .NameCategory .post-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.QuillContainer .NameCategory .post-status button {
+  text-align: center;
+  all: unset;
+  cursor: pointer;
+  padding: 8px;
+  margin: 5px;
+  color: white;
+  background-color: black;
+}
+.QuillContainer .NameCategory .post-category-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+
+}
+.QuillContainer .NameCategory .post-category-input select {
+  font-size: 1vw;
+  margin: 10px 0 10px 0;
+  width: 100%;
+  height: 2vw;
+  border-width: 0px;
+  border: 1px solid black;
+}
+.QuillContainer .NameCategory .post-category-input input {
+  width: 100%;
+  height: 1.5vw;
+  font-size: 1vw;
+  margin: 5px 0 5px 0;
+  padding: 4px 0 4px 0;
+  border-width: 0px;
+  border: 1px solid black;
+}
+.QuillContainer .event-date h4 {
+  height: 1.5vw;
+  text-align: center;
+  font-size: 1vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
 }

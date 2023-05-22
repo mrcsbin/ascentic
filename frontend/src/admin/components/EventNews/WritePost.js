@@ -257,38 +257,46 @@ const WritePost = ({ postEdit }) => {
   return (
     <div className="QuillContainer">
       <div className="NameCategory">
-        <input
-          type="text"
-          placeholder="제목"
-          value={postTitle}
-          onChange={(e) => setPostTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="한줄 메시지"
-          value={postCoreMessage}
-          onChange={(e) => setPostCoreMessage(e.target.value)}
-        />
-        <select
-          value={postCategory}
-          onChange={(e) => {
-            setPostCategory(e.target.value);
-            setEventDateRange([
-              {
-                startDate: null,
-                endDate: null,
-                key: "selection",
-              },
-            ]);
-          }}
-        >
-          <option value="">카테고리 선택</option>
-          <option value="event">이벤트</option>
-          <option value="news">뉴스</option>
-        </select>
+        <h1>[이벤트 및 뉴스 작성]</h1>
+        <div className="post-status">
+          <button onClick={() => setPostStatus(0)}>저장하기</button>
+          <button onClick={() => setPostStatus(1)}>임시저장하기</button>
+          <button onClick={() => setPostStatus(2)}>삭제하기</button>
+        </div>
+        <div className="post-category-input">
+          <select
+            value={postCategory}
+            onChange={(e) => {
+              setPostCategory(e.target.value);
+              setEventDateRange([
+                {
+                  startDate: null,
+                  endDate: null,
+                  key: "selection",
+                },
+              ]);
+            }}
+          >
+            <option value="">게시판을 선택해 주세요.</option>
+            <option value="event">이벤트</option>
+            <option value="news">뉴스</option>
+          </select>
+          <input
+            type="text"
+            placeholder="제목"
+            value={postTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="한줄 메시지"
+            value={postCoreMessage}
+            onChange={(e) => setPostCoreMessage(e.target.value)}
+          />
+        </div>
       </div>
-      <div>
-        <h4>이벤트 날짜 선택</h4>
+      <div className="event-date">
+        <h4>[이벤트 날짜 선택]</h4>
         <div className="CalendarContainer">
           <DateRangePicker
             onChange={handleDateRangeChange}
@@ -329,9 +337,6 @@ const WritePost = ({ postEdit }) => {
         onChange={setContent}
         modules={modules}
       />
-      <button onClick={() => setPostStatus(0)}>저장하기</button>
-      <button onClick={() => setPostStatus(1)}>임시저장하기</button>
-      <button onClick={() => setPostStatus(2)}>삭제하기</button>
     </div>
   );
 };

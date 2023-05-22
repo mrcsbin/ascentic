@@ -21,6 +21,12 @@ public class ProductOption {
     @Column(name = "prod_option")
     private String prodOption;
 
+    @Column(name = "prod_price")
+    private Integer prodPrice;
+
+    @Column(name = "prod_stock")
+    private Integer prodStock;
+
     @ManyToOne
     @JoinColumn(name = "prod_num")
     private Product product;   ///이걸 Product Class로 설정해도 db엔 PK만 들어 갔던거임!!! 근데 왜?

@@ -1,5 +1,6 @@
 package com.backend.product.entity;
 
+import com.backend.productOption.entity.ProductOption;
 import com.backend.scent.entity.Scent;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,11 +34,11 @@ public class Product {
     @Column(name = "prod_category")
     private String prodCategory;
 
-    @Column(name = "prod_price")
-    private Integer prodPrice;
-
-    @Column(name = "prod_stock")
-    private Integer prodStock;
+//    @Column(name = "prod_price")
+//    private Integer prodPrice;
+//
+//    @Column(name = "prod_stock")
+//    private Integer prodStock;
 
     @Column(name = "prod_info")
     private String prodInfo;
@@ -48,4 +51,7 @@ public class Product {
 
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
+
+//    @OneToMany(mappedBy = "product")
+//    private List<ProductOption> productOption;
 }

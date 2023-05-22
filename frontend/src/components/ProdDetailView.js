@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ProdDetail.css";
 import { getCookie } from "../utils/Cookies";
+import wish from "../assets/wish_icon.svg";
+import unwish from "../assets/unwish_icon.svg";
+import uptri from "../assets/up_triangle.svg";
 
 function ProdDetailView({ productData, productOption, isWish }) {
   const navigate = useNavigate();
@@ -85,7 +88,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
 
   // 찜하기 구현
   const handleWishClick = () => {
-    if (onWish == true) {
+    if (onWish === true) {
       //찜했다 안했다 하기 위함
       axios
         .post(
@@ -123,7 +126,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
     }
   };
 
-  //옵션 고르는 버튼(이미지로 표시해야되나?)
+  //옵션 고르는 버튼
   const Optioncard = (options) => {
     // console.log('this is in OptionCard', options);
     //아니 여기서 왜 options.options 로 써야되는지 모르겠음
@@ -131,7 +134,11 @@ function ProdDetailView({ productData, productOption, isWish }) {
 
     return (
       <button
-        className="prodOption"
+        className={
+          prodOption === options.options
+            ? "prodOptionBtn-active"
+            : "prodOptionBtn"
+        }
         onClick={() => {
           setProdOption(
             options.options
@@ -157,103 +164,119 @@ function ProdDetailView({ productData, productOption, isWish }) {
       {/* 이미지와 상세설명등만 담는 박스 */}
       <div className="img-and-content">
         {/* 이미지 박스 */}
-        <div className="Img-scroll">
+        <div className="Imgscroll">
           {/* 이미지 여러장 출력 */}
           {imgArr.map((imgUrl, index) => {
             return (
-              <img
-                key={index}
-                className="img-box"
-                src={`http://localhost:8080/images/${imgUrl}`}
-                alt="이미지 손상됨"
-              />
+              <div className="img-box" key={index}>
+                <img
+                  key={index}
+                  src={`http://localhost:8080/images/${imgUrl}`}
+                  alt="이미지 손상됨"
+                />
+              </div>
             );
           })}
 
           {/* <img src={productData.imageUrl} alt={productData.name} /> */}
         </div>
-        {/* 상세창 반 짤라서 윗부분 */}
+        {/* 상세창 */}
         <div className="detail-section">
           {/* 이름,가격있는 부분 */}
           <div className="name-price">
             <p>{productData.prodCategory}</p>
             <div className="name">
               <h2>{productData.prodName}</h2>
-              <button onClick={handleWishClick}>찜하기</button>
+              <div className="wishbtn" onClick={handleWishClick}>
+                {onWish ? (
+                  <img src={wish} alt="wish_icon" />
+                ) : (
+                  <img src={unwish} alt="unwish_icon" />
+                )}
+              </div>
             </div>
-            <div className="clear-both"></div>
-            <span>{addComma(productData.prodPrice)}원</span>
+            <div className="price">{addComma(productData.prodPrice)}원</div>
           </div>
-          <div className="clear-both"></div>
-          {/* 향 설명 박스 */}
+          {/* 설명 박스 */}
+          <div className="prodinfobox">{productData.prodInfo}</div>
           <div className="scent-content">
-            <p>{productData.scent.scentContent}</p>
+            <div className="scentname">
+              {productData.scent.scentNoteName} | {productData.scent.scentName}
+            </div>
+            <div className="scentinfo">{productData.scent.scentContent}</div>
           </div>
-        </div>
-        {/* 상세창 반 짤라서 아래부분 */}
-        <div className="detail-section">
-          {/* 옵션들 보여주기 */}
-          <div>
+          {/* 옵션 버튼 */}
+          <div className="optionbox">
             {productOption.map((options, index) => {
               return <Optioncard options={options} key={index} />;
             })}
-            <div className="clear-both"></div>
           </div>
-          {/* 수량, 구매하기 부분 */}
+          {/* 수량, 구매하기 */}
           <div className="detail-quantity">
             <p>수량</p>
-            <div className="button">
-              <button onClick={() => QuantButton("-")}> - </button>
-              {/* to do : 화살표로 대체 */}
-              {quantity}
-              <button onClick={() => QuantButton("+")}> + </button>
+            <div className="quantitybox">
+              <div className="quantitybtn" onClick={() => QuantButton("-")}>
+                <img className="down" src={uptri} alt="quantity_down_btn" />
+              </div>
+              <div className="quantity">{quantity}</div>
+              <div className="quantitybtn" onClick={() => QuantButton("+")}>
+                <img src={uptri} alt="quantity_up_btn" />
+              </div>
             </div>
           </div>
-          <div className="clear-both"></div>
-          {/* 주문하기, 장바구니 박스 */}
+          {/* 구매하기, 장바구니 박스 */}
           <div className="order-cart">
-            <button onClick={handleOrderClick}>주문하기</button>
-            <button onClick={handleCartClick}>장바구니</button>
+            <button className="buybtn" onClick={handleOrderClick}>
+              구매하기
+            </button>
+            <button className="cartbtn" onClick={handleCartClick}>
+              장바구니
+            </button>
           </div>
-          <br />
-          <hr />
           {/* 추가정보 박스 */}
           <div className="additional-content">
             <div className="prod-info-modal">
-              제품 세부정보
-              <button onClick={() => setProdInfoModal(!ProdInfoModal)}>
-                +
-              </button>
+              <div className="modalname">
+                제품 세부정보
+                {ProdInfoModal === false ? (
+                  <button onClick={() => setProdInfoModal(true)}>+</button>
+                ) : (
+                  <button onClick={() => setProdInfoModal(false)}>-</button>
+                )}
+              </div>
               {ProdInfoModal && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <p>{productData.prodInfo}</p>
-                  </div>
+                <div className="modal-content">
+                  <p>{productData.prodInfo}</p>
                 </div>
               )}
             </div>
-            <br />
-            <hr />
             <div className="prod-info-modal">
-              배송 & 반품
-              <button onClick={() => setDeliInfoModal(!deliInfoModal)}>
-                +
-              </button>
+              <div className="modalname">
+                배송 & 반품
+                {deliInfoModal === false ? (
+                  <button onClick={() => setDeliInfoModal(true)}>+</button>
+                ) : (
+                  <button onClick={() => setDeliInfoModal(false)}>-</button>
+                )}
+              </div>
               {deliInfoModal && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <p>
-                      3만원 이상 구매하실 경우 배송 비용은 무료입니다.
-                      주문일로부터 1-2 영업일 이내 출고됩니다. 배송은 지역
-                      택배사 사정에 따라 약간의 지연이 생길 수 있습니다. 배송이
-                      시작되면 구매자에게는 이메일, 수령인에게는 카카오
-                      알림톡으로 배송 정보를 전송해 드립니다.
-                      CJ대한통운(https://www.cjlogistics.com) *상품 혹은
-                      증정품의 포장(랩핑)을 개봉 및 훼손한 경우 반품이
-                      불가합니다. *단순 변심 또는 주문 실수로 인한 교환이
-                      불가합니다. 신중한 구매 부탁드립니다.
-                    </p>
-                  </div>
+                <div className="modal-content">
+                  <p>3만원 이상 구매하실 경우 배송 비용은 무료입니다. </p>
+                  <p>
+                    주문일로부터 1-2 영업일 이내 출고됩니다. 배송은 지역 택배사
+                    사정에 따라 약간의 지연이 생길 수 있습니다. 배송이 시작되면
+                    구매자에게는 이메일, 수령인에게는 카카오 알림톡으로 배송
+                    정보를 전송해 드립니다.
+                    CJ대한통운(https://www.cjlogistics.com){" "}
+                  </p>
+                  <p>
+                    * 상품 혹은 증정품의 포장(랩핑)을 개봉 및 훼손한 경우 반품이
+                    불가합니다.
+                  </p>
+                  <p>
+                    * 단순 변심 또는 주문 실수로 인한 교환이 불가합니다. 신중한
+                    구매 부탁드립니다.
+                  </p>
                 </div>
               )}
             </div>

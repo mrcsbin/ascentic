@@ -17,7 +17,6 @@ import java.util.*;
 public class TasteServiceImpl implements TasteService {
     public static final int TASTE_TEST_RESULT_LENGTH = 9;
     private final TasteRepository tasteRepository;
-    private final MemberRepository memberRepository;
 
     @Override
     public TasteResultDTO tasteResProgress(TasteDTO tasteDTO) {
@@ -30,9 +29,8 @@ public class TasteServiceImpl implements TasteService {
         String secondPlace = result.get(1);
         String thirdPlace = result.get(2);
 
-        Member currentMember = memberRepository.findById(currentMemberId).orElse(null);
 
-        if (currentMember==null){
+        if (currentMemberId == null) {
             return TasteResultDTO.builder()
                     .firstPlace("null")
                     .secondPlace("null")
@@ -41,9 +39,8 @@ public class TasteServiceImpl implements TasteService {
         }
 
         Taste taste = Taste.builder()
-                .member(currentMember)
+                .memberId(currentMemberId)
                 .tasteAgree(tasteDTO.getTasteAgree())
-                .tasteName(tasteDTO.getTasteName())
                 .tasteGender(tasteDTO.getTasteGender())
                 .tasteAge(tasteDTO.getTasteAge())
                 .tasteTest1(tasteDTO.getTasteTest1())
@@ -58,10 +55,10 @@ public class TasteServiceImpl implements TasteService {
 
         Taste tasteRes = tasteRepository.save(taste);
         return TasteResultDTO.builder()
-                    .firstPlace(tasteRes.getFirstPlace())
-                    .secondPlace(tasteRes.getSecondPlace())
-                    .thirdPlace(tasteRes.getThirdPlace())
-                    .build();
+                .firstPlace(tasteRes.getFirstPlace())
+                .secondPlace(tasteRes.getSecondPlace())
+                .thirdPlace(tasteRes.getThirdPlace())
+                .build();
 
     }
 
@@ -70,10 +67,9 @@ public class TasteServiceImpl implements TasteService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 //        String currentMemberId = "kka12345";
 
-        Taste taste = tasteRepository.findDistinctTopByMemberOrderByTasteNumDesc(memberRepository.findById(currentMemberId).orElse(null));
+        Optional<Taste> findTaste = tasteRepository.findByMemberId(currentMemberId);
 
-        if ((memberRepository.findById(currentMemberId).orElse(null)==null)
-                |(taste==null)) {
+        if (!findTaste.isPresent()) {
             return TasteResultDTO.builder()
                     .firstPlace("null")
                     .secondPlace("null")
@@ -81,9 +77,9 @@ public class TasteServiceImpl implements TasteService {
                     .build();
         } else {
             return TasteResultDTO.builder()
-                    .firstPlace(taste.getFirstPlace())
-                    .secondPlace(taste.getSecondPlace())
-                    .thirdPlace(taste.getThirdPlace())
+                    .firstPlace(findTaste.get().getFirstPlace())
+                    .secondPlace(findTaste.get().getSecondPlace())
+                    .thirdPlace(findTaste.get().getThirdPlace())
                     .build();
         }
     }

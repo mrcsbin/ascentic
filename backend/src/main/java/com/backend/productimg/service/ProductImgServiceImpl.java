@@ -1,8 +1,8 @@
-package com.backend.productImg.service;
+package com.backend.productimg.service;
 
 import com.backend.product.repository.ProductRepository;
-import com.backend.productImg.entity.ProductImg;
-import com.backend.productImg.repository.ProdImgRepository;
+import com.backend.productimg.entity.ProductImg;
+import com.backend.productimg.repository.ProdImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;

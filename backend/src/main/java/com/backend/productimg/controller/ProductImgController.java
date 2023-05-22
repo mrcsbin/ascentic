@@ -1,6 +1,6 @@
-package com.backend.productImg.controller;
+package com.backend.productimg.controller;
 
-import com.backend.productImg.service.ProductImgServiceImpl;
+import com.backend.productimg.service.ProductImgServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

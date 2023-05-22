@@ -21,9 +21,8 @@ public class Taste {
     @Column(name = "taste_num")
     private Integer tasteNum;
 
-    @OneToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     @Column(name = "taste_agree")
     private Boolean tasteAgree;

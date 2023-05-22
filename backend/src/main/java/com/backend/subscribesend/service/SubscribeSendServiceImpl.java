@@ -21,7 +21,6 @@ import java.util.List;
 public class SubscribeSendServiceImpl implements SubscribeSendService{
 
     private final SubscribeSendRepository subscribeSendRepository;
-    private final MemberRepository memberRepository;
     private final SbMemberRepository sbMemberRepository;
     private final SbProductRepository sbProductRepository;
 

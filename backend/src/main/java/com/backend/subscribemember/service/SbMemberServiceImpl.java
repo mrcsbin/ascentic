@@ -16,7 +16,6 @@ import java.time.LocalDate;
 public class SbMemberServiceImpl implements SbMemberService {
 
     private final SbMemberRepository sbMemberRepository;
-    private final MemberRepository memberRepository;
 
     @Override
     public void sbMemberAdd(SubscribeMemberDto subscribeMemberDto) {

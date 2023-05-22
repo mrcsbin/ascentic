@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 public class TasteDTO {
     private Boolean tasteAgree;
-    private String tasteName;
     private String tasteGender;
     private Integer tasteAge;
     private Integer tasteTest1;

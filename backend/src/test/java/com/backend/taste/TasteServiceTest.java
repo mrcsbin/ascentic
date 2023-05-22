@@ -29,7 +29,7 @@ public class TasteServiceTest {
                 .tasteTest5(1)
                 .build();
 
-        String result = tasteService.tasteResProgress(tasteDTO);
+        String result = String.valueOf(tasteService.tasteResProgress(tasteDTO));
 
         assertEquals(result, "Woody");
     }
@@ -48,7 +48,7 @@ public class TasteServiceTest {
                 .tasteTest5(2)
                 .build();
 
-        String result = tasteService.tasteResProgress(tasteDTO);
+        String result = String.valueOf(tasteService.tasteResProgress(tasteDTO));
 
         assertEquals(result, "Woody");
     }

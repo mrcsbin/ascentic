@@ -28,7 +28,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
             },
           })
           .then((response) => {
-            if (response.data == 1) {
+            if (response.data === 1) {
               setOnWish(true);
             } else {
               setOnWish(false);
@@ -164,7 +164,7 @@ function ProdDetailView({ productData, productOption, isWish }) {
               <img
                 key={index}
                 className="img-box"
-                src={`http://localhost:8080/download?img=${imgUrl}`}
+                src={`http://localhost:8080/images/${imgUrl}`}
                 alt="이미지 손상됨"
               />
             );

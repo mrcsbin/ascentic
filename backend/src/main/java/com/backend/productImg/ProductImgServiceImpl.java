@@ -1,6 +1,7 @@
 package com.backend.productImg;
 
 import com.backend.product.ProductRepository;
+import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
@@ -43,7 +44,7 @@ public class ProductImgServiceImpl implements ProductImgService {
 
         List<String> imageNames = new ArrayList<>();
         for (ProductImg img : images) {
-            imageNames.add("file:" + uploadDir + "/" + img.getProdSaveName());
+            imageNames.add(img.getProdSaveName());
         }
 
         return imageNames;

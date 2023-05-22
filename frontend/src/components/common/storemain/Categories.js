@@ -10,55 +10,53 @@ import mossy from "../../../assets/category/mossy.jpg";
 import special from "../../../assets/category/special.jpg";
 import watery from "../../../assets/category/watery.jpg";
 import woody from "../../../assets/category/woody.jpg";
-
 const categorylist = [
   {
     name: "Animal",
-    text: "/animal",
+    text: "/Animal",
     image: animal,
   },
   {
     name: "Watery & Powdery",
-    text: "/waterypowdery",
+    text: "/Watery&Powdery",
     image: watery,
   },
   {
     name: "Woody",
-    text: "/woody",
+    text: "/Woody",
     image: woody,
   },
   {
     name: "Mossy",
-    text: "/mossy",
+    text: "/Mossy",
     image: mossy,
   },
   {
     name: "Herbal & Green",
-    text: "/herbalgreen",
+    text: "/Herbal&Green",
     image: herbal,
   },
   {
     name: "Floral",
-    text: "/floral",
+    text: "/Floral",
     image: floral,
   },
   {
     name: "Citrus",
-    text: "/citrus",
+    text: "/Citrus",
     image: citrus,
   },
   {
     name: "Fruity",
-    text: "/fruity",
+    text: "/Fruity",
     image: fruity,
   },
   {
     name: "Special",
-    text: "/special",
+    text: "/Special",
     image: special,
   },
 ];
-
 const Categories = () => {
   return (
     <div className="categories">

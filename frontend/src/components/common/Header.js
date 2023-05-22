@@ -13,13 +13,18 @@ import arrow from "../../assets/menu_arrow.svg";
 //RouteTest.js 에 임시로 연결
 
 const Header = () => {
-  if (location.pathname.startsWith("/admin")) {
-    return null;
-  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLogin);
+
   const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/admin")) {
+    } else {
+      setShowSearch(false);
+    }
+  }, [location.pathname]);
 
   // 검색창
   const [showSearch, setShowSearch] = useState(false);

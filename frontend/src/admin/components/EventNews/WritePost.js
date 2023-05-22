@@ -3,7 +3,6 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import axios from "axios";
-
 import { ko } from "date-fns/esm/locale";
 import { storage } from "../../../utils/firebaseConfig";
 import "./QuillEditor.css";

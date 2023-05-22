@@ -10,7 +10,7 @@ import static org.mockito.Mockito.mock;
 @SpringBootTest
 public class testSubscribeMember {
 
-    SbMemberServiceImpl sbMemberService = new SbMemberServiceImpl(mock(SbMemberRepository.class),mock(MemberRepository.class));
+//    SbMemberServiceImpl sbMemberService = new SbMemberServiceImpl(mock(SbMemberRepository.class),mock(MemberRepository.class));
 
 
 //    TasteServiceImpl tasteService = new TasteServiceImpl

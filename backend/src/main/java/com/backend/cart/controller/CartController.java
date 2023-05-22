@@ -18,17 +18,17 @@ public class CartController {
     private final CartServiceImpl cartServiceImpl;
 
     @GetMapping("/get")
-    public List<GetCartDto> getCartV2() {
+    public List<GetCartDto> getCart() {
         return cartServiceImpl.getCart();
     }
 
     @PostMapping("/add")
-    public void addCartV2(@RequestBody AddCartDto cartAddDto) {
+    public void addCart(@RequestBody AddCartDto cartAddDto) {
         cartServiceImpl.addCart(cartAddDto);
     }
 
     @DeleteMapping("/del/{cartNum}")
-    public void deleteCartV3(@PathVariable Integer cartNum) {
+    public void deleteCart(@PathVariable Integer cartNum) {
         cartServiceImpl.deleteCart(cartNum);
     }
 }

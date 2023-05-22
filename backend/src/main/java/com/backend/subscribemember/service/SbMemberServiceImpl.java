@@ -51,7 +51,7 @@ public class SbMemberServiceImpl implements SbMemberService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
         // 멤버 아이디로 마지막 구독정보 가져옴
-        SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getLastSbMemberByMemberId(currentMemberId);
+        SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getFirstByMemberIdOrderBySbStartDateDesc(currentMemberId);
         LastSbMemberDTO lastSbMemberDTO = LastSbMemberDTO.builder()
                 .sbStartDate(lastSbMemberByMemberId.getSbStartDate())
                 .sbEndDate(lastSbMemberByMemberId.getSbEndDate())
@@ -75,7 +75,7 @@ public class SbMemberServiceImpl implements SbMemberService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
         //  구독 진행중인 데이터 가져옴
-        SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getLastSbMemberByMemberId(currentMemberId);
+        SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getFirstByMemberIdOrderBySbStartDateDesc(currentMemberId);
 
         //  구독종료일 업데이트
         LocalDate today = LocalDate.now();

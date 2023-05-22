@@ -1,7 +1,48 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { getCookie } from "../../utils/Cookies";
+import "../../styles/ExpTaste.css";
+import Loading from "../../components/common/Loading";
 
-const TestResult = ({ resultData }) => {
+const TestResult = () => {
+  const Navigate = useNavigate();
+  const location = useLocation();
+  const [resultData, setResultData] = useState();
+
+  const [testloading, setTestloading] = useState(false);
+
+  useEffect(() => {
+    const fetchResult = async () => {
+      setTestloading(true);
+      try {
+        const res = await axios.post(
+          `http://localhost:8080/tasteTest`,
+          location.state.taste,
+          {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          }
+        );
+        setResultData(res.data);
+        if (res.data.firstPlace === "null") {
+          return Navigate("/login", {
+            state: { taste: location.state.taste, pathname: "/exp/taste/res" },
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      setTestloading(false);
+    };
+    if (location.state.taste) {
+      fetchResult();
+    } else if (location.state.resultData) {
+      setResultData(location.state.resultData);
+    }
+  }, []);
+
   //9가지 경우의 수로 향 소개 및 소분류 명칭-설명 저장
   const resultpage = [
     {
@@ -78,16 +119,6 @@ const TestResult = ({ resultData }) => {
     },
   ];
 
-  const firstPlace = resultpage.filter(
-    (r) => r.noteName == resultData.firstPlace
-  );
-  const secondPlace = resultpage.filter(
-    (r) => r.noteName == resultData.secondPlace
-  );
-  const thirdPlace = resultpage.filter(
-    (r) => r.noteName == resultData.thirdPlace
-  );
-
   const TasteResultview = ({ place }) => {
     //이미지파일 확장자 jpg나 png로 통일
     return (
@@ -133,23 +164,58 @@ const TestResult = ({ resultData }) => {
       </div>
     );
   };
-  //result 는 TasteResultDTO형태임
-  return (
-    <div className="testresbox">
-      <div className="firstTaste">
-        <TasteResultview place={firstPlace[0]} />
-      </div>
-      <Link className="subsbtn" to="/exp/subs">
-        체험 패키지 구독 신청하러 가기
-      </Link>
-      {/* <div className="secondTaste">
+
+  // 대기 중일 때
+  if (testloading) {
+    return (
+      // <div>
+      //   <img src="#" alt="" />
+      //   <div>결과를 분석중입니다...</div>
+      // </div>
+      <Loading />
+    );
+  }
+  // 아직 값이 설정되지 않았을 때
+  if (!resultData) {
+    return null;
+  }
+  if (resultData.firstPlace === "null") {
+    return;
+  }
+  //값이 저장되었을 때
+  else {
+    const firstPlace = resultpage.filter(
+      (r) => r.noteName === resultData.firstPlace
+    );
+    const secondPlace = resultpage.filter(
+      (r) => r.noteName === resultData.secondPlace
+    );
+    const thirdPlace = resultpage.filter(
+      (r) => r.noteName === resultData.thirdPlace
+    );
+    //result 는 TasteResultDTO형태임
+    return (
+      <div className="testresbox">
+        <div className="firstTaste">
+          <TasteResultview place={firstPlace[0]} />
+        </div>
+        <div className="resbtnbox">
+          <Link className="retrybtn" to="/exp/taste">
+            다시하기
+          </Link>
+          <Link className="subsbtn" to="/exp/subs">
+            체험 패키지 구독 신청하러 가기
+          </Link>
+        </div>
+        {/* <div className="secondTaste">
         <TasteResultview place={secondPlace[0]} />
       </div>
       <div className="thirdTaste">
         <TasteResultview place={thirdPlace[0]} />
       </div> */}
-    </div>
-  );
+      </div>
+    );
+  }
 };
 
 export default TestResult;

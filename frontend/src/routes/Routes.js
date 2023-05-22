@@ -193,7 +193,7 @@ function Routes() {
       <Route path="/order" element={<Pages.Order />}></Route>
       <Route path="/ordercomplete" element={<Pages.OrderComplete />}></Route>
       <Route path="/proddetail" element={<Pages.ProdDetail />}></Route>
-      <Route path="/storemain" element={<Pages.StoreMain />}></Route>
+      <Route exact path="/storemain/" element={<Pages.StoreMain />}></Route>
       <Route
         exact
         path="/storemain/:category"
@@ -211,7 +211,10 @@ function Routes() {
         path="/exp/taste"
         element={<Pages.ExpTaste></Pages.ExpTaste>}
       ></Route>
-
+      <Route
+        path="/exp/taste/res"
+        element={<Pages.TestResult></Pages.TestResult>}
+      ></Route>
       <Route path="/exp/subs" element={<Pages.ExpSubs></Pages.ExpSubs>}></Route>
 
       <Route

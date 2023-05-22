@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import PRODUCT_IMAGE from "../../../assets/storemain.jpeg";
+import PRODUCT_IMAGE from "../../../assets/storemain.webp";
 
 export const ReviewItem = () => {
   return (

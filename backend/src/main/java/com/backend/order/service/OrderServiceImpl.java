@@ -15,17 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
-    private final MemberRepository memberRepository;
 
     @Override
     public Integer insertOrder(OrderDTO orderDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        System.out.println(currentMemberId);
-        Member member = memberRepository.findById(currentMemberId).orElse(null);
-
 
         Order order =  orderRepository.save(Order.builder()
-                .member(member)
+                .memberId(currentMemberId)
                 .orderEmail(orderDTO.getOrderEmail())
                 .orderName(orderDTO.getOrderName())
                 .orderTel(orderDTO.getOrderTel())
@@ -48,25 +44,11 @@ public class OrderServiceImpl implements OrderService {
     public AddressDTO getRecentAddr() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         System.out.println(currentMemberId);
-        Order order = orderRepository.findFirstByMemberOrderByOrderIdDesc(memberRepository.findById(currentMemberId).orElse(null));
+        Order order = orderRepository.findFirstByMemberIdOrderByOrderIdDesc(currentMemberId);
 
         return AddressDTO.builder()
                 .shipMainAddress(order.getShipMainAddress())
                 .shipSubAddress(order.getShipSubAddress())
-                .build();
-    }
-
-    @Override
-    public MemberInfoDto getMemberInfo() {
-        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Member findMember = memberRepository.findById(currentMemberId)
-                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
-        String[] emailParts = findMember.getEmail().split("@");
-        return MemberInfoDto.builder()
-                .email(emailParts[0])
-                .domain(emailParts[1])
-                .name(findMember.getName())
-                .tel(findMember.getPhone())
                 .build();
     }
 }

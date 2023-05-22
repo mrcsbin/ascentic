@@ -10,6 +10,7 @@ import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
+import com.backend.order.dto.MemberInfoDto;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -137,6 +138,20 @@ public class MemberServiceImpl implements MemberService {
 
         }
         return "해당 회원이 존재하지 않습니다.";
+    }
+
+    @Override
+    public MemberInfoDto getMemberInfo() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member findMember = memberRepository.findById(currentMemberId)
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        String[] emailParts = findMember.getEmail().split("@");
+        return MemberInfoDto.builder()
+                .email(emailParts[0])
+                .domain(emailParts[1])
+                .name(findMember.getName())
+                .tel(findMember.getPhone())
+                .build();
     }
 
 

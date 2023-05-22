@@ -22,10 +22,4 @@ public class OrderController {
         return orderService.getRecentAddr();
     }
 
-    @GetMapping("/order/getuser")
-    public MemberInfoDto getUserInfo() {
-        MemberInfoDto memberInfo = orderService.getMemberInfo();
-        System.out.println("모르곘다");
-        return memberInfo;
-    }
 }

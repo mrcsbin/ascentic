@@ -21,9 +21,8 @@ public class Order {
     @Column(name = "order_id")
     private Integer orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     @Column(name = "order_email", nullable = false)
     private String orderEmail;

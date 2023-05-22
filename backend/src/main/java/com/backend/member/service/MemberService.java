@@ -5,6 +5,7 @@ import com.backend.member.dto.FindDataDto;
 import com.backend.member.dto.JwtTokenDto;
 import com.backend.member.dto.LoginDto;
 import com.backend.member.entity.Member;
+import com.backend.order.dto.MemberInfoDto;
 
 import java.util.Optional;
 
@@ -29,6 +30,8 @@ public interface MemberService {
     boolean existMemberId(String memberId);
 
     boolean existEmail(String email);
+
+    MemberInfoDto getMemberInfo();
 
     boolean existPhone(String phone);
 }

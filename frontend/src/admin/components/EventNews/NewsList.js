@@ -96,22 +96,21 @@ function NewsList(props) {
     <div className="news-list-wrapper">
       <div className="news-list">
         <h1>[뉴스 관리]</h1>
-        <br />
+        <div className="selected-status">
+          <p>상태 보기 &nbsp;</p>
+          <select value={selectedStatus} onChange={handleStatusChange}>
+            <option value="all">모두 보기</option>
+            <option value="0">저장 상태</option>
+            <option value="1">임시 저장 상태</option>
+            <option value="2">삭제 상태</option>
+          </select>
+        </div>
         <table>
           <tr>
             <th>제목</th>
             <th>기간</th>
             <th>진행상황</th>
-            <th>
-              <div>
-                <select value={selectedStatus} onChange={handleStatusChange}>
-                  <option value="all">모두 보기</option>
-                  <option value="0">저장 상태</option>
-                  <option value="1">임시 저장 상태</option>
-                  <option value="2">삭제 상태</option>
-                </select>
-              </div>
-            </th>
+            <th>게시글 상태</th>
             <th>관리</th>
           </tr>
           {currentProducts.map((post) => (

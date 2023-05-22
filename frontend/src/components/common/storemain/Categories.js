@@ -1,16 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../../styles/StoreMain.css";
-import animal from "../../../assets/category/animal.jpg";
-import citrus from "../../../assets/category/citrus.jpg";
-import floral from "../../../assets/category/floral1.jpg";
-import fruity from "../../../assets/category/fruity.jpg";
-import herbal from "../../../assets/category/herbal.jpg";
-import mossy from "../../../assets/category/mossy.jpg";
-import special from "../../../assets/category/special.jpg";
-import watery from "../../../assets/category/watery.jpg";
-import woody from "../../../assets/category/woody.jpg";
+
+import all from "../../../assets/category/floral2.webp";
+import animal from "../../../assets/category/animal.webp";
+import citrus from "../../../assets/category/citrus.webp";
+import floral from "../../../assets/category/floral1.webp";
+import fruity from "../../../assets/category/fruity.webp";
+import herbal from "../../../assets/category/herbal.webp";
+import mossy from "../../../assets/category/mossy.webp";
+import special from "../../../assets/category/special.webp";
+import watery from "../../../assets/category/watery.webp";
+import woody from "../../../assets/category/woody.webp";
+
 const categorylist = [
+  {
+    name: "전체보기",
+    text: "/",
+    image: all,
+  },
   {
     name: "Animal",
     text: "/Animal",
@@ -67,7 +75,7 @@ const Categories = () => {
               isActive ? "catebox-active" : "catebox"
             }
             key={c.name}
-            to={"/StoreMain" + c.text}
+            to={"/storemain" + c.text}
           >
             <div className="cateimgEffect">
               <div className="cateimgbox">

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { requestApplySubs } from "../../api/SubsMemberApi";
 import { getCookie } from "../../utils/Cookies";
+import { useNavigate } from "react-router-dom";
 
 const SubsPayInfo = (props) => {
   const [agree, setAgree] = useState(false);
@@ -40,6 +41,7 @@ const SubsPayInfo = (props) => {
 
   const shipInfo = useSelector((state) => state.order.shipInfo);
   const paymentMethod = useSelector((state) => state.order.paymentMethod);
+  const nav = useNavigate();
 
   const requestData = {
     startDate: new Date(getToday()), // 구독 시작일
@@ -59,6 +61,7 @@ const SubsPayInfo = (props) => {
     if (agree) {
       alert("결제 진행");
       await requestApplySubs(accessToken, requestData);
+      nav("/ordercomplete");
     } else {
       alert("서비스 가입에 동의 해주세요.");
     }

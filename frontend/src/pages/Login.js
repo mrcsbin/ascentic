@@ -45,7 +45,11 @@ function Login() {
     await dispatch(fetchTokenByLogin({ id, password }));
     if (getCookie("accessToken")) {
       await dispatch(fetchMemberByToken()).then(() => {
-        navigate("/", { replace: true });
+        location.state
+          ? navigate(location.state.pathname, {
+              state: { taste: location.state.taste, option: 7 },
+            })
+          : navigate("/", { replace: true });
       });
     } else {
       setId("");

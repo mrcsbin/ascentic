@@ -135,10 +135,10 @@ function EventList(props) {
                               className="post-image"
                             />
                           )}
+                          <p className="post-status">
+                            상태: {getStatusText(post.postStatus)}
+                          </p>
                         </div>
-                        <p className="post-status">
-                          상태: {getStatusText(post.postStatus)}
-                        </p>
                         <div className="post-bottom">
                           <div className="post-left">
                             <p className="left-top">

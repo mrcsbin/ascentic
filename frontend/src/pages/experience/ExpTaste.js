@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "../../utils/Cookies";
-import TestResult from "../../components/ExpTasteRes";
+import Loading from "../../components/common/Loading";
 import "../../styles/ExpTaste.css";
 import nightsky from "../../assets/expTasteTest/nightsky.mp4";
+import logo from "../../assets/ascentic_logo_w.svg";
 import city1 from "../../assets/expTasteTest/1city.jpeg";
 import nature1 from "../../assets/expTasteTest/1nature.jpg";
 import cool2 from "../../assets/expTasteTest/2cool.jpg";
@@ -36,6 +37,7 @@ const ExpTaste = () => {
   });
   const [resultData, setResultData] = useState();
   const [activeComp, setActiveComp] = useState(0);
+  const Navigate = useNavigate();
   const location = useLocation();
 
   function handleData(e) {
@@ -64,15 +66,15 @@ const ExpTaste = () => {
     fetchResult();
     // console.log(location);
     if (location.state) {
-      setActiveComp(7);
-      setTaste(location.state.taste);
-      console.log(location);
+      Navigate("/exp/taste/res", {
+        state: { resultData: resultData },
+      });
     }
   }, []);
 
   // 대기 중일 때
   if (loading) {
-    // return <Loading isLoading={loading} />;
+    return <Loading />;
   }
   // 아직 값이 설정되지 않았을 때
   if (!resultData) {
@@ -81,33 +83,8 @@ const ExpTaste = () => {
 
   return (
     <div>
-      {(activeComp === 0) | (activeComp === 7) | (activeComp === 8) ? (
-        <>
-          {activeComp === 0 && (
-            <ExpTestMain
-              resultData={resultData}
-              setActiveComp={setActiveComp}
-            />
-          )}
-          {/* 설문 후 결과 저장 및 불러오기 */}
-          {activeComp === 7 && (
-            <ToTestResult
-              taste={taste}
-              resultData={resultData}
-              setActiveComp={setActiveComp}
-              setResultData={setResultData}
-            />
-          )}
-          {/* 위에서 불러온 결과 창으로 보여주기 */}
-          {activeComp === 8 && (
-            <TestResult
-              taste={taste}
-              resultData={resultData}
-              setActiveComp={setActiveComp}
-              setResultData={setResultData}
-            />
-          )}
-        </>
+      {activeComp === 0 ? (
+        <ExpTestMain resultData={resultData} setActiveComp={setActiveComp} />
       ) : (
         <div className="tasteTest">
           <video className="mainvideo" loop autoPlay muted>
@@ -163,6 +140,7 @@ const ExpTaste = () => {
 };
 
 const ExpTestMain = ({ resultData, setActiveComp }) => {
+  const Navigate = useNavigate();
   //파일 따로 생성 (백엔드 axios 연결 필요 - 받아오기)
   return (
     <div>
@@ -171,7 +149,7 @@ const ExpTestMain = ({ resultData, setActiveComp }) => {
           <source src={nightsky} type="video/mp4" />
         </video>
         <div className="contentbox">
-          <h2>[a]scentic</h2>
+          <img src={logo} alt="ascentic_logo" />
           <h3>자신의 향을 찾기 위한 여정</h3>
           <span>취향을 통해 자신을 발견해보세요.</span>
           <span>에이센틱과 함께 당신의 취향을 찾고</span>
@@ -183,7 +161,13 @@ const ExpTestMain = ({ resultData, setActiveComp }) => {
           ) : (
             <div className="buttonbox">
               <button onClick={() => setActiveComp(1)}>다시하기</button>
-              <button onClick={() => setActiveComp(8)} result={resultData}>
+              <button
+                onClick={() =>
+                  Navigate("/exp/taste/res", {
+                    state: { resultData: resultData },
+                  })
+                }
+              >
                 결과 확인하기
               </button>
             </div>
@@ -198,10 +182,8 @@ const TasteTestStart = ({ taste, handleData, setTaste, setActiveComp }) => {
   console.log(taste);
   return (
     <div className="testcontentbox">
-      <div className="maintext">
-        에이센틱이 회원님을 어떻게 부르면 좋을까요?
-      </div>
-      <input
+      <div className="maintext">에이센틱이 회원님을 알아가고 싶어요.</div>
+      {/* <input
         type="text"
         placeholder="닉네임"
         name="tasteName"
@@ -212,7 +194,7 @@ const TasteTestStart = ({ taste, handleData, setTaste, setActiveComp }) => {
             [e.target.name]: e.currentTarget.value,
           })
         }
-      />
+      /> */}
       <div className="testcontent">
         <div className="label">성별</div>
         <button
@@ -277,7 +259,7 @@ const TasteTestStart = ({ taste, handleData, setTaste, setActiveComp }) => {
         <button
           className="nextbtn"
           disabled={
-            (taste.tasteName === "") |
+            // (taste.tasteName === "") |
             (taste.tasteAge === "") |
             (taste.tasteGender === "") |
             (taste.tasteAgree === "")
@@ -518,6 +500,7 @@ const TasteTest4 = ({ taste, handleData, setActiveComp }) => {
 };
 
 const TasteTest5 = ({ taste, handleData, setActiveComp }) => {
+  const Navigate = useNavigate();
   console.log(taste);
 
   return (
@@ -600,68 +583,17 @@ const TasteTest5 = ({ taste, handleData, setActiveComp }) => {
         <button
           className="nextbtn"
           disabled={taste.tasteTest5 === "" ? true : false}
-          onClick={() => setActiveComp(7)}
+          onClick={() =>
+            Navigate("/exp/taste/res", {
+              state: { taste: taste },
+            })
+          }
         >
           결과보기
         </button>
       </div>
     </div>
   );
-};
-
-const ToTestResult = ({ taste, resultData, setResultData }) => {
-  const Navigate = useNavigate();
-  const [testloading, setTestloading] = useState(false);
-
-  useEffect(() => {
-    const fetchResult = async () => {
-      setTestloading(true);
-      try {
-        const res = await axios.post(`http://localhost:8080/tasteTest`, taste, {
-          headers: {
-            Authorization: "Bearer " + getCookie("accessToken"),
-          },
-        });
-        setResultData(res.data);
-        if (res.data.firstPlace === "null") {
-          return Navigate("/login", {
-            state: { taste: taste, pathname: "/exp/taste" },
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      setTestloading(false);
-    };
-    fetchResult();
-  }, []);
-
-  // 대기 중일 때
-  if (testloading) {
-    return (
-      <div>
-        <img src="#" alt="" />
-        <div>결과를 분석중입니다...</div>
-      </div>
-    );
-  }
-  // 아직 값이 설정되지 않았을 때
-  if (!resultData) {
-    return null;
-  }
-  if (resultData.firstPlace === "null") {
-    return;
-  }
-  //값이 저장되었을 때
-  else {
-    return (
-      <div>
-        <div>
-          <TestResult resultData={resultData} />
-        </div>
-      </div>
-    );
-  }
 };
 
 export default ExpTaste;

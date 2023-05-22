@@ -13,7 +13,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "member_tbl")
+@Table(name = "tb_member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -53,7 +53,7 @@ public class Member {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "member_role")
-    @CollectionTable(name = "member_role_tbl", joinColumns = @JoinColumn(name = "member_id"))
+    @CollectionTable(name = "tb_member_role", joinColumns = @JoinColumn(name = "member_id"))
     @Setter
     private List<String> role = new ArrayList<>();
 

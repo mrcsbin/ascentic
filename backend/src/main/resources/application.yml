@@ -44,6 +44,7 @@ spring:
       max-request-size: 100MB
       # window
 #      location: c:\\Project\\ascentic_file
+#      location: e:\\Project\\ascentic_file
       # mac
       location: /Users/sungbincho/Desktop/ascenticfile
       #location: /Users/hansic/Desktop/ascentic
@@ -82,6 +83,7 @@ spring:
           - classpath:taste.sql
           - classpath:subscribeProd.sql
           - classpath:subscribeSend.sql
+          - classpath:prod_img.sql
 
 # 멤버 이미지, 전화번호(-) 빼기
 # subscribeMember.sql (member_name, member_tel, member_addr 수정)

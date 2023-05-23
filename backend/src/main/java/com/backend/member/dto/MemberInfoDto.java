@@ -1,4 +1,4 @@
-package com.backend.order.dto;
+package com.backend.member.dto;
 
 import lombok.Builder;
 import lombok.Getter;

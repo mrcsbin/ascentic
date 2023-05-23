@@ -1,10 +1,7 @@
 package com.backend.order.service;
 
-import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
-import com.backend.member.repository.MemberRepository;
 import com.backend.order.dto.AddressDTO;
-import com.backend.order.dto.MemberInfoDto;
 import com.backend.order.dto.OrderDTO;
 import com.backend.order.dto.SuccessOrderDto;
 import com.backend.order.entity.Order;

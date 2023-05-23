@@ -6,7 +6,7 @@ import com.backend.member.dto.LoginDto;
 import com.backend.member.dto.SignupDto;
 import com.backend.member.entity.Member;
 import com.backend.member.service.MemberServiceImpl;
-import com.backend.order.dto.MemberInfoDto;
+import com.backend.member.dto.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;

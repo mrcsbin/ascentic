@@ -2,10 +2,12 @@ package com.backend.prodreview.entity;
 
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.prodreviewcomment.entity.ProdReviewComment;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class ProdReview {
     @Column(name = "prod_review_key")
     private Integer prodReviewKey;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_prod_key")
     private OrderProduct orderProd;
 
@@ -35,7 +37,7 @@ public class ProdReview {
 
     @CreationTimestamp
     @Column(name = "review_date", nullable = false)
-    private Date reviewDate;
+    private LocalDateTime reviewDate;
 
     @Column(name = "review_content", nullable = false)
     private String reviewContent;
@@ -46,8 +48,8 @@ public class ProdReview {
     @Column(name = "review_score", nullable = false)
     private Integer reviewScore;
 
-
-    @OneToMany(mappedBy = "prodReviewKey", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "prodReview", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProdReviewComment> comments;
 
 }

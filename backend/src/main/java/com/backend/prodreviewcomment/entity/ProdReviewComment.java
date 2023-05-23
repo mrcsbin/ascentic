@@ -21,7 +21,7 @@ public class ProdReviewComment {
 
     @ManyToOne
     @JoinColumn(name = "prod_review_key")
-    private ProdReview prodReviewKey;
+    private ProdReview prodReview;
 
     @Column(name = "order_prod_key")
     private Integer orderProdKey;

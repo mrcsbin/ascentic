@@ -46,6 +46,7 @@ public class ProdReview {
     @Column(name = "review_score", nullable = false)
     private Integer reviewScore;
 
+
     @OneToMany(mappedBy = "prodReviewKey", cascade = CascadeType.ALL)
     private List<ProdReviewComment> comments;
 

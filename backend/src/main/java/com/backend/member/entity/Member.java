@@ -57,6 +57,9 @@ public class Member {
     @Setter
     private List<String> role = new ArrayList<>();
 
+    @Column(name = "member_buyWelcomeYn")
+    private boolean buyWelcomePackageYn;
+
 //    @Column
 //    @Enumerated(EnumType.STRING)
 //    private Authority authority;

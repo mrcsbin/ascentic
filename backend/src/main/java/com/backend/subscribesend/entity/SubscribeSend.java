@@ -50,5 +50,8 @@ public class SubscribeSend {
 
     @Column(name = "sb_send_payment")
     private String sbSendPayment;
+
+    @Column(name = "sb_shipping_code")
+    private String sbShippingCode;
 }
 

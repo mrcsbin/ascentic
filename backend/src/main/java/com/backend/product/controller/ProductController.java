@@ -20,13 +20,7 @@ public class ProductController {
         productServiceImpl.create(product);
     }
 
-    @GetMapping("/prodDetail/{prod_num}")
-    public Product prodDetail(@PathVariable("prod_num") Integer prodNum) {
-        Product product = productServiceImpl.ProdDetail(prodNum);
-        return product;
-    }
-
-    @GetMapping("/prodDetailv2/{prod_num}")
+    @GetMapping("/proddetail/{prod_num}")
     public ProductDetailDto getProductDetail(@PathVariable("prod_num") Integer prodNum) {
         return productServiceImpl.getProductDetail(prodNum);
     }

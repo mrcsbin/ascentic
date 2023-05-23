@@ -83,6 +83,7 @@ spring:
           - classpath:taste.sql
           - classpath:subscribeProd.sql
           - classpath:subscribeSend.sql
+          - classpath:prodImage.sql
           - classpath:prod_img.sql
 
 # 멤버 이미지, 전화번호(-) 빼기

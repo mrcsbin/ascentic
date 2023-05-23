@@ -16,9 +16,9 @@ import java.util.List;
 public class ProductOptionController {
     private final ProductOptionServiceImpl productOptionService;
 
-    @GetMapping("/prodOption/{prodNum}")
-    public List<ProductOption> getProdOptions(@PathVariable("prodNum") Integer prodNum){
-        return productOptionService.getProdOption(prodNum);
-    }
+//    @GetMapping("/prodOption/{prodNum}")
+//    public List<ProductOption> getProdOptions(@PathVariable("prodNum") Integer prodNum){
+//        return productOptionService.getProdOption(prodNum);
+//    }
 
 }

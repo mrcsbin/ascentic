@@ -88,3 +88,6 @@ insert into tb_scent (scent_name, scent_content, scent_note_name)
 values ('Tonka nut', '스페셜 노트는 향에 포인트를 줄 수 있는 향조로, 향신료와 같은 스파이시한 향기나 담뱃잎에서 느낄 수 있는 궐련향 등 유니크한 향을 연출합니다.', 'Special');
 insert into tb_scent (scent_name, scent_content, scent_note_name)
 values ('Tabacco', '스페셜 노트는 향에 포인트를 줄 수 있는 향조로, 향신료와 같은 스파이시한 향기나 담뱃잎에서 느낄 수 있는 궐련향 등 유니크한 향을 연출합니다.', 'Special');
+
+# insert into tb_scent (scent_name, scent_content, scent_note_name)
+# values ('package', '시향카드 패키지입니다.', 'Package');

@@ -215,7 +215,7 @@ function EventList(props) {
           {posts.length === 0 ? (
             <div style={{ margin: "100px auto" }}>
               <center style={{ fontSize: "20px", fontFamily: "Pretendard" }}>
-                진행중인 뉴스가 없습니다.
+                진행중인 이벤트가 없습니다.
               </center>
               <div style={{ height: "100px" }}></div>
             </div>

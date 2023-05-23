@@ -17,9 +17,9 @@ const ExpMain = () => {
           <div>
             feel the scent
             <br /> 향을 경험해보세요.
-            <br /> 내게 맞는 향을 찾기 위해 어쩌구
-            <br /> 매달 찾아오는 다른 향기로 원하는 분위기
-            <br /> 찾아보세요 구독서비스 워라워라
+            <br /> 맞는 향을 찾기 위해 여정을 떠나고
+            <br /> 매달 찾아오는 다른 향기로 나만의 향을 찾는 과정
+            <br /> 에이센틱이 준비한 선물같은 경험에 초대합니다.
           </div>
         </div>
       </Content1>
@@ -32,12 +32,12 @@ const ExpMain = () => {
             </div>
             <div>자신의 향을 찾기위한 여정</div>
             <div>
-              find me
-              <br /> 원하는 향과 분위기를 찾아
-              <br /> ascentic의 제품을 추천받아
-              <br /> 자신을 발견해보세요 ~~~
+              find my scent
+              <br /> 원하는 향과 분위기에 맞는 Note
+              <br /> 나만의 향을 찾기 위한 여정의 시작
+              <br /> 에이센틱이 준비한 여정과 함께 자신을 발견해보세요.
             </div>
-            <button>find my scent</button>
+            <button>시작하기</button>
           </div>
           <div className="content2_right"></div>
         </Content2>
@@ -86,7 +86,7 @@ const Content1 = styled.div`
 
   .content1_left {
     width: 65vw;
-    height: 600px;
+    height: 700px;
     background-image: url(${mainImg});
   }
 
@@ -131,7 +131,7 @@ const Content2 = styled.div`
 
   .content2_right {
     width: 55vw;
-    height: 500px;
+    height: 600px;
     background-image: url(${mainImg});
   }
 
@@ -175,6 +175,7 @@ const Content2 = styled.div`
     cursor: pointer;
     &:hover {
       background-color: white;
+      font-weight: 600;
       color: black;
     }
   }
@@ -184,7 +185,7 @@ const Content3 = styled.div`
   margin-top: 3rem;
   display: flex;
   width: 100%;
-  height: 500px;
+  height: 600px;
   justify-content: center;
   align-items: center;
   background-image: url(${mainImg});

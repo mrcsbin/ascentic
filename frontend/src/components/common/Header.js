@@ -311,10 +311,10 @@ const CenterBox = styled.div`
 `;
 
 const RightBox = styled.div`
-  padding-top: 1.5%;
+  padding-top: 2%;
   padding-left: 10%;
-
-  width: 12%%;
+  padding-right: 3%;
+  width: 10%;
   display: flex;
   filter: ${({ isDarkMode }) =>
     isDarkMode ? "brightness(0) invert(1)" : "none"};

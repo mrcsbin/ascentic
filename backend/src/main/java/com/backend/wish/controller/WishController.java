@@ -1,6 +1,7 @@
 package com.backend.wish.controller;
 
 import com.backend.wish.dto.WishDto;
+import com.backend.wish.dto.WishListDto;
 import com.backend.wish.service.WishServiceImpl;
 import com.backend.wish.entity.Wish;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class WishController {
     }
 
     @PostMapping("/get")
-    public List<Wish> getWishList() {
+    public List<WishListDto> getWishList() {
         return wishServiceImpl.getWishList();
     }
 

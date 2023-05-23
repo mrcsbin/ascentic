@@ -15,7 +15,7 @@ public class ProductDetailDto {
     private String prodInfo;
     private List<Integer> prodPrice;
     private List<String> prodOption;
-    private String prodImage;
+    private List<String> prodImage;
     private Scent scent;
     private boolean isWish;
 }

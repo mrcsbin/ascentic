@@ -16,11 +16,4 @@ public class ProductOptionServiceImpl implements ProductOptionService{
     private final ProductOptionRepository productOptionRepository;
     private final ProductRepository productRepository;
 
-    @Override
-    public List<ProductOption> getProdOption(Integer prodNum) {
-        Product product = productRepository.findById(prodNum).orElse(null);
-        return productOptionRepository.findByProduct(product);
-    }
-
-
 }

@@ -1,14 +1,17 @@
 package com.backend.wish.service;
 
 import com.backend.member.jwt.SecurityUtils;
-import com.backend.member.repository.MemberRepository;
 import com.backend.product.entity.Product;
 import com.backend.product.repository.ProductRepository;
+import com.backend.productimg.entity.ProductImg;
+import com.backend.productimg.repository.ProductImgRepository;
+import com.backend.wish.dto.WishListDto;
 import com.backend.wish.entity.Wish;
 import com.backend.wish.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +21,7 @@ public class WishServiceImpl implements WishService {
 
     private final WishRepository wishRepository;
     private final ProductRepository productRepository;
+    private final ProductImgRepository productImgRepository;
 
     public void setWish(Integer prodNum) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
@@ -35,10 +39,21 @@ public class WishServiceImpl implements WishService {
         productRepository.save(product);
     }
 
-    public List<Wish> getWishList() {
+    public List<WishListDto> getWishList() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        List<Wish> wishlist = this.wishRepository.findAllByMemberId(currentMemberId);
-        return wishlist;
+        List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
+        List<WishListDto> wishListDto = new ArrayList<>();
+        for (Wish wishItem : wishList) {
+            ProductImg productImg = productImgRepository.findByProdImageTypeAndProductProdNum(0, wishItem.getProduct().getProdNum());
+            String prodImage = productImg.getProdSaveName();
+            WishListDto wish = WishListDto.builder()
+                    .prodNum(wishItem.getProduct().getProdNum())
+                    .prodImage(prodImage)
+                    .prodName(wishItem.getProduct().getProdName())
+                    .build();
+            wishListDto.add(wish);
+        }
+        return wishListDto;
     }
 
     public boolean isWish(String memberId, Product product) {

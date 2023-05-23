@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface ProductOptionRepository extends JpaRepository<ProductOption, Integer> {
 
-    List<ProductOption> findByProduct(Product product);
-
 }

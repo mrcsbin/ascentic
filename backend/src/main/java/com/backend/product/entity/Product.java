@@ -55,7 +55,6 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Wish> wish = new ArrayList<>();
 
-
     public Integer getProductPrice(Integer index) {
         return productOption.get(index).getProdPrice();
     }

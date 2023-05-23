@@ -314,7 +314,7 @@ const RightBox = styled.div`
   padding-top: 1.5%;
   padding-left: 10%;
 
-  width: 10%;
+  width: 12%%;
   display: flex;
   filter: ${({ isDarkMode }) =>
     isDarkMode ? "brightness(0) invert(1)" : "none"};

@@ -190,6 +190,9 @@ function SignUp() {
       ...prevFormData,
       birthDate: formatBirthDate(date),
     }));
+    if (formData.birthDate !== "") {
+      setShowCalendar(false);
+    }
   }
 
   function formatBirthDate(date) {

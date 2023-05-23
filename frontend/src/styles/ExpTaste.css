@@ -346,14 +346,15 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 60vw;
   max-width: 1000px;
   height: fit-content;
-  margin: 3vw auto;
-  padding: 0;
+  margin: 0 auto;
+  padding: 120px 0 3vw 0;
   text-align: center;
   border: 0;
 }
 .firstTaste {
   display: flex;
   font-family: "Pretendard";
+  padding-top: 3vw;
 }
 .firstTaste > div > .info {
   margin: 2vw auto;

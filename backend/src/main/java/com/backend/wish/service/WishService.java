@@ -1,16 +1,22 @@
 package com.backend.wish.service;
 
+import com.backend.product.entity.Product;
 import com.backend.wish.entity.Wish;
 
 import java.util.List;
 
 public interface WishService {
 
-    public void addWish(Integer prodNum);
+    void setWish(Integer prodNum);
 
-    public void delWish(Integer prodNum);
+    List<Wish> getWishList();
 
-    public int isWish(Integer prodNum);
+//    void setWish(Integer prodNum);
 
-    public List<Wish> listWish();
+//    public void addWish(Integer prodNum);
+
+//    public void delWish(Integer prodNum);
+
+//    public int isWish(Integer prodNum);
+
 }

@@ -99,7 +99,6 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public JwtTokenDto doLogin(LoginDto loginDto) {
         Optional<Member> findData = memberRepository.findById(loginDto.getId());
-
         if (findData.isPresent()) {
             Member member = findData.get();
             if (passwordEncoder.matches(loginDto.getPassword(), member.getPassword()) && loginDto.getId().equals(member.getId())) {

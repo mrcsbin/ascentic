@@ -1,16 +1,15 @@
 package com.backend.wish.entity;
 
-import com.backend.member.entity.Member;
 import com.backend.product.entity.Product;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
+@Builder
 @Table(name = "tb_wish")
 public class Wish {
     @Id
@@ -18,11 +17,16 @@ public class Wish {
     @Column(name = "wish_num")
     private Integer wishNum;
 
-
     @Column(name = "member_id")
-    private String member;
+    private String memberId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_num")
     private Product product;
+
+    public Wish(Integer wishNum, String memberId, Product product) {
+        this.wishNum = wishNum;
+        this.memberId = memberId;
+        this.product = product;
+    }
 }

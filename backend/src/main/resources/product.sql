@@ -69,3 +69,5 @@ insert into tb_product (prod_num, prod_category, prod_date, prod_info, prod_name
 insert into tb_product (prod_num, prod_category, prod_date, prod_info, prod_name, prod_read_count, prod_wish_count, scent_name) values (61, '샴푸', '2023-04-30 00:00:00', '향긋한 Tabacco 향의 샴푸입니다.', '스페셜 샴푸', 0, 0, 'Tabacco');
 insert into tb_product (prod_num, prod_category, prod_date, prod_info, prod_name, prod_read_count, prod_wish_count, scent_name) values (62, '바디워시', '2023-05-01 00:00:00', '향긋한 Clove 향의 바디워시입니다.', '스페셜 바디워시', 0, 0, 'Clove');
 insert into tb_product (prod_num, prod_category, prod_date, prod_info, prod_name, prod_read_count, prod_wish_count, scent_name) values (63, '섬유향수', '2023-05-02 00:00:00', '향긋한 Cinnamon 향의 섬유향수입니다.', '스페셜 섬유향수', 0, 0, 'Cinnamon');
+
+# insert into tb_product (prod_num, prod_category, prod_date, prod_info, prod_name, prod_read_count, prod_wish_count, scent_name) values (64, '시향카드', '2023-05-04 00:00:00', '다양한 향을 간직하고 있습니다,', '시향카드 패키지', 0, 0, 'package');

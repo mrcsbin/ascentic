@@ -4,8 +4,6 @@ import com.backend.product.dto.ProductDetailDto;
 import com.backend.product.dto.ProductListDto;
 import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
-import com.backend.scent.entity.Scent;
-import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ScentRepository scentRepository;
 
     public void create(Product product) {
         productRepository.save(product);
@@ -32,7 +29,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public ProductDetailDto getProductDetail(Integer prodNum) {
+//        Member member = memberRepository.findById(currentMemberId).get();
+//        member.buyWelcomePackageYn();
+//        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        String currentMemberId = "sungbin";
         Optional<Product> findProduct = productRepository.findById(prodNum);
+        findProduct.get().setProdReadCount(findProduct.get().getProdReadCount() + 1);
+        productRepository.save(findProduct.get());
+
         if (findProduct.isPresent()) {
             Product product = findProduct.get();
             List<Integer> prodPrice = new ArrayList<>(Arrays.asList(product.getProductPrice(0), product.getProductPrice(1)));
@@ -44,7 +48,9 @@ public class ProductServiceImpl implements ProductService {
                     .prodInfo(product.getProdInfo())
                     .prodPrice(prodPrice)
                     .prodOption(prodOption)
-                    .prodImage("일단 없삼")
+                    .prodImage("..;")
+                    .scent(product.getScent())
+                    .isWish(product.isWish(currentMemberId, prodNum))
                     .build();
         } else {
             throw new RuntimeException("상품 없삼");
@@ -54,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductListDto> getListByCategory(String ScentName) {
         List<ProductListDto> productList = new ArrayList<>();
+
         // 모두 조회
         if (ScentName.equals("all")) {
             List<Product> products = productRepository.findAll();
@@ -65,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
                         .prodWishCount(product.getProdWishCount())
                         .prodReadCount(product.getProdReadCount())
                         .prodCategory(product.getProdCategory())
-                        .prodImage("..")
+                        .prodImage("..;")
                         .prodPrice(product.getProductPrice(0))
                         .build());
             }

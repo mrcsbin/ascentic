@@ -17,14 +17,11 @@ public class ProdReviewComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prod_review_comment_key")
-    private String prodReviewCommentKey;
+    private Integer prodReviewCommentKey;
 
     @ManyToOne
     @JoinColumn(name = "prod_review_key")
     private ProdReview prodReviewKey;
-
-    @Column(name = "order_prod_key")
-    private Integer orderProdKey;
 
     @Column(name = "member_id")
     private String memberId;

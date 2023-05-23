@@ -3,6 +3,8 @@ import styled, { keyframes } from "styled-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import iconUser from "../../assets/iconUser.svg";
 import iconBag from "../../assets/iconBag.svg";
+import logoW from "../../assets/logoW.svg";
+import logoB from "../../assets/logoB.svg";
 import iconSearch from "../../assets/iconSearch.svg";
 import LOGOUT_ICON from "../../assets/logout.png";
 import "../../styles/Header.css";
@@ -67,6 +69,7 @@ const HeaderV2 = () => {
     };
     checkLoginStatus();
   }, [dispatch]);
+  const logoSrc = isDarkMode ? logoW : logoB;
   if (location.pathname.startsWith("/admin")) return null;
   //isDarkMode leftBox CenterBox RightBox 단에서 props로 주니까 보라색으로 이상하게 바뀜요,,, 그래서 styledLink로,,
   return (
@@ -81,7 +84,7 @@ const HeaderV2 = () => {
         <TopContainer>
           <LeftBox>
             <StyledLink to="/" isDarkMode={isDarkMode}>
-              [a]scentic
+              <Logo src={logoSrc} alt="logoImg" />
             </StyledLink>
           </LeftBox>
           <CenterBox>
@@ -263,25 +266,22 @@ const Wrap = styled.div`
   width: 100%;
   font-weight: bold;
 
+  &.onHover {
+    height: 155px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &.notHover {
+    height: 75px;
+    transition: all 0.5s ease-in-out;
+  }
   &.header-wrap-original-header {
-    background-color: transparent;
-    transition: background-color 0.5s ease;
+    background-color: rgba(0, 0, 0, 0);
   }
 
   &.header-wrap-change-header {
     background-color: ${({ isDarkMode }) =>
       isDarkMode ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.7)"};
-    transition: background-color 0.5s ease;
-  }
-
-  &.onHover {
-    height: 155px;
-    transition: height 1s ease;
-  }
-
-  &.notHover {
-    height: 75px;
-    transition: height 1s ease;
   }
 `;
 
@@ -313,12 +313,15 @@ const CenterBox = styled.div`
 const RightBox = styled.div`
   padding-top: 1.5%;
   padding-left: 10%;
+
   width: 10%;
   display: flex;
   filter: ${({ isDarkMode }) =>
     isDarkMode ? "brightness(0) invert(1)" : "none"};
 `;
-
+const Logo = styled.img`
+  width: 50%;
+`;
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${({ isDarkMode }) => (isDarkMode ? "white;" : "black;")};
@@ -326,6 +329,7 @@ const StyledLink = styled(Link)`
 
 const IconBox = styled.div`
   display: flex;
+
   flex-direction: column;
   justify-content: end;
   padding: 0px 15px;
@@ -363,6 +367,7 @@ const fadeIn = keyframes`
 const ExpSubMenuContainer = styled.div`
   box-sizing: border-box;
   margin-top: 17px;
+
   padding: 25px 0px;
   border-bottom: ${({ isDarkMode }) =>
     isDarkMode
@@ -373,11 +378,12 @@ const ExpSubMenuContainer = styled.div`
       ? "1px solid rgba(255, 255, 255, 0.3)"
       : "1px solid rgba(0, 0, 0, 0.3)"};
   display: none;
-  animation: ${fadeIn} 1s forwards;
+  animation: ${fadeIn} 0.7s forwards;
 
   ${(props) =>
     props.isMenuHovered &&
     `
+    align-content: space-between;
     display: block;
     opacity: 1;
     transform: translateY(0);
@@ -407,6 +413,7 @@ const StoreSubMenuContainer = styled.div`
 
 const CommunitySubMenuContainer = styled.div`
   z-index: 1;
+  margin-top: 17px;
   box-sizing: border-box;
   padding: 20px 0px;
   border-bottom: ${({ isDarkMode }) =>
@@ -418,7 +425,7 @@ const CommunitySubMenuContainer = styled.div`
       ? "1px solid rgba(255, 255, 255, 0.3)"
       : "1px solid rgba(0, 0, 0, 0.3)"};
   display: none;
-  animation: ${fadeIn} 1s forwards;
+  animation: ${fadeIn} 0.7s forwards;
 
   ${(props) =>
     props.isMenuHovered &&
@@ -446,6 +453,7 @@ const CategoryItem = styled.div`
 
 const SubMenu = styled.div`
   font-size: 15px;
+  width: 80px;
 `;
 
 // 검색 CSS

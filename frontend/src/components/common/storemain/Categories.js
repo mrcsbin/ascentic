@@ -2,8 +2,8 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../../styles/StoreMain.css";
 
-import all from "../../../assets/category/floral2.webp";
-import animal from "../../../assets/category/animal.webp";
+import all from "../../../assets/category/all.webp";
+import animal from "../../../assets/category/animal3.webp";
 import citrus from "../../../assets/category/citrus.webp";
 import floral from "../../../assets/category/floral1.webp";
 import fruity from "../../../assets/category/fruity.webp";

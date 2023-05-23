@@ -150,3 +150,9 @@
 .header-wrap .menu2-1:hover .img {
   display: block;
 } */
+
+.NoticeHeader {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}

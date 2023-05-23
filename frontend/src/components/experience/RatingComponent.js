@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import axios from 'axios';
-import React, { useState } from 'react';
+import styled from "styled-components";
+import axios from "axios";
+import React, { useState } from "react";
 
 const RatingForm = styled.form`
   .wrapper {
@@ -19,7 +19,7 @@ const RatingForm = styled.form`
     text-align: right;
   }
 
-  .rating-fieldset input[type='radio'] {
+  .rating-fieldset input[type="radio"] {
     display: none;
   }
 
@@ -37,7 +37,7 @@ const RatingForm = styled.form`
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
   }
 
-  .rating-fieldset input[type='radio']:checked ~ label {
+  .rating-fieldset input[type="radio"]:checked ~ label {
     text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
   }
 
@@ -55,14 +55,14 @@ const RatingForm = styled.form`
   }
 `;
 
-const RatingComponent = ({ score, review }) => {
+const RatingComponent = ({ sbSendNum, score, review }) => {
   const [rating, setRating] = useState(score);
-  const [reviewText, setReviewText] = useState(score !== null ? review : '');
+  const [reviewText, setReviewText] = useState(score !== null ? review : "");
 
   const handleChange = (e) => {
-    if (e.target.name === 'reviewStar') {
+    if (e.target.name === "reviewStar") {
       setRating(Number(e.target.value));
-    } else if (e.target.id === 'reviewContents' && score === null) {
+    } else if (e.target.id === "reviewContents" && score === null) {
       setReviewText(e.target.value);
     }
   };
@@ -71,12 +71,13 @@ const RatingComponent = ({ score, review }) => {
     e.preventDefault();
 
     const reviewData = {
-      rating: rating,
-      reviewText: reviewText,
+      sbSendNum: sbSendNum,
+      sbSendScore: rating,
+      sbSendReview: reviewText,
     };
 
     try {
-      const response = await axios.get('/reviews', reviewData);
+      const response = await axios.post("/subscribeReview", reviewData);
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -146,8 +147,8 @@ const RatingComponent = ({ score, review }) => {
             readOnly={score !== null}
             placeholder={
               score === null
-                ? '이번 달의 체험 패키지에 대한 만족도를 들려주세요! 고객님의 의견은 서비스 개선에 큰 도움이 됩니다.'
-                : ''
+                ? "이번 달의 체험 패키지에 대한 만족도를 들려주세요! 고객님의 의견은 서비스 개선에 큰 도움이 됩니다."
+                : ""
             }
           ></textarea>
         </div>

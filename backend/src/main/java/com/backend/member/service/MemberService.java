@@ -5,7 +5,7 @@ import com.backend.member.dto.FindDataDto;
 import com.backend.member.dto.JwtTokenDto;
 import com.backend.member.dto.LoginDto;
 import com.backend.member.entity.Member;
-import com.backend.order.dto.MemberInfoDto;
+import com.backend.member.dto.MemberInfoDto;
 
 import java.util.Optional;
 

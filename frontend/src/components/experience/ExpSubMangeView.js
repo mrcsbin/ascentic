@@ -1,19 +1,22 @@
-import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
-import '../../styles/ExpSubManageView.css';
-import RatingComponent from './RatingComponent';
-import { getCookie } from '../../utils/Cookies';
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
+import "../../styles/ExpSubManageView.css";
+import RatingComponent from "./RatingComponent";
+import { getCookie } from "../../utils/Cookies";
 
 const ExpSubsManageView = ({ sbMember, subscribe }) => {
   // ------------------------------------ 구독기간 관련 ---------------------------------------
   // const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
-  const start = new Date('2020-11-30'); // 구독시작 날짜
+  const start = new Date("2020-11-30"); // 구독시작 날짜
   const currentDate = new Date(); // 현재 날짜
   const [startYear, startMonth] = [start.getFullYear(), start.getMonth()];
   const [currnetYear, currnetMonth] = [
     currentDate.getFullYear(),
     currentDate.getMonth(),
   ];
+
+  console.log("gggg");
+  console.log(subscribe);
 
   //구독중인 기간
   const subsDuration =
@@ -61,9 +64,9 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
   console.log(currnetMonth);
   useEffect(() => {
     const filterByMonth = (chosenYear, chosenMonth) => {
-      if (chosenMonth < 10) chosenMonth = '0' + chosenMonth;
+      if (chosenMonth < 10) chosenMonth = "0" + chosenMonth;
       const chosenDate = chosenYear + chosenMonth;
-      console.log(chosenDate, 'chosenDate', typeof chosenDate);
+      console.log(chosenDate, "chosenDate", typeof chosenDate);
 
       let filtered = subscribe.filter(
         (data) =>
@@ -82,7 +85,7 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
   // }
   function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return num.toString().replace(regexp, ',');
+    return num.toString().replace(regexp, ",");
   }
 
   const SubsInfo = () => {
@@ -93,7 +96,7 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
             {chosenYear}년 {chosenMonth}월
           </span>
           <div className="on-delivery">
-            <span>{sbMember.sbSendEnd ? '배송 완료' : '배송중'}</span>
+            <span>{sbMember.sbSendEnd ? "배송 완료" : "배송중"}</span>
           </div>
           <div className="subs-prod-name-intro">
             <div>
@@ -111,7 +114,10 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
           </div>
           <div className="clear-both"></div>
           <div className="rating-component">
+            {/* {console.log("ssss")}
+            {console.log(filterProd[0])} */}
             <RatingComponent
+              sbSendNum={filterProd[0].sbSendNum}
               score={filterProd[0].sbSendScore}
               review={filterProd[0].sbSendReview}
             ></RatingComponent>
@@ -136,16 +142,16 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
   // ------------------------------------ 구독해지하기---------------------------------------
 
   const endSubscribe = async () => {
-    const confirmation = window.confirm('정말로 해지하시겠습니까?');
+    const confirmation = window.confirm("정말로 해지하시겠습니까?");
 
     if (!confirmation) {
       return;
     }
 
     try {
-      await axios.get('/endSubscribe', {
+      await axios.get("/endSubscribe", {
         headers: {
-          Authorization: 'Bearer ' + getCookie('accessToken'),
+          Authorization: "Bearer " + getCookie("accessToken"),
         },
       });
       window.location.reload();
@@ -167,7 +173,7 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
         </div>
         <div className="sbMember-info">
           <div className="subscribe-or-not">
-            {sbMember.sbEndDate ? '구독하지 않는 중' : '구독중'}
+            {sbMember.sbEndDate ? "구독하지 않는 중" : "구독중"}
           </div>
           <div className="duration-payDay">
             <p>
@@ -212,8 +218,8 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
         <br />
         <br />
         <hr />
-        {console.log('filterProd = ', filterProd)}
-        {console.log('sbMember = ', sbMember)}
+        {console.log("filterProd = ", filterProd)}
+        {console.log("sbMember = ", sbMember)}
       </div>
       <SubsInfo />
       {/* <button className="end-subscribe" onClick={endSubscribe}>구독 해지하기</button> */}

@@ -34,12 +34,14 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
     }
 
     @Override
-    public void insertSubsReview(SubsReviewDTO subsReviewDTO){
-        Integer sbSendNum = subsReviewDTO.getSbSendNum();
-        Integer sbSendScore = subsReviewDTO.getSbSendScore();
-        String sbSendReview = subsReviewDTO.getSbSendReview();
-        subscribeSendRepository.updateReview(sbSendNum, sbSendScore, sbSendReview);
+    public void insertSubsReview(SubsReviewDTO subsReviewDTO) {
+        SubscribeSend subscribeSend = subscribeSendRepository.findById(subsReviewDTO.getSbSendNum()).orElse(null);
+        subscribeSend.setSbSendReview(subsReviewDTO.getSbSendReview());
+        subscribeSend.setSbSendScore(subsReviewDTO.getSbSendScore());
+
+        subscribeSendRepository.save(subscribeSend);
     }
+
 
     @Override
     public List<SubsSendDTO> getSubs(){

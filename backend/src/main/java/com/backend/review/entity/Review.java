@@ -41,9 +41,6 @@ public class Review {
     @Column(name = "review_content", nullable = false)
     private String reviewContent;
 
-    @Column(name = "review_image")
-    private String reviewImage;
-
     @Column(name = "review_score", nullable = false)
     private Integer reviewScore;
 

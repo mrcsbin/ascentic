@@ -39,7 +39,7 @@ public class Inquiry {
     private String inquiryComment;
 
     @Column(name = "inquiry_state")
-    private String inquiryState;
+    private Boolean inquiryState;
 
     @Column(name = "comment_date")
     private LocalDateTime commentDate;

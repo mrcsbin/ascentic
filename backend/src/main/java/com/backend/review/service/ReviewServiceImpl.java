@@ -37,11 +37,10 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDtos;
     }
 
-    /**
-     * 일단 리뷰목록 조회 먼저 하자
-     */
     public void addReview(PostReviewDto postReviewDto) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        OrderProduct orderProduct = orderProductRepository.findById(postReviewDto.getOrderProductNum()).get();
+        System.out.println("orderProduct.getMemberId() = " + orderProduct.getMemberId());
         reviewRepository.save(Review.builder()
                 .memberId(currentMemberId)
                 .prodNum(postReviewDto.getProductNum())

@@ -55,16 +55,16 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Wish> wish = new ArrayList<>();
 
-    public Integer getProductPrice(Integer index) {
+    public Integer getProdPrice(Integer index) {
         return productOption.get(index).getProdPrice();
     }
 
-    public String getProductOption(Integer index) {
+    public String getProdOption(Integer index) {
         return productOption.get(index).getProdOption();
     }
 
-    public Integer getProductStock(Integer index) {
-        return productOption.get(index).getProdStock();
+    public Integer getProdOptionNum() {
+        return productOption.get(0).getOptionNum();
     }
 
     public Integer getWishCount(Integer prodNum) {

@@ -35,14 +35,14 @@ public class OrderServiceImpl implements OrderService {
                 .shipCharge(orderDTO.getShipCharge())
                 .orderState(orderDTO.getOrderState())
                 .build());
-        return order.getOrderId();
+        return order.getOrderNum();
     }
 
     @Override
     public AddressDTO getRecentAddr() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         System.out.println(currentMemberId);
-        Order order = orderRepository.findFirstByMemberIdOrderByOrderIdDesc(currentMemberId);
+        Order order = orderRepository.findFirstByMemberIdOrderByOrderNumDesc(currentMemberId);
 
         return AddressDTO.builder()
                 .shipMainAddress(order.getShipMainAddress())

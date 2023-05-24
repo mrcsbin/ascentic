@@ -1,14 +1,13 @@
-package com.backend.prodreview.entity;
+package com.backend.review.entity;
 
 import com.backend.orderproduct.entity.OrderProduct;
-import com.backend.prodreviewcomment.entity.ProdReviewComment;
+import com.backend.reviewcomment.entity.ReviewComment;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,18 +15,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_prod_review")
+@Table(name = "tb_review")
 @Builder
-public class ProdReview {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prod_review_key")
-    private Integer prodReviewKey;
+    @Column(name = "review_num")
+    private Integer reviewNum;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_prod_key")
-    private OrderProduct orderProd;
+    @JoinColumn(name = "order_prod_num")
+    private OrderProduct orderProduct;
 
     @Column(name = "member_id", nullable = false)
     private String memberId;
@@ -42,14 +41,11 @@ public class ProdReview {
     @Column(name = "review_content", nullable = false)
     private String reviewContent;
 
-    @Column(name = "review_image")
-    private String reviewImage;
-
     @Column(name = "review_score", nullable = false)
     private Integer reviewScore;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "prodReview", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProdReviewComment> comments;
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ReviewComment> comments;
 
 }

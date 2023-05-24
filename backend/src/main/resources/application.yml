@@ -84,6 +84,9 @@ spring:
           - classpath:subscribeProd.sql
           - classpath:subscribeSend.sql
           - classpath:prodImage.sql
+          - classpath:review.sql
+          - classpath:reviewcomment.sql
+          - classpath:inquiry.sql
 
 # 멤버 이미지, 전화번호(-) 빼기
 # subscribeMember.sql (member_name, member_tel, member_addr 수정)

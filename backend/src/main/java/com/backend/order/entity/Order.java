@@ -18,8 +18,8 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private Integer orderId;
+    @Column(name = "order_num")
+    private Integer orderNum;
 
     @Column(name = "member_id")
     private String memberId;

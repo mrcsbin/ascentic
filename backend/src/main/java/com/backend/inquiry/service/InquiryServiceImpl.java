@@ -1,5 +1,6 @@
 package com.backend.inquiry.service;
 
+import com.backend.inquiry.dto.request.CommentInquiryDto;
 import com.backend.inquiry.dto.request.CreateInquiryDto;
 import com.backend.inquiry.dto.response.InquiryDto;
 import com.backend.inquiry.entity.Inquiry;
@@ -7,7 +8,7 @@ import com.backend.inquiry.repository.InquiryRepository;
 import com.backend.member.jwt.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,5 +36,16 @@ public class InquiryServiceImpl implements InquiryService{
                 .inquiryCategory(createInquiryDto.getInquiryCategory())
                 .build();
         inquiryRepository.save(inquiry);
+    }
+
+    @Override
+    public void updateInquiry(CommentInquiryDto commentInquiryDto) {
+        Inquiry inquiry = inquiryRepository.findById(commentInquiryDto.getInquiryNum()).orElse(null);
+        inquiry.setInquiryComment(commentInquiryDto.getInquiryComment());
+        inquiry.setInquiryState(true);
+        inquiry.setCommentDate(LocalDateTime.now());
+
+        inquiryRepository.save(inquiry);
+
     }
 }

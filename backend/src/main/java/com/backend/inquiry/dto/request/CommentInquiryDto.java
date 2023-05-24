@@ -8,8 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 @Builder
 @AllArgsConstructor
-public class CreateInquiryDto {
-    private String inquiryTitle;
-    private String inquiryContent;
-    private String inquiryCategory;
+public class CommentInquiryDto {
+    private Integer inquiryNum;
+    private String inquiryComment;
 }

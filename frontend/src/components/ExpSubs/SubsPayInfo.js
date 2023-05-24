@@ -31,7 +31,7 @@ const SubsPayInfo = (props) => {
     // 다음달의 마지막 일을 구한다.
     const daysInNextMonth = new Date(nextYear, nextMonth + 1, 0).getDate();
 
-    // 현재날짜가 다음달의 마지막날짜와 크거나 같으면 현재날짜와 같은 값을 가짐
+    // 현재날짜보다 다음달의 마지막날짜가 크거나 같으면 현재날짜와 같은 값을 가짐
     // 그렇지 않은 경우에는 다음달의 마지막 날짜를 가진다.
     const nextDate =
       currentDate <= daysInNextMonth ? currentDate : daysInNextMonth;
@@ -102,9 +102,21 @@ const SubsPayInfo = (props) => {
           매달 취향에 맞는 다양한 제품들을 받아보실 수 있습니다. <br />
           매달 제품을 사용하시고 후기를 남겨주세요.
         </div>
-        <input type="checkbox" onChange={() => setAgree(!agree)}></input>{" "}
-        에이센틱의 구독서비스를 가입하시겠습니까?
-        <button onClick={() => payStart()}>결제진행</button>
+        <input
+          type="checkbox"
+          name="subsAgree"
+          id="subsAgree"
+          onChange={() => setAgree(!agree)}
+        ></input>
+        <label htmlFor="subsAgree">
+          에이센틱의 구독서비스를 가입하시겠습니까?
+        </label>
+        <button
+          disabled={agree === false ? true : false}
+          onClick={() => payStart()}
+        >
+          결제진행
+        </button>
       </SubsContent>
     </SubsPayForm>
   );
@@ -175,16 +187,36 @@ const SubsContent = styled.div`
     color: #557fb0;
   }
 
-  > input {
+  > input[type="checkbox"] + label {
     margin-top: 15px;
+    cursor: pointer;
   }
 
   > button {
     position: absolute;
+    bottom: 10%;
+    right: 13%;
+    padding: 0.7rem 9rem;
+    font-size: 1rem;
+    font-weight: 600;
     color: white;
     background-color: black;
-    font-size: 20px;
-    top: 89%;
-    right: 7%;
+    border: 1px solid black;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  > button:disabled {
+    position: absolute;
+    bottom: 10%;
+    right: 13%;
+    padding: 0.7rem 9rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: gray;
+    border: 1px solid black;
   }
 `;

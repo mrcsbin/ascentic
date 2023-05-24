@@ -1,9 +1,8 @@
 package com.productimg.controller;
 
-import com.backend.productimg.ProductImgServiceImpl;
+import com.productimg.service.ProductImgServiceImpl;
 import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

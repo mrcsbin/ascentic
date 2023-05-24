@@ -1,6 +1,6 @@
 package com.productimg.repository;
 
-import com.backend.productimg.entity.ProductImg;
+import com.productimg.entity.ProductImg;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

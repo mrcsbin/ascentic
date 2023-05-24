@@ -1,7 +1,7 @@
 package com.productimg;
 
 
-import com.backend.productimg.entity.ProductImg;
+import com.productimg.entity.ProductImg;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +20,6 @@ public interface ProdImgRepository extends JpaRepository<ProductImg,Integer> {
             nativeQuery=true)
 
 
-   List<productImg> findAllByProdNumAndProdImageType(@Param("prodNum") Integer prodNum, @Param("prodImageType") Integer prodImageType);
-
+   List<ProductImg> findAllByProdNumAndProdImageType(@Param("prodNum") Integer prodNum, @Param("prodImageType") Integer prodImageType);
 }
 

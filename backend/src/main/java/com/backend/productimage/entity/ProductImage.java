@@ -1,4 +1,4 @@
-package com.backend.productimg.entity;
+package com.backend.productimage.entity;
 
 import com.backend.product.entity.Product;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "tb_prod_image")
 @Entity
-public class ProductImg {
+public class ProductImage {
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     @Column(name = "prod_img_num") // 컬럼명 지정

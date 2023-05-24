@@ -6,8 +6,8 @@ import com.backend.product.repository.ProductRepository;
 import com.backend.wish.dto.WishListDto;
 import com.backend.wish.entity.Wish;
 import com.backend.wish.repository.WishRepository;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
+import com.backend.productimage.entity.ProductImage;
+import com.backend.productimage.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class WishServiceImpl implements WishService {
 
     private final WishRepository wishRepository;
     private final ProductRepository productRepository;
-    private final ProductImgRepository productImgRepository;
+    private final ProductImageRepository productImageRepository;
 
 //    public void setWish(Integer prodNum) {
 //        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
@@ -61,8 +61,8 @@ public class WishServiceImpl implements WishService {
         List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
         List<WishListDto> wishListDto = new ArrayList<>();
         for (Wish wishItem : wishList) {
-            ProductImg productImg = productImgRepository.findByProdImageTypeAndProductProdNum(0, wishItem.getProduct().getProdNum());
-            String prodImage = productImg.getProdSaveName();
+            ProductImage productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, wishItem.getProduct().getProdNum());
+            String prodImage = productImage.getProdSaveName();
             WishListDto wish = WishListDto.builder()
                     .prodNum(wishItem.getProduct().getProdNum())
                     .prodImage(prodImage)

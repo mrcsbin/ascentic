@@ -9,7 +9,7 @@ import com.backend.orderproduct.dto.OrderProductDto;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
-import com.backend.productimg.repository.ProductImgRepository;
+import com.backend.productimage.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class OrderProductServiceImpl implements OrderProductService {
     private final OrderProductRepository orderProductRepository;
     private final OrderRepository orderRepository;
     private final ProductOptionRepository productOptionRepository;
-    private final ProductImgRepository productImgRepository;
+    private final ProductImageRepository productImageRepository;
 
     @Override
     public void insetOrderProduct(OrderProductDto orderProductDTO) {
@@ -46,7 +46,7 @@ public class OrderProductServiceImpl implements OrderProductService {
         Optional<List<OrderProduct>> orderProductList = orderProductRepository.findAllByMemberId(currentMemberId);
         if (orderProductList.isPresent()) {
             for (OrderProduct orderProduct : orderProductList.get()) {
-                String prodSaveName = productImgRepository.findById(orderProduct.getProductOption().getProduct().getProdNum()).get().getProdSaveName();
+                String prodSaveName = productImageRepository.findById(orderProduct.getProductOption().getProduct().getProdNum()).get().getProdSaveName();
                 orderListDto.add(OrderListDto.builder()
                         .productImage(prodSaveName)
                         .productName(orderProduct.getProductOption().getProduct().getProdName())

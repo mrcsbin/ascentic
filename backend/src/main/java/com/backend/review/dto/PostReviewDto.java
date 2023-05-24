@@ -6,7 +6,6 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 public class PostReviewDto {
     private Integer productNum; // 상품 번호
     private String reviewContent; // 리뷰 내용

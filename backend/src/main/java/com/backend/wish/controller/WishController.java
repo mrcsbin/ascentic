@@ -26,6 +26,11 @@ public class WishController {
         return wishServiceImpl.getWishList();
     }
 
+    @GetMapping("/iswish")
+    public boolean getIsWish(Integer prodNum) {
+        return wishServiceImpl.isWish(prodNum);
+    }
+
 //    @PostMapping("/addwish")
 //    public void addWish(@RequestBody WishDto wishDto) {
 //        this.wishServiceImpl.addWish(wishDto.getProdNum());

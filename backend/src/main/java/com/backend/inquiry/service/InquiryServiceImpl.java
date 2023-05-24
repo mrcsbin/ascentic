@@ -27,6 +27,11 @@ public class InquiryServiceImpl implements InquiryService{
     }
 
     @Override
+    public List<Inquiry> getAdminInquiry() {
+        return inquiryRepository.findAll();
+    }
+
+    @Override
     public void createInquiry(CreateInquiryDto createInquiryDto) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Inquiry inquiry = Inquiry.builder()

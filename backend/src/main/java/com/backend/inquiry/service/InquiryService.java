@@ -4,6 +4,7 @@ package com.backend.inquiry.service;
 import com.backend.inquiry.dto.request.CommentInquiryDto;
 import com.backend.inquiry.dto.request.CreateInquiryDto;
 import com.backend.inquiry.dto.response.InquiryDto;
+import com.backend.inquiry.entity.Inquiry;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface InquiryService {
     void createInquiry(CreateInquiryDto createInquiryDto);
 
     void updateInquiry(CommentInquiryDto commentInquiryDto);
+
+    List<Inquiry> getAdminInquiry();
 }

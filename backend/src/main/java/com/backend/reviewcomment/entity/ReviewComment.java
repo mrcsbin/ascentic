@@ -1,13 +1,12 @@
-package com.backend.prodreviewcomment.entity;
+package com.backend.reviewcomment.entity;
 
-import com.backend.prodreview.entity.ProdReview;
+import com.backend.review.entity.Review;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -15,26 +14,26 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "tb_prod_review_comment")
-public class ProdReviewComment {
+@Table(name = "tb_review_comment")
+public class ReviewComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prod_review_comment_key")
+    @Column(name = "review_comment_num")
     private Integer prodReviewCommentKey;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prod_review_key")
-    private ProdReview prodReview;
+    @JoinColumn(name = "review_num")
+    private Review review;
 
     @Column(name = "member_id")
     private String memberId;
 
     @CreationTimestamp
-    @Column(name = "comment_date")
-    private LocalDateTime commentDate;
+    @Column(name = "review_comment_date")
+    private LocalDateTime reviewCommentDate;
 
-    @Column(name = "comment_content")
-    private String commentContent;
+    @Column(name = "review_comment_content")
+    private String reviewCommentContent;
 }

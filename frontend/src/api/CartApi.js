@@ -3,7 +3,7 @@ import axios from "axios";
 const CART_API_URL = "http://localhost:8080/cart";
 
 export const getCartItemList = async (accessToken) => {
-  const response = await axios.get(`${CART_API_URL}/getv2`, {
+  const response = await axios.get(`${CART_API_URL}/get`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -12,7 +12,7 @@ export const getCartItemList = async (accessToken) => {
 };
 
 export const addCart = async (accessToken) => {
-  const response = await axios.post(`${CART_API_URL}/addv2`, {
+  const response = await axios.post(`${CART_API_URL}/add`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -21,7 +21,7 @@ export const addCart = async (accessToken) => {
 };
 
 export const removeCart = async (cartNum, accessToken) => {
-  const response = await axios.delete(`${CART_API_URL}/delv2/${cartNum}`, {
+  const response = await axios.delete(`${CART_API_URL}/del/${cartNum}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

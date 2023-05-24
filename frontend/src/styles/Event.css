@@ -5,8 +5,8 @@
 .event-list-wrapper .event-list h1 {
   text-align: center;
   font-size: 2vw;
-  margin-top: 10vw;
-  margin-bottom: 10vw;
+  margin-top: 4vw;
+  margin-bottom: 4vw;
 }
 .event-list-wrapper .event-list .selected-status {
   display: flex;
@@ -267,4 +267,14 @@
 .postLink {
   text-decoration: none;
   color: black;
+}
+.infobox {
+  width: 80vw;
+  margin: 0 auto 20px auto;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.event-list h1 {
+  font-weight: bold;
 }

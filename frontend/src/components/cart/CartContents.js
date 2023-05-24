@@ -51,7 +51,6 @@ function CartContentHeader() {
 
 export const CartContents = () => {
   const cartItems = useSelector((state) => state.cart.cartItem);
-
   return (
     <CartContentsWrap>
       <CartContentHeader />

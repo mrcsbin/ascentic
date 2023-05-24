@@ -78,7 +78,7 @@ function Routes() {
 
       <Route
         path="/store/productdetail/:prod_num"
-        element={<Pages.ProdDetailV2 />}
+        element={<Pages.ProdDetail />}
       ></Route>
 
       <Route path="/exp" element={<Pages.ExpMain></Pages.ExpMain>}></Route>

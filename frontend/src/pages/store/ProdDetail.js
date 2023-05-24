@@ -14,19 +14,33 @@ const ProductDetailPage = () => {
   const prodNum = params.prod_num;
 
   //Product Option 데이터 받아오기
+  // useEffect(() => {
+  //   const fetchOption = async () => {
+  //     try {
+  //       const res = await axios
+  //         .get(`http://localhost:8080/prodOption/${prodNum}`)
+  //         .then(function (res) {
+  //           setProductOption(res.data);
+  //           setProductData(res.data[0].product);
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //     setLoading(false);
+  //   };
+  //   fetchOption();
+  // }, []);
   useEffect(() => {
     const fetchOption = async () => {
       try {
-        const res = await axios
-          .get(`http://localhost:8080/prodOption/${prodNum}`)
-          .then(function (res) {
-            setProductOption(res.data);
-            setProductData(res.data[0].product);
-          });
-      } catch (e) {
-        console.log(e);
+        const res = await axios.get(
+          `http://localhost:8080/proddetail/${prodNum}`
+        );
+        console.log(res.data);
+        setProductData(res.data);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchOption();
   }, []);

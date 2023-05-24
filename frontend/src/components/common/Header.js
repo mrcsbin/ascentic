@@ -53,12 +53,14 @@ const HeaderV2 = () => {
   useEffect(() => {
     if (location.pathname.startsWith("/exp")) {
       setIsDarkMode(true);
-      console.log("다크모드 : " + isDarkMode);
+
+      if (location.pathname.startsWith("/exp/taste/res")) {
+        setIsDarkMode(false);
+      }
     } else {
       setIsDarkMode(false);
-      console.log("다크모드 : " + isDarkMode);
     }
-  }, [isDarkMode, location.pathname]);
+  }, [location.pathname]);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -108,7 +110,7 @@ const HeaderV2 = () => {
               <MenuBox>
                 <StyledLink
                   isDarkMode={isDarkMode}
-                  to="/proddetail/"
+                  to="/"
                   onMouseEnter={() => setHoverMenu("커뮤니티")}
                 >
                   <Menu>커 뮤 니 티</Menu>
@@ -326,7 +328,6 @@ const StyledLink = styled(Link)`
 
 const IconBox = styled.div`
   display: flex;
-
   flex-direction: column;
   justify-content: end;
   padding: 0px 15px;
@@ -362,10 +363,10 @@ const fadeIn = keyframes`
   }
 `;
 const ExpSubMenuContainer = styled.div`
-  box-sizing: border-box;
+  z-index: 1;
   margin-top: 17px;
-
-  padding: 25px 0px;
+  box-sizing: border-box;
+  padding: 20px 0px;
   border-bottom: ${({ isDarkMode }) =>
     isDarkMode
       ? "1px solid rgba(255, 255, 255, 0.3)"
@@ -380,13 +381,12 @@ const ExpSubMenuContainer = styled.div`
   ${(props) =>
     props.isMenuHovered &&
     `
-    align-content: space-between;
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
-  `};
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+
+`};
 `;
 
 const StoreSubMenuContainer = styled.div`

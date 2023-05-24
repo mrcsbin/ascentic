@@ -21,6 +21,7 @@ public class ReviewController {
 
     @PostMapping("/add")
     public void addReview(@RequestBody PostReviewDto postReviewDto) {
+        System.out.println("postReviewDto.getReviewContent() = " + postReviewDto.getReviewContent());
         reviewService.addReview(postReviewDto);
     }
 

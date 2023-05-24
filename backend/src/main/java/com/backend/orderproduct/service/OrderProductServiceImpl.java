@@ -7,10 +7,9 @@ import com.backend.orderproduct.dto.OrderListDto;
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.dto.OrderProductDto;
 import com.backend.orderproduct.repository.OrderProductRepository;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
+import com.backend.productimg.repository.ProductImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +56,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                         .orderProductQuantity(orderProduct.getProdCount())
                         .orderProductPrice(orderProduct.getProductOption().getProdPrice())
                         .orderShippingState(orderProduct.getOrderState())
+                        .orderProductNumber(orderProduct.getOrderProdNum())
                         .build());
             }
         }

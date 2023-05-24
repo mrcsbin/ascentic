@@ -1,4 +1,5 @@
-package com.backend.productimg;
+package com.backend.productimg.service;
+
 
 import com.backend.product.repository.ProductRepository;
 import com.backend.productimg.entity.ProductImg;
@@ -8,7 +9,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.net.MalformedURLException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ProductImgServiceImpl implements com.backend.productimg.service.Pro
     @Value("${spring.servlet.multipart.location}")
     String uploadDir;
 
-    private final ProdImgRepository prodImgRepository;
+    private final ProductImgRepository prodImgRepository;
     private final ProductRepository productRepository;
 
     // 프론트에서 이미지를 조회할 때

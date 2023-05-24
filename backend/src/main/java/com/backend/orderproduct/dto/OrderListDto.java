@@ -17,4 +17,5 @@ public class OrderListDto {
     private Integer orderProductQuantity; // 주문 상품 수량
     private Integer orderProductPrice; // 주문 상품 가격
     private boolean orderShippingState; // 주문 발송 상태
+    private Integer orderProductNumber; // 주문 상품 번호
 }

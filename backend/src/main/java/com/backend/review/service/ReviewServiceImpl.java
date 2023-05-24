@@ -3,18 +3,16 @@ package com.backend.review.service;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
 import com.backend.review.dto.ReviewDto;
 import com.backend.review.dto.PostReviewDto;
 import com.backend.review.dto.ReviewListDto;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
+import com.backend.productimg.repository.ProductImgRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +35,10 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDtos;
     }
 
-    /**
-     * 일단 리뷰목록 조회 먼저 하자
-     */
     public void addReview(PostReviewDto postReviewDto) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        OrderProduct orderProduct = orderProductRepository.findById(postReviewDto.getOrderProductNum()).get();
+        System.out.println("orderProduct.getMemberId() = " + orderProduct.getMemberId());
         reviewRepository.save(Review.builder()
                 .memberId(currentMemberId)
                 .prodNum(postReviewDto.getProductNum())

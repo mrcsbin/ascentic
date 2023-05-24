@@ -3,11 +3,11 @@ package com.backend.wish.service;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.product.entity.Product;
 import com.backend.product.repository.ProductRepository;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
 import com.backend.wish.dto.WishListDto;
 import com.backend.wish.entity.Wish;
 import com.backend.wish.repository.WishRepository;
+import com.backend.productimg.entity.ProductImg;
+import com.backend.productimg.repository.ProductImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +23,27 @@ public class WishServiceImpl implements WishService {
     private final ProductRepository productRepository;
     private final ProductImgRepository productImgRepository;
 
+//    public void setWish(Integer prodNum) {
+//        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+//        Product product = productRepository.findById(prodNum).get();
+//        if (isWish(currentMemberId, product)) {
+//            wishRepository.delete(wishRepository.findByMemberIdAndProduct(currentMemberId, product).get());
+//            product.setProdWishCount(product.getProdWishCount() - 1);
+//        } else {
+//            wishRepository.save(Wish.builder()
+//                    .memberId(currentMemberId)
+//                    .product(productRepository.findById(prodNum).get())
+//                    .build());
+//            product.setProdWishCount(product.getProdWishCount() + 1);
+//        }
+//        productRepository.save(product);
+//    }
+
     public void setWish(Integer prodNum) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Product product = productRepository.findById(prodNum).get();
-        if (isWish(currentMemberId, product)) {
+        Optional<Wish> findWish = wishRepository.findByMemberIdAndProduct(currentMemberId, product);
+        if (findWish.isPresent()) {
             wishRepository.delete(wishRepository.findByMemberIdAndProduct(currentMemberId, product).get());
             product.setProdWishCount(product.getProdWishCount() - 1);
         } else {
@@ -56,8 +73,10 @@ public class WishServiceImpl implements WishService {
         return wishListDto;
     }
 
-    public boolean isWish(String memberId, Product product) {
-        Optional<Wish> findWish = wishRepository.findByMemberIdAndProduct(memberId, product);
+    public boolean isWish(Integer prodNum) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Product product = productRepository.findById(prodNum).get();
+        Optional<Wish> findWish = wishRepository.findByMemberIdAndProduct(currentMemberId, product);
         if (findWish.isPresent()) {
             return true;
         } else {

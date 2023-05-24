@@ -1,152 +1,331 @@
-h1 {
-  color: black;
-}
+/* 폰트 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
 
 .Wrapper-all {
-  width: 1720px;
-  height: 3282px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  border: 1px solid black;
-  padding: 5px;
-}
-
-.img-and-content {
-  width: 1600px;
-  margin-top: 50px;
-  height: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  border: 1px solid red;
-}
-
-.Img-scroll {
-  float: left;
-  width: 56%;
-  padding-left: 2%;
-  padding-right: 1%;
-  height: 100%;
-  margin-top: 3%;
+  width: 85vw;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 0;
   overflow: auto;
-
-  font-size: 50px;
-  text-align: center;
-  background-color: #eee;
 }
-
-.img-box {
+.img-and-content {
   width: 100%;
 }
 
+/* 이미지 스크롤 박스 */
+.Imgscroll {
+  float: left;
+  width: 55vw;
+  height: 1000px;
+  margin: 0;
+  margin-bottom: 5vw;
+  padding: 0;
+  margin-top: 160px;
+  overflow-y: overlay;
+  /* -ms-overflow-style: none; */
+  /* scrollbar-width: none; */
+}
+.Imgscroll::-webkit-scrollbar {
+  width: 5px;
+  /* height: 95%; */
+}
+.Imgscroll::-webkit-scrollbar-thumb {
+  outline: none;
+  border-radius: 10px;
+  background-color: #f3f1f1;
+}
+.Imgscroll::-webkit-scrollbar-track {
+  box-shadow: none;
+  background-color: transparent;
+  /* display: none; */
+}
+.img-box {
+  width: 55vw;
+  height: fit-content;
+  overflow: hidden;
+}
+.img-box > img {
+  width: 55vw;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 설명 섹션 */
 .detail-section {
   float: right;
-  width: 30%;
-  height: 34%;
-  padding: 3%;
-  margin-right: 2%;
-  /* background-color: aquamarine; */
+  width: 25vw;
+  height: fit-content;
+  padding: 0;
+  padding-top: 170px;
+  margin: 0;
+  margin-left: 5vw;
 }
 
-.name-price p {
-  font-size: 28px;
-  font-weight: 500;
-  margin-top: 8%;
-  margin-bottom: 3%;
-  /* float: left; */
+.name-price > p {
+  display: inline-block;
+  font-family: "Pretendard";
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0;
+  text-align: left;
 }
-
-.name-price h2 {
-  font-size: 40px;
+.name-price > .name {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  margin: 1.5rem 0;
+}
+.name-price > .name > h2 {
+  font-family: "Pretendard";
+  font-size: 2rem;
   font-weight: 700;
-
-  margin-bottom: 7%;
+  margin: 0;
+  margin-right: 1rem;
+  text-align: left;
+  line-height: 1.2;
+}
+.name-price > .name > .wishbtn {
+  width: 35px;
+  cursor: pointer;
+}
+.name-price > .name > .wishbtn > img {
+  width: 35px;
+  object-fit: cover;
+}
+.name-price > .price {
+  font-family: "Pretendard";
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 2rem 0;
+  text-align: right;
 }
 
-.name-price span {
-  font-size: 36px;
-  float: right;
-  margin-top: 3%;
+.prodinfobox {
+  font-family: "Pretendard";
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 2rem 0;
+  text-align: right;
+  word-break: keep-all;
+  line-height: 1.4;
 }
-
-.name {
-  margin-top: 6%;
-}
-
-.name h2 {
-  float: left;
-}
-
-.name button {
-  float: right;
-  margin-top: 2%;
-}
-
-.clear-both {
-  clear: both;
-}
-
 .scent-content {
-  font-size: 24px;
-  /* border: 3px solid red; */
-  margin-top: 10%;
+  font-family: "Pretendard";
+  margin: 0;
+  text-align: left;
+  padding-top: 1rem;
+  /* border-top: 1px solid black; */
+}
+.scent-content > .scentname {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: 0;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.scent-content > .scentinfo {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  text-align: left;
+  word-break: keep-all;
+  line-height: 1.4;
 }
 
-.scent-content p {
-  letter-spacing: 1px;
-  line-height: 1.5;
+/* 옵션 버튼 */
+.optionwrapper {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3rem 0 2rem 0;
 }
-
-.detail-quantity p {
-  font-size: 27px;
-  width: 80%;
-  float: left;
-  margin-bottom: 5%;
+.optionwrapper > p {
+  font-family: "Pretendard";
+  font-size: 1.1rem;
+  font-weight: 600;
 }
-
-.button {
-  /* width: 40%; */
-  float: right;
-  margin-bottom: 1px;
-  font-size: 27px;
+.optionbox {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: center;
+  align-items: stretch;
 }
-
-.order-cart {
-  font-size: 40px;
-}
-
-.order-cart button {
-  width: 47%;
-  margin: 2%;
-  font-size: 28px;
-  background-color: black;
-  color: white;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
-}
-
-.prodOption {
-  font-size: 30px;
-  width: 30%;
-  /* padding: 4%; */
-  float: left;
-  margin-bottom: 8%;
-}
-
-.additional-content {
-}
-
-hr {
+.optionbox > .prodOptionBtn {
+  display: block;
+  margin: 0;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: "Pretendard";
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
   color: black;
+  border: 1.5px solid black;
+  background-color: white;
+  cursor: pointer;
+}
+.optionbox > .prodOptionBtn-active {
+  display: block;
+  margin: 0;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: "Pretendard";
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  border: 1.5px solid black;
+  background-color: black;
+  cursor: pointer;
 }
 
+/* 수량 버튼 */
+.detail-quantity {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 2.5rem 0;
+}
+.detail-quantity > p {
+  font-family: "Pretendard";
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.detail-quantity > .quantitybox {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.detail-quantity > .quantitybox > .quantitybtn {
+  display: block;
+  margin: 0 1rem;
+  padding: 0;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+.detail-quantity > .quantitybox > .quantitybtn > img {
+  width: 15px;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+}
+.detail-quantity > .quantitybox > .quantitybtn > .down {
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.detail-quantity > .quantitybox > .quantity {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 50px;
+  font-family: "Pretendard";
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+  border: 0;
+}
+.finalPrice {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 2rem 0;
+}
+.finalPrice > p {
+  font-family: "Pretendard";
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.finalPrice > .fprice {
+  font-family: "Pretendard";
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* 카트 버튼 */
+.order-cart {
+  display: flex;
+  margin: 2rem 0;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-cart > .cartbtn {
+  display: block;
+  width: 100%;
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard";
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  border: 1.5px solid black;
+  background-color: black;
+}
+.order-cart > .cartbtn:hover {
+  color: black;
+  border: 1.5px solid black;
+  background-color: white;
+}
+
+/* 추가정보 */
+.additional-content {
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  border-bottom: 1px solid #8e8e8e;
+}
 .prod-info-modal {
-  font-size: 28px;
+  font-family: "Pretendard";
 }
-
-.prod-info-modal button {
+.prod-info-modal > .modalname {
+  display: flex;
+  height: fit-content;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: left;
+  border-top: 1px solid #8e8e8e;
+}
+.prod-info-modal > .modalname > button {
   border: none;
-  font-size: 40px;
+  font-size: 35px;
   background-color: transparent;
   cursor: pointer;
-  float: right;
+}
+.prod-info-modal > .modal-content {
+  padding: 0rem 1rem 1rem 1rem;
+  /* border-top: 1px solid #8e8e8e; */
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+  line-height: 1.5;
+}
+.prod-info-modal > .modal-content > p {
+  margin: 0.5rem 0;
+  text-align: left;
+  word-break: keep-all;
 }

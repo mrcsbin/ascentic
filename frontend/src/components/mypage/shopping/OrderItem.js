@@ -1,53 +1,24 @@
 import styled from "styled-components";
-import PRODUCT_IMAGE from "../../../assets/storemain.jpeg";
 
-export const OrderItem = () => {
+export const OrderItem = ({ orderItem }) => {
   return (
     <>
       <ItemCard>
         <ItemInfoBox>
-          <ItemImage src={PRODUCT_IMAGE} alt="상품 이미지" />
+          <ItemImage src={orderItem.productImage} alt="상품 이미지" />
           <ItemNameOptionBox>
-            <ItemName>Naaaaaaaaame</ItemName>
-            <ItemOption>Oooooooption</ItemOption>
+            <ItemName>{orderItem.productName}</ItemName>
+            <ItemOption>{orderItem.productOptionName}</ItemOption>
           </ItemNameOptionBox>
         </ItemInfoBox>
-        <ItemOrderDate>2023-05-12</ItemOrderDate>
+        <ItemOrderDate>{orderItem.orderDate}</ItemOrderDate>
         <ItemAmountBox>
-          <ItemAmount>30,000원</ItemAmount>
-          <ItemCount>2개</ItemCount>
+          <ItemAmount>{orderItem.orderProductPrice}</ItemAmount>
+          <ItemCount>{orderItem.orderProductQuantity}</ItemCount>
         </ItemAmountBox>
-        <ItemOrderState>배송 준비 중</ItemOrderState>
-      </ItemCard>
-      <ItemCard>
-        <ItemInfoBox>
-          <ItemImage src={PRODUCT_IMAGE} alt="상품 이미지" />
-          <ItemNameOptionBox>
-            <ItemName>Naaaaaaaaame</ItemName>
-            <ItemOption>Oooooooption</ItemOption>
-          </ItemNameOptionBox>
-        </ItemInfoBox>
-        <ItemOrderDate>2023-05-12</ItemOrderDate>
-        <ItemAmountBox>
-          <ItemAmount>30,000원</ItemAmount>
-          <ItemCount>2개</ItemCount>
-        </ItemAmountBox>
-        <ItemOrderState>배송 준비 중</ItemOrderState>
-      </ItemCard>
-      <ItemCard>
-        <ItemInfoBox>
-          <ItemImage src={PRODUCT_IMAGE} alt="상품 이미지" />
-          <ItemNameOptionBox>
-            <ItemName>Naaaaaaaaame</ItemName>
-            <ItemOption>Oooooooption</ItemOption>
-          </ItemNameOptionBox>
-        </ItemInfoBox>
-        <ItemOrderDate>2023-05-12</ItemOrderDate>
-        <ItemAmountBox>
-          <ItemAmount>30,000원</ItemAmount>
-          <ItemCount>2개</ItemCount>
-        </ItemAmountBox>
-        <ItemOrderState>배송 준비 중</ItemOrderState>
+        <ItemOrderState>
+          {orderItem.orderShippingState ? "배송 완료" : "배송 준비 중"}
+        </ItemOrderState>
       </ItemCard>
     </>
   );

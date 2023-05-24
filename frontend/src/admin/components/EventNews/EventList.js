@@ -135,10 +135,10 @@ function EventList(props) {
                               className="post-image"
                             />
                           )}
+                          <p className="post-status">
+                            상태: {getStatusText(post.postStatus)}
+                          </p>
                         </div>
-                        <p className="post-status">
-                          상태: {getStatusText(post.postStatus)}
-                        </p>
                         <div className="post-bottom">
                           <div className="post-left">
                             <p className="left-top">
@@ -215,7 +215,7 @@ function EventList(props) {
           {posts.length === 0 ? (
             <div style={{ margin: "100px auto" }}>
               <center style={{ fontSize: "20px", fontFamily: "Pretendard" }}>
-                진행중인 뉴스가 없습니다.
+                진행중인 이벤트가 없습니다.
               </center>
               <div style={{ height: "100px" }}></div>
             </div>

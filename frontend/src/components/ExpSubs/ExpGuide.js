@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import expCard1 from "../../assets/expSubs/expCard1.png";
 import expCard2 from "../../assets/expSubs/expCard2.png";
 import packageCard1 from "../../assets/expSubs/packageCard1.png";
@@ -7,6 +8,8 @@ import packageCard2 from "../../assets/expSubs/packageCard2.png";
 
 const ExpGuide = (props) => {
   const [guideMode, setGuideMode] = useState(1);
+  const now = new Date();
+  const navigate = useNavigate();
 
   const changeExpPackageMode = () => {
     setGuideMode(1);
@@ -21,7 +24,7 @@ const ExpGuide = (props) => {
   };
 
   const expApply = () => {
-    alert("주문관련 컴포넌트 불러오기");
+    // alert("주문관련 컴포넌트 불러오기");
     props.showModal();
   };
 
@@ -48,8 +51,12 @@ const ExpGuide = (props) => {
             체험 패키지
           </button>
           <ImageCard>
-            <img src={packageCard1} alt="이미지 없음"></img>
-            <img src={packageCard2} alt="이미지 없음"></img>
+            <div>
+              <img src={packageCard1} alt="이미지 없음" />
+            </div>
+            <div>
+              <img src={packageCard2} alt="이미지 없음" />
+            </div>
           </ImageCard>
 
           <GuideContent>
@@ -64,7 +71,7 @@ const ExpGuide = (props) => {
             <AddInfo>
               <div>회원당 1회만 신청가능</div>
             </AddInfo>
-            <ApplyBtn onClick={() => cardApply()}>지금 신청하다</ApplyBtn>
+            <ApplyBtn onClick={() => cardApply()}>지금 신청하기</ApplyBtn>
           </GuideContent>
         </ExpGuide1>
       );
@@ -90,8 +97,13 @@ const ExpGuide = (props) => {
             체험 패키지
           </button>
           <ImageCard>
-            <img src={expCard1} alt="이미지 없음"></img>
-            <img src={expCard2} alt="이미지 없음"></img>
+            <div>
+              {" "}
+              <img src={expCard1} alt="이미지 없음" />
+            </div>
+            <div>
+              <img src={expCard2} alt="이미지 없음" />
+            </div>
           </ImageCard>
 
           <GuideContent>
@@ -105,10 +117,19 @@ const ExpGuide = (props) => {
             </div>
             <div>
               패키지 구성: 큐레이션 카드, 매달 다르게 구성되는 체험 패키지
-              결제일: 오늘 날짜 예상 도착일: 결제 3일 후
+              <br />
+              결제일: {now.getDate()}일
+              <br />
+              예상 도착일: 결제 3일 후
             </div>
             <PriceInfo>매월 22,900원 정기결제 (배송비 포함)</PriceInfo>
+            {/* {props.userTasteRes === "none" ? (
+              <ApplyBtn onClick={() => navigate("/exp/taste")}>
+                취향 테스트 먼저하기
+              </ApplyBtn>
+            ) : ( */}
             <ApplyBtn onClick={() => expApply()}>구독 신청하기</ApplyBtn>
+            {/* )} */}
           </GuideContent>
         </ExpGuide1>
       );
@@ -132,6 +153,7 @@ const ExpGuide1 = styled.div`
     top: -9.7%;
     width: 195px;
     height: 70px;
+    cursor: pointer;
   }
 
   > button:nth-child(2) {
@@ -142,6 +164,7 @@ const ExpGuide1 = styled.div`
     top: -9.7%;
     width: 195px;
     height: 70px;
+    cursor: pointer;
   }
 `;
 
@@ -152,19 +175,25 @@ const ImageCard = styled.div`
   width: 515px;
   height: 225px;
 
-  > img:nth-child(1) {
+  > div:nth-child(1) {
     position: absolute;
     width: 223px;
     height: 223px;
-    background-color: red;
+    overflow: hidden;
   }
 
-  > img:nth-child(2) {
+  > div:nth-child(2) {
     position: absolute;
     left: 55%;
     width: 223px;
     height: 223px;
-    background-color: white;
+    overflow: hidden;
+  }
+  img {
+    width: 223px;
+    height: 223px;
+    object-fit: cover;
+    object-position: center;
   }
 `;
 
@@ -197,16 +226,16 @@ const GuideContent = styled.div`
     margin-top: 25px;
     font-size: 15px;
     font-weight: 550;
+    line-height: 1.5;
   }
 `;
 
 const PriceInfo = styled.div`
   width: 480px;
   height: 55px;
-  /* background-color: red; */
 
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 10%;
 
   font-size: 27px;
@@ -237,6 +266,7 @@ const ApplyBtn = styled.button`
   background-color: black;
   color: white;
   font-size: 23px;
+  cursor: pointer;
 `;
 
 export default ExpGuide;

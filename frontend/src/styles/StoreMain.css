@@ -11,23 +11,28 @@
   width: 100vw;
   object-fit: cover;
 }
-.imagebox video {
+.imagebox .topVideo {
   width: 100vw;
+  height: 30vw;
+  object-fit: cover;
+  object-position: center top;
+}
+.imagebox .midVideo {
+  width: 100vw;
+  height: 30vw;
+  object-fit: cover;
+  object-position: center 30%;
 }
 .infobox {
   width: 80vw;
-  margin: 0 auto 15px auto;
+  margin: 0 auto 20px auto;
   padding: 10px 0;
   text-align: center;
 }
-.infobox h2 {
-  width: 80vw;
-  margin: 30px auto;
+.infobox img {
+  width: 230px;
+  margin: 20px auto 15px auto;
   padding: 0;
-  text-align: center;
-  font-family: "Pretendard";
-  font-size: 2rem;
-  font-weight: bold;
 }
 .infobox span {
   display: block;
@@ -35,7 +40,7 @@
   margin: 7px auto;
   padding: 0;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-family: "Pretendard";
   font-weight: 400;
 }
@@ -43,6 +48,7 @@
 .buttonBox {
   display: block;
   width: 80vw;
+  max-width: 1150px;
   height: 30px;
   margin: 5px auto;
 }
@@ -64,14 +70,13 @@
   width: 20px;
   float: left;
 }
-/* hover효과 이쁜걸로 */
 .filter:hover {
   border: 1px solid #2f2f2f;
 }
 .buttonBox .prodnum {
   display: block;
   float: right;
-  margin-top: 13px;
+  margin-top: 15px;
   font-size: 0.8rem;
   font-family: "Pretendard";
   font-weight: 500;
@@ -83,21 +88,18 @@
   height: 150px;
   display: block;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0;
   align-items: center;
   overflow: hidden;
 }
-@media (max-width: 1210px) {
+@media (max-width: 1352px) {
   .categories {
     overflow: scroll;
   }
 }
 .categoriesbox {
-  width: 990px;
-  display: block;
+  width: 1100px;
   margin: 0 auto;
-  padding: 0;
-  overflow: hidden;
 }
 .catebox,
 .catebox-active {
@@ -106,7 +108,7 @@
   width: 90px;
   float: left;
   font-family: "Pretendard";
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-align: center;
   line-height: 1.1;
   text-decoration: none;
@@ -150,7 +152,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99;
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.7);
 }
 .modal.openModal {
@@ -185,11 +187,10 @@
 .modal > section {
   width: 50vw;
   min-width: 350px;
-  max-width: 650px;
+  max-width: 800px;
   height: 100%;
   margin: 0 auto 0 0;
   background-color: white;
-  /* 팝업이 열릴때 스르륵 열리는 효과 */
   overflow: hidden;
 }
 .modal > section > header {
@@ -293,7 +294,7 @@
   position: fixed;
   width: 50vw;
   min-width: 350px;
-  max-width: 650px;
+  max-width: 800px;
   height: 55px;
   bottom: 0;
   left: 0;
@@ -316,97 +317,4 @@
 .filterresult {
   background-color: black;
   color: white;
-}
-
-/* 카드 */
-.Cardbox {
-  display: block;
-  width: 80vw;
-  margin: 0 auto;
-}
-.Cardbox .cont {
-  display: block;
-  margin: 0 auto;
-}
-@media (min-width: 1210px) {
-  .Cardbox .cont,
-  .buttonBox {
-    width: 1040px;
-  }
-}
-.Cardblock {
-  display: block;
-  padding: 5px;
-  margin-bottom: 10px;
-  float: left;
-  width: 250px;
-  overflow: hidden;
-  text-decoration: none;
-  font-family: "Pretendard";
-  color: black;
-}
-.CardImagebox {
-  margin: 0 0 10px 0;
-  padding: 0;
-  width: 250px;
-  height: 300px;
-  overflow: hidden;
-}
-.CardImagebox img {
-  width: 250px;
-  height: 300px;
-  object-fit: cover;
-  object-position: center;
-}
-.Pinfo,
-.Pname,
-.Pprice {
-  margin: 0;
-  padding: 5px 10px;
-  font-family: "Pretendard";
-}
-.Pinfo {
-  font-size: 0.8rem;
-  font-weight: 300;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: black;
-}
-.Pname {
-  font-size: 1rem;
-  font-weight: 500;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: black;
-}
-.Pprice {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: black;
-}
-.pagination {
-  display: inline-block;
-  width: 100vw;
-  height: 30px;
-  margin: 10px auto;
-  text-align: center;
-  align-items: center;
-}
-.pagination div {
-  display: inline-block;
-  cursor: pointer;
-  margin: 5px;
-  padding: 2px;
-  font-family: "Pretendard";
-  font-size: 0.85rem;
-  border: 1px solid;
-}
-.pagination div:hover {
-  border-color: black;
-}
-.pagination .numbtn {
-  width: 1rem;
-}
-.pagination .btn {
-  width: 2rem;
 }

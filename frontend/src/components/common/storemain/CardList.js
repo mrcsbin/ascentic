@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import "../../../styles/StoreMain.css";
 import ProductCard from "./ProductCard";
+import styled from "styled-components";
 
 const CardList = ({ products }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,23 +25,18 @@ const CardList = ({ products }) => {
 
   return (
     <div>
-      <div className="Cardbox">
-        <div className="cont">
-          {currentProducts.map((product) => {
-            return <ProductCard key={product.prodNum} product={product} />;
-          })}
-        </div>
-      </div>
-      <div className="pagination">
+      <Cardbox>
+        {currentProducts.map((product) => {
+          return <ProductCard key={product.prodNum} product={product} />;
+        })}
+      </Cardbox>
+      <Pagination>
         {currentPage - 3 <= 0 ? (
           ""
         ) : (
-          <div
-            className="btn"
-            onClick={() => handlePageChange(currentPage - 3)}
-          >
+          <PageBtn onClick={() => handlePageChange(currentPage - 3)}>
             이전
-          </div>
+          </PageBtn>
         )}
         {Array.from({ length: totalPages }, (_, i) => i + 1)
           .filter(
@@ -49,8 +44,7 @@ const CardList = ({ products }) => {
               pageNumber > currentPage - 3 && pageNumber < currentPage + 3
           )
           .map((pageNumber) => (
-            <div
-              className="numbtn"
+            <PageNumBtn
               key={pageNumber}
               onClick={() => handlePageChange(pageNumber)}
               style={{
@@ -59,24 +53,21 @@ const CardList = ({ products }) => {
               }}
             >
               {pageNumber}
-            </div>
+            </PageNumBtn>
           ))}
         {currentPage + 3 > totalPages ? (
           ""
         ) : (
-          <div
-            className="btn"
-            onClick={() => handlePageChange(currentPage + 3)}
-          >
+          <PageBtn onClick={() => handlePageChange(currentPage + 3)}>
             다음
-          </div>
+          </PageBtn>
         )}
-      </div>
+      </Pagination>
       <div>
         {products.length === 0 ? (
           <div style={{ margin: "100px auto" }}>
             <center style={{ fontSize: "20px", fontFamily: "Pretendard" }}>
-              판매 중인 상품이 없습니다.
+              해당하는 상품이 없습니다.
             </center>
             <div style={{ height: "100px" }}></div>
           </div>
@@ -87,5 +78,53 @@ const CardList = ({ products }) => {
     </div>
   );
 };
+//flex박스로 고치기?
+const Cardbox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 90vw;
+  height: fit-content;
+  max-width: 1200px;
+  margin: 0 auto;
+  @media screen and (max-width: 984px) {
+    justify-content: center;
+  }
+`;
+const Pagination = styled.div`
+  display: inline-block;
+  width: 100vw;
+  height: 30px;
+  margin: 10px auto;
+  text-align: center;
+  align-items: center;
+`;
+const PageBtn = styled.div`
+  display: inline-block;
+  cursor: pointer;
+  margin: 5px;
+  padding: 2px;
+  font-family: "Pretendard";
+  font-size: 0.85rem;
+  border: 1px solid;
+  width: 2rem;
+  &:hover {
+    border-color: black;
+  }
+`;
+const PageNumBtn = styled.div`
+  display: inline-block;
+  cursor: pointer;
+  margin: 5px;
+  padding: 2px;
+  font-family: "Pretendard";
+  font-size: 0.85rem;
+  border: 1px solid;
+  width: 1rem;
+  &:hover {
+    border-color: black;
+  }
+`;
 
 export default CardList;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import HEART from "../../../assets/mypage/heart.png";
 import HEART_EMPTY from "../../../assets/mypage/heart_empty.png";
-import TEST_ITEM_IMAGE from "../../../assets/storemain.jpeg";
+import TEST_ITEM_IMAGE from "../../../assets/storemain.webp";
 import { useState } from "react";
 
 function WishItems() {

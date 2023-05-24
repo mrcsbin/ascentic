@@ -1,11 +1,26 @@
 package com.backend.inquiry.controller;
 
+import com.backend.inquiry.dto.request.CreateInquiryDto;
+import com.backend.inquiry.dto.response.InquiryDto;
+import com.backend.inquiry.service.InquiryServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RequestMapping
+import java.util.List;
+
+@RequestMapping("/inquiry")
 @RestController
 @RequiredArgsConstructor
 public class InquiryController {
+    private final InquiryServiceImpl inquiryService;
+
+    @GetMapping("/getInquiry") // 회원 아이디에 해당하는 문의 내역 조회
+    public List<InquiryDto> getInquiry() {
+        return inquiryService.getInquiry();
+    }
+
+    @PostMapping("/createInquiry") // 1:1 문의 생성
+    public void createInquiry(@RequestBody CreateInquiryDto createInquiryDto) {
+        inquiryService.createInquiry(createInquiryDto);
+    }
 }

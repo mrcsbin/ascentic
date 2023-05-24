@@ -40,27 +40,27 @@ const FilterModal = (props) => {
         image: diffuser,
       },
       {
-        name: "candle",
+        name: "향초",
         text: "향초",
         image: candle,
       },
       {
-        name: "hand",
+        name: "핸드크림",
         text: "핸드크림",
         image: hand,
       },
       {
-        name: "shampoo",
+        name: "샴푸",
         text: "샴푸",
         image: shampoo,
       },
       {
-        name: "body",
+        name: "바디워시",
         text: "바디워시",
         image: body,
       },
       {
-        name: "fabric",
+        name: "섬유향수",
         text: "섬유향수",
         image: fabric,
       },
@@ -178,7 +178,7 @@ const FilterModal = (props) => {
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
-    <div className={open ? "openModal modal" : "modal"} onClick={close}>
+    <div className={open ? "openModal modal" : "modal"}>
       {open ? (
         <section>
           <header>

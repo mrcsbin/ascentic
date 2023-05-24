@@ -4,6 +4,7 @@ import axios from "axios";
 import ProdDetailView from "../../components/ProdDetailView";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/common/Loading";
+import { getCookie } from "../../utils/Cookies";
 
 const ProductDetailPage = () => {
   const [productData, setProductData] = useState(null);
@@ -34,7 +35,12 @@ const ProductDetailPage = () => {
     const fetchOption = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/proddetail/${prodNum}`
+          `http://localhost:8080/proddetail/${prodNum}`,
+          {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          }
         );
         console.log(res.data);
         setProductData(res.data);

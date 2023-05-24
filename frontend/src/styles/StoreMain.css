@@ -191,7 +191,6 @@
   height: 100%;
   margin: 0 auto 0 0;
   background-color: white;
-  /* 팝업이 열릴때 스르륵 열리는 효과 */
   overflow: hidden;
 }
 .modal > section > header {

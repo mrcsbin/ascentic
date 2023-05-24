@@ -1,5 +1,6 @@
 package com.backend.product.service;
 
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
@@ -36,8 +37,9 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse.ProductDetailDto getProductDetail(Integer prodNum) {
 //        Member member = memberRepository.findById(currentMemberId).get();
 //        member.buyWelcomePackageYn();
-//        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        String currentMemberId = "sungbin";
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        System.out.println("ggg");
+        System.out.println(currentMemberId);
         Optional<Product> findProduct = productRepository.findById(prodNum);
         findProduct.get().setProdReadCount(findProduct.get().getProdReadCount() + 1);
         productRepository.save(findProduct.get());
@@ -62,6 +64,7 @@ public class ProductServiceImpl implements ProductService {
             for (ProductImage productImage : productImageList) {
                 prodImages.add(productImage.getProdSaveName());
             }
+
             return ProductResponse.ProductDetailDto.builder()
                     .prodNum(prodNum)
                     .prodName(product.getProdName())

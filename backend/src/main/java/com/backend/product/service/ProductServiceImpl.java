@@ -5,8 +5,8 @@ import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
+import com.backend.productimage.entity.ProductImage;
+import com.backend.productimage.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductImgRepository productImgRepository;
+    private final ProductImageRepository productImageRepository;
     private final ReviewRepository reviewRepository;
 
     public void create(Product product) {
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
             List<Integer> prodPrice = new ArrayList<>(Arrays.asList(product.getProdPrice(0), product.getProdPrice(1)));
             List<String> prodOption = new ArrayList<>(Arrays.asList(product.getProdOption(0), product.getProdOption(1)));
             List<String> prodImages = new ArrayList<>();
-            List<ProductImg> productImgList = productImgRepository.findAllByProdImageTypeAndProductProdNum(1, product.getProdNum());
+            List<ProductImage> productImageList = productImageRepository.findAllByProdImageTypeAndProductProdNum(1, product.getProdNum());
             List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
             List<ProductResponse.Review> reviews = new ArrayList<>();
             for (Review review : reviewList) {
@@ -59,8 +59,8 @@ public class ProductServiceImpl implements ProductService {
                         .reviewCommentList(review.getComments())
                         .build());
             }
-            for (ProductImg productImg : productImgList) {
-                prodImages.add(productImg.getProdSaveName());
+            for (ProductImage productImage : productImageList) {
+                prodImages.add(productImage.getProdSaveName());
             }
             return ProductResponse.ProductDetailDto.builder()
                     .prodNum(prodNum)
@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
         if (ScentName.equals("all")) {
             List<Product> products = productRepository.findAll();
             for (Product product : products) {
-                ProductImg productImg = productImgRepository.findByProdImageTypeAndProductProdNum(0, product.getProdNum());
+                ProductImage productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, product.getProdNum());
                 productList.add(ProductResponse.ProductListDto.builder()
                         .prodNum(product.getProdNum())
                         .prodName(product.getProdName())
@@ -94,14 +94,14 @@ public class ProductServiceImpl implements ProductService {
                         .prodWishCount(product.getProdWishCount())
                         .prodReadCount(product.getProdReadCount())
                         .prodCategory(product.getProdCategory())
-                        .prodImage(productImg.getProdSaveName())
+                        .prodImage(productImage.getProdSaveName())
                         .prodPrice(product.getProdPrice(0))
                         .build());
             }
         } else {
             List<Product> products = productRepository.findByScentScentNoteName(ScentName);
             for (Product product : products) {
-                ProductImg productImg = productImgRepository.findByProdImageTypeAndProductProdNum(0, product.getProdNum());
+                ProductImage productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, product.getProdNum());
                 productList.add(ProductResponse.ProductListDto.builder()
                         .prodNum(product.getProdNum())
                         .prodName(product.getProdName())
@@ -109,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
                         .prodWishCount(product.getProdWishCount())
                         .prodReadCount(product.getProdReadCount())
                         .prodCategory(product.getProdCategory())
-                        .prodImage(productImg.getProdSaveName())
+                        .prodImage(productImage.getProdSaveName())
                         .prodPrice(product.getProdPrice(0))
                         .build());
             }

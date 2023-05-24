@@ -8,7 +8,7 @@ import com.backend.review.dto.PostReviewDto;
 import com.backend.review.dto.ReviewListDto;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
-import com.backend.productimg.repository.ProductImgRepository;
+import com.backend.productimage.repository.ProductImageRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final OrderProductRepository orderProductRepository;
-    private final ProductImgRepository productImgRepository;
+    private final ProductImageRepository productImageRepository;
 
     @Override
     public List<ReviewDto> findAllByProdNum(Integer prodNum) {
@@ -58,7 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
         List<ReviewListDto> reviewListDto = new ArrayList<>();
         for (Review review : reviewList) {
-            String productImage = productImgRepository.findByProdImageTypeAndProductProdNum(0, review.getProdNum()).getProdSaveName();
+            String productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, review.getProdNum()).getProdSaveName();
             reviewListDto.add(ReviewListDto.builder()
                     .productImage(productImage)
                     .productName(review.getOrderProduct().getProductOption().getProduct().getProdName())

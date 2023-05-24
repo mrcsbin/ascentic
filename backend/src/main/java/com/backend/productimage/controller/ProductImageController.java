@@ -1,22 +1,18 @@
-package com.backend.productimg.controller;
+package com.backend.productimage.controller;
 
-import com.backend.productimg.service.ProductImgServiceImpl;
-import io.lettuce.core.dynamic.annotation.Param;
+import com.backend.productimage.service.ProductImageServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.UrlResource;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.List;
 
 @RequestMapping
 @RestController
 @RequiredArgsConstructor
-public class ProductImgController {
+public class ProductImageController {
 
-    private final ProductImgServiceImpl productImgService;
+    private final ProductImageServiceImpl productImgService;
 
     // 1. 상품번호, 2. 이미지(multipart), 3. 이미지 타입,
     @PostMapping("/uploadImage")

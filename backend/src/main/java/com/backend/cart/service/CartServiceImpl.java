@@ -7,7 +7,7 @@ import com.backend.cart.repository.CartRepository;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
-import com.backend.productimg.repository.ProductImgRepository;
+import com.backend.productimage.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +21,14 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final ProductOptionRepository productOptionRepository;
-    private final ProductImgRepository productImgRepository;
+    private final ProductImageRepository productImageRepository;
 
     public List<GetCartDto> getCart() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         List<Cart> findCartItems = cartRepository.findByMemberId(currentMemberId);
         List<GetCartDto> cartItems = new ArrayList<>();
         for (Cart cart : findCartItems) {
-            String productImage = productImgRepository.findByProdImageTypeAndProductProdNum(0, cart.getProductOption().getProduct().getProdNum()).getProdSaveName();
+            String productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, cart.getProductOption().getProduct().getProdNum()).getProdSaveName();
             GetCartDto build = GetCartDto.builder()
                     .prodImage(productImage)
                     .prodName(cart.getProductOption().getProduct().getProdName())

@@ -6,19 +6,19 @@ import CardList from "../../components/common/storemain/CardList";
 import Categories from "../../components/common/storemain/Categories";
 import FilterModal from "../../components/common/storemain/FilterModal";
 import mainimg from "../../assets/storemain.webp";
-import mainvideo from "../../assets/storemain.mp4";
 import filterimg from "../../assets/filter.png";
 import logo from "../../assets/ascentic_logo_b.svg";
-import video1 from "../../assets/storeMain/1.webm";
-import video2 from "../../assets/storeMain/2.webm";
-import img1 from "../../assets/storeMain/213.jpg";
-import img2 from "../../assets/storeMain/flowers.jpg";
-import img3 from "../../assets/storeMain/lifestyle.jpg";
-import img4 from "../../assets/storeMain/soap.jpg";
-import img5 from "../../assets/storeMain/4541.jpg";
-import img6 from "../../assets/storeMain/spa.jpg";
-import img7 from "../../assets/storeMain/spa2.jpg";
-import img8 from "../../assets/storeMain/spa3.jpg";
+import video from "../../assets/storeMain/2.webm";
+import all2 from "../../assets/storeMain/storemain_all2.mp4";
+import animal from "../../assets/storeMain/storemain_animal.mp4";
+import citrus from "../../assets/storeMain/storemain_citrus.mp4";
+import floral2 from "../../assets/storeMain/storemain_floral2.mp4";
+import fruity from "../../assets/storeMain/storemain_fruity2.mp4";
+import green from "../../assets/storeMain/storemain_green.mp4";
+import mossy from "../../assets/storeMain/storemain_mossy.mp4";
+import special from "../../assets/storeMain/storemain_special2.mp4";
+import watery from "../../assets/storeMain/storemain_watery.mp4";
+import woody from "../../assets/storeMain/storemain_woody.mp4";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
@@ -125,27 +125,55 @@ function StoreMain() {
     <div>
       <div className="imagebox">
         {category === "all" && (
-          <video loop autoPlay muted>
-            <source src={video1} type="video/webm" />
+          <video className="topVideo" loop autoPlay muted>
+            <source src={all2} type="video/mp4" />
           </video>
         )}
         {category === "Animal" && (
-          <video loop autoPlay muted>
-            <source src={mainvideo} type="video/mp4" />
+          <video className="midVideo" loop autoPlay muted>
+            <source src={animal} type="video/mp4" />
           </video>
         )}
         {category === "Watery&Powdery" && (
-          <video loop autoPlay muted>
-            <source src={video2} type="video/webm" />
+          <video className="midVideo" loop autoPlay muted>
+            <source src={watery} type="video/webm" />
           </video>
         )}
-        {category === "Woody" && <img src={img1} alt="" />}
-        {category === "Mossy" && <img src={img2} alt="" />}
-        {category === "Herbal&Green" && <img src={img3} alt="" />}
-        {category === "Floral" && <img src={img4} alt="" />}
-        {category === "Citrus" && <img src={img5} alt="" />}
-        {category === "Fruity" && <img src={img6} alt="" />}
-        {category === "Special" && <img src={img7} alt="" />}
+        {category === "Woody" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={woody} type="video/webm" />
+          </video>
+        )}
+        {category === "Mossy" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={mossy} type="video/webm" />
+          </video>
+        )}
+        {category === "Herbal&Green" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={green} type="video/webm" />
+          </video>
+        )}
+        {category === "Floral" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={floral2} type="video/webm" />
+          </video>
+        )}
+        {category === "Citrus" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={citrus} type="video/webm" />
+          </video>
+        )}
+        {category === "Fruity" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={fruity} type="video/webm" />
+          </video>
+        )}
+        {category === "Special" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={special} type="video/webm" />
+          </video>
+        )}
       </div>
       <div className="infobox">
         <img src={logo} alt="ascentic_logo" />

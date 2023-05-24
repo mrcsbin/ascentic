@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ReviewService {
     public List<ReviewDto> findAllByProdNum(Integer prodNum);
+
+    void deleteReview(Integer prodNum);
 }

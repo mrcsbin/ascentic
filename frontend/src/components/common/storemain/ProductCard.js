@@ -23,7 +23,7 @@ const ProductCard = (props) => {
           className="Productimage"
           src={
             // !arr === undefined ?
-            `http://localhost:8080/getProdImg?prodNum=${props.product.prodNum}&prodImageType=0`
+            `http://localhost:8080/images/${props.product.prodImage}`
             //  : null
           }
           alt=""

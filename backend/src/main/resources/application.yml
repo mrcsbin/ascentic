@@ -84,7 +84,6 @@ spring:
           - classpath:subscribeProd.sql
           - classpath:subscribeSend.sql
           - classpath:prodImage.sql
-          - classpath:prod_img.sql
           - classpath:review.sql
           - classpath:reviewcomment.sql
           - classpath:inquiry.sql

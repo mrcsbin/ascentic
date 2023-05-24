@@ -162,8 +162,16 @@ const WritePost = ({ postEdit }) => {
 
   const mainDeleteImage = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+
     axios
-      .post("/admin/mainimg", { image: null })
+      .post("/admin/mainimg", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(() => {
         setSelectedImage(null);
       })
@@ -171,7 +179,28 @@ const WritePost = ({ postEdit }) => {
         console.error("이미지 삭제 오류: ", error);
       });
   };
-
+  const renderStaticRangeLabel = (key, label) => {
+    switch (key) {
+      case "Today":
+        return "오늘";
+      case "yesterday":
+        return "어제";
+      case "this_week":
+        return "이번 주";
+      case "last_week":
+        return "저번 주";
+      case "this_month":
+        return "이번 달";
+      case "last_month":
+        return "저번 달";
+      case "days_up_to_today":
+        return "오늘로부터 몇일 전";
+      case "days_starting_today":
+        return "오늘로부터 몇일 후";
+      default:
+        return label;
+    }
+  };
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
 
@@ -262,6 +291,34 @@ const WritePost = ({ postEdit }) => {
           <button onClick={() => setPostStatus(1)}>임시저장하기</button>
           <button onClick={() => setPostStatus(2)}>삭제하기</button>
         </div>
+        {postCategory === "event" && (
+          <div className="image-selection">
+            <h4>대표 이미지 선택</h4>
+            {selectedImage && (
+              <div className="image-container">
+                {/* <img
+                  src={`http://localhost:8080/admin/download?img=${selectedImage}`}
+                  alt="대표 이미지"
+                  className="selected-image"
+                /> */}
+                ${selectedImage}
+                <div className="image-buttons">
+                  <button onClick={mainImageReplace}>이미지 교체</button>
+                  <button onClick={mainDeleteImage}>이미지 삭제</button>
+                </div>
+              </div>
+            )}
+            {!selectedImage && (
+              <div className="upload-container">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={mainImageUpload}
+                />
+              </div>
+            )}
+          </div>
+        )}
         <div className="post-category-input">
           <select
             value={postCategory}
@@ -269,8 +326,8 @@ const WritePost = ({ postEdit }) => {
               setPostCategory(e.target.value);
               setEventDateRange([
                 {
-                  startDate: null,
-                  endDate: null,
+                  startDate: new Date(),
+                  endDate: new Date(),
                   key: "selection",
                 },
               ]);
@@ -294,13 +351,14 @@ const WritePost = ({ postEdit }) => {
           />
         </div>
       </div>
+
       <div className="event-date">
         <h4>[이벤트 날짜 선택]</h4>
         <div className="CalendarContainer">
           <DateRangePicker
             onChange={handleDateRangeChange}
-            showSelectionPreview={true}
             moveRangeOnFirstSelection={false}
+            showSelectionPreview={true}
             months={2}
             ranges={eventDateRange}
             direction="horizontal"
@@ -308,27 +366,7 @@ const WritePost = ({ postEdit }) => {
           />
         </div>
       </div>
-      {postCategory === "event" && (
-        <div>
-          <h4>대표 이미지 선택</h4>
-          {selectedImage && (
-            <div>
-              <img
-                src={`http://localhost:8080/admin/download?img=${selectedImage}`}
-                alt="대표 이미지"
-                style={{ maxWidth: "300px" }}
-              />
-              <button onClick={mainImageReplace}>이미지 교체</button>
-              <button onClick={mainDeleteImage}>이미지 삭제</button>
-            </div>
-          )}
-          {!selectedImage && (
-            <div>
-              <input type="file" accept="image/*" onChange={mainImageUpload} />
-            </div>
-          )}
-        </div>
-      )}
+
       <ReactQuill
         ref={quillRef}
         value={content}

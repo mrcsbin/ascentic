@@ -108,7 +108,7 @@ const HeaderV2 = () => {
               <MenuBox>
                 <StyledLink
                   isDarkMode={isDarkMode}
-                  to="/proddetail"
+                  to="/proddetail/"
                   onMouseEnter={() => setHoverMenu("커뮤니티")}
                 >
                   <Menu>커 뮤 니 티</Menu>
@@ -123,22 +123,22 @@ const HeaderV2 = () => {
             >
               <CategoryBox>
                 <CategoryItem>
-                  <StyledLink to="/exp" isDarkMode={isDarkMode}>
+                  <StyledLink to="/exp/" isDarkMode={isDarkMode}>
                     <SubMenu>구독 소개</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
-                  <StyledLink to="/exp/taste" isDarkMode={isDarkMode}>
+                  <StyledLink to="/exp/taste/" isDarkMode={isDarkMode}>
                     <SubMenu>취향 테스트</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
-                  <StyledLink to="/exp/subs" isDarkMode={isDarkMode}>
+                  <StyledLink to="/exp/subs/" isDarkMode={isDarkMode}>
                     <SubMenu>구독 신청</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
-                  <StyledLink to="/exp/subsmanage" isDarkMode={isDarkMode}>
+                  <StyledLink to="/exp/subsmanage/" isDarkMode={isDarkMode}>
                     <SubMenu>구독 관리</SubMenu>
                   </StyledLink>
                 </CategoryItem>
@@ -162,7 +162,7 @@ const HeaderV2 = () => {
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
+                  <StyledLink to="/community/event/" isDarkMode={isDarkMode}>
                     <SubMenu>이벤트</SubMenu>
                   </StyledLink>
                 </CategoryItem>
@@ -296,8 +296,8 @@ const TopContainer = styled.div`
 `;
 
 const LeftBox = styled.div`
-  margin: 15px auto;
-  width: 25%;
+  margin: 15px 0;
+  width: 15%;
   font-weight: bold;
   font-size: 40px;
 `;
@@ -307,20 +307,17 @@ const CenterBox = styled.div`
   font-weight: bold;
   font-size: 40px;
   text-align: center;
-  width: 50%;
+  width: 45%;
 `;
 
 const RightBox = styled.div`
-  padding-top: 1.5%;
-  padding-left: 10%;
-
-  width: 10%;
+  margin: 20px 0;
   display: flex;
   filter: ${({ isDarkMode }) =>
     isDarkMode ? "brightness(0) invert(1)" : "none"};
 `;
 const Logo = styled.img`
-  width: 50%;
+  width: 150px;
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;

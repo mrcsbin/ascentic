@@ -296,8 +296,8 @@ const TopContainer = styled.div`
 `;
 
 const LeftBox = styled.div`
-  margin: 15px auto;
-  width: 25%;
+  margin: 15px 0;
+  width: 15%;
   font-weight: bold;
   font-size: 40px;
 `;
@@ -307,20 +307,17 @@ const CenterBox = styled.div`
   font-weight: bold;
   font-size: 40px;
   text-align: center;
-  width: 50%;
+  width: 45%;
 `;
 
 const RightBox = styled.div`
-  padding-top: 2%;
-  padding-left: 10%;
-  padding-right: 3%;
-  width: 10%;
+  margin: 20px 0;
   display: flex;
   filter: ${({ isDarkMode }) =>
     isDarkMode ? "brightness(0) invert(1)" : "none"};
 `;
 const Logo = styled.img`
-  width: 50%;
+  width: 150px;
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;

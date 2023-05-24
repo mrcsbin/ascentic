@@ -1,4 +1,4 @@
-package com.backend.productimg.repository;
+package com.productimg.repository;
 
 import com.backend.productimg.entity.ProductImg;
 import org.springframework.data.jpa.repository.JpaRepository;

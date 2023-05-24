@@ -1,4 +1,4 @@
-package com.backend.productimg.entity;
+package com.productimg.entity;
 
 import com.backend.product.entity.Product;
 import jakarta.persistence.*;

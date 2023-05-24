@@ -1,4 +1,4 @@
-package com.backend.productimg.service;
+package com.productimg.service;
 
 import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;

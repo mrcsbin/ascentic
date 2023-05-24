@@ -1,7 +1,9 @@
 package com.backend.taste;
 
 
-import org.junit.jupiter.api.AfterEach;
+import com.backend.taste.dto.TasteDTO;
+import com.backend.taste.dto.TasteResultDTO;
+import com.backend.taste.service.TasteService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

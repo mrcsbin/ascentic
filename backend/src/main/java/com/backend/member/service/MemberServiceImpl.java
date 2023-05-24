@@ -1,6 +1,6 @@
 package com.backend.member.service;
 
-import com.backend.MessageAndMail.MailController;
+import com.backend.messageandmail.controller.MailController;
 import com.backend.member.dto.FindDataDto;
 import com.backend.member.dto.JwtTokenDto;
 import com.backend.member.dto.LoginDto;
@@ -10,12 +10,10 @@ import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
+import com.backend.member.dto.MemberInfoDto;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +29,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+
     @Override
     @Transactional
     public String join(SignupDto signupDto) {
@@ -62,12 +61,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean existMemberId(String memberId){
+    public boolean existMemberId(String memberId) {
         return memberRepository.existsById(memberId);
     }
 
     @Override
-    public boolean existEmail(String email){
+    public boolean existEmail(String email) {
         return memberRepository.existsByEmail(email);
     }
 
@@ -100,7 +99,6 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public JwtTokenDto doLogin(LoginDto loginDto) {
         Optional<Member> findData = memberRepository.findById(loginDto.getId());
-
         if (findData.isPresent()) {
             Member member = findData.get();
             if (passwordEncoder.matches(loginDto.getPassword(), member.getPassword()) && loginDto.getId().equals(member.getId())) {
@@ -141,6 +139,20 @@ public class MemberServiceImpl implements MemberService {
         return "해당 회원이 존재하지 않습니다.";
     }
 
+    @Override
+    public MemberInfoDto getMemberInfo() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member findMember = memberRepository.findById(currentMemberId)
+                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+        String[] emailParts = findMember.getEmail().split("@");
+        return MemberInfoDto.builder()
+                .email(emailParts[0])
+                .domain(emailParts[1])
+                .name(findMember.getName())
+                .tel(findMember.getPhone())
+                .build();
+    }
+
 
     @Transactional
     public void changeTempPw(Member member, String tempPassword) {
@@ -162,12 +174,84 @@ public class MemberServiceImpl implements MemberService {
                 .id("admin")
                 .password(passwordEncoder.encode("admin"))
                 .email("admin@ascentic.com")
-                .image("관리자 이미지")
+                .image("profileimage1")
                 .name("관리자")
                 .birthDate("0101")
-                .phone("010-0000-0000")
+                .phone("01012341234")
                 .role(Collections.singletonList("ADMIN"))
                 .build();
         memberRepository.save(member);
+
+        Member member1 = Member.builder()
+                .id("sungbin")
+                .password(passwordEncoder.encode("1234"))
+                .email("test1@ascentic.com")
+                .image("profileimage1")
+                .name("조성빈")
+                .birthDate("0101")
+                .phone("01000000000")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member1);
+
+        Member member2 = Member.builder()
+                .id("hansic")
+                .password(passwordEncoder.encode("1234"))
+                .email("test2@ascentic.com")
+                .image("profileimage1")
+                .name("조한식")
+                .birthDate("0101")
+                .phone("01000000001")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member2);
+
+        Member member3 = Member.builder()
+                .id("kyungmin")
+                .password(passwordEncoder.encode("1234"))
+                .email("test3@ascentic.com")
+                .image("profileimage1")
+                .name("강경민")
+                .birthDate("0101")
+                .phone("01000000002")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member3);
+
+        Member member4 = Member.builder()
+                .id("haesung")
+                .password(passwordEncoder.encode("1234"))
+                .email("test4@ascentic.com")
+                .image("profileimage1")
+                .name("나해성")
+                .birthDate("0101")
+                .phone("01000000003")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member4);
+
+        Member member5 = Member.builder()
+                .id("chaeeun")
+                .password(passwordEncoder.encode("1234"))
+                .email("test5@ascentic.com")
+                .image("profileimage1")
+                .name("전채은")
+                .birthDate("0101")
+                .phone("01000000004")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member5);
+
+        Member member6 = Member.builder()
+                .id("sungmin")
+                .password(passwordEncoder.encode("1234"))
+                .email("test6@ascentic.com")
+                .image("profileimage1")
+                .name("황성민")
+                .birthDate("0101")
+                .phone("01000000005")
+                .role(Collections.singletonList("USER"))
+                .build();
+        memberRepository.save(member6);
     }
 }

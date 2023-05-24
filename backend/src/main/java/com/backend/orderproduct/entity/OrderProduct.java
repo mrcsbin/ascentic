@@ -32,4 +32,7 @@ public class OrderProduct {
 
     @Column(name = "order_state")
     private Boolean orderState;
+
+    @Column(name = "member_id")
+    private String memberId;
 }

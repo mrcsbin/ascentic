@@ -16,6 +16,8 @@ function StoreMain() {
   const [productList, setProductList] = useState(products);
   const [loading, setLoading] = useState(false);
 
+  console.log(products)
+
   const params = useParams();
   // 카테고리가 선택되지 않았으면 기본값 all로 사용
   const category = params.category || "all";
@@ -93,7 +95,6 @@ function StoreMain() {
         );
         setProducts(res.data);
         setProductList(res.data);
-        //console.log(products);
       } catch (e) {
         console.log(e);
       }

@@ -7,46 +7,48 @@ import wish from "../assets/wish_icon.svg";
 import unwish from "../assets/unwish_icon.svg";
 import uptri from "../assets/up_triangle.svg";
 
-function ProdDetailView({ productData, productOption, isWish }) {
+function ProdDetailView({ productData, productOption }) {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [onWish, setOnWish] = useState();
-  const [prodOption, setProdOption] = useState();
+  const [prodOption, setProdOption] = useState(productData.prodOption[0]);
+  const [prodPrice, setProdPrice] = useState(productData.prodPrice[0]);
+  const [isWish, setIsWish] = useState(productData.wish);
+
   const [ProdInfoModal, setProdInfoModal] = useState(false);
   const [deliInfoModal, setDeliInfoModal] = useState(false);
 
   //이미지 배열 가져오기
   const [imgArr, setImgArr] = useState([]);
-  useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/getProdImgDetailPage/${productData.prodNum}/1`
-        );
-        setImgArr(res.data);
-        await axios
-          .get(`/iswish?prodNum=${productData.prodNum}`, {
-            headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
-            },
-          })
-          .then((response) => {
-            if (response.data === 1) {
-              setOnWish(true);
-            } else {
-              setOnWish(false);
-            }
-            console.log("onwish" + response.data);
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchProductData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProductData = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `http://localhost:8080/getProdImgDetailPage/${productData.prodNum}/1`
+  //       );
+  //       setImgArr(res.data);
+  //       await axios
+  //         .get(`/iswish?prodNum=${productData.prodNum}`, {
+  //           headers: {
+  //             Authorization: "Bearer " + getCookie("accessToken"),
+  //           },
+  //         })
+  //         .then((response) => {
+  //           if (response.data === 1) {
+  //             setOnWish(true);
+  //           } else {
+  //             setOnWish(false);
+  //           }
+  //           console.log("onwish" + response.data);
+  //         })
+  //         .catch((e) => {
+  //           console.error(e);
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchProductData();
+  // }, []);
 
   //수량 설정
   function QuantButton(x) {
@@ -68,85 +70,128 @@ function ProdDetailView({ productData, productOption, isWish }) {
   // 장바구니 페이지 이동
   const handleCartClick = () => {
     const dataForCart = {
-      optionNum: prodOption.optionNum,
+      optionNum: prodOption,
       prodCount: quantity,
     };
 
     console.log(dataForCart);
 
-    axios
-      .post("/cart/addv2", dataForCart, {
-        headers: {
-          Authorization: "Bearer " + getCookie("accessToken"),
-        },
-      })
-      .then(() => {
-        // navigate(`/cart`, { state: dataForCart });
-      })
-      .catch((error) => {});
+    if (getCookie("accessToken")) {
+      axios
+        .post("http://localhost:8080/cart/add", dataForCart, {
+          headers: {
+            Authorization: "Bearer " + getCookie("accessToken"),
+          },
+        })
+        .then(() => {
+          // navigate(`/cart`, { state: dataForCart });
+        })
+        .catch((error) => {});
+    } else {
+      alert("로그인이 필요합니다.");
+    }
   };
 
   // 찜하기 구현
+  // const handleWishClick = () => {
+  //   if (onWish === true) {
+  //     //찜했다 안했다 하기 위함
+  //     axios
+  //       .post(
+  //         `/wish/set`,
+  //         { prodNum: productData.prodNum },
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + getCookie("accessToken"),
+  //           },
+  //         }
+  //       ) // url별로 추가/삭제 백에서 처리
+  //       .then(() => {
+  //         setOnWish(!onWish);
+  //       })
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //   } else {
+  //     axios
+  //       .post(
+  //         `/addwish`,
+  //         { prodNum: productData.prodNum },
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + getCookie("accessToken"),
+  //           },
+  //         }
+  //       ) // url별로 추가/삭제 백에서 처리
+  //       .then(() => {
+  //         setOnWish(!onWish);
+  //       })
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //   }
+  // };
+
   const handleWishClick = () => {
-    if (onWish === true) {
-      //찜했다 안했다 하기 위함
+    if (getCookie("accessToken")) {
       axios
         .post(
-          `/delwish`,
+          `http://localhost:8080/wish/set`,
           { prodNum: productData.prodNum },
           {
             headers: {
               Authorization: "Bearer " + getCookie("accessToken"),
             },
           }
-        ) // url별로 추가/삭제 백에서 처리
+        )
         .then(() => {
-          setOnWish(!onWish);
+          setIsWish(!isWish);
         })
         .catch((e) => {
           console.error(e);
         });
     } else {
-      axios
-        .post(
-          `/addwish`,
-          { prodNum: productData.prodNum },
-          {
-            headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
-            },
-          }
-        ) // url별로 추가/삭제 백에서 처리
-        .then(() => {
-          setOnWish(!onWish);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      alert("로그인이 필요합니다.");
     }
   };
 
   //옵션 고르는 버튼
-  const Optioncard = (options) => {
-    // console.log('this is in OptionCard', options);
-    //아니 여기서 왜 options.options 로 써야되는지 모르겠음
-    const option = options.options.prodOption;
+  // const Optioncard = (options) => {
+  //   // console.log('this is in OptionCard', options);
+  //   //아니 여기서 왜 options.options 로 써야되는지 모르겠음
+  //   const option = options.options.prodOption;
 
+  //   return (
+  //     <button
+  // className={
+  //   prodOption === options.options
+  //     ? "prodOptionBtn-active"
+  //     : "prodOptionBtn"
+  // }
+  //       onClick={() => {
+  //         setProdOption(
+  //           options.options
+  //           // console.log(options.options.optionNum)
+  //         );
+  //       }}
+  //     >
+  //       {option}
+  //     </button>
+  //   );
+  // };
+
+  const OptionCard = ({ options, index }) => {
     return (
       <button
         className={
-          prodOption === options.options
-            ? "prodOptionBtn-active"
-            : "prodOptionBtn"
+          prodOption === options ? "prodOptionBtn-active" : "prodOptionBtn"
         }
         onClick={() => {
-          setProdOption(
-            options.options
-            // console.log(options.options.optionNum)
-          );
+          setProdOption(options);
+          setProdPrice(productData.prodPrice[index]);
         }}
       >
-        {option}
+        {options}
       </button>
     );
   };
@@ -166,20 +211,18 @@ function ProdDetailView({ productData, productOption, isWish }) {
         {/* 이미지 박스 */}
         <div className="Imgscroll">
           {/* 이미지 여러장 출력 */}
-          {imgArr.map((imgUrl, index) => {
+          {productData.prodImage.map((imgUrl, index) => {
             return (
-
               <div className="img-box" key={index}>
                 <img
                   key={index}
+                  className="img-box"
                   src={`http://localhost:8080/images/${imgUrl}`}
                   alt="이미지 손상됨"
                 />
               </div>
-
             );
           })}
-
           {/* <img src={productData.imageUrl} alt={productData.name} /> */}
         </div>
         {/* 상세창 */}
@@ -190,14 +233,14 @@ function ProdDetailView({ productData, productOption, isWish }) {
             <div className="name">
               <h2>{productData.prodName}</h2>
               <div className="wishbtn" onClick={handleWishClick}>
-                {onWish ? (
+                {isWish ? (
                   <img src={wish} alt="wish_icon" />
                 ) : (
                   <img src={unwish} alt="unwish_icon" />
                 )}
               </div>
             </div>
-            <div className="price">{addComma(productData.prodPrice)}원</div>
+            <div className="price">{addComma(prodPrice)}원</div>
           </div>
           {/* 설명 박스 */}
           <div className="prodinfobox">{productData.prodInfo}</div>
@@ -208,12 +251,17 @@ function ProdDetailView({ productData, productOption, isWish }) {
             <div className="scentinfo">{productData.scent.scentContent}</div>
           </div>
           {/* 옵션 버튼 */}
-          <div className="optionbox">
-            {productOption.map((options, index) => {
-              return <Optioncard options={options} key={index} />;
-            })}
+          <div className="optionwrapper">
+            <p>옵션</p>
+            <div className="optionbox">
+              {productData.prodOption.map((options, index) => {
+                return (
+                  <OptionCard options={options} key={index} index={index} />
+                );
+              })}
+            </div>
           </div>
-          {/* 수량, 구매하기 */}
+          {/* 수량, 최종가격 */}
           <div className="detail-quantity">
             <p>수량</p>
             <div className="quantitybox">
@@ -226,13 +274,14 @@ function ProdDetailView({ productData, productOption, isWish }) {
               </div>
             </div>
           </div>
+          <div className="finalPrice">
+            <p>최종 가격</p>
+            <div className="fprice">{addComma(quantity * prodPrice)}원</div>
+          </div>
           {/* 구매하기, 장바구니 박스 */}
           <div className="order-cart">
-            <button className="buybtn" onClick={handleOrderClick}>
-              구매하기
-            </button>
             <button className="cartbtn" onClick={handleCartClick}>
-              장바구니
+              장바구니 담기
             </button>
           </div>
           {/* 추가정보 박스 */}

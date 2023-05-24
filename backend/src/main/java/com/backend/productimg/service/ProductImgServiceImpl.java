@@ -1,15 +1,14 @@
 package com.backend.productimg.service;
 
+
 import com.backend.product.repository.ProductRepository;
 import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.net.MalformedURLException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class ProductImgServiceImpl implements ProductImgService {
+public class ProductImgServiceImpl implements com.backend.productimg.service.ProductImgService {
 
     //	application.yml(설정파일)에 설정된 내용을 주입시켜주는 어노테이션
     @Value("${spring.servlet.multipart.location}")

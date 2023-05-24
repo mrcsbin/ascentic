@@ -94,11 +94,26 @@ function Event() {
 
     return groups;
   };
-
+  const infotext1 = "지금 Ascentic에서 특별한 이벤트가 펼쳐집니다.";
+  const infotext2 =
+    "향기의 매력에 빠져들고 싶은 분들을 위해 준비한 이번 이벤트는 특별한 경험과 놀라운 혜택을 제공합니다.";
+  const infotext3 =
+    " 여러분은 우리와 함께하는 이 이벤트를 통해 향기의 세계를 더 깊이 탐험하고, 멋진 선물과 특별한 혜택을 누릴 수 있습니다.";
   return (
     <div className="event-list-wrapper">
       <div className="event-list">
         <h1>이벤트</h1>
+        <div className="infobox">
+          <span>
+            {infotext1}
+            <br />
+          </span>
+          <span>
+            {infotext2}
+            <br />
+          </span>
+          <span>{infotext3}</span>
+        </div>
         {/* <div className="selected-status">
           <p>상태 보기 &nbsp;</p>
           <select value={selectedStatus} onChange={handleStatusChange}>
@@ -144,7 +159,7 @@ function Event() {
                               </p>
                             </div>
                           </div>
-                        </div>{" "}
+                        </div>
                       </NavLink>
                     </td>
                   ))}

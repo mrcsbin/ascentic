@@ -6,25 +6,27 @@ import { useParams } from "react-router-dom";
 const EventDetail = () => {
   const params = useParams();
   const postId = params.postId;
-
-  //   useEffect(() => {
-  //     const fetchOption = async () => {
-  //       try {
-  //         const res = await axios
-  //           .get(`http://localhost:8080/admin/post/${postId}`)
-  //           .then(function (res) {
-  //           });
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-
-  //     };
-  //     fetchOption();
-  //   }, []);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchOption = async () => {
+      try {
+        const res = await axios
+          .get(`http://localhost:8080/admin/post/${postId}`)
+          .then(function (res) {
+            setData(res.data);
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchOption();
+  }, []);
 
   return (
-    <EventDetailWrap>postId : {postId}</EventDetailWrap>
-    // <ProdDetailView productData={productData} productOption={productOption} />
+    <EventDetailWrap>
+      postId : {postId}
+      <div dangerouslySetInnerHTML={{ __html: data.postContent }} />
+    </EventDetailWrap>
   );
 };
 const EventDetailWrap = styled.div`

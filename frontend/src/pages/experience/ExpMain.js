@@ -11,6 +11,7 @@ const ExpMain = () => {
   return (
     <MainWrapper>
       <Content1>
+        <div className="gradientbox"></div>
         <div className="content1_left">
           <video className="midVideo" loop autoPlay muted>
             <source src={content1} type="video/mp4" />
@@ -91,6 +92,20 @@ const Content1 = styled.div`
   background-color: white;
   justify-content: space-between;
   align-items: flex-end;
+
+  .gradientbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 900;
+    width: 100vw;
+    height: 200px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0)
+    );
+  }
 
   .content1_left {
     width: 65vw;

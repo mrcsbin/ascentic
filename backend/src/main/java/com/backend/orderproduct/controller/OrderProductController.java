@@ -21,7 +21,7 @@ public class OrderProductController {
         orderProductService.insetOrderProduct(orderProductDTO);
     }
 
-    @GetMapping("/order/getlist")
+    @GetMapping("/orderproduct/getlist")
     public List<OrderListDto> getOrderList() {
         return orderProductService.getOrderList();
     }

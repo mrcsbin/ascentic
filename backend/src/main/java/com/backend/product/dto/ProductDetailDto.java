@@ -1,5 +1,6 @@
 package com.backend.product.dto;
 
+import com.backend.review.entity.Review;
 import com.backend.scent.entity.Scent;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,4 +19,5 @@ public class ProductDetailDto {
     private List<String> prodImage;
     private Scent scent;
     private boolean isWish;
+    private List<Review> reviewList;
 }

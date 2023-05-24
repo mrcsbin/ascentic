@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
     List<Review> findByProdNum(Integer prodNum);
+
+    void deleteByProdNumAndMemberId(Integer prodNum, String memberId);
+
+    List<Review> findByMemberId(String currentMemberId);
 }

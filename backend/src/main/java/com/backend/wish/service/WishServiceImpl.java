@@ -3,11 +3,11 @@ package com.backend.wish.service;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.product.entity.Product;
 import com.backend.product.repository.ProductRepository;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
 import com.backend.wish.dto.WishListDto;
 import com.backend.wish.entity.Wish;
 import com.backend.wish.repository.WishRepository;
+import com.backend.productimg.entity.ProductImg;
+import com.backend.productimg.repository.ProductImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

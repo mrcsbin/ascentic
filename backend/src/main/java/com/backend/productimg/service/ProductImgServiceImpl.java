@@ -1,4 +1,4 @@
-package com.backend.productImg;
+package com.backend.productimg.service;
 
 import com.backend.product.repository.ProductRepository;
 import com.backend.productimg.entity.ProductImg;
@@ -24,7 +24,7 @@ public class ProductImgServiceImpl implements ProductImgService {
     @Value("${spring.servlet.multipart.location}")
     String uploadDir;
 
-    private final ProdImgRepository prodImgRepository;
+    private final ProductImgRepository prodImgRepository;
     private final ProductRepository productRepository;
 
     // 프론트에서 이미지를 조회할 때

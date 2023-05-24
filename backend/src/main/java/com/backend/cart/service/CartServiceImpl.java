@@ -4,12 +4,10 @@ import com.backend.cart.dto.AddCartDto;
 import com.backend.cart.dto.GetCartDto;
 import com.backend.cart.entity.Cart;
 import com.backend.cart.repository.CartRepository;
-import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
-import com.backend.member.repository.MemberRepository;
-import com.backend.productimg.repository.ProductImgRepository;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
+import com.backend.productimg.repository.ProductImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

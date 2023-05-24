@@ -3,10 +3,10 @@ package com.backend.product.service;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
-import com.backend.productimg.entity.ProductImg;
-import com.backend.productimg.repository.ProductImgRepository;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
+import com.backend.productimg.entity.ProductImg;
+import com.backend.productimg.repository.ProductImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

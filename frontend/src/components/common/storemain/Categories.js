@@ -1,64 +1,70 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../../styles/StoreMain.css";
-import animal from "../../../assets/category/animal.jpg";
-import citrus from "../../../assets/category/citrus.jpg";
-import floral from "../../../assets/category/floral1.jpg";
-import fruity from "../../../assets/category/fruity.jpg";
-import herbal from "../../../assets/category/herbal.jpg";
-import mossy from "../../../assets/category/mossy.jpg";
-import special from "../../../assets/category/special.jpg";
-import watery from "../../../assets/category/watery.jpg";
-import woody from "../../../assets/category/woody.jpg";
+
+import all from "../../../assets/category/all.webp";
+import animal from "../../../assets/category/animal3.webp";
+import citrus from "../../../assets/category/citrus.webp";
+import floral from "../../../assets/category/floral1.webp";
+import fruity from "../../../assets/category/fruity.webp";
+import herbal from "../../../assets/category/herbal.webp";
+import mossy from "../../../assets/category/mossy.webp";
+import special from "../../../assets/category/special.webp";
+import watery from "../../../assets/category/watery.webp";
+import woody from "../../../assets/category/woody.webp";
 
 const categorylist = [
   {
+    name: "전체보기",
+    text: "/",
+    image: all,
+  },
+  {
     name: "Animal",
-    text: "/animal",
+    text: "/Animal",
     image: animal,
   },
   {
     name: "Watery & Powdery",
-    text: "/waterypowdery",
+    text: "/Watery&Powdery",
     image: watery,
   },
   {
     name: "Woody",
-    text: "/woody",
+    text: "/Woody",
     image: woody,
   },
   {
     name: "Mossy",
-    text: "/mossy",
+    text: "/Mossy",
     image: mossy,
   },
   {
     name: "Herbal & Green",
-    text: "/herbalgreen",
+    text: "/Herbal&Green",
     image: herbal,
   },
   {
     name: "Floral",
-    text: "/floral",
+    text: "/Floral",
     image: floral,
   },
   {
     name: "Citrus",
-    text: "/citrus",
+    text: "/Citrus",
     image: citrus,
   },
   {
     name: "Fruity",
-    text: "/fruity",
+    text: "/Fruity",
     image: fruity,
   },
   {
     name: "Special",
-    text: "/special",
+    text: "/Special",
     image: special,
   },
 ];
-
 const Categories = () => {
   return (
     <div className="categories">
@@ -69,7 +75,7 @@ const Categories = () => {
               isActive ? "catebox-active" : "catebox"
             }
             key={c.name}
-            to={"/StoreMain" + c.text}
+            to={"/storemain" + c.text}
           >
             <div className="cateimgEffect">
               <div className="cateimgbox">

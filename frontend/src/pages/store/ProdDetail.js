@@ -1,8 +1,10 @@
-import '../../styles/ProdDetail.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import ProdDetailView from '../../components/ProdDetailView';
-import { useParams } from 'react-router-dom';
+import "../../styles/ProdDetail.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import ProdDetailView from "../../components/ProdDetailView";
+import { useParams } from "react-router-dom";
+import Loading from "../../components/common/Loading";
+import { getCookie } from "../../utils/Cookies";
 
 const ProductDetailPage = () => {
   const [productData, setProductData] = useState(null);
@@ -13,20 +15,38 @@ const ProductDetailPage = () => {
   const prodNum = params.prod_num;
 
   //Product Option 데이터 받아오기
+  // useEffect(() => {
+  //   const fetchOption = async () => {
+  //     try {
+  //       const res = await axios
+  //         .get(`http://localhost:8080/prodOption/${prodNum}`)
+  //         .then(function (res) {
+  //           setProductOption(res.data);
+  //           setProductData(res.data[0].product);
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //     setLoading(false);
+  //   };
+  //   fetchOption();
+  // }, []);
   useEffect(() => {
     const fetchOption = async () => {
       try {
-        const res = await axios
-          .get(`http://localhost:8080/prodOption/${prodNum}`)
-          .then(function (res) {
-            console.log('여기서 문제가 생겨나??', res.data);
-            setProductOption(res.data);
-            setProductData(res.data[0].product);
-          });
-      } catch (e) {
-        console.log(e);
+        const res = await axios.get(
+          `http://localhost:8080/proddetail/${prodNum}`,
+          {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          }
+        );
+        console.log(res.data);
+        setProductData(res.data);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchOption();
   }, []);
@@ -72,13 +92,13 @@ const ProductDetailPage = () => {
 
   // 대기 중일 때
   if (loading) {
-    return <div>Loading... {prodNum}</div>;
+    return <Loading />;
   }
 
   // 값 아직 설정되지 않았을 때
   if (productData == null || productOption == null) {
-    console.log('Loadddddding...');
-    return <div>Loadddddding... </div>;
+    // console.log("Loadddddding...");
+    return <Loading />;
   }
 
   // 값 유효할 때

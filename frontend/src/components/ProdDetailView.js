@@ -3,47 +3,52 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/ProdDetail.css";
 import { getCookie } from "../utils/Cookies";
+import wish from "../assets/wish_icon.svg";
+import unwish from "../assets/unwish_icon.svg";
+import uptri from "../assets/up_triangle.svg";
 
-function ProdDetailView({ productData, productOption, isWish }) {
+function ProdDetailView({ productData, productOption }) {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [onWish, setOnWish] = useState();
-  const [prodOption, setProdOption] = useState();
+  const [prodOption, setProdOption] = useState(productData.prodOption[0]);
+  const [prodPrice, setProdPrice] = useState(productData.prodPrice[0]);
+  const [isWish, setIsWish] = useState(productData.wish);
+
   const [ProdInfoModal, setProdInfoModal] = useState(false);
   const [deliInfoModal, setDeliInfoModal] = useState(false);
 
   //이미지 배열 가져오기
   const [imgArr, setImgArr] = useState([]);
-  useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/getProdImgDetailPage/${productData.prodNum}/1`
-        );
-        setImgArr(res.data);
-        await axios
-          .get(`/iswish?prodNum=${productData.prodNum}`, {
-            headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
-            },
-          })
-          .then((response) => {
-            if (response.data == 1) {
-              setOnWish(true);
-            } else {
-              setOnWish(false);
-            }
-            console.log("onwish" + response.data);
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchProductData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProductData = async () => {
+  //     try {
+  //       const res = await axios.get(
+  //         `http://localhost:8080/getProdImgDetailPage/${productData.prodNum}/1`
+  //       );
+  //       setImgArr(res.data);
+  //       await axios
+  //         .get(`/iswish?prodNum=${productData.prodNum}`, {
+  //           headers: {
+  //             Authorization: "Bearer " + getCookie("accessToken"),
+  //           },
+  //         })
+  //         .then((response) => {
+  //           if (response.data === 1) {
+  //             setOnWish(true);
+  //           } else {
+  //             setOnWish(false);
+  //           }
+  //           console.log("onwish" + response.data);
+  //         })
+  //         .catch((e) => {
+  //           console.error(e);
+  //         });
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchProductData();
+  // }, []);
 
   //수량 설정
   function QuantButton(x) {
@@ -65,81 +70,128 @@ function ProdDetailView({ productData, productOption, isWish }) {
   // 장바구니 페이지 이동
   const handleCartClick = () => {
     const dataForCart = {
-      optionNum: prodOption.optionNum,
+      optionNum: prodOption,
       prodCount: quantity,
     };
 
     console.log(dataForCart);
 
-    axios
-      .post("/cart/addv2", dataForCart, {
-        headers: {
-          Authorization: "Bearer " + getCookie("accessToken"),
-        },
-      })
-      .then(() => {
-        // navigate(`/cart`, { state: dataForCart });
-      })
-      .catch((error) => {});
+    if (getCookie("accessToken")) {
+      axios
+        .post("http://localhost:8080/cart/add", dataForCart, {
+          headers: {
+            Authorization: "Bearer " + getCookie("accessToken"),
+          },
+        })
+        .then(() => {
+          // navigate(`/cart`, { state: dataForCart });
+        })
+        .catch((error) => {});
+    } else {
+      alert("로그인이 필요합니다.");
+    }
   };
 
   // 찜하기 구현
+  // const handleWishClick = () => {
+  //   if (onWish === true) {
+  //     //찜했다 안했다 하기 위함
+  //     axios
+  //       .post(
+  //         `/wish/set`,
+  //         { prodNum: productData.prodNum },
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + getCookie("accessToken"),
+  //           },
+  //         }
+  //       ) // url별로 추가/삭제 백에서 처리
+  //       .then(() => {
+  //         setOnWish(!onWish);
+  //       })
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //   } else {
+  //     axios
+  //       .post(
+  //         `/addwish`,
+  //         { prodNum: productData.prodNum },
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + getCookie("accessToken"),
+  //           },
+  //         }
+  //       ) // url별로 추가/삭제 백에서 처리
+  //       .then(() => {
+  //         setOnWish(!onWish);
+  //       })
+  //       .catch((e) => {
+  //         console.error(e);
+  //       });
+  //   }
+  // };
+
   const handleWishClick = () => {
-    if (onWish == true) {
-      //찜했다 안했다 하기 위함
+    if (getCookie("accessToken")) {
       axios
         .post(
-          `/delwish`,
+          `http://localhost:8080/wish/set`,
           { prodNum: productData.prodNum },
           {
             headers: {
               Authorization: "Bearer " + getCookie("accessToken"),
             },
           }
-        ) // url별로 추가/삭제 백에서 처리
+        )
         .then(() => {
-          setOnWish(!onWish);
+          setIsWish(!isWish);
         })
         .catch((e) => {
           console.error(e);
         });
     } else {
-      axios
-        .post(
-          `/addwish`,
-          { prodNum: productData.prodNum },
-          {
-            headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
-            },
-          }
-        ) // url별로 추가/삭제 백에서 처리
-        .then(() => {
-          setOnWish(!onWish);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      alert("로그인이 필요합니다.");
     }
   };
 
-  //옵션 고르는 버튼(이미지로 표시해야되나?)
-  const Optioncard = (options) => {
-    // console.log('this is in OptionCard', options);
-    //아니 여기서 왜 options.options 로 써야되는지 모르겠음
-    const option = options.options.prodOption;
+  //옵션 고르는 버튼
+  // const Optioncard = (options) => {
+  //   // console.log('this is in OptionCard', options);
+  //   //아니 여기서 왜 options.options 로 써야되는지 모르겠음
+  //   const option = options.options.prodOption;
 
+  //   return (
+  //     <button
+  // className={
+  //   prodOption === options.options
+  //     ? "prodOptionBtn-active"
+  //     : "prodOptionBtn"
+  // }
+  //       onClick={() => {
+  //         setProdOption(
+  //           options.options
+  //           // console.log(options.options.optionNum)
+  //         );
+  //       }}
+  //     >
+  //       {option}
+  //     </button>
+  //   );
+  // };
+
+  const OptionCard = ({ options, index }) => {
     return (
       <button
-        className="prodOption"
+        className={
+          prodOption === options ? "prodOptionBtn-active" : "prodOptionBtn"
+        }
         onClick={() => {
-          setProdOption(
-            options.options
-            // console.log(options.options.optionNum)
-          );
+          setProdOption(options);
+          setProdPrice(productData.prodPrice[index]);
         }}
       >
-        {option}
+        {options}
       </button>
     );
   };
@@ -157,103 +209,125 @@ function ProdDetailView({ productData, productOption, isWish }) {
       {/* 이미지와 상세설명등만 담는 박스 */}
       <div className="img-and-content">
         {/* 이미지 박스 */}
-        <div className="Img-scroll">
+        <div className="Imgscroll">
           {/* 이미지 여러장 출력 */}
-          {imgArr.map((imgUrl, index) => {
+          {productData.prodImage.map((imgUrl, index) => {
             return (
-              <img
-                key={index}
-                className="img-box"
-                src={`http://localhost:8080/download?img=${imgUrl}`}
-                alt="이미지 손상됨"
-              />
+              <div className="img-box" key={index}>
+                <img
+                  key={index}
+                  className="img-box"
+                  src={`http://localhost:8080/images/${imgUrl}`}
+                  alt="이미지 손상됨"
+                />
+              </div>
             );
           })}
-
           {/* <img src={productData.imageUrl} alt={productData.name} /> */}
         </div>
-        {/* 상세창 반 짤라서 윗부분 */}
+        {/* 상세창 */}
         <div className="detail-section">
           {/* 이름,가격있는 부분 */}
           <div className="name-price">
             <p>{productData.prodCategory}</p>
             <div className="name">
               <h2>{productData.prodName}</h2>
-              <button onClick={handleWishClick}>찜하기</button>
+              <div className="wishbtn" onClick={handleWishClick}>
+                {isWish ? (
+                  <img src={wish} alt="wish_icon" />
+                ) : (
+                  <img src={unwish} alt="unwish_icon" />
+                )}
+              </div>
             </div>
-            <div className="clear-both"></div>
-            <span>{addComma(productData.prodPrice)}원</span>
+            <div className="price">{addComma(prodPrice)}원</div>
           </div>
-          <div className="clear-both"></div>
-          {/* 향 설명 박스 */}
+          {/* 설명 박스 */}
+          <div className="prodinfobox">{productData.prodInfo}</div>
           <div className="scent-content">
-            <p>{productData.scent.scentContent}</p>
+            <div className="scentname">
+              {productData.scent.scentNoteName} | {productData.scent.scentName}
+            </div>
+            <div className="scentinfo">{productData.scent.scentContent}</div>
           </div>
-        </div>
-        {/* 상세창 반 짤라서 아래부분 */}
-        <div className="detail-section">
-          {/* 옵션들 보여주기 */}
-          <div>
-            {productOption.map((options, index) => {
-              return <Optioncard options={options} key={index} />;
-            })}
-            <div className="clear-both"></div>
+          {/* 옵션 버튼 */}
+          <div className="optionwrapper">
+            <p>옵션</p>
+            <div className="optionbox">
+              {productData.prodOption.map((options, index) => {
+                return (
+                  <OptionCard options={options} key={index} index={index} />
+                );
+              })}
+            </div>
           </div>
-          {/* 수량, 구매하기 부분 */}
+          {/* 수량, 최종가격 */}
           <div className="detail-quantity">
             <p>수량</p>
-            <div className="button">
-              <button onClick={() => QuantButton("-")}> - </button>
-              {/* to do : 화살표로 대체 */}
-              {quantity}
-              <button onClick={() => QuantButton("+")}> + </button>
+            <div className="quantitybox">
+              <div className="quantitybtn" onClick={() => QuantButton("-")}>
+                <img className="down" src={uptri} alt="quantity_down_btn" />
+              </div>
+              <div className="quantity">{quantity}</div>
+              <div className="quantitybtn" onClick={() => QuantButton("+")}>
+                <img src={uptri} alt="quantity_up_btn" />
+              </div>
             </div>
           </div>
-          <div className="clear-both"></div>
-          {/* 주문하기, 장바구니 박스 */}
-          <div className="order-cart">
-            <button onClick={handleOrderClick}>주문하기</button>
-            <button onClick={handleCartClick}>장바구니</button>
+          <div className="finalPrice">
+            <p>최종 가격</p>
+            <div className="fprice">{addComma(quantity * prodPrice)}원</div>
           </div>
-          <br />
-          <hr />
+          {/* 구매하기, 장바구니 박스 */}
+          <div className="order-cart">
+            <button className="cartbtn" onClick={handleCartClick}>
+              장바구니 담기
+            </button>
+          </div>
           {/* 추가정보 박스 */}
           <div className="additional-content">
             <div className="prod-info-modal">
-              제품 세부정보
-              <button onClick={() => setProdInfoModal(!ProdInfoModal)}>
-                +
-              </button>
+              <div className="modalname">
+                제품 세부정보
+                {ProdInfoModal === false ? (
+                  <button onClick={() => setProdInfoModal(true)}>+</button>
+                ) : (
+                  <button onClick={() => setProdInfoModal(false)}>-</button>
+                )}
+              </div>
               {ProdInfoModal && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <p>{productData.prodInfo}</p>
-                  </div>
+                <div className="modal-content">
+                  <p>{productData.prodInfo}</p>
                 </div>
               )}
             </div>
-            <br />
-            <hr />
             <div className="prod-info-modal">
-              배송 & 반품
-              <button onClick={() => setDeliInfoModal(!deliInfoModal)}>
-                +
-              </button>
+              <div className="modalname">
+                배송 & 반품
+                {deliInfoModal === false ? (
+                  <button onClick={() => setDeliInfoModal(true)}>+</button>
+                ) : (
+                  <button onClick={() => setDeliInfoModal(false)}>-</button>
+                )}
+              </div>
               {deliInfoModal && (
-                <div className="modal">
-                  <div className="modal-content">
-                    <p>
-                      3만원 이상 구매하실 경우 배송 비용은 무료입니다.
-                      주문일로부터 1-2 영업일 이내 출고됩니다. 배송은 지역
-                      택배사 사정에 따라 약간의 지연이 생길 수 있습니다. 배송이
-                      시작되면 구매자에게는 이메일, 수령인에게는 카카오
-                      알림톡으로 배송 정보를 전송해 드립니다.
-                      CJ대한통운(https://www.cjlogistics.com) *상품 혹은
-                      증정품의 포장(랩핑)을 개봉 및 훼손한 경우 반품이
-                      불가합니다. *단순 변심 또는 주문 실수로 인한 교환이
-                      불가합니다. 신중한 구매 부탁드립니다.
-                    </p>
-                  </div>
+                <div className="modal-content">
+                  <p>3만원 이상 구매하실 경우 배송 비용은 무료입니다. </p>
+                  <p>
+                    주문일로부터 1-2 영업일 이내 출고됩니다. 배송은 지역 택배사
+                    사정에 따라 약간의 지연이 생길 수 있습니다. 배송이 시작되면
+                    구매자에게는 이메일, 수령인에게는 카카오 알림톡으로 배송
+                    정보를 전송해 드립니다.
+                    CJ대한통운(https://www.cjlogistics.com){" "}
+                  </p>
+                  <p>
+                    * 상품 혹은 증정품의 포장(랩핑)을 개봉 및 훼손한 경우 반품이
+                    불가합니다.
+                  </p>
+                  <p>
+                    * 단순 변심 또는 주문 실수로 인한 교환이 불가합니다. 신중한
+                    구매 부탁드립니다.
+                  </p>
                 </div>
               )}
             </div>

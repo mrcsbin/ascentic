@@ -5,11 +5,20 @@ import "../../styles/StoreMain.css";
 import CardList from "../../components/common/storemain/CardList";
 import Categories from "../../components/common/storemain/Categories";
 import FilterModal from "../../components/common/storemain/FilterModal";
-import mainimg from "../../assets/storemain.jpeg";
-import mainvideo from "../../assets/storemain.mp4";
-//JennieChan.webm도 assets에 넣어놨는데 mainVideo 어떠신가요..?
+import mainimg from "../../assets/storemain.webp";
 import filterimg from "../../assets/filter.png";
-
+import logo from "../../assets/ascentic_logo_b.svg";
+import video from "../../assets/storeMain/2.webm";
+import all2 from "../../assets/storeMain/storemain_all2.mp4";
+import animal from "../../assets/storeMain/storemain_animal.mp4";
+import citrus from "../../assets/storeMain/storemain_citrus.mp4";
+import floral2 from "../../assets/storeMain/storemain_floral2.mp4";
+import fruity from "../../assets/storeMain/storemain_fruity2.mp4";
+import green from "../../assets/storeMain/storemain_green.mp4";
+import mossy from "../../assets/storeMain/storemain_mossy.mp4";
+import special from "../../assets/storeMain/storemain_special2.mp4";
+import watery from "../../assets/storeMain/storemain_watery.mp4";
+import woody from "../../assets/storeMain/storemain_woody.mp4";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
@@ -19,6 +28,7 @@ function StoreMain() {
   const params = useParams();
   // 카테고리가 선택되지 않았으면 기본값 all로 사용
   const category = params.category || "all";
+  const encodecategory = escape(category);
 
   const [sortOption, setSortOption] = useState("latest");
   const [prodcategory, setProdcategory] = useState("all");
@@ -53,30 +63,29 @@ function StoreMain() {
   }
 
   function sortByOption(productList, sortOption) {
-    if (sortOption == "wishCount") {
+    if (sortOption === "wishCount") {
       productList.sort((a, b) => {
         return b.prodWishCount - a.prodWishCount;
       });
-    } else if (sortOption == "latest") {
+    } else if (sortOption === "latest") {
       productList.sort((a, b) => {
         return b.prodNum - a.prodNum;
       });
-    } else if (sortOption == "highPrice") {
+    } else if (sortOption === "highPrice") {
       productList.sort((a, b) => {
         return b.prodPrice - a.prodPrice;
       });
-    } else if (sortOption == "lowPrice") {
+    } else if (sortOption === "lowPrice") {
       productList.sort((a, b) => {
         return a.prodPrice - b.prodPrice;
       });
-    } else if (sortOption == "viewCount") {
+    } else if (sortOption === "viewCount") {
       productList.sort((a, b) => {
         return b.prodReadCount - a.prodReadCount;
       });
     } else return;
   }
 
-  const infologo = "[a]scentic";
   const infotext =
     "에이센틱과 함께 당신을 나타내는 향으로 일상을 가득 채워보세요.";
   const infotext2 =
@@ -89,11 +98,10 @@ function StoreMain() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:8080/listscent?category=${category}`
+          `http://localhost:8080/listscent?category=${encodecategory}`
         );
         setProducts(res.data);
-        setProductList(res.data);
-        //console.log(products);
+        productCategory(res.data, prodcategory);
       } catch (e) {
         console.log(e);
       }
@@ -116,13 +124,59 @@ function StoreMain() {
   return (
     <div>
       <div className="imagebox">
-        <img src={mainimg} alt="" />
-        {/* <video loop autoPlay muted>
-          <source src={mainvideo} type="video/mp4" />
-        </video> */}
+        {category === "all" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={all2} type="video/mp4" />
+          </video>
+        )}
+        {category === "Animal" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={animal} type="video/mp4" />
+          </video>
+        )}
+        {category === "Watery&Powdery" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={watery} type="video/webm" />
+          </video>
+        )}
+        {category === "Woody" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={woody} type="video/webm" />
+          </video>
+        )}
+        {category === "Mossy" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={mossy} type="video/webm" />
+          </video>
+        )}
+        {category === "Herbal&Green" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={green} type="video/webm" />
+          </video>
+        )}
+        {category === "Floral" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={floral2} type="video/webm" />
+          </video>
+        )}
+        {category === "Citrus" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={citrus} type="video/webm" />
+          </video>
+        )}
+        {category === "Fruity" && (
+          <video className="topVideo" loop autoPlay muted>
+            <source src={fruity} type="video/webm" />
+          </video>
+        )}
+        {category === "Special" && (
+          <video className="midVideo" loop autoPlay muted>
+            <source src={special} type="video/webm" />
+          </video>
+        )}
       </div>
       <div className="infobox">
-        <h2>{infologo}</h2>
+        <img src={logo} alt="ascentic_logo" />
         <span>{infotext}</span>
         <span>{infotext2}</span>
         <span>{infotext3}</span>

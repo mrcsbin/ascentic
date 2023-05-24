@@ -61,7 +61,10 @@ export const CartItemCard = ({ item }) => {
         onChange={handleToggleCheck}
       />
       <ItemImageLink href={`store/productdetail/${item.prodNum}`}>
-        <ItemImage src={TEST_IMAGE} alt="상품 이미지" />
+        <ItemImage
+          src={`http://localhost:8080/images/${item.prodImage}`}
+          alt="상품 이미지"
+        />
       </ItemImageLink>
       <ItemLink href={`store/productdetail/${item.prodNum}`}>
         <ItemTitle>{item.prodName}</ItemTitle>

@@ -1,63 +1,71 @@
 .news-list-wrapper {
-    width: 100%;
+  width: 100%;
 }
 .news-list-wrapper .news-list h1 {
-    text-align: center;
-    font-size: 2.5vw;
-    margin-bottom: 1vw;
+  text-align: center;
+  font-size: 2vw;
+  margin-top: 0;
+  margin-bottom: 1vw;
 }
-
+.news-list-wrapper .news-list .selected-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1vw;
+}
 .news-list-wrapper table {
-    width: 100%;
-    text-align: center;
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
+  width: 100%;
+  text-align: center;
+  border-top: 0.1vw solid black;
+  border-bottom: 0.1vw solid black;
 }
 
 .news-list-wrapper table tr th {
-    padding: 18px;
-    border-bottom: 0.5px solid rgb(206, 206, 206);
-    font-weight: bold;
-    font-size: 15px;
+  padding: 1.1vw;
+  border-bottom: 0.05vw solid rgb(206, 206, 206);
+  font-weight: bold;
+  font-size: 1vw;
 }
 
 .news-list-wrapper table tr td {
-    padding: 9px;
-    border-bottom: 0.5px solid rgb(206, 206, 206);
+  padding: 0.5vw;
+  border-bottom: 0.05vw solid rgb(206, 206, 206);
 }
 
 .news-list-wrapper table .handle-post button {
-    all: unset;
-    cursor: pointer;
-    border: 1px black solid;
-    padding: 0.2vw 0.6vw;
-    margin: 0vw 0.4vw;
-    color: white;
-    background-color: black;
+  all: unset;
+  cursor: pointer;
+  border: 0.1vw black solid;
+  padding: 0.2vw 0.6vw;
+  margin: 0vw 0.4vw;
+  color: white;
+  background-color: black;
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 1vw;
 }
 
 .pagination .btn {
-    cursor: pointer;
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
 }
 
 .pagination .numbtn {
-    cursor: pointer;
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
 
 .pagination .numbtn:hover {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }

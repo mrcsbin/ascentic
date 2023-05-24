@@ -26,7 +26,7 @@ spring:
     hibernate:
       # create : 기존의 테이블을 drop 하고 다시 생성하는 것. 애플리케이션이 실행되는 시점에 drop하고 create가 일어난다.
       # update : 기존에 테이블이 없을 때는 새로 생성하지만 있으면 그대로 유지. 테이블에 추가되는 컬럼이 존재하면 해당 테이블을 업데이트 한다.
-      ddl-auto: update
+      ddl-auto: create-drop
       naming:
         # 엔티티(테이블)를 만들때 변수명 그대로 테이블 필드(컬럼)를 만든다.
         # 엔티티: 테이블을 만들 수 있는 클래스
@@ -35,6 +35,8 @@ spring:
     properties:
       hibernate.format_sql: true # sql 명령문을 보기 좋게 보여준다.
 
+    defer-datasource-initialization: true #기본 더미 데이터 채우기
+
 
   servlet:
     multipart:
@@ -42,8 +44,9 @@ spring:
       max-request-size: 100MB
       # window
       location: c:\\Project\\ascentic_file
+#      location: e:\\Project\\ascentic_file
       # mac
-      #location: /Users/sungbincho/Desktop/ascentic_file
+#      location: /Users/sungbincho/Desktop/ascenticfile
       #location: /Users/hansic/Desktop/ascentic
       #location: /Users/jo4921/ascentic_file
       #location: /Users/user/ascentic
@@ -65,4 +68,26 @@ spring:
           starttls:
             enable: true
           auth: true
+  sql:
+    init:
+      mode: always #모든 sql 스크립트 실행
+      data-locations:
+          - classpath:scent.sql
+          - classpath:product.sql
+          - classpath:product_option.sql
+          - classpath:cart.sql
+          - classpath:order.sql
+          - classpath:orderProduct.sql
+          - classpath:wish.sql
+          - classpath:subscribeMember.sql
+          - classpath:taste.sql
+          - classpath:subscribeProd.sql
+          - classpath:subscribeSend.sql
+          - classpath:prodImage.sql
+          - classpath:review.sql
+          - classpath:reviewcomment.sql
+          - classpath:inquiry.sql
+
+# 멤버 이미지, 전화번호(-) 빼기
+# subscribeMember.sql (member_name, member_tel, member_addr 수정)
 

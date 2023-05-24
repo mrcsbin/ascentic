@@ -1,10 +1,9 @@
-package com.backend.prodreviewcomment.service;
+package com.backend.inquiry.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ProdReviewCommentServiceImpl {
-
+public class InquiryServiceImpl implements InquiryService{
 }

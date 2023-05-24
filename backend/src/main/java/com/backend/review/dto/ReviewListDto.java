@@ -16,4 +16,5 @@ public class ReviewListDto {
     private Integer orderProductQuantity; // 주문 상품 수량
     private Integer orderProductPrice; // 주문 상품 가격
     private boolean orderProductReviewState; // 주문 상품 리뷰 상태
+    private Integer orderProductNum; // 주문 상품 번호(기본키)
 }

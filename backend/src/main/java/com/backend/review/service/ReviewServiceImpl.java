@@ -1,6 +1,7 @@
 package com.backend.review.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import com.backend.productimg.entity.ProductImg;
 import com.backend.productimg.repository.ProductImgRepository;
@@ -47,13 +48,14 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewContent(postReviewDto.getReviewContent())
                 .reviewDate(postReviewDto.getReviewDate())
                 .reviewScore(postReviewDto.getReviewScore())
-                .orderProduct(orderProductRepository.findById(postReviewDto.getOrderNum()).get())
+                .orderProduct(orderProductRepository.findById(postReviewDto.getOrderProductNum()).get())
                 .build());
     }
 
     /**
      * Order 테이블에 order_review_state 추가해야함
      */
+    @Override
     public List<ReviewListDto> getReviewList() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
@@ -69,6 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .orderProductQuantity(review.getOrderProduct().getProdCount())
                     .orderProductPrice(review.getOrderProduct().getProductOption().getProdPrice())
                     .orderProductReviewState(review.getOrderProduct().getOrderState())
+                    .orderProductNum(review.getOrderProduct().getOrderProdNum())
                     .build());
         }
         return reviewListDto;

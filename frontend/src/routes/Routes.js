@@ -98,6 +98,7 @@ function Routes() {
         element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
       ></Route>
       <Route path="/community/event" element={<Pages.Event />}></Route>
+      <Route path="/community/event/:postId" element={<Pages.EventDetail />} />
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
       <Route path="/admin" element={<AdminPages.Admin />} />
 

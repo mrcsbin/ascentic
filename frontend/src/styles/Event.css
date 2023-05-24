@@ -1,5 +1,6 @@
 .event-list-wrapper {
   width: 100%;
+  padding-top: 100px;
 }
 .event-list-wrapper .event-list h1 {
   text-align: center;
@@ -241,7 +242,7 @@
 .event-list-wrapper .event-list .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 .event-list-wrapper .event-list .pagination .btn {
@@ -262,4 +263,8 @@
 
 .event-list-wrapper .event-list .pagination .numbtn:hover {
   background-color: #f9f9f9;
+}
+.postLink {
+  text-decoration: none;
+  color: black;
 }

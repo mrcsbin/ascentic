@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/Event.css";
-
+import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 function Event() {
   const [posts, setPosts] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("all");
@@ -34,18 +35,6 @@ function Event() {
       return "진행 완료";
     } else {
       return "진행 중";
-    }
-  };
-
-  const handleDelete = async (postId) => {
-    try {
-      if (window.confirm("삭제하시겠습니까?")) {
-        const res = await axios.delete(`/admin/post/${postId}`);
-        console.log(res);
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -110,7 +99,7 @@ function Event() {
     <div className="event-list-wrapper">
       <div className="event-list">
         <h1>이벤트</h1>
-        <div className="selected-status">
+        {/* <div className="selected-status">
           <p>상태 보기 &nbsp;</p>
           <select value={selectedStatus} onChange={handleStatusChange}>
             <option value="all">모두 보기</option>
@@ -118,7 +107,7 @@ function Event() {
             <option value="1">임시 저장 상태</option>
             <option value="2">삭제 상태</option>
           </select>
-        </div>
+        </div> */}
         <div className="post-grid">
           {groupPosts(currentProducts).map((postGroup, index) => (
             <table key={index}>
@@ -126,34 +115,37 @@ function Event() {
                 <tr>
                   {postGroup.map((post) => (
                     <td key={post.postId}>
-                      <div className="post">
-                        <div className="post-img">
-                          {post.postImage && (
-                            <img
-                              src={`http://localhost:8080/admin/download?img=${post.postImage}`}
-                              alt="대표 이미지"
-                              className="post-image"
-                            />
-                          )}
-                          <p className="post-status">
-                            상태: {getStatusText(post.postStatus)}
-                          </p>
-                        </div>
-                        <div className="post-bottom">
-                          <div className="post-left">
-                            <p className="left-top">
-                              {getEventStatus(
-                                post.eventStartDate,
-                                post.eventEndDate
-                              )}
-                            </p>
-                            <p className="left-center">{post.postTitle}</p>
-                            <p className="left-bottom">
-                              {post.eventStartDate} ~ {post.eventEndDate}
-                            </p>
+                      <NavLink
+                        to={`/community/event/${post.postId}`}
+                        className="postLink"
+                      >
+                        {" "}
+                        <div className="post">
+                          <div className="post-img">
+                            {post.postImage && (
+                              <img
+                                src={`http://localhost:8080/admin/download?img=${post.postImage}`}
+                                alt="대표 이미지"
+                                className="post-image"
+                              />
+                            )}
                           </div>
-                        </div>
-                      </div>
+                          <div className="post-bottom">
+                            <div className="post-left">
+                              <p className="left-top">
+                                {getEventStatus(
+                                  post.eventStartDate,
+                                  post.eventEndDate
+                                )}
+                              </p>
+                              <p className="left-center">{post.postTitle}</p>
+                              <p className="left-bottom">
+                                {post.eventStartDate} ~ {post.eventEndDate}
+                              </p>
+                            </div>
+                          </div>
+                        </div>{" "}
+                      </NavLink>
                     </td>
                   ))}
                 </tr>
@@ -218,4 +210,15 @@ function Event() {
   );
 }
 
+// const Cardblock = styled(NavLink)`
+//   display: block;
+//   padding: 10px;
+//   margin-bottom: 10px;
+//   float: left;
+//   width: 280px;
+//   overflow: hidden;
+//   text-decoration: none;
+//   font-family: "Pretendard";
+//   color: black;
+// `;
 export default Event;

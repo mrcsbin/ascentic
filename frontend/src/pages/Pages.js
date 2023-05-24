@@ -20,6 +20,7 @@ const ExpTaste = lazy(() => import("./experience/ExpTaste"));
 const TestResult = lazy(() => import("./experience/ExpTasteRes"));
 const Withdrawal = lazy(() => import("./Withdrawal"));
 const Event = lazy(() => import("./community/Event"));
+const EventDetail = lazy(() => import("./community/EventDetail"));
 export {
   Order,
   OrderComplete,
@@ -41,4 +42,5 @@ export {
   TestResult,
   Withdrawal,
   Event,
+  EventDetail,
 };

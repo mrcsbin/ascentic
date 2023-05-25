@@ -63,8 +63,8 @@ public class Product {
         return productOption.get(index).getProdOption();
     }
 
-    public Integer getProdOptionNum() {
-        return productOption.get(0).getOptionNum();
+    public Integer getProdOptionNum(Integer index) {
+        return productOption.get(index).getOptionNum();
     }
 
     public Integer getWishCount(Integer prodNum) {

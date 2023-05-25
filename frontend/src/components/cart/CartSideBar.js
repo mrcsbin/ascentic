@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -49,13 +49,14 @@ function Contents({ cartItems }) {
 export const CartSideBar = () => {
   const cartItems = useSelector((state) => state.cart.cartItem);
   const checkedItem = useSelector((state) => state.cart.checkedItems);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isNotItems = checkedItem.length === 0;
+  console.log(cartItems)
 
   const clickHandler = () => {
-    
-    // dispatch("/order 로 상품정보 보내는 api 호출");
+    navigate("/order", { state: { cartItems } });
   };
 
   return (
@@ -64,16 +65,13 @@ export const CartSideBar = () => {
         <SideBarContent>
           <Contents cartItems={cartItems} />
         </SideBarContent>
-        <Link to="/order">
           <OrderButton
             type="button"
             onClick={clickHandler}
             disabled={isNotItems}
-            
           >
             구매하기
           </OrderButton>
-        </Link>
       </SideBarContainer>
     </SideBarWrap>
   );

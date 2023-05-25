@@ -59,12 +59,14 @@ public class ReviewServiceImpl implements ReviewService {
         List<ReviewListDto> reviewListDto = new ArrayList<>();
         for (Review review : reviewList) {
             String productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, review.getProdNum()).getProdSaveName();
+            String orderDate = String.valueOf(review.getOrderProduct().getOrder().getOrderDate());
+            orderDate = orderDate.replaceFirst("-", "년 ").replaceFirst("-", "월 ").replaceFirst("T", "일").substring(0, 13);
             reviewListDto.add(ReviewListDto.builder()
                     .productImage(productImage)
                     .productName(review.getOrderProduct().getProductOption().getProduct().getProdName())
                     .productOptionName(review.getOrderProduct().getProductOption().getProdOption())
                     .productNum(review.getProdNum())
-                    .orderDate(review.getOrderProduct().getOrder().getOrderDate())
+                    .orderDate(orderDate)
                     .orderProductQuantity(review.getOrderProduct().getProdCount())
                     .orderProductPrice(review.getOrderProduct().getProductOption().getProdPrice())
                     .orderProductReviewState(review.getOrderProduct().getOrderState())

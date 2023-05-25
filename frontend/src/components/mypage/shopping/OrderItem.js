@@ -1,23 +1,28 @@
 import styled from "styled-components";
 
-export const OrderItem = ({ orderItem }) => {
+export const OrderItem = ({ item }) => {
+  function addComma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
+
   return (
     <>
-      <ItemCard>
+       <ItemCard>
         <ItemInfoBox>
-          <ItemImage src={orderItem.productImage} alt="상품 이미지" />
+          <ItemImage src={`http://localhost:8080/images/${item.productImage}`} alt="상품 이미지" />
           <ItemNameOptionBox>
-            <ItemName>{orderItem.productName}</ItemName>
-            <ItemOption>{orderItem.productOptionName}</ItemOption>
+            <ItemName>{item.productName}</ItemName>
+            <ItemOption>{item.productOptionName}</ItemOption>
           </ItemNameOptionBox>
         </ItemInfoBox>
-        <ItemOrderDate>{orderItem.orderDate}</ItemOrderDate>
+        <ItemOrderDate>{item.orderDate}</ItemOrderDate>
         <ItemAmountBox>
-          <ItemAmount>{orderItem.orderProductPrice}</ItemAmount>
-          <ItemCount>{orderItem.orderProductQuantity}</ItemCount>
+          <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
+          <ItemCount>{item.orderProductQuantity} 개</ItemCount>
         </ItemAmountBox>
         <ItemOrderState>
-          {orderItem.orderShippingState ? "배송 완료" : "배송 준비 중"}
+          {item.orderShippingState ? "배송 완료" : "배송 준비 중"}
         </ItemOrderState>
       </ItemCard>
     </>

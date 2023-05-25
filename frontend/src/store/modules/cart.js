@@ -71,9 +71,12 @@ const cartSlice = createSlice({
       state.loading = false;
       console.log("데이터 받아왔음");
       state.cartItem = action.payload;
-      state.checkedItems = action.payload.map((item) => item.cartNum)
+      state.checkedItems = action.payload.map((item) => item.cartNum);
       console.log(state.cartItem);
       console.log("state.cartItem끝");
+    },
+    [removeCartItem.fulfilled]: (state, action) => {
+      console.log("삭제완료");
     },
   },
 });

@@ -28,3 +28,12 @@ export const removeCart = async (cartNum, accessToken) => {
   });
   return response.data;
 };
+
+export const updateCart = async (cartList, accessToken) => {
+  const response = await axios.post(`${CART_API_URL}/update`, cartList, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};

@@ -1,53 +1,32 @@
 import styled from "styled-components";
-import PRODUCT_IMAGE from "../../../assets/storemain.webp";
 
-export const ReviewItem = () => {
+export const ReviewItem = ({ item }) => {
+  function addComma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
+
   return (
     <>
       <ItemCard>
         <ItemInfoBox>
-          <ItemImage src={PRODUCT_IMAGE} alt="상품 이미지" />
+          <ItemImage
+            src={`http://localhost:8080/images/${item.productImage}`}
+            alt="상품 이미지"
+          />
           <ItemNameOptionBox>
-            <ItemName>Naaaaaaaaame</ItemName>
-            <ItemOption>Oooooooption</ItemOption>
+            <ItemName>{item.productName}</ItemName>
+            <ItemOption>{item.productOptionName}</ItemOption>
           </ItemNameOptionBox>
         </ItemInfoBox>
-        <ItemOrderDate>2023-05-12</ItemOrderDate>
+        <ItemOrderDate>{item.orderDate}</ItemOrderDate>
         <ItemAmountBox>
-          <ItemAmount>30,000원</ItemAmount>
-          <ItemCount>2개</ItemCount>
+          <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
+          <ItemCount>{item.orderProductQuantity} 개</ItemCount>
         </ItemAmountBox>
-        <ItemOrderState>후기 작성</ItemOrderState>
-      </ItemCard>
-      <ItemCard>
-        <ItemInfoBox>
-          <ItemImage src={PRODUCT_IMAGE} alt="상품 이미지" />
-          <ItemNameOptionBox>
-            <ItemName>Naaaaaaaaame</ItemName>
-            <ItemOption>Oooooooption</ItemOption>
-          </ItemNameOptionBox>
-        </ItemInfoBox>
-        <ItemOrderDate>2023-05-12</ItemOrderDate>
-        <ItemAmountBox>
-          <ItemAmount>30,000원</ItemAmount>
-          <ItemCount>2개</ItemCount>
-        </ItemAmountBox>
-        <ItemOrderState>후기 작성</ItemOrderState>
-      </ItemCard>
-      <ItemCard>
-        <ItemInfoBox>
-          <ItemImage src={PRODUCT_IMAGE} alt="상품 이미지" />
-          <ItemNameOptionBox>
-            <ItemName>Naaaaaaaaame</ItemName>
-            <ItemOption>Oooooooption</ItemOption>
-          </ItemNameOptionBox>
-        </ItemInfoBox>
-        <ItemOrderDate>2023-05-12</ItemOrderDate>
-        <ItemAmountBox>
-          <ItemAmount>30,000원</ItemAmount>
-          <ItemCount>2개</ItemCount>
-        </ItemAmountBox>
-        <ItemOrderState>후기 작성 완료</ItemOrderState>
+        <ItemOrderState>
+          {item.orderShippingState ? "배송 완료" : "배송 준비 중"}
+        </ItemOrderState>
       </ItemCard>
     </>
   );

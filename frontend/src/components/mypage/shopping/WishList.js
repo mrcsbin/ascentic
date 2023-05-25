@@ -2,47 +2,50 @@ import styled from "styled-components";
 import HEART from "../../../assets/mypage/heart.png";
 import HEART_EMPTY from "../../../assets/mypage/heart_empty.png";
 import TEST_ITEM_IMAGE from "../../../assets/storemain.webp";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { getCookie } from "../../../utils/Cookies";
 
-function WishItems() {
-  const [like, setLike] = useState(true);
+function WishItems({ item }) {
+  const [isWish, setIsWish] = useState(true);
+
+  const clickHandle = () => {
+    if (getCookie("accessToken")) {
+      axios
+        .post(
+          `http://localhost:8080/wish/set`,
+          { prodNum: item.productNum },
+          {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          }
+        )
+        .then(() => {
+          setIsWish(!isWish);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    } else {
+      alert("로그인이 필요합니다.");
+    }
+  };
 
   return (
     <>
       <WishItemCard>
         <ImageBox>
-          <WishItemImage src={TEST_ITEM_IMAGE} alt="상품 이미지" />
-          <ButtonImage src={HEART} alt="좋아요 버튼" />
+          <WishItemImage
+            src={`http://localhost:8080/images/${item.productImage}`}
+            alt="상품 이미지"
+          />
+          <SetWishButton onClick={clickHandle}>
+            <ButtonImage src={isWish ? HEART : HEART_EMPTY} alt="좋아요 버튼" />
+          </SetWishButton>
         </ImageBox>
         <NameBox>
-          <WishItemName>향수01</WishItemName>
-        </NameBox>
-      </WishItemCard>
-      <WishItemCard>
-        <ImageBox>
-          <WishItemImage src={TEST_ITEM_IMAGE} alt="상품 이미지" />
-          <ButtonImage src={HEART} alt="좋아요 버튼" />
-        </ImageBox>
-        <NameBox>
-          <WishItemName>향수02</WishItemName>
-        </NameBox>
-      </WishItemCard>
-      <WishItemCard>
-        <ImageBox>
-          <WishItemImage src={TEST_ITEM_IMAGE} alt="상품 이미지" />
-          <ButtonImage src={HEART} alt="좋아요 버튼" />
-        </ImageBox>
-        <NameBox>
-          <WishItemName>향수03</WishItemName>
-        </NameBox>
-      </WishItemCard>
-      <WishItemCard>
-        <ImageBox>
-          <WishItemImage src={TEST_ITEM_IMAGE} alt="상품 이미지" />
-          <ButtonImage src={HEART} alt="좋아요 버튼" />
-        </ImageBox>
-        <NameBox>
-          <WishItemName>향수04</WishItemName>
+          <WishItemName>{item.productName}</WishItemName>
         </NameBox>
       </WishItemCard>
     </>
@@ -50,11 +53,37 @@ function WishItems() {
 }
 
 export const WishList = () => {
+  const [wishList, setWishList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log(wishList);
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/wish/get", {
+          headers: {
+            Authorization: `Bearer ${getCookie("accessToken")}`,
+          },
+        });
+        setWishList(res.data);
+      } catch (error) {
+        console.error("Error fetching order list:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProductData();
+  }, []);
+
   return (
     <WishListWrap>
       <ContentHeader>좋아요</ContentHeader>
       <WishItemsContents>
-        <WishItems />
+        {wishList.length === 0 ? (
+          <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
+        ) : (
+          wishList.map((item, index) => <WishItems item={item} key={index} />)
+        )}
       </WishItemsContents>
     </WishListWrap>
   );
@@ -120,3 +149,7 @@ const ButtonImage = styled.img`
     transform: scale(1.1);
   }
 `;
+
+const IsNotItem = styled.div``;
+
+const SetWishButton = styled.button``;

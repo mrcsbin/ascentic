@@ -12,4 +12,6 @@ public class GetCartDto {
     private Integer cartNum;
     private Integer prodPrice;
     private Integer prodCount;
+    private Integer prodOptionNum;
+    private Integer prodNum;
 }

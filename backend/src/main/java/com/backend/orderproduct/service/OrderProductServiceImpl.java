@@ -13,6 +13,7 @@ import com.backend.productimage.repository.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,12 +48,14 @@ public class OrderProductServiceImpl implements OrderProductService {
         if (orderProductList.isPresent()) {
             for (OrderProduct orderProduct : orderProductList.get()) {
                 String prodSaveName = productImageRepository.findById(orderProduct.getProductOption().getProduct().getProdNum()).get().getProdSaveName();
+                String orderDate = String.valueOf(orderProduct.getOrder().getOrderDate());
+                orderDate = orderDate.replaceFirst("-", "년 ").replaceFirst("-", "월 ").replaceFirst("T", "일").substring(0, 13);
                 orderListDto.add(OrderListDto.builder()
                         .productImage(prodSaveName)
                         .productName(orderProduct.getProductOption().getProduct().getProdName())
                         .productOptionName(orderProduct.getProductOption().getProdOption())
                         .productNum(orderProduct.getProductOption().getProduct().getProdNum())
-                        .orderDate(orderProduct.getOrder().getOrderDate())
+                        .orderDate(orderDate)
                         .orderProductQuantity(orderProduct.getProdCount())
                         .orderProductPrice(orderProduct.getProductOption().getProdPrice())
                         .orderShippingState(orderProduct.getOrderState())

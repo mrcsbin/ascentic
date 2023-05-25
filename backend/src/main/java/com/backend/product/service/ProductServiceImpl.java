@@ -48,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
             Product product = findProduct.get();
             List<Integer> prodPrice = new ArrayList<>(Arrays.asList(product.getProdPrice(0), product.getProdPrice(1)));
             List<String> prodOption = new ArrayList<>(Arrays.asList(product.getProdOption(0), product.getProdOption(1)));
+            List<Integer> prodOptionNum = new ArrayList<>(Arrays.asList(product.getProdOptionNum(0), product.getProdOptionNum(1)));
             List<String> prodImages = new ArrayList<>();
             List<ProductImage> productImageList = productImageRepository.findAllByProdImageTypeAndProductProdNum(1, product.getProdNum());
             List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
@@ -76,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
                     .scent(product.getScent())
                     .isWish(product.isWish(currentMemberId, prodNum))
                     .reviewList(reviews)
-                    .prodOptionNum(product.getProdOptionNum())
+                    .prodOptionNum(prodOptionNum)
                     .build();
         } else {
             throw new RuntimeException("상품 없삼");

@@ -12,6 +12,11 @@ function CartContentHeader() {
   const checkedItems = useSelector((state) => state.cart.checkedItems);
   const dispatch = useDispatch();
 
+  const filteredCartItems = cartItems.filter((item) =>
+    checkedItems.includes(item.cartNum)
+  );
+
+
   const isAllChecked = cartItems.every((item) =>
     checkedItems.includes(item.cartNum)
   );

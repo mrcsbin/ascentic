@@ -24,28 +24,29 @@ const Order = () => {
 
   // 상품정보 (서버에 전송할 데이터)
   const location = useLocation();
+  console.log(location.state.cartItems);
+  const cartItems = location.state.cartItems;
 
-  const products = [
-    // 서버로 전송할 정보
-    // 옵션, 수량
-    {
-      option: location.state.prodOption.optionNum,
-      count: location.state.prodQuantity,
-    },
-  ];
+  // const products = [
+  //   // 서버로 전송할 정보
+  //   // 옵션, 수량
+  //   {
+  //     option: location.state.prodOption.optionNum,
+  //     count: location.state.prodQuantity,
+  //   },
+  // ];
 
-  // 상품 정보
-  const prods = [
-    {
-      prodName: location.state.prodOption.product.prodName,
-      prodOption: location.state.prodOption.prodOption,
-      prodeQunanity: location.state.prodQuantity,
-      prodPrice:
-        location.state.prodOption.product.prodPrice *
-        location.state.prodQuantity, // 수량  x 가격
-      prodNum: location.state.prodOption.product.prodNum,
-    },
-  ];
+  // // 상품 정보
+  // const products = [
+  //   {
+  //     prodImage: cartItems.prodImage,
+  //     prodName: cartItems.prodName,
+  //     prodOption: cartItems.prodOption,
+  //     prodQuantity: cartItems.prodCount,
+  //     prodPrice: cartItems.prodPrice * cartItems.prodCount, // 수량  x 가격
+  //     prodNum: cartItems.prodNum,
+  //   },
+  // ];
 
   return (
     <OrderWrap>
@@ -57,7 +58,9 @@ const Order = () => {
             isOpen={extend.prod}
             onClick={() => handleExtendChange("prod")}
           >
-            <ProductInfo prods={prods}></ProductInfo>
+            {cartItems.map((item, index) => (
+              <ProductInfo item={item} key={index} />
+            ))}
           </ExtendAble>
 
           <ExtendAble
@@ -107,7 +110,8 @@ const Order = () => {
           </OrderNotice>
         </Left>
         <Right>
-          <FinalPayment prods={prods} products={products}></FinalPayment>
+          {/* <FinalPayment prods={prods} products={products}></FinalPayment> */}
+          <FinalPayment products={cartItems} />
         </Right>
       </OrderBody>
     </OrderWrap>

@@ -1,29 +1,31 @@
 import styled from "styled-components";
-import TEST_IMAGE from "../../assets/correct.png";
 import {
   decreaseCount,
   increaseCount,
   removeCartItem,
   fetchCartItems,
   toggleCheckItem,
+  updateCartItem,
 } from "../../store/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
 
-function CountButton({ prodCount, cartNum }) {
+function CountButton({ cartNum, prodCount }) {
   const dispatch = useDispatch();
 
   return (
     <CountButtonBox>
       <MinusButton
-        onClick={() => {
+        onClick={async () => {
           dispatch(decreaseCount({ cartNum }));
+          dispatch(updateCartItem({ cartNum, prodCount: prodCount - 1 }));
         }}
         disabled={prodCount === 1}
       ></MinusButton>
       <NumCount>{prodCount}</NumCount>
       <PlusButton
-        onClick={() => {
+        onClick={async () => {
           dispatch(increaseCount({ cartNum }));
+          dispatch(updateCartItem({ cartNum, prodCount: prodCount + 1 }));
         }}
       ></PlusButton>
     </CountButtonBox>
@@ -52,7 +54,6 @@ export const CartItemCard = ({ item }) => {
     );
   };
 
-  // "OMG 상품 번호도 받아와야됨 ..............."
   return (
     <ItemCard>
       <SelectButton

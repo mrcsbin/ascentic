@@ -9,8 +9,6 @@ function Cart() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.cart.loading);
   const cartItems = useSelector((state) => state.cart.cartItem);
-  const test = useSelector((state) => state.cart.checkedItems);
-  console.log(test);
   useEffect(() => {
     dispatch(fetchCartItems());
   }, [dispatch]);

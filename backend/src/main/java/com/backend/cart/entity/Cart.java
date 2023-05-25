@@ -7,7 +7,6 @@ import lombok.*;
 
 @Builder
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -25,6 +24,7 @@ public class Cart {
     @Column(name = "member_id")
     private String memberId;
 
+    @Setter
     @Column(name = "prod_count")
     private Integer prodCount;
 }

@@ -13,6 +13,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByScentScentNoteName(String scentName);
 
+    List<Product> findByProdCategory(String prodCategory);
+
 //    @Modifying
 //    @Query("UPDATE Product p SET p.prodReadCount = p.prodReadCount + 1 WHERE p.prodNum = :prodNum")
 //    void incrementReadCount(Integer prodNum);

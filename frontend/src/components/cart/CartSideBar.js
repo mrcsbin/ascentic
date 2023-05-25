@@ -47,13 +47,15 @@ function Contents({ cartItems }) {
 }
 
 export const CartSideBar = () => {
-  const cartItems = useSelector((state) => state.cart.cartItem);
-  const checkedItem = useSelector((state) => state.cart.checkedItems);
+  const AllCartItems = useSelector((state) => state.cart.cartItem);
+  const checkedItems = useSelector((state) => state.cart.checkedItems);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const isNotItems = checkedItem.length === 0;
-  console.log(cartItems)
+  const cartItems = AllCartItems.filter((item) =>
+    checkedItems.includes(item.cartNum)
+  );
+
+  const isNotItems = checkedItems.length === 0;
 
   const clickHandler = () => {
     navigate("/order", { state: { cartItems } });
@@ -65,13 +67,9 @@ export const CartSideBar = () => {
         <SideBarContent>
           <Contents cartItems={cartItems} />
         </SideBarContent>
-          <OrderButton
-            type="button"
-            onClick={clickHandler}
-            disabled={isNotItems}
-          >
-            구매하기
-          </OrderButton>
+        <OrderButton type="button" onClick={clickHandler} disabled={isNotItems}>
+          구매하기
+        </OrderButton>
       </SideBarContainer>
     </SideBarWrap>
   );

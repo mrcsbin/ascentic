@@ -1,9 +1,11 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.product.dto.admindto.AdminProductListDto;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
+import com.backend.productoption.repository.ProductOptionRepository;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
 import com.backend.productimage.entity.ProductImage;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -119,5 +122,22 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return productList;
+    }
+
+    @Override
+    public List<AdminProductListDto> getAdminProdList(String category) {
+        List<Product> products;
+
+        if (category.equals("all")) {
+            products = productRepository.findAll();
+        } else {
+            products = productRepository.findByProdCategory(category);
+        }
+
+        return products.stream()
+                .map(product -> {
+                    return AdminProductListDto.of(product);
+                })
+                .collect(Collectors.toList());
     }
 }

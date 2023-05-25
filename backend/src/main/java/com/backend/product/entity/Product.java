@@ -1,10 +1,10 @@
 package com.backend.product.entity;
 
+import com.backend.productimage.entity.ProductImage;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.scent.entity.Scent;
 import com.backend.wish.entity.Wish;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -54,6 +55,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Wish> wish = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", fetch =  FetchType.LAZY)
+    private List<ProductImage> productImages = new ArrayList<>();
 
     public Integer getProdPrice(Integer index) {
         return productOption.get(index).getProdPrice();

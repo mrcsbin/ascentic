@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import "./AdminNav.css";
+import "../styles/AdminNav.css";
 
 function AdminNav() {
   const location = useLocation();
@@ -28,7 +28,6 @@ function AdminNav() {
 
   const renderSubMenu = (menu, label) => {
     const isActive = isMenuOpen(menu);
-
     return (
       <li key={menu}>
         <Link
@@ -44,6 +43,12 @@ function AdminNav() {
 
   return (
     <nav className="admin-nav">
+      <div className="link-to-main">
+        <Link className="toMain" to="/" style={{ textDecoration: "none" }}>
+          &lt; 메인페이지로 돌아가기
+        </Link>
+      </div>
+      <h3>관리자페이지</h3>
       <ul className="admin-nav-list">
         {[
           { menu: "analysis", label: "분석" },

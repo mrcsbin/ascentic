@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import "./Admin.css";
+import "./styles/Admin.css";
 
 function Admin() {
   return (

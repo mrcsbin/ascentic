@@ -8,6 +8,9 @@ import com.backend.order.entity.Order;
 import com.backend.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -15,6 +18,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
     @Override
+    @Transactional
     public Integer insertOrder(OrderDTO orderDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
@@ -34,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderPriceSum(orderDTO.getOrderPriceSum())
                 .shipCharge(orderDTO.getShipCharge())
                 .orderState(orderDTO.getOrderState())
+                .orderId(UUID.randomUUID().toString())
                 .build());
         return order.getOrderNum();
     }

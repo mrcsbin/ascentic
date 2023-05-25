@@ -4,6 +4,10 @@ const ORDER_API_URL = "http://localhost:8080";
 
 // 주문 요청
 export const requestOrder = async (accessToken, requestData, products) => {
+  // console.log(`requestData = ${requestData}`);
+  // var forPayment = [...requestData, products[0].prodName];
+  // console.log(`forPayment = ${forPayment}`);
+
   try {
     const response = await axios.post("/finishorder", requestData, {
       headers: {
@@ -14,8 +18,8 @@ export const requestOrder = async (accessToken, requestData, products) => {
 
     const orderProd = products.map((item) => ({
       orderId: orderNum,
-      optionNum: item.option,
-      prodCount: item.count,
+      optionNum: item.prodOptionNum,
+      prodCount: item.prodCount,
       orderState: false,
     }));
 

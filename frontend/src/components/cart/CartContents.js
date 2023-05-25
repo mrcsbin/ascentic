@@ -1,13 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { CartItemCard } from "./CartItemCard";
-import { updateCartItem } from "../../store/modules/cart";
 import {
   removeCartItem,
   fetchCartItems,
   toggleAllCheckItem,
 } from "../../store/modules/cart";
-import { useEffect } from "react";
 
 function CartContentHeader() {
   const cartItems = useSelector((state) => state.cart.cartItem);
@@ -17,10 +15,6 @@ function CartContentHeader() {
   const isAllChecked = cartItems.every((item) =>
     checkedItems.includes(item.cartNum)
   );
-
-  useEffect(() => {
-    dispatch(updateCartItem(cartItems));
-  }, [cartItems, dispatch]);
 
   const handleDeleteClick = () => {
     checkedItems.forEach((cartNum) => {

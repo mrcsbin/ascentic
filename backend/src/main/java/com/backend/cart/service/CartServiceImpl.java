@@ -1,6 +1,7 @@
 package com.backend.cart.service;
 
 import com.backend.cart.dto.AddCartDto;
+import com.backend.cart.dto.CartRequest;
 import com.backend.cart.dto.GetCartDto;
 import com.backend.cart.entity.Cart;
 import com.backend.cart.repository.CartRepository;
@@ -67,6 +68,14 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> findCartItem = cartRepository.findByMemberIdAndCartNum(currentMemberId, cartNum);
         if (findCartItem.isPresent()) {
             cartRepository.delete(findCartItem.get());
+        }
+    }
+
+    public void updateCart(CartRequest.UpdateCartDto updateCartDto) {
+        Optional<Cart> findCart = cartRepository.findById(updateCartDto.getCartNum());
+        if (findCart.isPresent()) {
+            findCart.get().setProdCount(updateCartDto.getProdCount());
+            cartRepository.save(findCart.get());
         }
     }
 }

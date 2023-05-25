@@ -15,6 +15,7 @@ export const requestOrder = async (accessToken, requestData, products) => {
       },
     });
     const orderNum = response.data;
+    console.log(products);
 
     const orderProd = products.map((item) => ({
       orderId: orderNum,
@@ -26,7 +27,13 @@ export const requestOrder = async (accessToken, requestData, products) => {
     // 여러개의 요청을 동시에
     await Promise.all(
       orderProd.map((prod) =>
-        axios.post("/finishorderprod", prod).then((res) => res.data)
+        axios
+          .post("/finishorderprod", prod, {
+            headers: {
+              Authorization: "Bearer " + accessToken,
+            },
+          })
+          .then((res) => res.data)
       )
     );
 

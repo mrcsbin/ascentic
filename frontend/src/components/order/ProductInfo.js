@@ -2,26 +2,50 @@ import React from "react";
 import styled from "styled-components";
 
 // 주문 상품 정보
-const ProductInfo = (props) => {
-  const prods = props.prods;
+const ProductInfo = ({ item, key }) => {
+  // const prods = props.prods;
+  function addComma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
+
+  //   return (
+  //     <ProdContainer>
+  //       {products.map((product) => (
+  //         <ProdInfoContainer key={product.prodNum}>
+  //           <ProdImage
+  //             src={`http://localhost:8080/images/${product.productImage}`}
+  //             alt="상품 이미지"
+  //           />
+  //           <PurchaseInfoContainer>
+  //             <ProdName>상품명: {product.prodName}</ProdName>
+  //             <ProdOption>옵션명: {product.prodOption}</ProdOption>
+  //             <ProdQuantity>수량: {product.prodQuantity}개</ProdQuantity>
+  //           </PurchaseInfoContainer>
+  //           <ProdPrice>{addComma(product.prodPrice)} 원</ProdPrice>
+  //         </ProdInfoContainer>
+  //       ))}
+  //     </ProdContainer>
+  //   );
+  // };
 
   return (
-    <ProdContainer>
-      {prods.map((product) => (
-        <ProdInfoContainer key={product.prodNum}>
+    <>
+      <ProdContainer>
+        <ProdInfoContainer key={key}>
           <ProdImage
-            src={`http://localhost:8080/getProdImg?prodNum=${product.prodNum}&prodImageType=0`}
-            alt="상품이미지"
+            src={`http://localhost:8080/images/${item.prodImage}`}
+            alt="상품 이미지"
           />
           <PurchaseInfoContainer>
-            <ProdName>상품명: {product.prodName}</ProdName>
-            <ProdOption>옵션명: {product.prodOption}</ProdOption>
-            <ProdQuantity>수량: {product.prodeQunanity}개</ProdQuantity>
+            <ProdName>상품명: {item.prodName}</ProdName>
+            <ProdOption>옵션명: {item.prodOption}</ProdOption>
+            <ProdQuantity>수량: {item.prodCount}개</ProdQuantity>
           </PurchaseInfoContainer>
-          <ProdPrice>{`${product.prodPrice.toLocaleString()}원`}</ProdPrice>
+          <ProdPrice>{addComma(item.prodPrice * item.prodCount)} 원</ProdPrice>
         </ProdInfoContainer>
-      ))}
-    </ProdContainer>
+      </ProdContainer>
+    </>
   );
 };
 

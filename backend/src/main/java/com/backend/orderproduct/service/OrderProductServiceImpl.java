@@ -28,6 +28,7 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public void insetOrderProduct(OrderProductDto orderProductDTO) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Order order = orderRepository.findById(orderProductDTO.getOrderId()).orElse(null);
         ProductOption productOption = productOptionRepository.findById(orderProductDTO.getOptionNum()).orElse(null);
         OrderProduct orderProduct = OrderProduct.builder()
@@ -35,6 +36,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .productOption(productOption)
                 .prodCount(orderProductDTO.getProdCount())
                 .orderState(orderProductDTO.isOrderState())
+                .memberId(currentMemberId)
                 .build();
 
         orderProductRepository.save(orderProduct);

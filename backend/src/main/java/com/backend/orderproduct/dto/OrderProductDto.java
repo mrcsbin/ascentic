@@ -14,6 +14,4 @@ public class OrderProductDto {
     private Integer optionNum;
     private Integer prodCount;
     private boolean orderState;
-
-
 }

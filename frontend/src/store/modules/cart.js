@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCartItemList, removeCart } from "../../api/CartApi";
+import { getCartItemList, removeCart, updateCart } from "../../api/CartApi";
 import { getCookie } from "../../utils/Cookies";
 
 export const fetchCartItems = createAsyncThunk(
@@ -14,6 +14,14 @@ export const removeCartItem = createAsyncThunk(
   "cart/removeCartItem",
   async (cartNum, thunkAPI) => {
     const res = await removeCart(cartNum, getCookie("accessToken"));
+    return res;
+  }
+);
+
+export const updateCartItem = createAsyncThunk(
+  "cart/updateCartItem",
+  async (cartList, thunkAPI) => {
+    const res = await updateCart(cartList, getCookie("accessToken"));
     return res;
   }
 );
@@ -74,9 +82,6 @@ const cartSlice = createSlice({
       state.checkedItems = action.payload.map((item) => item.cartNum);
       console.log(state.cartItem);
       console.log("state.cartItem끝");
-    },
-    [removeCartItem.fulfilled]: (state, action) => {
-      console.log("삭제완료");
     },
   },
 });

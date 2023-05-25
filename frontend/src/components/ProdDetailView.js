@@ -7,11 +7,14 @@ import wish from "../assets/wish_icon.svg";
 import unwish from "../assets/unwish_icon.svg";
 import uptri from "../assets/up_triangle.svg";
 
-function ProdDetailView({ productData, productOption }) {
+function ProdDetailView({ productData }) {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [prodOption, setProdOption] = useState(productData.prodOption[0]);
   const [prodPrice, setProdPrice] = useState(productData.prodPrice[0]);
+  const [prodOptionNum, setProdOptionNum] = useState(
+    productData.prodOptionNum[0]
+  );
   const [isWish, setIsWish] = useState(productData.wish);
 
   const [ProdInfoModal, setProdInfoModal] = useState(false);
@@ -59,19 +62,20 @@ function ProdDetailView({ productData, productOption }) {
   // prodNum, 이름, 가격, 옵션 선택한거, 수량 총 5개 객체로 해서 넘기면 될듯
 
   // 주문창으로 이동
-  const handleOrderClick = () => {
-    const dataForOrder = {
-      prodQuantity: quantity,
-      prodOption: prodOption,
-    };
-    navigate(`/order`, { state: dataForOrder });
-  };
+  // const handleOrderClick = () => {
+  //   const dataForOrder = {
+  //     prodQuantity: quantity,
+  //     prodOption: prodOption,
+  //   };
+  //   navigate(`/order`, { state: dataForOrder });
+  // };
 
   // 장바구니 페이지 이동
   const handleCartClick = () => {
     const dataForCart = {
-      optionNum: prodOption,
+      optionName: prodOption,
       prodCount: quantity,
+      optionNum: prodOptionNum,
     };
 
     console.log(dataForCart);
@@ -189,6 +193,7 @@ function ProdDetailView({ productData, productOption }) {
         onClick={() => {
           setProdOption(options);
           setProdPrice(productData.prodPrice[index]);
+          setProdOptionNum(productData.prodOptionNum[index]);
         }}
       >
         {options}

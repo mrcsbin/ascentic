@@ -21,7 +21,7 @@ public class WishController {
         wishServiceImpl.setWish(wishDto.getProdNum());
     }
 
-    @PostMapping("/get")
+    @GetMapping("/get")
     public List<WishListDto> getWishList() {
         return wishServiceImpl.getWishList();
     }

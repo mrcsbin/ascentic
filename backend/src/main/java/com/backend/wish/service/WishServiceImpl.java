@@ -64,9 +64,9 @@ public class WishServiceImpl implements WishService {
             ProductImage productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, wishItem.getProduct().getProdNum());
             String prodImage = productImage.getProdSaveName();
             WishListDto wish = WishListDto.builder()
-                    .prodNum(wishItem.getProduct().getProdNum())
-                    .prodImage(prodImage)
-                    .prodName(wishItem.getProduct().getProdName())
+                    .productNum(wishItem.getProduct().getProdNum())
+                    .productImage(prodImage)
+                    .productName(wishItem.getProduct().getProdName())
                     .build();
             wishListDto.add(wish);
         }

@@ -5,9 +5,8 @@ import axios from "axios";
 import { getCookie } from "../../../utils/Cookies";
 
 export const OrderList = () => {
-  const [orderList, setOrderList] = useState();
+  const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(orderList);
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -27,42 +26,37 @@ export const OrderList = () => {
         setIsLoading(false);
       }
     };
-
     fetchProductData();
   }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  if ((orderList === undefined) | (orderList === "")) {
-    return null;
-  } else {
-    return (
-      <OrderListWrap>
-        <ContentHeader>주문 내역 조회</ContentHeader>
-        <ItemInfoBox>
-          <ItemBigBox>
-            <ItemName>상품 정보</ItemName>
-          </ItemBigBox>
-          <ItemSmallBox>
-            <OrderDate>주문 일자</OrderDate>
-          </ItemSmallBox>
-          <ItemSmallBox>
-            <OrderAmount>주문금액 (수량)</OrderAmount>
-          </ItemSmallBox>
-          <ItemSmallBox>
-            <OrderState>주문상태</OrderState>
-          </ItemSmallBox>
-        </ItemInfoBox>
-        {orderList &&
-          orderList.map((item, index) => <OrderItem key={index} item={item} />)}
-        {/* <OrderItem /> */}
-        {/* {orderList.map((item, index) => (
-        <OrderItem key={index} item={item} />
-      ))} */}
-      </OrderListWrap>
-    );
-  }
+
+  return (
+    <OrderListWrap>
+      <ContentHeader>주문 내역 조회</ContentHeader>
+      <ItemInfoBox>
+        <ItemBigBox>
+          <ItemName>상품 정보</ItemName>
+        </ItemBigBox>
+        <ItemSmallBox>
+          <OrderDate>주문 일자</OrderDate>
+        </ItemSmallBox>
+        <ItemSmallBox>
+          <OrderAmount>주문금액 (수량)</OrderAmount>
+        </ItemSmallBox>
+        <ItemSmallBox>
+          <OrderState>주문상태</OrderState>
+        </ItemSmallBox>
+      </ItemInfoBox>
+      {orderList.length === 0 ? (
+        <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
+      ) : (
+        orderList.map((item, index) => <OrderItem item={item} key={index} />)
+      )}
+    </OrderListWrap>
+  );
 };
 
 const OrderListWrap = styled.div`
@@ -106,3 +100,5 @@ const OrderAmount = styled.div`
 const OrderState = styled.div`
   text-align: center;
 `;
+
+const IsNotItem = styled.div``;

@@ -36,7 +36,7 @@ public class ProductResponse {
         private Scent scent;
         private boolean isWish;
         private List<Review> reviewList;
-        private Integer prodOptionNum;
+        private List<Integer> prodOptionNum;
     }
 
     @Getter

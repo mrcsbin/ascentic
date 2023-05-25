@@ -36,6 +36,8 @@ public class CartServiceImpl implements CartService {
                     .cartNum(cart.getCartNum())
                     .prodPrice(cart.getProductOption().getProdPrice())
                     .prodCount(cart.getProdCount())
+                    .prodOptionNum(cart.getProductOption().getOptionNum())
+                    .prodNum(cart.getProductOption().getProduct().getProdNum())
                     .build();
             cartItems.add(build);
         }

@@ -3,6 +3,8 @@ package com.backend.product.dto.admindto;
 import com.backend.product.entity.Product;
 import com.backend.productoption.entity.ProductOption;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +28,7 @@ public class AdminProductListDto {
     private String prodCategory; // 카테고리
 
     @Setter
-    private LocalDateTime prodDate; // 등록 날짜
+    private LocalDate prodDate; // 등록 날짜
 
     private Integer prodStock; // 재고
 
@@ -48,7 +50,7 @@ public class AdminProductListDto {
         dto.setProdImage(product);
         dto.setProdPrice(product);
         dto.setOptions(product);
-        dto.setProdDate(product.getProdDate());
+        dto.setProdDate(product.getProdDate().toLocalDate());
         return dto;
     }
 
@@ -69,4 +71,6 @@ public class AdminProductListDto {
     private void setProdPrice(Product product) {
         prodPrice = product.getProductOption().get(0).getProdPrice();
     }
+
+
 }

@@ -6,7 +6,7 @@
   display: block;
   float: left;
   box-sizing: border-box;
-  padding: 10px 0;
+  padding: 15px 0;
   /* position: fixed; */
 }
 .admin-nav .toMain {
@@ -16,10 +16,11 @@
   color: black;
 }
 .admin-nav > h3 {
-  font-size: 2rem;
+  font-size: 1.8rem;
+  font-weight: 500;
   width: 100%;
   text-align: center;
-  margin: 2rem auto;
+  margin: 2.5rem auto;
 }
 
 .admin-nav-list {

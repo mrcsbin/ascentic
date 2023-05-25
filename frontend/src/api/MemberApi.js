@@ -11,7 +11,15 @@ export const 회원가입 = async (e) => {
 };
 
 // 회원 수정
-export const updateMember = async (id, name, email, image, nickname, password, newPassword) => {
+export const updateMember = async (
+  id,
+  name,
+  email,
+  image,
+  nickname,
+  password,
+  newPassword
+) => {
   const response = await axios.patch(`${MEMBER_API_URL}/${id}`, {
     id,
     name,
@@ -19,7 +27,7 @@ export const updateMember = async (id, name, email, image, nickname, password, n
     image,
     nickname,
     password,
-    newPassword
+    newPassword,
   });
   return response.data;
 };
@@ -121,4 +129,19 @@ export const checkCode = async (phone, code) => {
       return res.data;
     });
   return response;
+};
+
+// 주문자 정보 조호
+export const getOrderInfo = async (accessToken) => {
+  try {
+    const response = await axios.get(`${MEMBER_API_URL}/order/getuser`, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };

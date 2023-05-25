@@ -2,9 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateOrder, saveExtendChange } from "../../store/modules/order";
 import { useState } from "react";
 import styled from "styled-components";
+import { getOrderInfo } from "../../api/MemberApi";
+import { getCookie } from "../../utils/Cookies";
+import { useEffect } from "react";
 
 // 주문자 정보
 const OrderInfo = () => {
+  const accessToken = getCookie("accessToken");
+
   const dispatch = useDispatch();
   const orderInformation = useSelector((state) => state.order.orderInformation);
 
@@ -52,6 +57,19 @@ const OrderInfo = () => {
       alert("모두 동의가 필요합니다.");
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getOrderInfo(accessToken); // api 함수 호출
+      console.log("gg");
+      console.log(result);
+      Object.entries(result).forEach(([name, value]) => {
+        dispatch(updateOrder({ updateOrderInformation: { [name]: value } }));
+      });
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <OrderForm>

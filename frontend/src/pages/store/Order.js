@@ -122,7 +122,7 @@ export default Order;
 
 const OrderWrap = styled.div`
   // OrderWrap 스타일 정의
-  margin-top: 30px;
+  padding-top: 150px;
   margin-left: 150px;
 `;
 

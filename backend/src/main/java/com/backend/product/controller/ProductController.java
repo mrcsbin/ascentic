@@ -1,5 +1,6 @@
 package com.backend.product.controller;
 
+import com.backend.product.dto.admindto.AdminProductListDto;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.service.ProductServiceImpl;
 import com.backend.product.entity.Product;
@@ -27,5 +28,10 @@ public class ProductController {
     @GetMapping("/listscent")
     public List<ProductResponse.ProductListDto> getCategory(@RequestParam("category") String category) {
         return productServiceImpl.getListByCategory(category);
+    }
+
+    @GetMapping("/admingetprodlist")
+    public List<AdminProductListDto> getAdminProdList(@RequestParam("category") String category) {
+        return productServiceImpl.getAdminProdList(category);
     }
 }

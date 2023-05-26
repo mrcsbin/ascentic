@@ -99,8 +99,9 @@ function Routes() {
       ></Route>
       <Route path="/community/event" element={<Pages.Event />}></Route>
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />
+
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
-      <Route path="/admin" element={<AdminPages.Admin />} />
+      <Route path="/admin" element={<AdminPages.AdminMainPage />} />
 
       <Route path="/admin/analysis" element={<AdminPages.AdminAnalysis />} />
       <Route

@@ -1,26 +1,31 @@
 package com.backend.order.service;
 
 import com.backend.member.jwt.SecurityUtils;
-import com.backend.order.dto.AddressDTO;
-import com.backend.order.dto.OrderDTO;
-import com.backend.order.dto.SuccessOrderDto;
+import com.backend.member.repository.MemberRepository;
+import com.backend.order.dto.*;
 import com.backend.order.entity.Order;
 import com.backend.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     @Transactional
-    public Integer insertOrder(OrderDTO orderDTO) {
+    public PaymentRes insertOrder(OrderDTO orderDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        String orderIdTemp = UUID.randomUUID().toString();
 
         Order order =  orderRepository.save(Order.builder()
                 .memberId(currentMemberId)
@@ -38,9 +43,25 @@ public class OrderServiceImpl implements OrderService {
                 .orderPriceSum(orderDTO.getOrderPriceSum())
                 .shipCharge(orderDTO.getShipCharge())
                 .orderState(orderDTO.getOrderState())
-                .orderId(UUID.randomUUID().toString())
+                .orderId(orderIdTemp)
+
                 .build());
-        return order.getOrderNum();
+        String prodNames = orderDTO.getProdNames();
+        String productNames= countProdNames(prodNames);
+        PaymentRes res = PaymentRes.builder()
+                .payment(orderDTO.getOrderPayment())
+                .amount(orderDTO.getOrderPriceSum())
+                .orderName(productNames)
+                .customerName(memberRepository.findById(currentMemberId).orElseThrow().getName())
+                .orderNum(orderRepository.findByOrderId(orderIdTemp).getOrderNum())
+                .orderId(orderIdTemp)
+                .successUrl("http://localhost:3000/")
+                .failUrl("http://localhost:3000/mypage")
+                .createDate(OffsetDateTime.now(ZoneOffset.ofHours(9)).toString())
+                .paySuccssYn("Y")
+                .build();
+
+        return res;
     }
 
     @Override
@@ -76,4 +97,13 @@ public class OrderServiceImpl implements OrderService {
                 .orderPriceSum(order.getOrderPriceSum())
                 .build();
     }
+
+    private static String countProdNames(String prodNames) {
+        String[] prodNamesArray = prodNames.split(",");
+        int count = prodNamesArray.length - 1;
+        String firstProduct = prodNamesArray[0].trim();
+        String purchaseName = firstProduct +"외 "+count+" 종";
+        return purchaseName;
+    }
+
 }

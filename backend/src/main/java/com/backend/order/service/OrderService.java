@@ -1,11 +1,9 @@
 package com.backend.order.service;
 
-import com.backend.order.dto.AddressDTO;
-import com.backend.order.dto.OrderDTO;
-import com.backend.order.dto.SuccessOrderDto;
+import com.backend.order.dto.*;
 
 public interface OrderService {
-    Integer insertOrder(OrderDTO orderDTO);
+    PaymentRes insertOrder(OrderDTO orderDTO);
 
     AddressDTO getRecentAddr();
 

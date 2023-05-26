@@ -30,8 +30,10 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public void insetOrderProduct(OrderProductDto orderProductDTO) {
+
+
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Order order = orderRepository.findById(orderProductDTO.getOrderId()).orElse(null);
+        Order order = orderRepository.findById(orderProductDTO.getOrderNum()).orElse(null);
         ProductOption productOption = productOptionRepository.findById(orderProductDTO.getOptionNum()).orElse(null);
         OrderProduct orderProduct = OrderProduct.builder()
                 .order(order)

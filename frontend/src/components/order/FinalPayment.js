@@ -214,9 +214,12 @@ const FinalPayment = ({ products }) => {
     return acc + cur.prodPrice;
   }, 0);
 
-  const [shippingFee, setShippingFee] = useState(prodSumPrice > 30000 ? 0 : 2500);
+  const [shippingFee, setShippingFee] = useState(
+    prodSumPrice > 30000 ? 0 : 2500
+  );
 
-
+  const prodNames = products.map((product) => product.prodName);
+  const prodNamesString = prodNames.join(" ,");
 
   const nav = useNavigate();
 
@@ -238,6 +241,7 @@ const FinalPayment = ({ products }) => {
     orderPriceSum: prodSumPrice, // 상품 총 금액
     shipCharge: shippingFee, // 배송비
     discount: 0, //할인 금액
+    prodNames: prodNamesString,
   };
 
   console.log(addComma(requestData.orderPriceSum));
@@ -253,9 +257,10 @@ const FinalPayment = ({ products }) => {
     if (check1 && check2 && check3 && check4) {
       alert("결제를 진행하겠습니다.");
       try {
-        const orderNum = await requestOrder(accessToken, requestData, products);
-        console.log("주문 성공");
-        nav("/ordercomplete");
+        const res = await requestOrder(accessToken, requestData, products);
+        // console.log(`이거 toss용임 ${res.data}`);
+        // console.log("주문 성공");
+        // nav("/ordercomplete");
       } catch (e) {
         console.error(e);
       }

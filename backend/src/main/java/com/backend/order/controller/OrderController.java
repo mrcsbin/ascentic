@@ -2,6 +2,7 @@ package com.backend.order.controller;
 
 import com.backend.order.dto.AddressDTO;
 import com.backend.order.dto.OrderDTO;
+import com.backend.order.dto.PaymentRes;
 import com.backend.order.dto.SuccessOrderDto;
 import com.backend.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/finishorder")// 상품 주문 API
-    public int insertOrder(@RequestBody OrderDTO orderDTO) {
+    public PaymentRes insertOrder(@RequestBody OrderDTO orderDTO) {
         return orderService.insertOrder(orderDTO);
     }
 

@@ -13,8 +13,11 @@ public class PaymentRes {
     private String payment;
     private Integer amount;
     private String orderName;
+    private String orderId;
+    private String customerName;
     private String successUrl;
     private String failUrl;
     private String createDate;
     private String paySuccssYn;
+    private Integer orderNum;
 }

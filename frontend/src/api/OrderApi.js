@@ -1,30 +1,50 @@
 import axios from "axios";
+import { useEffect, useRef } from "react";
 
 const ORDER_API_URL = "http://localhost:8080";
 
 // 주문 요청
 export const requestOrder = async (accessToken, requestData, products) => {
-  // console.log(`requestData = ${requestData}`);
-  // var forPayment = [...requestData, products[0].prodName];
-  // console.log(`forPayment = ${forPayment}`);
-
   try {
-    const response = await axios.post("/finishorder", requestData, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    });
-    const orderNum = response.data;
-    console.log(products);
+    const res = await axios
+      .post("/finishorder", requestData, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      })
 
-    const orderProd = products.map((item) => ({
-      orderId: orderNum,
+      // 토스페이먼츠
+      .then((res) => {
+        const data = res.data;
+        const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+        const customerKey = "cfy966II3JFcefeByCd2C";
+        const tossPayments = window.TossPayments(clientKey);
+        // console.log(data);
+        tossPayments.requestPayment("card", {
+          orderId: data.orderId,
+          orderName: data.orderName,
+          customerName: data.customerName,
+          amount: data.amount,
+          customerEmail: data.order_email,
+          successUrl: data.successUrl,
+          failUrl: data.failUrl,
+        });
+      });
+    const data = res.data;
+
+    // console.log(data.orderNum);
+    const orderProd = products.map((item, index) => ({
+      orderId: data.orderId,
+      orderNum: data.orderNum,
       optionNum: item.prodOptionNum,
       prodCount: item.prodCount,
       orderState: false,
     }));
 
-    // 여러개의 요청을 동시에
+    console.log("order Prod ==== ");
+    console.log(orderProd);
+
+    // // 여러개의 요청을 동시에
     await Promise.all(
       orderProd.map((prod) =>
         axios
@@ -37,7 +57,7 @@ export const requestOrder = async (accessToken, requestData, products) => {
       )
     );
 
-    return orderNum;
+    // return orderNum;
   } catch (error) {
     console.error(error);
   }

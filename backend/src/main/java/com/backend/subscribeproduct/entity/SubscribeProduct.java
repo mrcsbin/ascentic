@@ -27,7 +27,17 @@ public class SubscribeProduct {
     @Column(name = "sp_intro")
     private String sbProdIntro;
 
+    @Column(name = "sp_image")
+    private String sbProdImage;
+
     // 돌아가면 삭제
 //    @OneToMany(mappedBy = "subscribeProduct")
 //    private List<SubscribeSend> subscribeSends;
+
+    public void updateSbProduct(Scent scentName, String sbProdPrice, String sbProdIntro, String sbProdImage){
+        this.scentName = scentName;
+        this.sbProdPrice = sbProdPrice;
+        this.sbProdIntro = sbProdIntro;
+        this.sbProdImage = sbProdImage;
+    }
 }

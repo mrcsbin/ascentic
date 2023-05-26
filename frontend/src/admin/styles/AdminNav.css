@@ -1,0 +1,53 @@
+.admin-nav {
+  width: 15%;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 0%;
+  display: block;
+  float: left;
+  box-sizing: border-box;
+  padding: 15px 0;
+  /* position: fixed; */
+}
+.admin-nav .toMain {
+  font-size: 1rem;
+  width: 100%;
+  margin: 0 10%;
+  color: black;
+}
+.admin-nav > h3 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  margin: 2.5rem auto;
+}
+
+.admin-nav-list {
+  list-style-type: none;
+  padding: 0 10%;
+  margin: 0;
+}
+
+.admin-nav-list > li {
+  margin: 20px 0;
+}
+
+.admin-nav-link {
+  display: block;
+  color: #212529;
+  text-decoration: none;
+  padding: 8px 16px;
+  margin: 10px 0;
+  transition: background-color 0.3s;
+  font-size: 1.3rem;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.active {
+  background-color: #e9ecef;
+}
+
+.admin-nav-link.active {
+  font-weight: bold;
+}

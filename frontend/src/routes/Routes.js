@@ -4,7 +4,7 @@ import { setIsLogin } from "../store/modules/login";
 import { getCookie } from "../utils/Cookies";
 import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
 import * as Pages from "../pages/Pages";
-import * as AdminPages from "../admin/components/AdminPages";
+import * as AdminPages from "../admin/pages/AdminPages";
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
@@ -117,6 +117,11 @@ function Routes() {
         path="/admin/storemanagement"
         element={<AdminPages.AdminStoreManagement />}
       />
+      <Route
+        exact
+        path="/admin/storemanagement/:category"
+        element={<AdminPages.AdminStoreManagement />}
+      ></Route>
       <Route
         path="/admin/subscribemanagement"
         element={<AdminPages.AdminSubscribeManagement />}

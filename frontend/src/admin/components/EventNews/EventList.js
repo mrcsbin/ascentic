@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./EventList.css";
+import "../../styles/EventList.css";
 
 function EventList(props) {
   const [posts, setPosts] = useState([]);

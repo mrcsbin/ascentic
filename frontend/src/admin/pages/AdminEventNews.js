@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./AdminEventNews.css";
-import EventList from "./EventNews/EventList";
-import NewsList from "./EventNews/NewsList";
-import WritePost from "./EventNews/WritePost";
+import "../styles/AdminEventNews.css";
+import EventList from "../components/EventNews/EventList";
+import NewsList from "../components/EventNews/NewsList";
+import WritePost from "../components/EventNews/WritePost";
 
 function AdminEventNews() {
   const [mode, setMode] = useState(1);

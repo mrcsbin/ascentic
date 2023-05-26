@@ -1,6 +1,7 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.repository.ProductRepository;
@@ -139,5 +140,10 @@ public class ProductServiceImpl implements ProductService {
                     return AdminProductListDto.of(product);
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AdminProdUpdateInfoDto getAdminProdUpdateInfo(Integer prodNum) {
+        return AdminProdUpdateInfoDto.of(productRepository.findById(prodNum).orElse(null));
     }
 }

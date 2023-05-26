@@ -1,5 +1,6 @@
 package com.backend.product.dto;
 
+import com.backend.productoption.entity.ProductOption;
 import com.backend.reviewcomment.entity.ReviewComment;
 import com.backend.scent.entity.Scent;
 import lombok.Builder;

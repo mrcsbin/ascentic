@@ -20,4 +20,5 @@ public class PaymentRes {
     private String createDate;
     private String paySuccssYn;
     private Integer orderNum;
+    private Card card;
 }

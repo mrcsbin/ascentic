@@ -181,6 +181,7 @@ const FinalPayment = ({ products }) => {
     check4: false,
   });
   console.log(products);
+  console.log("여기에는 들어오니? final 184번째줄");
   // const prodSumPrice = products.reduce((sum, item) => sum + item.prodPrice, 0);
   // 동의 체크 이벤트
   const handleCheckChange = (e) => {
@@ -233,19 +234,18 @@ const FinalPayment = ({ products }) => {
     shipTel: shipInfo.shipTel, // 연락처
     shipMainAddress: shipInfo.mainAddress, // 메인주소
     shipSubAddress: shipInfo.subAddress, // 상세주소
-    shipMessage: shipInfo.shipMessage, // 배송메시지
+    shippingMessage: shipInfo.shipMessage, // 배송메시지
     orderPayment: paymentMethod, // 결제 수단
     orderPaymentInfo: "결제정보입니다!", // 카드번호, 결제관련 정보
-    orderPaymentState: false, // true: 결제완료, flase: 결제실패
-    orderState: "결제완료", // 결제완료, 배송준비중, 배송중, 배송완료
+    orderPaymentState: false, // true: 결제완료, false: 결제실패
+    orderState: "결제대기중", // 결제대기중 ,결제완료, 배송준비중, 배송중, 배송완료
     orderPriceSum: prodSumPrice, // 상품 총 금액
     shipCharge: shippingFee, // 배송비
     discount: 0, //할인 금액
     prodNames: prodNamesString,
   };
-
-  console.log(addComma(requestData.orderPriceSum));
-  console.log(addComma(requestData.shipCharge));
+  console.log("requestData");
+  console.log(requestData);
 
   // requestData.orderPriceSum
   // requestData.shipCharge
@@ -271,9 +271,9 @@ const FinalPayment = ({ products }) => {
 
   function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    console.log(num + "너냐??");
     return num.toString().replace(regexp, ",");
   }
-
   return (
     <FinalPay>
       <FinalSubTitle>최종 결제금액</FinalSubTitle>

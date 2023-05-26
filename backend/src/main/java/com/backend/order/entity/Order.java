@@ -73,5 +73,6 @@ public class Order {
     @Column(name = "orderDate", nullable = false)
     private LocalDateTime orderDate;
 
-
+    @Column(name = "tossPaymentKey")
+    private String tossPaymentKey;
 }

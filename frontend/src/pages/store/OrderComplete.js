@@ -19,7 +19,7 @@ function OrderComplete() {
   });
 
   return (
-    <div>
+    <div className="order_complete_wrap">
       <div className="title">주문 / 결제</div>
       <div className="complete_body">
         <div className="complete_message">
@@ -30,7 +30,7 @@ function OrderComplete() {
             감사합니다.
           </div>
           <div>
-            {orderInfo.prdeName}/ {orderInfo.Option} / 1개 외{" "}
+            {orderInfo.prdeName}/ {orderInfo.Option} / 1개 외
             {orderInfo.count - 1} 건<br />
             <br />
             {orderInfo.date} 주문하신 주문번호는 {orderInfo.orderNum} 입니다.

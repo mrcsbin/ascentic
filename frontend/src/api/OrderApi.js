@@ -35,7 +35,7 @@ export const requestOrder = async (accessToken, requestData, products) => {
           orderNum: data.orderNum,
           optionNum: item.prodOptionNum,
           prodCount: item.prodCount,
-          orderState: false,
+          orderState: "결제대기중",
         }));
 
         // // 여러개의 요청을 동시에 (각각의 상품들을)

@@ -1,49 +1,29 @@
 package com.backend.adminanalysis.controller;
 
-import com.backend.adminanalysis.dto.response.ProductSalesResponse;
-import com.backend.adminanalysis.dto.response.ScentSalesResponse;
-import com.backend.adminanalysis.service.AdminAnalysisService;
+import com.backend.adminanalysis.service.AdminAnalysisServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/analysis")
 @RequiredArgsConstructor
 public class AdminAnalysisController {
 
-    private final AdminAnalysisService adminAnalysisService;
+    private final AdminAnalysisServiceImpl adminAnalysisService;
 
-    @GetMapping("/sales/year")
-    public List<ProductSalesResponse.SalesPerYearDto> getProductSalesPerYear() {
-        return adminAnalysisService.getProductSalesPerYear();
+    @GetMapping("/sales/{type}")
+    public List<Map<String, Object>> getSalesAmountByDateTypeAndProductType(@PathVariable String type, String dateType) {
+        return adminAnalysisService.getSalesAmountByDateTypeAndProductType(type, dateType);
     }
 
-    @GetMapping("/product/month")
-    public List<ProductSalesResponse.SalesPerMonthDto> getProductSalesPerMonth() {
-        return adminAnalysisService.getProductSalesPerMonth();
-    }
-
-    @GetMapping("/product/day")
-    public List<ProductSalesResponse.SalesPerDayDto> getProductSalesPerDay() {
-        return adminAnalysisService.getProductSalesPerDay();
-    }
-
-    @GetMapping("/scent/year")
-    public List<ScentSalesResponse.SalesPerYearDto> getScentSalesPerYear() {
-        return adminAnalysisService.getScentSalesPerYear();
-    }
-
-    @GetMapping("/scent/month")
-    public List<ScentSalesResponse.SalesPerMonthDto> getScentSalesPerMonth() {
-        return adminAnalysisService.getScentSalesPerMonth();
-    }
-
-    @GetMapping("/scent/day")
-    public List<ScentSalesResponse.SalesPerDayDto> getScentSalesPerDay() {
-        return adminAnalysisService.getScentSalesPerDay();
+    @GetMapping("/sales/all")
+    public List<Map<String, Integer>> getAmountSales(String dateType) {
+        return adminAnalysisService.getAmountSales(dateType);
     }
 }

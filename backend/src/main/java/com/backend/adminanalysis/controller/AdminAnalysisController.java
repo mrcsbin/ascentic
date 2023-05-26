@@ -1,6 +1,6 @@
 package com.backend.adminanalysis.controller;
 
-import com.backend.adminanalysis.service.AdminAnalysisServiceImpl;
+import com.backend.adminanalysis.service.AdminAnalysisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AdminAnalysisController {
 
-    private final AdminAnalysisServiceImpl adminAnalysisService;
+    private final AdminAnalysisService adminAnalysisService;
 
     @GetMapping("/sales/{type}")
     public List<Map<String, Object>> getSalesAmountByDateTypeAndProductType(@PathVariable String type, String dateType) {

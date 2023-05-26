@@ -67,18 +67,23 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
     public List<Map<String, Integer>> getAmountSales(String dateType) {
         Map<String, Integer> salesMap = new HashMap<>();
 
-        Map<String, Integer> map = orderProductRepository.findAll().stream()
+        List<Map.Entry<String, Integer>> sortedEntries = orderProductRepository.findAll().stream()
                 .collect(Collectors.groupingBy(
                         orderProduct -> dateTypeMap.get(dateType).format(orderProduct.getOrder().getOrderDate()),
                         Collectors.summingInt(orderProduct -> orderProduct.getOrder().getOrderPriceSum())
-                ));
+                ))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toList());
 
-        return map.entrySet().stream()
+        return sortedEntries.stream()
                 .map(entry -> {
                     salesMap.put(dateTypeLabels.get(dateType), Integer.parseInt(entry.getKey()));
                     salesMap.put("판매액", entry.getValue());
-                    return salesMap;
+                    return new HashMap<>(salesMap);
                 })
                 .collect(Collectors.toList());
     }
+
+
 }

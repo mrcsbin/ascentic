@@ -13,7 +13,7 @@ function FindId() {
   const [getData, setGetData] = useState("");
   const [showCertificate, setShowCertificate] = useState(false);
   const [codeOk, setCodeOk] = useState(false);
-  
+
   const getCode = async (phone) => {
     const res = await sendCode(phone);
     console.log(res);
@@ -94,13 +94,15 @@ function FindId() {
             }
           }}
         />
-        <button
-          className="check"
-          onClick={() => getCode(phone)}
-          disabled={showCertificate || phone.length < 11 || codeOk}
-        >
-          인증번호 받기
-        </button>
+        <div className="button-box">
+          <button
+            className="check"
+            onClick={() => getCode(phone)}
+            disabled={showCertificate || phone.length < 11 || codeOk}
+          >
+            인증번호 받기
+          </button>
+        </div>
         {showCertificate && (
           <div className="certificateCode-box">
             <br />
@@ -117,10 +119,12 @@ function FindId() {
               value={code}
               disabled={false}
               onChange={(e) => setCode(e.target.value)}
-            />{" "}
-            <button className="check" onClick={() => check(phone, code)}>
-              인증번호 확인하기
-            </button>
+            />
+            <div className="button-box">
+              <button className="check" onClick={() => check(phone, code)}>
+                인증번호 확인하기
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -250,14 +254,16 @@ function FindPassword() {
               setPhone(e.target.value);
             }
           }}
-        />
-        <button
-          className="check"
-          onClick={() => getCode(phone)}
-          disabled={showCertificate || phone.length < 11 || codeOk}
-        >
-          인증번호 받기
-        </button>
+        />{" "}
+        <div className="button-box">
+          <button
+            className="check"
+            onClick={() => getCode(phone)}
+            disabled={showCertificate || phone.length < 11 || codeOk}
+          >
+            인증번호 받기
+          </button>
+        </div>
         {showCertificate && (
           <div className="certificateCode-box">
             <br />
@@ -274,10 +280,12 @@ function FindPassword() {
               value={code}
               disabled={false}
               onChange={(e) => setCode(e.target.value)}
-            />{" "}
-            <button className="check" onClick={() => check(phone, code)}>
-              인증번호 확인하기
-            </button>
+            />
+            <div className="button-box">
+              <button className="check" onClick={() => check(phone, code)}>
+                인증번호 확인하기
+              </button>
+            </div>
           </div>
         )}
       </div>

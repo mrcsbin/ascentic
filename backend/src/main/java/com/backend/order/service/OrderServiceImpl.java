@@ -102,7 +102,14 @@ public class OrderServiceImpl implements OrderService {
         String[] prodNamesArray = prodNames.split(",");
         int count = prodNamesArray.length - 1;
         String firstProduct = prodNamesArray[0].trim();
-        String purchaseName = firstProduct +"외 "+count+" 종";
+        String purchaseName;
+        if(prodNamesArray.length==1){
+            purchaseName=firstProduct;
+        }
+        else{
+           purchaseName  = firstProduct +"외 "+count+" 종";
+        }
+
         return purchaseName;
     }
 

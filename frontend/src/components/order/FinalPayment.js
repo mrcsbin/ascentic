@@ -211,7 +211,7 @@ const FinalPayment = ({ products }) => {
 
   // 상품들의 총금액 구하기
   const prodSumPrice = products.reduce((acc, cur) => {
-    return acc + cur.prodPrice;
+    return acc + cur.prodPrice * cur.prodCount;
   }, 0);
 
   const [shippingFee, setShippingFee] = useState(

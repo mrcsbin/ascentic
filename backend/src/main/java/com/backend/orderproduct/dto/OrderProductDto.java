@@ -14,5 +14,5 @@ public class OrderProductDto {
     private Integer orderNum;
     private Integer optionNum;
     private Integer prodCount;
-    private boolean orderState;
+    private String orderState;
 }

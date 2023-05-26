@@ -39,7 +39,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .order(order)
                 .productOption(productOption)
                 .prodCount(orderProductDTO.getProdCount())
-                .orderState(orderProductDTO.isOrderState())
+                .orderState(orderProductDTO.getOrderState())
                 .memberId(currentMemberId)
                 .build();
         cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
@@ -64,7 +64,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                         .orderDate(orderDate)
                         .orderProductQuantity(orderProduct.getProdCount())
                         .orderProductPrice(orderProduct.getProductOption().getProdPrice())
-                        .orderShippingState(orderProduct.getOrderState())
+                        .orderShippingState(orderProduct.getOrder().getOrderState())
                         .orderProductNumber(orderProduct.getOrderProdNum())
                         .build());
             }

@@ -31,7 +31,7 @@ public class OrderProduct {
     private Integer prodCount;
 
     @Column(name = "order_state")
-    private Boolean orderState;
+    private String orderState;
 
     @Column(name = "member_id")
     private String memberId;

@@ -17,6 +17,7 @@ import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -154,7 +155,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
-        Product product = productRepository.findById(adminProdUpdateInfoDto.getProdNum()).orElse(null);
+        Product product;
+        if(adminProdUpdateInfoDto.getProdNum() != null) {
+            product = productRepository.findById(adminProdUpdateInfoDto.getProdNum()).orElse(null);
+        } else {
+            product = new Product();
+            product.setProdDate(LocalDateTime.now());
+            product.setProdReadCount(0);
+            product.setProdWishCount(0);
+        }
         product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());

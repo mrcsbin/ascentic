@@ -43,6 +43,7 @@ public class Product {
     @Column(name = "prod_info")
     private String prodInfo;
 
+    @Setter
     @Column(name = "prod_date")
     private LocalDateTime prodDate;
 

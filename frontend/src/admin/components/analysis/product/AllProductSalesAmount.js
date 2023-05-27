@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { GetAllProductSalesData } from "../data";
 import { ResponsiveBar } from "@nivo/bar";
+import styled from "styled-components";
 
-export const AllProductSalesAmount = ({ dateType }) => {
+export const AllProductSalesAmount = ({dateType}) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  // const [dateType, setAllDataType] = useState("year");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,6 +107,34 @@ export const AllProductSalesAmount = ({ dateType }) => {
           e.indexValue
         }
       />
+      {/* <TempButtonBox>
+        <button
+          onClick={() => {
+            setAllDataType("year");
+          }}
+        >
+          Year!!
+        </button>
+        <button
+          onClick={() => {
+            setAllDataType("month");
+          }}
+        >
+          Month!!
+        </button>
+        <button
+          onClick={() => {
+            setAllDataType("day");
+          }}
+        >
+          day!!
+        </button>
+      </TempButtonBox> */}
     </div>
   );
 };
+
+const TempButtonBox = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;

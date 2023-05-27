@@ -6,11 +6,11 @@ import { useParams } from "react-router-dom";
 
 const AdminAnalysis = () => {
   const params = useParams();
-  const [activeTab, setActiveTab] = useState("상품 종류");
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
+  const [activeTab, setActiveTab] = useState("종류별 매출");
+  const [activeSubTab, setActiveSubTab] = useState(1);
+  const [productType, setProductType] = useState("category");
+  const [dateType, setDateType] = useState("year");
+  console.log(activeSubTab);
 
   if (params.category === "member") {
     return (
@@ -35,39 +35,137 @@ const AdminAnalysis = () => {
           <HeaderWrap>
             <HeaderLeft>상품 매출 통계</HeaderLeft>
             <HeaderRight>
-              <div
-                onClick={() => handleTabClick("상품 종류")}
-                className={activeTab === "상품 종류" ? "active" : ""}
+              <Tab
+                onClick={() => {
+                  setActiveTab("종류별 매출");
+                  setProductType("category");
+                }}
+                className={activeTab === "종류별 매출" ? "active" : ""}
               >
-                상품 종류
-              </div>
-              <div
-                onClick={() => handleTabClick("상품 향")}
-                className={activeTab === "상품 향" ? "active" : ""}
+                <TabName
+                  onClick={() => {
+                    setActiveSubTab(1);
+                    setDateType("year");
+                  }}
+                >
+                  종류별 매출
+                </TabName>
+                <SubTab>
+                  <SubTabName
+                    className={activeSubTab === 1 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("year");
+                      setActiveSubTab(1);
+                    }}
+                  >
+                    년별 매출
+                  </SubTabName>
+                  <SubTabName
+                    className={activeSubTab === 2 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("month");
+                      setActiveSubTab(2);
+                    }}
+                  >
+                    월별 매출
+                  </SubTabName>
+                </SubTab>
+              </Tab>
+
+              <Tab
+                onClick={() => {
+                  setActiveTab("향별 매출");
+                  setProductType("scent");
+                }}
+                className={activeTab === "향별 매출" ? "active" : ""}
               >
-                상품 향
-              </div>
-              <div
-                onClick={() => handleTabClick("상품")}
-                className={activeTab === "상품" ? "active" : ""}
+                <TabName
+                  onClick={() => {
+                    setActiveSubTab(3);
+                    setDateType("year");
+                  }}
+                >
+                  향별 매출
+                </TabName>
+                <SubTab>
+                  <SubTabName
+                    className={activeSubTab === 3 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("year");
+                      setActiveSubTab(3);
+                    }}
+                  >
+                    년별 매출
+                  </SubTabName>
+                  <SubTabName
+                    className={activeSubTab === 4 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("month");
+                      setActiveSubTab(4);
+                    }}
+                  >
+                    월별 매출
+                  </SubTabName>
+                </SubTab>
+              </Tab>
+
+              <Tab
+                onClick={() => {
+                  setActiveTab("전체 매출");
+                }}
+                className={activeTab === "전체 매출" ? "active" : ""}
               >
-                상품
-              </div>
+                <TabName
+                  onClick={() => {
+                    setActiveSubTab(5);
+                    setDateType("year");
+                  }}
+                >
+                  전체 매출
+                </TabName>
+                <SubTab>
+                  <SubTabName
+                    className={activeSubTab === 5 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("year");
+                      setActiveSubTab(5);
+                    }}
+                  >
+                    년별 매출
+                  </SubTabName>
+                  <SubTabName
+                    className={activeSubTab === 6 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("month");
+                      setActiveSubTab(6);
+                    }}
+                  >
+                    월별 매출
+                  </SubTabName>
+                  <SubTabName
+                    className={activeSubTab === 7 ? "active" : ""}
+                    onClick={() => {
+                      setDateType("day");
+                      setActiveSubTab(7);
+                    }}
+                  >
+                    월별 매출
+                  </SubTabName>
+                </SubTab>
+              </Tab>
             </HeaderRight>
           </HeaderWrap>
-          {activeTab === "상품 종류" && (
+          {(activeTab === "종류별 매출" || activeTab === "향별 매출") && (
             <>
-              <ProductSalesAmountByType productType={"category"} />
+              <ProductSalesAmountByType
+                productType={productType}
+                dateType={dateType}
+              />
             </>
           )}
-          {activeTab === "상품 향" && (
+          {activeTab === "전체 매출" && (
             <>
-              <ProductSalesAmountByType productType={"scent"} />
-            </>
-          )}
-          {activeTab === "상품" && (
-            <>
-              <AllProductSalesAmount />
+              <AllProductSalesAmount dateType={dateType} />
             </>
           )}
         </>
@@ -105,12 +203,41 @@ const HeaderRight = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: end;
-  padding-bottom: 5px;
-  > div {
-    margin-left: 20px;
-    cursor: pointer;
-    &.active {
-      font-weight: bold;
-    }
+`;
+
+const SubTab = styled.div`
+  display: none;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+`;
+
+const SubTabName = styled.div`
+  font-weight: 400;
+  padding: 10px 0;
+  &.active {
+    font-weight: bold;
+  }
+  &:hover {
+    font-weight: bold;
   }
 `;
+
+const Tab = styled.div`
+  /* margin-left: 20px; */
+  width: 100px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  &.active {
+    font-weight: bold;
+  }
+  &:hover {
+    font-weight: bold;
+  }
+  &:hover ${SubTab} {
+    display: block;
+  }
+`;
+
+const TabName = styled.div``;

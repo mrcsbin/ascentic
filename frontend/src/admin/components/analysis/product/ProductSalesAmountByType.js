@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { GetProductTypeSalesData } from "../data";
 import { useEffect, useState } from "react";
 
-export const ProductSalesAmountByType = ({ productType }) => {
+export const ProductSalesAmountByType = ({ productType, dateType }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  const [dateType, setDateType] = useState("year");
+  // const [dateType, setDateType] = useState("year");
   const [groupMode, setGroupMode] = useState(false);
 
   useEffect(() => {
@@ -148,7 +148,7 @@ export const ProductSalesAmountByType = ({ productType }) => {
         }
         groupMode={groupMode ? "grouped" : ""}
       />
-      <TempButtonBox>
+      {/* <TempButtonBox>
         <button
           onClick={() => {
             setDateType("year");
@@ -179,7 +179,7 @@ export const ProductSalesAmountByType = ({ productType }) => {
         >
           GroupMode!!!
         </button>
-      </TempButtonBox>
+      </TempButtonBox> */}
     </div>
   );
 };

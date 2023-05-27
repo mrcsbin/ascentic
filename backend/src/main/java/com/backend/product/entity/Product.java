@@ -26,6 +26,7 @@ public class Product {
     @Column(name = "prod_num")
     private Integer prodNum;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "scent_name")
     private Scent scent;

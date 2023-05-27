@@ -13,6 +13,7 @@ import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
 import com.backend.productimage.entity.ProductImage;
 import com.backend.productimage.repository.ProductImageRepository;
+import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductImageRepository productImageRepository;
     private final ReviewRepository reviewRepository;
     private final ProductOptionRepository productOptionRepository;
+    private final ScentRepository scentRepository;
 
     public void create(Product product) {
         productRepository.save(product);
@@ -153,6 +155,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
         Product product = productRepository.findById(adminProdUpdateInfoDto.getProdNum()).orElse(null);
+        product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
         product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());

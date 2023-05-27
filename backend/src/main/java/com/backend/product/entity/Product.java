@@ -30,12 +30,15 @@ public class Product {
     @JoinColumn(name = "scent_name")
     private Scent scent;
 
+    @Setter
     @Column(name = "prod_name")
     private String prodName;
 
+    @Setter
     @Column(name = "prod_category")
     private String prodCategory;
 
+    @Setter
     @Column(name = "prod_info")
     private String prodInfo;
 
@@ -88,5 +91,11 @@ public class Product {
             }
         }
         return false;
+    }
+
+    public List<Integer> getOptionNums() {
+        return productOption.stream()
+                .map(ProductOption::getOptionNum)
+                .collect(Collectors.toList());
     }
 }

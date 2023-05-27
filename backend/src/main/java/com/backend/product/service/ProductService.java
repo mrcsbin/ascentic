@@ -16,4 +16,6 @@ public interface ProductService {
     List<AdminProductListDto> getAdminProdList(String scent);
 
     AdminProdUpdateInfoDto getAdminProdUpdateInfo(Integer prodNum);
+
+    void updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto);
 }

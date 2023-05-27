@@ -4,12 +4,16 @@ import com.backend.product.entity.Product;
 import com.backend.productoption.entity.ProductOption;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class AdminProdUpdateInfoDto {
     private Integer prodNum;
     private String prodName;
@@ -38,4 +42,9 @@ public class AdminProdUpdateInfoDto {
                 .collect(Collectors.toList());
     }
 
+    public List<Integer> getOptionNums() {
+        return options.stream()
+                .map(OptionDto::getOptionNum)
+                .collect(Collectors.toList());
+    }
 }

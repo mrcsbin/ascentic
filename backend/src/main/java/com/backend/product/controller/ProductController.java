@@ -40,4 +40,9 @@ public class ProductController {
     public AdminProdUpdateInfoDto getAdminProdUpdateInfo(@RequestParam("prodNum") Integer prodNum) {
         return productServiceImpl.getAdminProdUpdateInfo(prodNum);
     }
+
+    @PostMapping("/adminProdUpdate")
+    public void updateAdminProd(@RequestBody AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
+        productServiceImpl.updateAdminProd(adminProdUpdateInfoDto);
+    }
 }

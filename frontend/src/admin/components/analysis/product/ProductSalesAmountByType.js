@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { GetProductTypeSalesData } from "../data";
 import { useEffect, useState } from "react";
 
-export const ProductSalesAmountByType = ({
-  productType,
-  dateType,
-  groupMode,
-}) => {
+export const ProductSalesAmountByType = ({ productType }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+
+  const [dateType, setDateType] = useState("year");
+  const [groupMode, setGroupMode] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +21,7 @@ export const ProductSalesAmountByType = ({
     };
 
     fetchData();
-  }, [productType, dateType]);
+  }, [productType, dateType, groupMode]);
 
   if (isLoading) {
     return <div>..........</div>;
@@ -149,8 +148,45 @@ export const ProductSalesAmountByType = ({
         }
         groupMode={groupMode ? "grouped" : ""}
       />
+      <TempButtonBox>
+        <button
+          onClick={() => {
+            setDateType("year");
+          }}
+        >
+          Year!!
+        </button>
+        <button
+          onClick={() => {
+            setDateType("month");
+          }}
+        >
+          Month!!
+        </button>
+      </TempButtonBox>
+      <TempButtonBox>
+        <button
+          onClick={() => {
+            setGroupMode(false);
+          }}
+        >
+          TotalMode!!!
+        </button>
+        <button
+          onClick={() => {
+            setGroupMode(true);
+          }}
+        >
+          GroupMode!!!
+        </button>
+      </TempButtonBox>
     </div>
   );
 };
 
 const Wrap = styled.div``;
+
+const TempButtonBox = styled.div`
+  margin: 0 auto;
+  text-align: center;
+`;

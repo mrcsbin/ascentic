@@ -13,7 +13,7 @@ const Wrap = styled.div`
   display: block;
   float: right;
   margin: 0;
-  width: 85%;
+  width: 100%;
 `;
 
 export default AdminMainPage;

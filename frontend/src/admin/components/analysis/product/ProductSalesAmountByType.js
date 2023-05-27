@@ -28,7 +28,7 @@ export const ProductSalesAmountByType = ({ productType, dateType }) => {
   }
 
   return (
-    <div style={{ width: "70%", height: "400px", margin: "0 auto" }}>
+    <div style={{ width: "70%", height: "400px", margin: "100px auto" }}>
       <ResponsiveBar
         data={data}
         keys={

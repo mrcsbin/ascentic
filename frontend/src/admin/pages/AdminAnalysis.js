@@ -10,7 +10,6 @@ const AdminAnalysis = () => {
   const [activeSubTab, setActiveSubTab] = useState(1);
   const [productType, setProductType] = useState("category");
   const [dateType, setDateType] = useState("year");
-  console.log(activeSubTab);
 
   if (params.category === "member") {
     return (

@@ -3,8 +3,8 @@ import { AdminNavToggle } from "../components/AdminNavToggle";
 
 function AdminMainPage() {
   return (
-    <Wrap className="asdsa">
-      <AdminNavToggle></AdminNavToggle>
+    <Wrap>
+      <div> 메인페이지 뭐넣을깝숑</div>
     </Wrap>
   );
 }
@@ -14,10 +14,6 @@ const Wrap = styled.div`
   float: right;
   margin: 0;
   width: 85%;
-`;
-
-const Content = styled.div`
-  padding-left: 15%;
 `;
 
 export default AdminMainPage;

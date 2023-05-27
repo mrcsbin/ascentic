@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { AdminNavToggle } from "../components/AdminNavToggle";
 
 function AdminMainPage() {
   return (
     <Wrap className="asdsa">
-      <Content>asdasdasd</Content>
+      <AdminNavToggle></AdminNavToggle>
     </Wrap>
   );
 }

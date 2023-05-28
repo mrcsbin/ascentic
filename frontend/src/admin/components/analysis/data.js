@@ -17,7 +17,7 @@ export const GetMembershipTrend = async (dateType) => {
 
   const data = [
     {
-      id: "id",
+      id: "회원가입 수",
       color: "hsl(224, 70%, 50%)",
       data: response,
     },

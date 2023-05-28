@@ -1,14 +1,40 @@
 import styled from "styled-components";
 import { MembershipTrend } from "./member/MembershipTrend";
+import { useState } from "react";
 
 export const MemberAnalysis = () => {
+  const [activeTab, setActiveTab] = useState(30);
+  const [dateType, setDateType] = useState(30);
+
   return (
     <>
       <HeaderWrap>
         <HeaderLeft>회원 통계</HeaderLeft>
-        <HeaderRight></HeaderRight>
+        <HeaderRight>
+          <Tab>설정</Tab>
+          <Tab className={activeTab === 30 ? "active" : ""}>
+            <TabName
+              onClick={() => {
+                setActiveTab(30);
+                setDateType(30);
+              }}
+            >
+              30일
+            </TabName>
+          </Tab>
+          <Tab className={activeTab === 60 ? "active" : ""}>
+            <TabName
+              onClick={() => {
+                setActiveTab(60);
+                setDateType(60);
+              }}
+            >
+              60일
+            </TabName>
+          </Tab>
+        </HeaderRight>
       </HeaderWrap>
-      <MembershipTrend />
+      <MembershipTrend dateType={dateType} />
     </>
   );
 };
@@ -35,39 +61,16 @@ const HeaderRight = styled.div`
   align-items: end;
 `;
 
-const SubTab = styled.div`
-  display: none;
-  position: absolute;
-  width: 100%;
-  z-index: 10;
-`;
-
-const SubTabName = styled.div`
-  font-weight: 400;
-  padding: 10px 0;
-  &.active {
-    font-weight: bold;
-  }
-  &:hover {
-    font-weight: bold;
-  }
-`;
-
 const Tab = styled.div`
   /* margin-left: 20px; */
-  width: 100px;
+  width: 60px;
   text-align: center;
   position: relative;
-  cursor: pointer;
   &.active {
     font-weight: bold;
   }
-  &:hover {
-    font-weight: bold;
-  }
-  &:hover ${SubTab} {
-    display: block;
-  }
 `;
 
-const TabName = styled.div``;
+const TabName = styled.span`
+  cursor: pointer;
+`;

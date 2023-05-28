@@ -17,6 +17,8 @@ export const getProductTypeSalesData = async (type, dateType) => {
 };
 
 export const getMembershipTrend = async (dateType) => {
-  const response = await axios.get(`${ADMIN_ANALYSIS_API_URL}/test`);
+  const response = await axios.get(
+    `${ADMIN_ANALYSIS_API_URL}/member?dateType=${dateType}`
+  );
   return response.data;
 };

@@ -89,20 +89,33 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
                 .collect(Collectors.toList());
     }
 
-    public List<Map<String, Object>> getMemberSignUpCounts() {
-        Map<LocalDate, Integer> signUpCountMap = memberRepository.findAll().stream()
+    public List<Map<String, Object>> getMembershipTrend(Integer dateType) {
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(dateType - 1); // 오늘로부터 30일 이전 날짜로 설정
+
+        List<Member> members = memberRepository.findAll();
+        Map<LocalDate, Long> signUpCountMap = members.stream()
+                .filter(member -> {
+                    LocalDate signUpDate = member.getMemberSignUpTime();
+                    return !signUpDate.isBefore(startDate) && !signUpDate.isAfter(endDate);
+                })
                 .collect(Collectors.groupingBy(
-                        Member::getMemberSignUpTime,
-                        Collectors.summingInt(e -> 1)
+                        member -> member.getMemberSignUpTime(),
+                        Collectors.counting()
                 ));
 
-        return signUpCountMap.entrySet().stream()
-                .map(entry -> {
+        List<LocalDate> dateRange = startDate.datesUntil(endDate.plusDays(1)).collect(Collectors.toList());
+
+        List<Map<String, Object>> signUpCounts = dateRange.stream()
+                .map(date -> {
                     Map<String, Object> dateCountMap = new HashMap<>();
-                    dateCountMap.put("x", entry.getKey());
-                    dateCountMap.put("y", entry.getValue());
+                    dateCountMap.put("x", date);
+                    dateCountMap.put("y", signUpCountMap.getOrDefault(date, 0L));
                     return dateCountMap;
                 })
                 .collect(Collectors.toList());
+
+        return signUpCounts;
     }
+
 }

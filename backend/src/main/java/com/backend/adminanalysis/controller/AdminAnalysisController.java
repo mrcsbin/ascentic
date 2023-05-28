@@ -28,8 +28,8 @@ public class AdminAnalysisController {
         return adminAnalysisService.getAmountSales(dateType);
     }
 
-    @GetMapping("/test")
-    public List<Map<String, Object>> getMembershipTrend() {
-        return adminAnalysisService.getMemberSignUpCounts();
+    @GetMapping("/member")
+    public List<Map<String, Object>> getMembershipTrend(Integer dateType) {
+        return adminAnalysisService.getMembershipTrend(dateType);
     }
 }

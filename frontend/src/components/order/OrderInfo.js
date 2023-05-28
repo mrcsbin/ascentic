@@ -7,9 +7,7 @@ import { getCookie } from "../../utils/Cookies";
 import { useEffect } from "react";
 
 // 주문자 정보
-const OrderInfo = () => {
-  const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
-
+const OrderInfo = ({ isOrderFormComplete, onChange, onSaveAndNext }) => {
   const accessToken = getCookie("accessToken");
 
   const dispatch = useDispatch();
@@ -52,9 +50,10 @@ const OrderInfo = () => {
   const saveAndNext = (e) => {
     e.preventDefault();
 
-    if (setIsOrderFormComplete) {
+    if (isOrderFormComplete) {
       handleSaveExtendChange("delivery");
       alert("저장되었습니다");
+      onSaveAndNext();
     } else {
       alert("모든 칸을 입력바랍니다.");
     }
@@ -81,15 +80,13 @@ const OrderInfo = () => {
       const areCheckValuesAllTrue = Object.values(checkValues).every(
         (value) => value === true
       );
-      setIsOrderFormComplete(
-        isEmailFilled && isNameFilled && isTelFilled && areCheckValuesAllTrue
-      );
+      const isComplete =
+        isEmailFilled && isNameFilled && isTelFilled && areCheckValuesAllTrue;
+      onChange(isComplete); // isOrderFormComplete 값을 업데이트
     };
 
     checkFormCompletion();
-    console.log(isOrderFormComplete);
-  }, [checkValues, isOrderFormComplete, orderInformation]);
-
+  }, [checkValues, orderInformation, onChange]);
   return (
     <OrderForm disabled={!isOrderFormComplete}>
       <EmailContent>

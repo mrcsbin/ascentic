@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { requestOrder } from "../../api/OrderApi";
 import { getCookie } from "../../utils/Cookies";
@@ -7,7 +7,11 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 // 최종 결제금액
-const FinalPayment = ({ products }) => {
+const FinalPayment = ({
+  products,
+  isOrderFormComplete,
+  isDeliveryFormComplete,
+}) => {
   // 동의 관련 state
   const [checkValues, setCheckValues] = useState({
     check1: false,
@@ -83,7 +87,10 @@ const FinalPayment = ({ products }) => {
 
   // requestData.orderPriceSum
   // requestData.shipCharge
-
+  const [buttonDisable, setButtonDisable] = useState(false);
+  useEffect(() => {
+    setButtonDisable(!isOrderFormComplete || !isDeliveryFormComplete);
+  }, [isOrderFormComplete, isDeliveryFormComplete, buttonDisable]);
   // 구매하기 버튼 클릭 이벤트
   const buySubmit = async () => {
     const { check1, check2, check3, check4 } = checkValues;
@@ -92,9 +99,6 @@ const FinalPayment = ({ products }) => {
       alert("결제를 진행하겠습니다.");
       try {
         const res = await requestOrder(accessToken, requestData, products);
-        // console.log(`이거 toss용임 ${res.data}`);
-        // console.log("주문 성공");
-        // nav("/ordercomplete");
       } catch (e) {
         console.error(e);
       }
@@ -105,11 +109,11 @@ const FinalPayment = ({ products }) => {
 
   function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    console.log(num + "너냐??");
     return num.toString().replace(regexp, ",");
   }
+
   return (
-    <FinalPay>
+    <FinalPay disabled={buttonDisable}>
       <FinalSubTitle>최종 결제금액</FinalSubTitle>
       {/* 결제정보 */}
       <FinalContent>
@@ -188,7 +192,9 @@ const FinalPayment = ({ products }) => {
           (필수)위 주문의 상품, 가격, 할인, 배송 정보에 동의합니다.
         </div>
       </FinalAgree>
-      <button onClick={() => buySubmit()}>구매하기</button>
+      <button onClick={() => buySubmit()} disabled={buttonDisable}>
+        구매하기
+      </button>
     </FinalPay>
   );
 };
@@ -256,12 +262,15 @@ const FinalAgree = styled.div`
 `;
 
 const FinalPay = styled.div`
-  > button {
-    margin-left: 20px;
-    background-color: black;
-    width: 529px;
-    height: 80px;
-    font-size: 25px;
+  button {
+    margin-left: 60px;
     color: white;
+    background-color: ${(props) => (props.disabled ? "gray" : "black")};
+    width: 455px;
+    height: 50px;
+    font-size: 18px;
+    opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+    pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   }
 `;

@@ -43,16 +43,12 @@ function AdminStoreManagement() {
         const res = await axios.get(
           `http://localhost:8080/admingetprodlist?category=${category}`
         );
-        console.log("gg");
         setProducts(res.data);
       } catch (e) {
         console.log(e);
       }
     };
-
-    if (!isOpenEditModal) {
-      fetchProducts();
-    }
+    fetchProducts();
   }, [category, isOpenEditModal, isOpenAddModal]);
 
   return (

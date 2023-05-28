@@ -41,3 +41,13 @@ export const scentNames = [
   "Tonka nut",
   "Tabacco",
 ];
+
+export const categories = [
+  "향수",
+  "디퓨저",
+  "향초",
+  "핸드크림",
+  "샴푸",
+  "바디워시",
+  "섬유향수",
+];

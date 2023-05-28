@@ -1,7 +1,32 @@
 import styled from "styled-components";
 import { InquiryItem } from "./InquiryItem";
+import { useEffect, useState } from "react";
+import { getCookie } from "../../../utils/Cookies";
+import axios from "axios";
 
 export const InquiryList = () => {
+  const [inquiryList, setInquiryList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8080/inquiry/getInquiry",
+          {
+            headers: {
+              Authorization: `Bearer ${getCookie("accessToken")}`,
+            },
+          }
+        );
+        setInquiryList(res.data);
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProductData();
+  }, []);
   return (
     <Wrap>
       <ContentHeader>1:1 문의내역</ContentHeader>
@@ -19,13 +44,14 @@ export const InquiryList = () => {
           <TabName>상태</TabName>
         </InquiryStateBox>
       </Section>
-      <InquiryItem />
+      {inquiryList.map((item, index) => (
+        <InquiryItem item={item} key={index} />
+      ))}
     </Wrap>
   );
 };
 
-const Wrap = styled.div`
-`;
+const Wrap = styled.div``;
 
 const ContentHeader = styled.div`
   padding: 20px 0;

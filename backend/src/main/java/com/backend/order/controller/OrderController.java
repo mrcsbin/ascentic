@@ -1,18 +1,17 @@
 package com.backend.order.controller;
 
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
-import com.backend.order.service.OrderService;
+import com.backend.order.service.OrderServiceImpl;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -20,7 +19,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 @RestController
 public class OrderController {
-    private final OrderService orderService;
+    private final OrderServiceImpl orderService;
     private final OrderRepository orderRepository;
     private final OrderProductRepository orderProductRepository;
 
@@ -34,7 +33,7 @@ public class OrderController {
         return orderService.getRecentAddr();
     }
 
-    @GetMapping("/successpayment") // 결제 완료 정보 조회
+    @GetMapping("/successpayment") // 최종 결제 승인 요청
     public ResponseEntity<?> paymentFinalRes(@RequestParam String paymentKey,
                                              @RequestParam String orderId, @RequestParam Integer amount) {
 
@@ -58,13 +57,14 @@ public class OrderController {
                 .orderDate(orderRes.getOrderDate()) //구매날짜
                 .email(orderRes.getOrderEmail()) //구매자 이메일
                 .shipName(orderRes.getOrderName())  // 수령인 이름
-                .shipAddress(orderRes.getShipMainAddress()) //수령인 배송지
+                .shipMainAddress(orderRes.getShipMainAddress()) //수령인 배송지
+                .shipSubAddress(orderRes.getShipSubAddress()) //수령인 배송지
                 .shipTel(orderRes.getShipTel()) //수령인 전번
                 .shipCharge(orderRes.getShipCharge()) //배송비
                 .orderPriceSum(finalRes.getTotalAmount()) //상품가격
                 .prodNames(finalRes.getOrderName()) //구매한 제품명
                 .totalProdCount(orderProductRepository.getProdCountSum(orderRes.getOrderNum())) // 총 구매한 제품 개수
-                .orderState(orderRes.getOrderState())  //결제 상태
+                .orderState("결제 완료")  //결제 상태
                 .card(finalRes.getCard()) //카드 정보
                 .failure(finalRes.getFailure()) //결제실패시
                 .build());
@@ -73,25 +73,7 @@ public class OrderController {
         String failureMessage = finalRes.getFailure() != null ? finalRes.getFailure().getMessage() : "";
         HttpHeaders headers = new HttpHeaders();
         URI location = UriComponentsBuilder.fromUriString("http://localhost:3000/ordercomplete")
-//                .queryParam("orderName", orderRes.getOrderName())
                 .queryParam("orderId", orderRes.getOrderId())
-//                .queryParam("orderDate", orderRes.getOrderDate())
-//                .queryParam("email", orderRes.getOrderEmail())
-//                .queryParam("shipName", orderRes.getOrderName())
-//                .queryParam("shipAddress", orderRes.getShipMainAddress())
-//                .queryParam("shipTel", orderRes.getShipTel())
-//                .queryParam("shipCharge", orderRes.getShipCharge())
-//                .queryParam("orderPriceSum", finalRes.getTotalAmount())
-//                .queryParam("prodNames", finalRes.getOrderName())
-//                .queryParam("totalProdCount", orderProductRepository.getProdCountSum(orderRes.getOrderNum()))
-//                .queryParam("orderState", orderRes.getOrderState())
-//                .queryParam("cardIssuerCode", finalRes.getCard().getIssuerCode())
-//                .queryParam("cardNumber", finalRes.getCard().getNumber())
-//                .queryParam("cardInstallment", finalRes.getCard().getInstallmentPlanMonths())
-//                .queryParam("cardType", finalRes.getCard().getCardType())
-//                .queryParam("cardOwnerType", finalRes.getCard().getOwnerType())
-//                .queryParam("failureCode", failureCode)
-//                .queryParam("failureMessage", failureMessage)
                 .build()
                 .toUri();
         headers.setLocation(location);
@@ -102,17 +84,28 @@ public class OrderController {
 
     @GetMapping("/orderCompleteInfo")
     public SuccessOrderDto getOrderCompleteInfo(String orderId) {
-        Order orderRes = orderService.orderFindByOrderId(orderId);
-        PaymentFinalRes finalRes =orderService.paymentFinalResFindByOrderId(orderId);
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        Order orderRes = orderService.findByOrderIdAndMemberId(orderId, currentMemberId);
+        PaymentFinalRes finalRes = orderService.paymentFinalResFindByOrderId(orderId);
+
+        if (orderRes.getOrderId() ==  "0"){
+            return SuccessOrderDto.builder()
+                    .orderId("0")
+                    .build();
+        }
+
         String failureCode = finalRes.getFailure() != null ? finalRes.getFailure().getCode() : "";
         String failureMessage = finalRes.getFailure() != null ? finalRes.getFailure().getMessage() : "";
+
         SuccessOrderDto successreturn = SuccessOrderDto.builder()
                 .orderName(orderRes.getOrderName()) // 주문자
                 .orderId(orderRes.getOrderId()) // 토스용 orderId
                 .orderDate(orderRes.getOrderDate()) // 구매날짜
                 .email(orderRes.getOrderEmail()) // 구매자 이메일
                 .shipName(orderRes.getOrderName()) // 수령인 이름
-                .shipAddress(orderRes.getShipMainAddress()) // 수령인 배송지
+                .shipMainAddress(orderRes.getShipMainAddress())
+                .shipSubAddress(orderRes.getShipSubAddress()) // 수령인 배송지
                 .shipTel(orderRes.getShipTel()) // 수령인 전화번호
                 .shipCharge(orderRes.getShipCharge()) // 배송비
                 .orderPriceSum(finalRes.getTotalAmount()) // 상품 가격

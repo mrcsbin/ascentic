@@ -15,7 +15,8 @@ public class SuccessOrderDto {
     private LocalDateTime orderDate; //구매 날짜
     private String email; //구메자 이메일
     private String shipName; // 수령인
-    private String shipAddress; //수령인 배송지
+    private String shipMainAddress; //수령인 배송지
+    private String shipSubAddress; //수령인 배송지
     private String shipTel; //수령인 휴대전화
     private Integer shipCharge; //배송비
     private Integer orderPriceSum; //상품가격

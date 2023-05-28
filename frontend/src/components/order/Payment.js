@@ -43,7 +43,7 @@ const Payment = () => {
         채무지급보증계약을 체결하여 보장해드리고 있습니다.
         <br />
         <br />
-        <a href="#">서비스 가입사실 확인</a>
+        <a href="/">서비스 가입사실 확인</a>
       </div>
     </PaymentMethod>
   );

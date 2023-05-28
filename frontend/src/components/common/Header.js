@@ -54,7 +54,10 @@ const HeaderV2 = () => {
     if (location.pathname.startsWith("/exp")) {
       setIsDarkMode(true);
 
-      if (location.pathname.startsWith("/exp/taste/res")|location.pathname.startsWith("/exp/subsmanage/")) {
+      if (
+        location.pathname.startsWith("/exp/taste/res") |
+        location.pathname.startsWith("/exp/subsmanage/")
+      ) {
         setIsDarkMode(false);
       }
     } else {
@@ -73,6 +76,7 @@ const HeaderV2 = () => {
   }, [dispatch]);
   const logoSrc = isDarkMode ? logoW : logoB;
   if (location.pathname.startsWith("/admin")) return null;
+  if (location.pathname.startsWith("/NotFound")) return null;
   //isDarkMode leftBox CenterBox RightBox 단에서 props로 주니까 보라색으로 이상하게 바뀜요,,, 그래서 styledLink로,,
   return (
     <div className="NoticeHeader">

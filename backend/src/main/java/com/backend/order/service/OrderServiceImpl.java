@@ -140,9 +140,23 @@ public class OrderServiceImpl implements OrderService {
         paymentFinalResRepository.save(result);
     }
 
-   public Order orderFindByOrderId(String orderId){
+    @Override
+   public Order orderFindByOrder(String orderId){
     return orderRepository.findByOrderId(orderId);
    };
+
+    public Order findByOrderIdAndMemberId(String orderId, String memberID){
+        Order order = orderRepository.findByOrderIdAndMemberId(orderId, memberID);
+        if (order == null){
+            Order orderNull = new Order();
+            orderNull.setOrderId("0");
+            return orderNull;
+        }
+        return order;
+    };
+
+
+
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId){
      return paymentFinalResRepository.findByOrderId(orderId);
     };

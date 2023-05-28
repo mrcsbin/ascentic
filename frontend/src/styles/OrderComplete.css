@@ -1,7 +1,7 @@
 /* 바디 세팅 */
 body {
   /* margin-left: 230px; */
-  margin-top: 55px;
+  /* margin-top: 55px; */
 }
 /*------------------------------------- 여기부터 orderComplete 페이지 title -------------------*/
 
@@ -19,7 +19,7 @@ body {
 /*------------------------------------- 여기부터 orderComplete 페이지 body -------------------*/
 .complete_body {
   margin-top: 50px;
-  margin-left: 230px;
+  margin-left: 100px;
   /* text-align: center; */
 }
 

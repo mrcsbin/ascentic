@@ -17,7 +17,7 @@ public interface OrderService {
 
     void saveRes(PaymentFinalRes result);
 
-    Order orderFindByOrderId(String orderId);
+    public Order orderFindByOrder(String orderId);
 
     PaymentFinalRes paymentFinalResFindByOrderId(String orderId);
 }

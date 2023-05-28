@@ -20,7 +20,6 @@ export const GetMembershipTrend = async (dateType) => {
   const data = [
     {
       id: "회원가입 수",
-      color: "hsl(224, 70%, 50%)",
       data: response,
     },
   ];
@@ -38,7 +37,6 @@ export const GetSubscribeProductScore = async () => {
   const data = [
     {
       id: "평점",
-      color: "hsl(224, 70%, 50%)",
       data: response,
     },
   ];

@@ -11,4 +11,6 @@ public interface AdminAnalysisService {
     List<Map<String, Object>> getMembershipTrend(Integer dateType);
 
     List<Map<String, Object>> getMemberPerSubscribeMember();
+
+    List<Map<String, Object>> getSubscribeProductScores();
 }

@@ -131,6 +131,11 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
         );
     }
 
+    private Map<String, Object> createDataMap(String id, String label, Long count) {
+        return Map.of("id", id, "label", label, "value", count);
+    }
+
+    @Override
     public List<Map<String, Object>> getSubscribeProductScores() {
         List<SubscribeSend> allSubscribeSends = subscribeSendRepository.findAll();
 
@@ -159,7 +164,4 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
         return result;
     }
 
-    private Map<String, Object> createDataMap(String id, String label, Long count) {
-        return Map.of("id", id, "label", label, "value", count);
-    }
 }

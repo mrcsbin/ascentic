@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import DROP_UP from "../../assets/drop-up.png";
-import DROP_DOWN from "../../assets/drop-down.png";
+import DROP_UP from "../../assets/admin/drop-up.png";
+import DROP_DOWN from "../../assets/admin/drop-down.png";
 
 export const AdminNavToggle = () => {
   const location = useLocation();
@@ -103,7 +103,7 @@ export const AdminNavToggle = () => {
                   className={activeSubTab === "고객 문의" ? "active" : ""}
                   onClick={() => setActiveSubTab("고객 문의")}
                 >
-                  고객 문의
+                  문의 내역
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>
@@ -113,7 +113,7 @@ export const AdminNavToggle = () => {
                   className={activeSubTab === "상담 내역" ? "active" : ""}
                   onClick={() => setActiveSubTab("상담 내역")}
                 >
-                  상담 내역
+                  전체 문의 내역
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>

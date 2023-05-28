@@ -68,7 +68,6 @@ public class Order {
 
     @Column(name = "ship_charge")
     private Integer shipCharge;
-
     @CreationTimestamp
     @Column(name = "orderDate", nullable = false)
     private LocalDateTime orderDate;

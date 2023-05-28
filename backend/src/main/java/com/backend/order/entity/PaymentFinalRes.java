@@ -1,56 +1,57 @@
 package com.backend.order.entity;
 
 import com.backend.order.dto.Card;
+import com.backend.order.dto.Failure;
 import jakarta.persistence.Column;
 import lombok.*;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 
 @Entity
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_order_payment_receipt")
 public class PaymentFinalRes {
     @Id
     @Column
     private String paymentKey;
+
     @Column
     private String orderId;
     @Column
     private String orderName;
+
     @Column
     private String status;
-//
-//    private Card card;
-//    @Embedded
-//    private Cancel[] cancel;
-//    @Embedded
-    private Failure failure;
+
     @Column
     private Integer totalAmount;
 
-    public PaymentFinalRes() {
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
+    private Card card;
 
-    public PaymentFinalRes(String paymentKey, String orderId, String orderName, String status,
-                           Failure failure, Integer totalAmount) {
-        this.paymentKey = paymentKey;
-        this.orderId = orderId;
-        this.orderName = orderName;
-        this.status = status;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "failure_id")
+    private Failure failure;
+
+//    public PaymentFinalRes() {
+//    }
+
+
 //        this.cancel = (cancel != null && cancel.length > 0) ? new Cancel[]{cancel[0]} : null;
-        this.failure = failure;
-        this.totalAmount = totalAmount;
-//        this.card = card;
-    }
+//public PaymentFinalRes(String paymentKey, String orderId, String orderName, String status,Failure failure, Integer totalAmount, Card card) {
+//            this.paymentKey = paymentKey;
+//            this.orderId = orderId;
+//            this.orderName = orderName;
+//            this.status = status;
+//            this.failure = failure;
+//            this.totalAmount = totalAmount;
+//            this.card = card;
+//        }
 
-    @Embeddable
-    public static class Failure {
-        private String code;
-        private String message;
-    }
 
     @Embeddable
     public static class Cancel {

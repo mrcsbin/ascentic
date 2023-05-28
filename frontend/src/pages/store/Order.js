@@ -79,21 +79,21 @@ const Order = () => {
             <DeliveryInfo />
           </ExtendAble>
 
-          <ExtendAble
+          {/* <ExtendAble
             title="할인 혜택"
             isOpen={extend.disCount}
             onClick={() => handleExtendChange("disCount")}
           >
             <DiscountBenefit />
-          </ExtendAble>
+          </ExtendAble> */}
 
-          <ExtendAble
+          {/* <ExtendAble
             title="결제 수단"
             isOpen={extend.payment}
             onClick={() => handleExtendChange("payment")}
           >
             <Payment />
-          </ExtendAble>
+          </ExtendAble> */}
 
           <OrderNotice>
             · 환경부 고시에 따라, 기본 쇼핑백이 제공되지 않습니다.

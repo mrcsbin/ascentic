@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useNavigate } from "react";
 
 const ORDER_API_URL = "http://localhost:8080";
 
@@ -19,15 +19,19 @@ export const requestOrder = async (accessToken, requestData, products) => {
         const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
         const tossPayments = window.TossPayments(clientKey);
 
-        tossPayments.requestPayment("card", {
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          amount: data.amount,
-          customerEmail: data.order_email,
-          successUrl: data.successUrl,
-          failUrl: data.failUrl,
-        });
+        tossPayments
+          .requestPayment("card", {
+            orderId: data.orderId,
+            orderName: data.orderName,
+            customerName: data.customerName,
+            amount: data.amount,
+            customerEmail: data.order_email,
+            successUrl: data.successUrl,
+            failUrl: data.failUrl,
+          })
+          .then((res) => {
+            console.log(res.data);
+          });
 
         // ProdOrder 생성하기
         const orderProd = products.map((item, index) => ({

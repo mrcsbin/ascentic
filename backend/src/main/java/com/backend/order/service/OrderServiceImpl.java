@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -32,7 +33,9 @@ public class OrderServiceImpl implements OrderService {
     public PaymentRes insertOrder(OrderDTO orderDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
-        String orderIdTemp = UUID.randomUUID().toString();
+        LocalDate currentDate = LocalDate.now();
+        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String orderIdTemp = formattedDate + UUID.randomUUID().toString().substring(0, 6);
 
         Order order =  orderRepository.save(Order.builder()
                 .memberId(currentMemberId)
@@ -81,28 +84,6 @@ public class OrderServiceImpl implements OrderService {
                 .shipSubAddress(order.getShipSubAddress())
                 .build();
     }
-
-//    @Override
-//    public SuccessOrderDto getSuccessOrderInfo(Integer orderNum) {
-//        Order order = orderRepository.findById(orderNum).orElse(null);
-//
-//        String orderDate = String.valueOf(order.getOrderDate());
-//        orderDate = orderDate.replaceFirst("-", "년 ").replaceFirst("-", "월 ").replaceFirst("T", "일 ");
-//        orderDate = orderDate.replaceFirst(":", "시").replaceFirst(":", "분");
-//        orderDate = orderDate.substring(0, 20);
-//
-//        return SuccessOrderDto.builder()
-//                .orderName(order.getOrderName())
-//                .orderDate(orderDate)
-//                .email(order.getOrderEmail())
-//                .shipName(order.getShipName())
-//                .shipAddress(order.getShipMainAddress() + " " + order.getShipSubAddress())
-//                .shipTel(order.getShipTel())
-//                .payMethod(order.getOrderPayment())
-//                .shipCharge(order.getShipCharge())
-//                .orderPriceSum(order.getOrderPriceSum())
-//                .build();
-//    }
 
     private static String countProdNames(String prodNames) {
         String[] prodNamesArray = prodNames.split(",");
@@ -159,6 +140,10 @@ public class OrderServiceImpl implements OrderService {
         paymentFinalResRepository.save(result);
     }
 
-
-
+   public Order orderFindByOrderId(String orderId){
+    return orderRepository.findByOrderId(orderId);
+   };
+    public PaymentFinalRes paymentFinalResFindByOrderId(String orderId){
+     return paymentFinalResRepository.findByOrderId(orderId);
+    };
 }

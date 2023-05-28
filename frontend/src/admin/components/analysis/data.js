@@ -2,6 +2,7 @@ import {
   getAllProductSalesData,
   getProductTypeSalesData,
   getMembershipTrend,
+  getSubscribeMemberPerMember,
 } from "../../api/AdminAnalysisApi";
 
 export const GetProductTypeSalesData = async (type, dateType) => {
@@ -25,3 +26,7 @@ export const GetMembershipTrend = async (dateType) => {
 
   return data;
 };
+
+export const GetSubscribeMemberPerMember = async () => {
+  return await getSubscribeMemberPerMember();
+}

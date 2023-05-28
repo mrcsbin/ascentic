@@ -1,9 +1,9 @@
 package com.backend.adminanalysis.service;
 
-import com.backend.member.entity.Member;
 import com.backend.member.repository.MemberRepository;
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
+import com.backend.subscribemember.repository.SbMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,7 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
 
     private final OrderProductRepository orderProductRepository;
     private final MemberRepository memberRepository;
+    private final SbMemberRepository sbMemberRepository;
 
     private Map<String, DateTimeFormatter> dateTypeMap = Map.of(
             "year", DateTimeFormatter.ofPattern("yyyy"),
@@ -89,12 +90,12 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Map<String, Object>> getMembershipTrend(Integer dateType) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(dateType - 1); // 오늘로부터 30일 이전 날짜로 설정
 
-        List<Member> members = memberRepository.findAll();
-        Map<LocalDate, Long> signUpCountMap = members.stream()
+        Map<LocalDate, Long> signUpCountMap = memberRepository.findAll().stream()
                 .filter(member -> {
                     LocalDate signUpDate = member.getMemberSignUpTime();
                     return !signUpDate.isBefore(startDate) && !signUpDate.isAfter(endDate);
@@ -118,4 +119,18 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
         return signUpCounts;
     }
 
+    @Override
+    public List<Map<String, Object>> getMemberPerSubscribeMember() {
+        Long memberCount = memberRepository.count();
+        Long subscribeMemberCount = sbMemberRepository.countBySbEndDateIsNull();
+
+        return List.of(
+                createDataMap("회원 수", "회원 수", memberCount - subscribeMemberCount),
+                createDataMap("구독회원 수", "구독회원 수", subscribeMemberCount)
+        );
+    }
+
+    private Map<String, Object> createDataMap(String id, String label, Long count) {
+        return Map.of("id", id, "label", label, "value", count);
+    }
 }

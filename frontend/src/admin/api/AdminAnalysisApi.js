@@ -22,3 +22,8 @@ export const getMembershipTrend = async (dateType) => {
   );
   return response.data;
 };
+
+export const getSubscribeMemberPerMember = async () => {
+  const response = await axios.get(`${ADMIN_ANALYSIS_API_URL}/subscribe`);
+  return response.data;
+};

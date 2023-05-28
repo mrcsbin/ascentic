@@ -1,4 +1,3 @@
-import { ResponsiveBar } from "@nivo/bar";
 import { useState, useEffect } from "react";
 import { GetMembershipTrend } from "../data";
 import { ResponsiveLine } from "@nivo/line";
@@ -72,9 +71,6 @@ export const MembershipTrend = ({dateType}) => {
 
 const Header = styled.div`
   text-align: center;
-`;
-
-const Button = styled.div`
-  cursor: pointer;
-  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
 `;

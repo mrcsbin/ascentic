@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +30,10 @@ public class AdminAnalysisController {
     @GetMapping("/member")
     public List<Map<String, Object>> getMembershipTrend(Integer dateType) {
         return adminAnalysisService.getMembershipTrend(dateType);
+    }
+
+    @GetMapping("/subscribe")
+    public List<Map<String, Object>> getSubscribeMemberPerMember() {
+        return adminAnalysisService.getMemberPerSubscribeMember();
     }
 }

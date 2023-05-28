@@ -37,7 +37,7 @@ export const ProductAnalysis = () => {
                   setActiveSubTab(1);
                 }}
               >
-                년별 매출
+                연도별 매출
               </SubTabName>
               <SubTabName
                 className={activeSubTab === 2 ? "active" : ""}
@@ -74,7 +74,7 @@ export const ProductAnalysis = () => {
                   setActiveSubTab(3);
                 }}
               >
-                년별 매출
+                연도별 매출
               </SubTabName>
               <SubTabName
                 className={activeSubTab === 4 ? "active" : ""}
@@ -110,7 +110,7 @@ export const ProductAnalysis = () => {
                   setActiveSubTab(5);
                 }}
               >
-                년별 매출
+                연도별 매출
               </SubTabName>
               <SubTabName
                 className={activeSubTab === 6 ? "active" : ""}

@@ -4,15 +4,15 @@ import com.backend.member.repository.MemberRepository;
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import com.backend.subscribemember.repository.SbMemberRepository;
+import com.backend.subscribeproduct.entity.SubscribeProduct;
+import com.backend.subscribesend.entity.SubscribeSend;
+import com.backend.subscribesend.repository.SubscribeSendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,6 +23,7 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
     private final OrderProductRepository orderProductRepository;
     private final MemberRepository memberRepository;
     private final SbMemberRepository sbMemberRepository;
+    private final SubscribeSendRepository subscribeSendRepository;
 
     private Map<String, DateTimeFormatter> dateTypeMap = Map.of(
             "year", DateTimeFormatter.ofPattern("yyyy"),
@@ -128,6 +129,34 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
                 createDataMap("회원 수", "회원 수", memberCount - subscribeMemberCount),
                 createDataMap("구독회원 수", "구독회원 수", subscribeMemberCount)
         );
+    }
+
+    public List<Map<String, Object>> getSubscribeProductScores() {
+        List<SubscribeSend> allSubscribeSends = subscribeSendRepository.findAll();
+
+        Map<SubscribeProduct, List<Integer>> scoresByProduct = allSubscribeSends.stream()
+                .collect(Collectors.groupingBy(SubscribeSend::getSubscribeProduct,
+                        LinkedHashMap::new,
+                        Collectors.mapping(SubscribeSend::getSbSendScore, Collectors.toList())));
+
+        List<Map<String, Object>> result = scoresByProduct.entrySet().stream()
+                .map(entry -> {
+                    SubscribeProduct subscribeProduct = entry.getKey();
+                    List<Integer> scores = entry.getValue();
+
+                    double avgScore = scores.stream()
+                            .mapToInt(Integer::intValue)
+                            .average()
+                            .orElse(0.0);
+
+                    Map<String, Object> productScoreMap = new LinkedHashMap<>();
+                    productScoreMap.put("x", subscribeProduct.getScentName().getScentName());
+                    productScoreMap.put("y", avgScore);
+                    return productScoreMap;
+                })
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     private Map<String, Object> createDataMap(String id, String label, Long count) {

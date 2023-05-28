@@ -27,7 +27,14 @@ export const AdminNavToggle = () => {
         <LinkToMain to="/">&lt; 메인페이지로 돌아가기</LinkToMain>
       </LinkBox>
       <LinkToMenu to="/admin">
-        <Header>관리자 페이지</Header>
+        <Header
+          onClick={() => {
+            setActiveTab(null);
+            setActiveSubTab(null);
+          }}
+        >
+          관리자 페이지
+        </Header>
       </LinkToMenu>
       <ToggleMenuBox className={activeTab === "통계" ? "active" : ""}>
         <ToggleMenuHeader
@@ -91,7 +98,7 @@ export const AdminNavToggle = () => {
         {activeTab === "고객서비스" && (
           <MenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/customerservice">
+              <LinkToMenu to="/admin/customerservice/new">
                 <SubMenu
                   className={activeSubTab === "고객 문의" ? "active" : ""}
                   onClick={() => setActiveSubTab("고객 문의")}
@@ -101,7 +108,7 @@ export const AdminNavToggle = () => {
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/customerservice">
+              <LinkToMenu to="/admin/customerservice/all">
                 <SubMenu
                   className={activeSubTab === "상담 내역" ? "active" : ""}
                   onClick={() => setActiveSubTab("상담 내역")}

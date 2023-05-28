@@ -27,3 +27,8 @@ export const getSubscribeMemberPerMember = async () => {
   const response = await axios.get(`${ADMIN_ANALYSIS_API_URL}/subscribe`);
   return response.data;
 };
+
+export const getSubscribeProductScore = async () => {
+  const response = await axios.get(`${ADMIN_ANALYSIS_API_URL}/subscribe/score`);
+  return response.data;
+}

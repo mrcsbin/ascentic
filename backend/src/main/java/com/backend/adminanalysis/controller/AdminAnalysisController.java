@@ -36,4 +36,9 @@ public class AdminAnalysisController {
     public List<Map<String, Object>> getSubscribeMemberPerMember() {
         return adminAnalysisService.getMemberPerSubscribeMember();
     }
+
+    @GetMapping("/subscribe/score")
+    public List<Map<String,Object>> getSubscribeProductScores() {
+        return adminAnalysisService.getSubscribeProductScores();
+    }
 }

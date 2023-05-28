@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { ProductAnalysis } from "../components/analysis/ProductAnalysis";
 import { MemberAnalysis } from "../components/analysis/MemberAnalysis";
-import { SubsCribe } from "../components/analysis/Subscribe";
+import { SubscribeAnalysis } from "../components/analysis/SubscribeAnalysis";
 
 const AdminAnalysis = () => {
   const params = useParams();
@@ -12,7 +12,7 @@ const AdminAnalysis = () => {
     <Wrap>
       {params.category === "product" && <ProductAnalysis />}
       {params.category === "member" && <MemberAnalysis />}
-      {params.category === "subscribe" && <SubsCribe />}
+      {params.category === "subscribe" && <SubscribeAnalysis />}
     </Wrap>
   );
 };

@@ -88,6 +88,10 @@ function Routes() {
         path="/admin/customerservice"
         element={<AdminPages.AdminCustomerService />}
       />
+      <Route
+        path="/admin/customerservice/:category"
+        element={<AdminPages.AdminCustomerService />}
+      />
       <Route path="/admin/eventnews" element={<AdminPages.AdminEventNews />} />
       <Route
         path="/admin/membermanagement"

@@ -3,6 +3,7 @@ import {
   getProductTypeSalesData,
   getMembershipTrend,
   getSubscribeMemberPerMember,
+  getSubscribeProductScore,
 } from "../../api/AdminAnalysisApi";
 
 export const GetProductTypeSalesData = async (type, dateType) => {
@@ -29,4 +30,18 @@ export const GetMembershipTrend = async (dateType) => {
 
 export const GetSubscribeMemberPerMember = async () => {
   return await getSubscribeMemberPerMember();
+}
+
+export const GetSubscribeProductScore = async () => {
+  const response = await getSubscribeProductScore();
+
+  const data = [
+    {
+      id: "평점",
+      color: "hsl(224, 70%, 50%)",
+      data: response,
+    },
+  ];
+
+  return data;
 }

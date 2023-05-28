@@ -7,7 +7,6 @@ export const ProductSalesAmountByType = ({ productType, dateType }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  // const [dateType, setDateType] = useState("year");
   const [groupMode, setGroupMode] = useState(false);
 
   useEffect(() => {
@@ -24,11 +23,16 @@ export const ProductSalesAmountByType = ({ productType, dateType }) => {
   }, [productType, dateType, groupMode]);
 
   if (isLoading) {
-    return <div>..........</div>;
+    return <div></div>;
   }
 
   return (
     <div style={{ width: "70%", height: "400px", margin: "100px auto" }}>
+      <ButtonBox>
+        <Button onClick={() => setGroupMode(!groupMode)}>
+          {groupMode ? "전체 보기" : "상품별로 보기"}
+        </Button>
+      </ButtonBox>
       <ResponsiveBar
         data={data}
         keys={
@@ -148,45 +152,14 @@ export const ProductSalesAmountByType = ({ productType, dateType }) => {
         }
         groupMode={groupMode ? "grouped" : ""}
       />
-      {/* <TempButtonBox>
-        <button
-          onClick={() => {
-            setDateType("year");
-          }}
-        >
-          Year!!
-        </button>
-        <button
-          onClick={() => {
-            setDateType("month");
-          }}
-        >
-          Month!!
-        </button>
-      </TempButtonBox>
-      <TempButtonBox>
-        <button
-          onClick={() => {
-            setGroupMode(false);
-          }}
-        >
-          TotalMode!!!
-        </button>
-        <button
-          onClick={() => {
-            setGroupMode(true);
-          }}
-        >
-          GroupMode!!!
-        </button>
-      </TempButtonBox> */}
     </div>
   );
 };
 
-const Wrap = styled.div``;
+const ButtonBox = styled.div`
+  text-align: right;
+`;
 
-const TempButtonBox = styled.div`
-  margin: 0 auto;
-  text-align: center;
+const Button = styled.span`
+  cursor: pointer;
 `;

@@ -1,10 +1,13 @@
 package com.backend.adminanalysis.service;
 
+import com.backend.member.entity.Member;
+import com.backend.member.repository.MemberRepository;
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +21,7 @@ import java.util.stream.Collectors;
 public class AdminAnalysisServiceImpl implements AdminAnalysisService {
 
     private final OrderProductRepository orderProductRepository;
+    private final MemberRepository memberRepository;
 
     private Map<String, DateTimeFormatter> dateTypeMap = Map.of(
             "year", DateTimeFormatter.ofPattern("yyyy"),
@@ -85,5 +89,20 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
                 .collect(Collectors.toList());
     }
 
+    public List<Map<String, Object>> getMemberSignUpCounts() {
+        Map<LocalDate, Integer> signUpCountMap = memberRepository.findAll().stream()
+                .collect(Collectors.groupingBy(
+                        Member::getMemberSignUpTime,
+                        Collectors.summingInt(e -> 1)
+                ));
 
+        return signUpCountMap.entrySet().stream()
+                .map(entry -> {
+                    Map<String, Object> dateCountMap = new HashMap<>();
+                    dateCountMap.put("x", entry.getKey());
+                    dateCountMap.put("y", entry.getValue());
+                    return dateCountMap;
+                })
+                .collect(Collectors.toList());
+    }
 }

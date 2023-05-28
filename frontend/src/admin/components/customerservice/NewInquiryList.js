@@ -1,34 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PLUS from "../../../assets/admin/plus-square.png";
 import MINUS from "../../../assets/admin/minus-square.png";
+import {
+  getNewInquiryList,
+  postInquiry,
+} from "../../api/AdminCustomerServiceApi";
 
 const Modal = ({ item }) => {
+  const [title, setTitle] = useState("");
+  const [inquiryComment, setInquiryComment] = useState("");
+
   return (
     <>
       <ModalWrap>
         <ModalSection>
           <ModalTitle>
             <ModalTitleLabel>제목</ModalTitleLabel>
-            <ModalTitleInput
-              type="text"
-              value={"re " + item.inquiryTitle}
-              disabled
-            />
+            <ModalTitleInputBox>
+              <ModalTitleInput
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </ModalTitleInputBox>
           </ModalTitle>
           <ModalContent>
             <ModalContentLabel>내용</ModalContentLabel>
-            <ModalContentInput
-              as="textarea"
-              value={item.inquiryComment}
-              rows={4}
-              cols={50}
-              disabled
-            />
+            <ModalContentInputBox>
+              <ModalContentInput
+                as="textarea"
+                rows={3}
+                value={inquiryComment}
+                onChange={(e) => setInquiryComment(e.target.value)}
+              />
+            </ModalContentInputBox>
           </ModalContent>
         </ModalSection>
         <ModalButtonBox>
-          <ModalSubmitButton></ModalSubmitButton>
+          <ModalSubmitButton
+            onClick={() => postInquiry(item.inquiryNum, inquiryComment)}
+          >
+            완료
+          </ModalSubmitButton>
         </ModalButtonBox>
       </ModalWrap>
     </>
@@ -37,6 +51,7 @@ const Modal = ({ item }) => {
 
 const Content = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  console.log(item);
 
   const handleToggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -59,10 +74,29 @@ const Content = ({ item }) => {
 };
 
 export const NewInquiryList = () => {
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getNewInquiryList();
+        setData(result);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <>
       <HeaderWrap>
-        <HeaderLeft>전체 문의 내역</HeaderLeft>
+        <HeaderLeft>미답변 문의</HeaderLeft>
         <HeaderRight></HeaderRight>
       </HeaderWrap>
       <ListBox>
@@ -74,6 +108,7 @@ export const NewInquiryList = () => {
           <DateBox>등록일</DateBox>
           <EmptyBox></EmptyBox>
         </TitleList>
+        {data && data.map((item, index) => <Content item={item} key={index} />)}
       </ListBox>
     </>
   );
@@ -210,12 +245,23 @@ const ModalTitleLabel = styled.div`
   width: 20%;
 `;
 
-const ModalTitleInput = styled.input`
-  font-size: 1.3rem;
-  border: none;
+const ModalTitleInputBox = styled.div`
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ModalTitleInput = styled.input`
+  box-sizing: border-box;
+  padding: 10px;
+  width: 90%;
+  height: 40%;
+  font-size: 1.3rem;
   background-color: white;
   color: black;
+  border: 1px solid grey;
+  border-radius: 5px;
 `;
 
 const ModalContent = styled.div`
@@ -230,15 +276,22 @@ const ModalContentLabel = styled.div`
   text-align: center;
 `;
 
+const ModalContentInputBox = styled.div`
+  width: 80%;
+`;
+
 const ModalContentInput = styled.input`
   font-size: 1.3rem;
-  width: 80%;
-  border: none;
+  width: 90%;
+  border: 1px solid grey;
+  border-radius: 5px;
   resize: none;
   overflow: auto;
   white-space: pre-line;
   background-color: white;
   color: black;
+  box-sizing: border-box;
+  padding: 0 10px;
 `;
 
 const ModalButtonBox = styled.div`

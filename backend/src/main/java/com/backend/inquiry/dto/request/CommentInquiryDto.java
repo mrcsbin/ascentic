@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
-@Builder
-@AllArgsConstructor
+@Getter
 public class CommentInquiryDto {
     private Integer inquiryNum;
     private String inquiryComment;

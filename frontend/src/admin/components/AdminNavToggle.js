@@ -100,30 +100,20 @@ export const AdminNavToggle = () => {
             <SubMenuBox>
               <LinkToMenu to="/admin/customerservice/new">
                 <SubMenu
-                  className={activeSubTab === "고객 문의" ? "active" : ""}
-                  onClick={() => setActiveSubTab("고객 문의")}
+                  className={activeSubTab === "미답변 문의" ? "active" : ""}
+                  onClick={() => setActiveSubTab("미답변 문의")}
                 >
-                  문의 내역
+                  미답변 문의
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
               <LinkToMenu to="/admin/customerservice/all">
                 <SubMenu
-                  className={activeSubTab === "상담 내역" ? "active" : ""}
-                  onClick={() => setActiveSubTab("상담 내역")}
+                  className={activeSubTab === "답변 내역" ? "active" : ""}
+                  onClick={() => setActiveSubTab("답변 내역")}
                 >
-                  전체 문의 내역
-                </SubMenu>
-              </LinkToMenu>
-            </SubMenuBox>
-            <SubMenuBox>
-              <LinkToMenu to="/admin/customerservice">
-                <SubMenu
-                  className={activeSubTab === "문의 답변" ? "active" : ""}
-                  onClick={() => setActiveSubTab("문의 답변")}
-                >
-                  문의 답변
+                  답변 내역
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>

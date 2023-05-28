@@ -82,7 +82,7 @@ export const AllInquiryList = () => {
   return (
     <>
       <HeaderWrap>
-        <HeaderLeft>전체 문의 내역</HeaderLeft>
+        <HeaderLeft>답변 내역</HeaderLeft>
         <HeaderRight></HeaderRight>
       </HeaderWrap>
       <ListBox>

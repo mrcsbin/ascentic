@@ -16,4 +16,6 @@ public interface InquiryService {
     void updateInquiry(CommentInquiryDto commentInquiryDto);
 
     List<Inquiry> getAdminInquiry();
+
+    List<Inquiry> getNewInquiryList();
 }

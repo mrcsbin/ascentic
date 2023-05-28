@@ -28,7 +28,7 @@ public class InquiryServiceImpl implements InquiryService{
 
     @Override
     public List<Inquiry> getAdminInquiry() {
-        return inquiryRepository.findAll();
+        return inquiryRepository.findAllByInquiryCommentIsNotNull();
     }
 
     @Override
@@ -52,5 +52,10 @@ public class InquiryServiceImpl implements InquiryService{
 
         inquiryRepository.save(inquiry);
 
+    }
+
+    @Override
+    public List<Inquiry> getNewInquiryList() {
+        return inquiryRepository.findAllByInquiryCommentIsNull();
     }
 }

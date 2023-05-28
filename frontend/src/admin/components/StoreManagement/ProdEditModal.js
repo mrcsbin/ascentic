@@ -3,15 +3,15 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { scentNames } from "./ScentNames";
+import { categories, scentNames } from "./ProdSelectData";
 
 const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
   const [productInfo, setProductInfo] = useState({
     prodNum: 0,
     prodName: "",
-    scentName: "",
-    prodCategory: "",
-    productInfo: "",
+    scentName: "Ambergris",
+    prodCategory: "향수",
+    prodInfo: "",
     options: [],
   });
 
@@ -47,6 +47,13 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
 
   // 옵션 정보 업데이트
   const handleOptionChange = (e, index, field) => {
+    if (field === "prodPrice" || field === "prodStock") {
+      if (!/^\d*$/.test(e.target.value)) {
+        alert("숫자만 올 수 있습니다.");
+        return;
+      }
+    }
+
     const updatedOptions = productInfo.options.map((option, i) => {
       if (i === index) {
         return {
@@ -73,17 +80,38 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
 
   // 수정 버튼 클릭시
   const handleEdit = () => {
-    const isEmptyOptions = productInfo.options.some(
-      (option) =>
-        option.prodOption === "" ||
-        option.prodPrice === "" ||
-        option.prodStock === ""
-    );
+    const { prodName, scentName, prodCategory, prodInfo, options } =
+      productInfo;
 
-    if (isEmptyOptions) {
-      alert("옵션을 입력해주세요!");
+    // 상품 정보 검사
+    const isEmptyProductInfo = [
+      prodName,
+      scentName,
+      prodCategory,
+      prodInfo,
+    ].some((value) => value === "");
+
+    if (isEmptyProductInfo) {
+      alert("상품 정보를 입력하세요");
       return;
     }
+
+    // options 검사
+    if (options.length === 0) {
+      alert("옵션은 반드시 하나 이상 입력 해야합니다!");
+      return;
+    }
+
+    const isEmptyOptions = options.some((option) => {
+      const { prodOption, prodPrice, prodStock } = option;
+      return prodOption === "" || prodPrice === "" || prodStock === "";
+    });
+
+    if (isEmptyOptions) {
+      alert("모든 옵션를 입력해주세요!");
+      return;
+    }
+
     const updateProduct = async () => {
       try {
         await axios.post(`http://localhost:8080/adminProdUpdate`, productInfo);
@@ -126,7 +154,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
             </OneInputContainer>
             <OneInputContainer>
               <Label>향이름</Label>
-              <ScentInput
+              <SelectInput
                 value={productInfo.scentName}
                 onChange={(e) => handleChange(e, "scentName")}
               >
@@ -135,15 +163,20 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
                     {scent}
                   </option>
                 ))}
-              </ScentInput>
+              </SelectInput>
             </OneInputContainer>
             <OneInputContainer>
               <Label>분류</Label>
-              <NameInput
-                type="text"
+              <SelectInput
                 value={productInfo.prodCategory}
                 onChange={(e) => handleChange(e, "prodCategory")}
-              ></NameInput>
+              >
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </SelectInput>
             </OneInputContainer>
             <BigOneInputContainer>
               <Label>제품 설명</Label>
@@ -266,7 +299,7 @@ const NameInput = styled.input`
   border: 1px solid;
 `;
 
-const ScentInput = styled.select`
+const SelectInput = styled.select`
   width: 90%;
   height: 80%;
   border: 1px solid;

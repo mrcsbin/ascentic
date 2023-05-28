@@ -42,7 +42,8 @@ public class ProductController {
     }
 
     @PostMapping("/adminProdUpdate")
-    public void updateAdminProd(@RequestBody AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
-        productServiceImpl.updateAdminProd(adminProdUpdateInfoDto);
+    public Integer updateAdminProd(@RequestBody AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
+        return productServiceImpl.updateAdminProd(adminProdUpdateInfoDto);
     }
+
 }

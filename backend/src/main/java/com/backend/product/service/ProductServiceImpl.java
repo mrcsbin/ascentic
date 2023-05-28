@@ -16,6 +16,7 @@ import com.backend.productimage.repository.ProductImageRepository;
 import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -154,7 +155,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
+    public Integer updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
         Product product;
         if(adminProdUpdateInfoDto.getProdNum() != null) {
             product = productRepository.findById(adminProdUpdateInfoDto.getProdNum()).orElse(null);
@@ -168,10 +169,12 @@ public class ProductServiceImpl implements ProductService {
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
         product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());
-        productRepository.save(product);
+        Product resProduct = productRepository.save(product);
 
         deleteOptionNum(adminProdUpdateInfoDto, product); // 옵션 삭제
         updateOptions(adminProdUpdateInfoDto, product); // 옵션 업데이트
+
+        return resProduct.getProdNum();
     }
 
     // 옵션 삭제
@@ -204,4 +207,5 @@ public class ProductServiceImpl implements ProductService {
             productOptionRepository.save(option);
         }
     }
+
 }

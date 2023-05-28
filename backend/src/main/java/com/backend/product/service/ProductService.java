@@ -17,5 +17,5 @@ public interface ProductService {
 
     AdminProdUpdateInfoDto getAdminProdUpdateInfo(Integer prodNum);
 
-    void updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto);
+    Integer updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto);
 }

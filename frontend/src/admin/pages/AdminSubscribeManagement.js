@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import SbProductManagement from "../components/SubscribeManagement/AdminSbProductManagement";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 function AdminSubscribeManagement() {
   const [spActionMode, setSpActionMode] = useState(1);
+  const params = useParams();
   return (
     <Wrapper>
-      <ActionBtnbox>
+      {params.category === "member" && <></>}
+      {params.category === "product" && <SbProductManagement />}
+      {/* <ActionBtnbox>
         <button
           className={spActionMode === 1 ? "activeBtn" : "Btn"}
           onClick={() => setSpActionMode(1)}
@@ -23,7 +27,7 @@ function AdminSubscribeManagement() {
       <div>
         {spActionMode === 1 && <div />}
         {spActionMode === 2 && <SbProductManagement />}
-      </div>
+      </div> */}
     </Wrapper>
   );
 }

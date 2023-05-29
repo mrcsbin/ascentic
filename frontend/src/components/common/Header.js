@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "../../store/modules/login";
 import arrow from "../../assets/menu_arrow.svg";
 import Notice from "./Notice";
+import { Search } from "./Search";
+
 //HSM
 //RouteTest.js 에 임시로 연결
 
@@ -37,11 +39,11 @@ const HeaderV2 = () => {
   useEffect(() => {
     window.addEventListener("scroll", updateScroll);
   });
-  const handleshowSearch = () => {
+  const handleShowSearch = () => {
     setShowSearch(true);
   };
   // 검색창 끄기
-  const handlehideSearch = () => {
+  const handleHideSearch = () => {
     setShowSearch(false);
   };
 
@@ -185,7 +187,7 @@ const HeaderV2 = () => {
               <Icon
                 src={iconSearch}
                 alt="iconSearch"
-                onClick={handleshowSearch}
+                onClick={handleShowSearch}
                 style={{ cursor: "pointer" }}
               ></Icon>
             </IconBox>
@@ -213,53 +215,7 @@ const HeaderV2 = () => {
           </RightBox>
         </TopContainer>
 
-        {/* {showSearch && (
-        <SearchWrap>
-          <SearchContainer>
-            <SearchForm>
-              <SearchInput
-                type="text"
-                name="search"
-                placeholder="원하는 향을 검색하세요."
-                minLength="1"
-                maxLength="10"
-              ></SearchInput>
-              <SearchButton type="submit" >
-                <SearchIcon
-                  src={iconSearch}
-                  alt="iconSearch"
-                  style={{ cursor: "pointer" }}
-                ></SearchIcon>
-              </SearchButton>
-              <CloseButton  onClick={handlehideSearch}>
-                닫기
-              </CloseButton>
-            </SearchForm>
-          </SearchContainer>
-        </SearchWrap>
-      )} */}
-
-        {showSearch && (
-          <SearchWrap>
-            <SearchContainer>
-              <SearchInputBox>
-                <SearchInput
-                  type="text"
-                  name="search"
-                  placeholder="검색"
-                ></SearchInput>
-              </SearchInputBox>
-
-              <SearchButton>
-                <SearchIcon src={iconSearch} alt="검색아이콘" />
-              </SearchButton>
-            </SearchContainer>
-            <CloseButton onClick={handlehideSearch}>닫기</CloseButton>
-            <ResultContainer>
-              <Result>결과</Result>
-            </ResultContainer>
-          </SearchWrap>
-        )}
+        {showSearch && <Search handleHideSearch={handleHideSearch} />}
       </Wrap>
     </div>
   );

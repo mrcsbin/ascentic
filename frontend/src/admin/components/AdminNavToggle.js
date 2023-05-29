@@ -216,7 +216,7 @@ export const AdminNavToggle = () => {
         {activeTab === "상품 관리" && (
           <MenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/storemanagement">
+              <LinkToMenu to="/admin/storemanagement/list">
                 <SubMenu
                   className={activeSubTab === "상품 목록" ? "active" : ""}
                   onClick={() => setActiveSubTab("상품 목록")}
@@ -226,7 +226,7 @@ export const AdminNavToggle = () => {
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/storemanagement">
+              <LinkToMenu to="/admin/storemanagement/post">
                 <SubMenu
                   className={activeSubTab === "상품 추가" ? "active" : ""}
                   onClick={() => setActiveSubTab("상품 추가")}

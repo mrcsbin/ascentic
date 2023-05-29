@@ -26,19 +26,24 @@ public class Product {
     @Column(name = "prod_num")
     private Integer prodNum;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "scent_name")
     private Scent scent;
 
+    @Setter
     @Column(name = "prod_name")
     private String prodName;
 
+    @Setter
     @Column(name = "prod_category")
     private String prodCategory;
 
+    @Setter
     @Column(name = "prod_info")
     private String prodInfo;
 
+    @Setter
     @Column(name = "prod_date")
     private LocalDateTime prodDate;
 
@@ -88,5 +93,11 @@ public class Product {
             }
         }
         return false;
+    }
+
+    public List<Integer> getOptionNums() {
+        return productOption.stream()
+                .map(ProductOption::getOptionNum)
+                .collect(Collectors.toList());
     }
 }

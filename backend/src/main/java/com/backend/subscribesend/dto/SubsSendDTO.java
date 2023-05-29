@@ -22,7 +22,7 @@ public class SubsSendDTO {
     private Integer sbPaymentDay;
     private String tasteResult;
     private Scent spScent;
-    private String spPrice;
+    private Integer spPrice;
     private String spIntro;
     private LocalDate sbSendStart;
     private LocalDate sbSendEnd;

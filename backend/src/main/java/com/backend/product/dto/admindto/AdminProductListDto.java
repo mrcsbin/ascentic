@@ -17,6 +17,9 @@ public class AdminProductListDto {
 
     @Setter
     private String prodName; // 상품 이름
+    
+    @Setter
+    private  String scentName; // 향 이름
 
     @Setter
     private Integer prodWishCount; // 찜 수
@@ -43,6 +46,7 @@ public class AdminProductListDto {
         AdminProductListDto dto = new AdminProductListDto();
         dto.setProdNum(product.getProdNum());
         dto.setProdName(product.getProdName());
+        dto.setScentName(product.getScent().getScentName());
         dto.setProdStock(product);
         dto.setProdWishCount(product.getWishCount(product.getProdNum()));
         dto.setProdReadCount(product.getProdReadCount());

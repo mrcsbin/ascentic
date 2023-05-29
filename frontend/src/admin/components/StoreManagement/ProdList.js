@@ -1,16 +1,20 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import styled from "styled-components";
+import Items from "./Items";
 
-const ProdList = (products) => {
+const ProdList = ({ products, hadleOpenEditModal, hadleOpenAddModal }) => {
   return (
     <ListWrapper>
-      <ListTitle>제품 목록</ListTitle>
+      <TitleContainer>
+        <ListTitle>제품 목록</ListTitle>
+        <AddBtn onClick={() => hadleOpenAddModal()}>상품 추가</AddBtn>
+      </TitleContainer>
       <ListBox>
         <ContentTitle>
           <NumTitle>No</NumTitle>
           <ImgTitle>이미지</ImgTitle>
           <NameTitle>상품명</NameTitle>
+          <ScentTitle>향이름</ScentTitle>
           <PriceTitle>판매가</PriceTitle>
           <CatTitle>카테고리</CatTitle>
           <StockTitle>재고</StockTitle>
@@ -18,32 +22,12 @@ const ProdList = (products) => {
           <DateTitle>등록일</DateTitle>
         </ContentTitle>
       </ListBox>
-      {products.products.map((item, index) => (
-        <Content>
-          <ProdNum>{item.prodNum}</ProdNum>
-          <ProdImage>
-            <img
-              src={`http://localhost:8080/images/${item.prodImage}`}
-              alt="상품 이미지"
-            ></img>
-          </ProdImage>
-          <ProdName>{item.prodName}</ProdName>
-          <ProdPrice>{item.prodPrice.toLocaleString()}원</ProdPrice>
-          <ProdCategory>{item.prodCategory}</ProdCategory>
-          <ProdStock>{item.prodStock}개</ProdStock>
-          <ProdOption>
-            {item.options.map((option, index) => (
-              <div key={index}>
-                {option}
-                {index !== item.options.length - 1 && "/"}{" "}
-              </div>
-            ))}
-          </ProdOption>
-          <ProdDate>{item.prodDate}</ProdDate>
-          <EditBtn>
-            <Button>수정</Button>
-          </EditBtn>
-        </Content>
+      {products.map((item, index) => (
+        <Items
+          item={item}
+          index={index}
+          hadleOpenEditModal={hadleOpenEditModal}
+        />
       ))}
     </ListWrapper>
   );
@@ -52,10 +36,24 @@ const ProdList = (products) => {
 const ListWrapper = styled.div`
   border-bottom: 2px solid black;
 `;
+
+const TitleContainer = styled.div`
+  font-weight: 700;
+  display: flex;
+`;
+
 const ListTitle = styled.div`
+  width: 90%;
   font-size: 30px;
   font-weight: 700;
 `;
+
+const AddBtn = styled.button`
+  background-color: white;
+  cursor: pointer;
+  width: 10%;
+`;
+
 const ListBox = styled.div`
   margin-top: 30px;
   border-top: 2px solid black;
@@ -72,7 +70,7 @@ const NumTitle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 5%;
+  width: 3%;
 `;
 const ImgTitle = styled.div`
   display: flex;
@@ -81,13 +79,23 @@ const ImgTitle = styled.div`
   justify-content: center;
   width: 10%;
 `;
+
 const NameTitle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 25%;
+  width: 12%;
 `;
+
+const ScentTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 13%;
+`;
+
 const PriceTitle = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,101 +126,11 @@ const StockTitle = styled.div`
   width: 10%;
 `;
 const DateTitle = styled.div`
-  width: 12%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Content = styled.div`
-  font-size: 16px;
-  display: flex;
-  height: 100px;
-  border-bottom: 1px solid black;
-`;
-
-const ProdNum = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 5%;
-`;
-
-const ProdImage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 10%;
-  > img {
-    width: 70px;
-    height: 70px;
-  }
-`;
-
-const ProdName = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 25%;
-`;
-
-const ProdPrice = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const ProdCategory = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const ProdStock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const ProdOption = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  width: 15%;
-`;
-
-const ProdDate = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const EditBtn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 5%;
-
-  > button {
-    width: 50px;
-    height: 30px;
-    background-color: black;
-    color: white;
-  }
 `;
 
 export default ProdList;

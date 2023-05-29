@@ -1,25 +1,14 @@
 import styled from "styled-components";
 
-export const InquiryItem = () => {
+export const InquiryItem = ({ item }) => {
+  console.log(item);
   return (
     <>
       <InquiryCard>
-        <InquiryNumber>3</InquiryNumber>
-        <InquiryCategory>상품</InquiryCategory>
-        <InquiryTitle>선물용으로 괜찮을까요?</InquiryTitle>
-        <InquiryState>대기중</InquiryState>
-      </InquiryCard>
-      <InquiryCard>
-        <InquiryNumber>2</InquiryNumber>
-        <InquiryCategory>배송</InquiryCategory>
-        <InquiryTitle>언제쯤 배송되나요?</InquiryTitle>
-        <InquiryState>대기중</InquiryState>
-      </InquiryCard>
-      <InquiryCard>
-        <InquiryNumber>1</InquiryNumber>
-        <InquiryCategory>상품</InquiryCategory>
-        <InquiryTitle>이 상품이 20대 남성에게 잘 어울릴까요?</InquiryTitle>
-        <InquiryState>답변완료</InquiryState>
+        <InquiryNumber>{item.inquiryNum}</InquiryNumber>
+        <InquiryCategory>{item.inquiryCategory}</InquiryCategory>
+        <InquiryTitle>{item.inquiryTitle}</InquiryTitle>
+        <InquiryState>{item.inquiryState === true ? "답변 완료" : "답변 대기중"}</InquiryState>
       </InquiryCard>
     </>
   );

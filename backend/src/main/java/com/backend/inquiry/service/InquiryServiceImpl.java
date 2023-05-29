@@ -8,14 +8,16 @@ import com.backend.inquiry.repository.InquiryRepository;
 import com.backend.member.jwt.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class InquiryServiceImpl implements InquiryService{
+public class InquiryServiceImpl implements InquiryService {
     private final InquiryRepository inquiryRepository;
+
     @Override
     public List<InquiryDto> getInquiry() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
@@ -28,7 +30,7 @@ public class InquiryServiceImpl implements InquiryService{
 
     @Override
     public List<Inquiry> getAdminInquiry() {
-        return inquiryRepository.findAll();
+        return inquiryRepository.findAllByInquiryCommentIsNotNull();
     }
 
     @Override
@@ -52,5 +54,10 @@ public class InquiryServiceImpl implements InquiryService{
 
         inquiryRepository.save(inquiry);
 
+    }
+
+    @Override
+    public List<Inquiry> getNewInquiryList() {
+        return inquiryRepository.findAllByInquiryCommentIsNull();
     }
 }

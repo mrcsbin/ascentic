@@ -1,5 +1,6 @@
 package com.backend.product.controller;
 
+import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.service.ProductServiceImpl;
@@ -34,4 +35,15 @@ public class ProductController {
     public List<AdminProductListDto> getAdminProdList(@RequestParam("category") String category) {
         return productServiceImpl.getAdminProdList(category);
     }
+
+    @GetMapping("/admingetProdUpdateInfo")
+    public AdminProdUpdateInfoDto getAdminProdUpdateInfo(@RequestParam("prodNum") Integer prodNum) {
+        return productServiceImpl.getAdminProdUpdateInfo(prodNum);
+    }
+
+    @PostMapping("/adminProdUpdate")
+    public Integer updateAdminProd(@RequestBody AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
+        return productServiceImpl.updateAdminProd(adminProdUpdateInfoDto);
+    }
+
 }

@@ -1,12 +1,25 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import { AllInquiryList } from "../components/customerservice/AllInquiryList";
+import { NewInquiryList } from "../components/customerservice/NewInquiryList";
 
 function AdminCustomerService() {
+  const params = useParams();
+
   return (
-    <div>
-      <h2>C/S 페이지</h2>
-      <p>고객이 좋다~</p>
-    </div>
+    <Wrap>
+      {params.category === "all" && <AllInquiryList />}
+      {params.category === "new" && <NewInquiryList />}
+    </Wrap>
   );
 }
 
 export default AdminCustomerService;
+
+const Wrap = styled.div`
+  display: block;
+  float: right;
+  margin: 0;
+  width: 85%;
+`;

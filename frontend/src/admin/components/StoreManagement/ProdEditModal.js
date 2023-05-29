@@ -21,7 +21,6 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
       alert("옵션이 너무 많습니다.");
       return;
     }
-    console.log("sss");
     setProductInfo((prevProductInfo) => ({
       ...prevProductInfo,
       options: [
@@ -33,7 +32,6 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
 
   // 옵션 삭제 버튼 클릭 시 실행
   const handleDeleteOption = (index) => {
-    console.log("gg");
     setProductInfo((prevProductInfo) => {
       const updatedOptions = prevProductInfo.options.filter(
         (_, i) => i !== index

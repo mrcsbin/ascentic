@@ -1,5 +1,6 @@
 package com.backend.orderproduct.service;
 
+import com.backend.cart.repository.CartRepository;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.entity.Order;
 import com.backend.order.repository.OrderRepository;
@@ -25,6 +26,7 @@ public class OrderProductServiceImpl implements OrderProductService {
     private final OrderRepository orderRepository;
     private final ProductOptionRepository productOptionRepository;
     private final ProductImageRepository productImageRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public void insetOrderProduct(OrderProductDto orderProductDTO) {
@@ -38,7 +40,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .orderState(orderProductDTO.isOrderState())
                 .memberId(currentMemberId)
                 .build();
-
+        cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
         orderProductRepository.save(orderProduct);
     }
 
@@ -60,7 +62,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                         .orderDate(orderDate)
                         .orderProductQuantity(orderProduct.getProdCount())
                         .orderProductPrice(orderProduct.getProductOption().getProdPrice())
-                        .orderShippingState(orderProduct.getOrderState())
+                        .orderShippingState(orderProduct.getOrder().getOrderState())
                         .orderProductNumber(orderProduct.getOrderProdNum())
                         .build());
             }

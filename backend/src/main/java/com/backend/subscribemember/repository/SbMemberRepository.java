@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integer> {
@@ -18,4 +19,6 @@ public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integ
 
 //    @Query(value = "select sb_member_num from tb_subscribe_member where member_id = :memberId", nativeQuery = true)
 //    List<Integer> getSbMemberNum(String memberId);
+
+    Long countBySbEndDateIsNull();
 }

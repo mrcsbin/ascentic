@@ -1,10 +1,9 @@
 package com.backend.cart.controller;
 
 import com.backend.cart.dto.AddCartDto;
+import com.backend.cart.dto.CartRequest;
 import com.backend.cart.service.CartServiceImpl;
 import com.backend.cart.dto.GetCartDto;
-import com.backend.cart.entity.Cart;
-import com.backend.productoption.entity.ProductOption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +29,12 @@ public class CartController {
     @DeleteMapping("/del/{cartNum}")
     public void deleteCart(@PathVariable Integer cartNum) {
         cartServiceImpl.deleteCart(cartNum);
+    }
+
+    @PostMapping("/update")
+    public void updateCart(@RequestBody CartRequest.UpdateCartDto updateCartDto) {
+        System.out.println("updateCartDto.getCartNum() = " + updateCartDto.getCartNum());
+        System.out.println("updateCartDto.getProdCount() = " + updateCartDto.getProdCount());
+        cartServiceImpl.updateCart(updateCartDto);
     }
 }

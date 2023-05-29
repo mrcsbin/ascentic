@@ -29,11 +29,10 @@ export const removeCart = async (cartNum, accessToken) => {
   return response.data;
 };
 
-export const updateCart = async (cartList, accessToken) => {
-  const response = await axios.post(`${CART_API_URL}/update`, cartList, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+export const updateCart = async (cartNum, prodCount) => {
+  const response = await axios.post(`${CART_API_URL}/update`, {
+    cartNum,
+    prodCount,
   });
   return response.data;
 };

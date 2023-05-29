@@ -20,8 +20,8 @@ export const removeCartItem = createAsyncThunk(
 
 export const updateCartItem = createAsyncThunk(
   "cart/updateCartItem",
-  async (cartList, thunkAPI) => {
-    const res = await updateCart(cartList, getCookie("accessToken"));
+  async ({ cartNum, prodCount }, thunkAPI) => {
+    const res = await updateCart(cartNum, prodCount);
     return res;
   }
 );
@@ -73,15 +73,11 @@ const cartSlice = createSlice({
   extraReducers: {
     [fetchCartItems.pending]: (state) => {
       state.loading = true;
-      console.log("데이터 받아오는중.");
     },
     [fetchCartItems.fulfilled]: (state, action) => {
       state.loading = false;
-      console.log("데이터 받아왔음");
       state.cartItem = action.payload;
       state.checkedItems = action.payload.map((item) => item.cartNum);
-      console.log(state.cartItem);
-      console.log("state.cartItem끝");
     },
   },
 });

@@ -55,6 +55,9 @@ public class Product {
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
 
+    @Column(name = "prod_state")
+    private Boolean prodState; // true: 판매중, false: 판매종료
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOption = new ArrayList<>();
 

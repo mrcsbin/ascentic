@@ -27,6 +27,10 @@ public class ProductOption {
     @Column(name = "prod_stock")
     private Integer prodStock;
 
+    @Column(name = "option_state")
+    private Boolean optionState; // true: 판매중, false: 판매종료
+
+
     @ManyToOne
     @JoinColumn(name = "prod_num")
     private Product product;   ///이걸 Product Class로 설정해도 db엔 PK만 들어 갔던거임!!! 근데 왜?

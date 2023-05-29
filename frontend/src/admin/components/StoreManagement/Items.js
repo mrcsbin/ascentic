@@ -127,6 +127,7 @@ const EditBtn = styled.div`
     height: 30px;
     background-color: black;
     color: white;
+    cursor: pointer;
   }
 `;
 

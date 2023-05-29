@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
 import { categories, scentNames } from "./ProdSelectData";
+import { Last } from "react-bootstrap/esm/PageItem";
 
 const ProdAdd = () => {
   const [productInfo, setProductInfo] = useState({
@@ -225,33 +226,38 @@ const ProdAdd = () => {
         </ProdInputContainer>
         <OptionContainer>
           <OneInputContainer>
-            <OptionLabel>
-              <OptionInfoLabel>옵션명</OptionInfoLabel>
-              <OptionInfoLabel>가격</OptionInfoLabel>
-              <OptionInfoLabel>재고</OptionInfoLabel>
-            </OptionLabel>
+            <Label></Label>
+            <OptionInfoLabel>옵션명</OptionInfoLabel>
+            <OptionInfoLabel>가격</OptionInfoLabel>
+            <OptionInfoLabel>재고</OptionInfoLabel>
           </OneInputContainer>
           {productInfo.options.map((option, index) => (
             <div key={index}>
               <OptionOneInputContainer>
                 <Label>옵션{index + 1}</Label>
-                <InputOption
-                  type="text"
-                  value={option.prodOption}
-                  onChange={(e) => handleOptionChange(e, index, "prodOption")}
-                />
-                <InputOption
-                  type="text"
-                  value={option.prodPrice}
-                  onChange={(e) => handleOptionChange(e, index, "prodPrice")}
-                />
-                원
-                <InputOption
-                  type="text"
-                  value={option.prodStock}
-                  onChange={(e) => handleOptionChange(e, index, "prodStock")}
-                />
-                개
+                <OneOptionInput>
+                  <InputOption
+                    type="text"
+                    value={option.prodOption}
+                    onChange={(e) => handleOptionChange(e, index, "prodOption")}
+                  />
+                </OneOptionInput>
+                <OneOptionInput>
+                  <InputOption
+                    type="text"
+                    value={option.prodPrice}
+                    onChange={(e) => handleOptionChange(e, index, "prodPrice")}
+                  />
+                  원
+                </OneOptionInput>
+                <OneOptionInput>
+                  <InputOption
+                    type="text"
+                    value={option.prodStock}
+                    onChange={(e) => handleOptionChange(e, index, "prodStock")}
+                  />
+                  개
+                </OneOptionInput>
                 <OptionDelBtn onClick={() => handleDeleteOption(index)}>
                   -
                 </OptionDelBtn>
@@ -295,6 +301,7 @@ const HeaderRight = styled.div`
 const InputContainer = styled.div`
   width: 80%;
   height: 90%;
+  margin: 2% auto;
 `;
 
 const ProdInputContainer = styled.div`
@@ -303,6 +310,7 @@ const ProdInputContainer = styled.div`
 `;
 
 const OptionContainer = styled.div`
+  margin: 3% auto;
   width: 100%;
   height: 45%;
 `;
@@ -354,28 +362,19 @@ const OptionOneInputContainer = styled.div`
   height: 50px;
   margin-bottom: 10px;
   align-items: center;
-
-  > input:nth-child(3),
-  input:nth-child(4) {
-    margin-left: 60px;
-  }
-`;
-
-const OptionLabel = styled.div`
-  font-size: 20px;
-  width: 80%;
-  display: flex;
-  margin-left: 15%;
 `;
 
 const OptionInfoLabel = styled.div`
   width: 33.3%;
 `;
 
+const OneOptionInput = styled.div`
+  width: 33.3%;
+`;
+
 const InputOption = styled.input`
-  width: 100px;
+  width: 50%;
   height: 30px;
-  gap: 10px;
   border: 1px solid;
 `;
 
@@ -416,18 +415,10 @@ const Imagesontainer = styled.div`
 const ImageInput = styled.input``;
 
 const AddBtn = styled.button`
-  width: 150px;
-  height: 30px;
-  margin-left: 50%;
+  width: 600px;
+  height: 50px;
+  margin: 2% 25%;
   background-color: black;
   color: white;
-  cursor: pointer;
-`;
-
-const CloseBtn = styled.button`
-  margin-left: 20px;
-  width: 150px;
-  height: 30px;
-  background-color: white;
   cursor: pointer;
 `;

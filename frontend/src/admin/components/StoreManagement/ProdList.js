@@ -69,7 +69,7 @@ const ProdList = () => {
   }, [category]);
 
   return (
-    <ListWrapper>
+    <>
       <CategoriesBox>
         {categories.map((c) => (
           <button
@@ -84,33 +84,35 @@ const ProdList = () => {
       <TitleContainer>
         <ListTitle>제품 목록</ListTitle>
       </TitleContainer>
-      <ListBox>
-        <ContentTitle>
-          <NumTitle>No</NumTitle>
-          <ImgTitle>이미지</ImgTitle>
-          <NameTitle>상품명</NameTitle>
-          <ScentTitle>향이름</ScentTitle>
-          <PriceTitle>판매가</PriceTitle>
-          <CatTitle>카테고리</CatTitle>
-          <StockTitle>재고</StockTitle>
-          <OptionTitle>옵션</OptionTitle>
-          <DateTitle>등록일</DateTitle>
-        </ContentTitle>
-      </ListBox>
-      {products.map((item, index) => (
-        <Items
-          item={item}
-          index={index}
-          hadleOpenEditModal={hadleOpenEditModal}
-        />
-      ))}
-      {isOpenEditModal && (
-        <ProdEditModal
-          prodNum={selectProdNum}
-          hadleCloseEditModal={hadleCloseEditModal}
-        />
-      )}
-    </ListWrapper>
+      <ListWrapper>
+        <ListBox>
+          <ContentTitle>
+            <NumTitle>No</NumTitle>
+            <ImgTitle>이미지</ImgTitle>
+            <NameTitle>상품명</NameTitle>
+            <ScentTitle>향이름</ScentTitle>
+            <PriceTitle>판매가</PriceTitle>
+            <CatTitle>카테고리</CatTitle>
+            <StockTitle>재고</StockTitle>
+            <OptionTitle>옵션</OptionTitle>
+            <DateTitle>등록일</DateTitle>
+          </ContentTitle>
+        </ListBox>
+        {products.map((item, index) => (
+          <Items
+            item={item}
+            index={index}
+            hadleOpenEditModal={hadleOpenEditModal}
+          />
+        ))}
+        {isOpenEditModal && (
+          <ProdEditModal
+            prodNum={selectProdNum}
+            hadleCloseEditModal={hadleCloseEditModal}
+          />
+        )}
+      </ListWrapper>
+    </>
   );
 };
 
@@ -135,10 +137,13 @@ const CategoriesBox = styled.div`
 `;
 
 const ListWrapper = styled.div`
+  margin: 0 auto;
+  width: 90%;
   border-bottom: 2px solid black;
 `;
 
 const TitleContainer = styled.div`
+  margin: 2% 5%;
   font-weight: 700;
   display: flex;
 `;
@@ -147,12 +152,6 @@ const ListTitle = styled.div`
   width: 90%;
   font-size: 30px;
   font-weight: 700;
-`;
-
-const AddBtn = styled.button`
-  background-color: white;
-  cursor: pointer;
-  width: 10%;
 `;
 
 const ListBox = styled.div`

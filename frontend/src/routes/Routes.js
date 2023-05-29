@@ -34,6 +34,8 @@ function Routes() {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Pages.Main />}></Route>
+      <Route path="/test" element={<Pages.MainTest />}></Route>
+      <Route path="/test2" element={<Pages.MainTest2 />}></Route>
       <Route
         path="/login"
         element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
@@ -93,6 +95,7 @@ function Routes() {
         element={<AdminPages.AdminCustomerService />}
       />
       <Route path="/admin/eventnews" element={<AdminPages.AdminEventNews />} />
+      <Route path="/admin/eventnews/:category" element={<AdminPages.AdminEventNews />} />
       <Route
         path="/admin/membermanagement"
         element={<AdminPages.AdminMemberManagement />}

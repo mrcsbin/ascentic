@@ -149,6 +149,7 @@ const ProdAddModal = ({ hadleCloseAddModal }) => {
         };
         uploadImages();
         alert("상품이 추가되었습니다.");
+        window.location.reload();
       } catch (e) {
         console.log(e);
         alert("상품 추가 오류");

@@ -134,7 +134,7 @@ export const AdminNavToggle = () => {
         {activeTab === "이벤트 및 뉴스" && (
           <MenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/eventnews">
+              <LinkToMenu to="/admin/eventnews/event">
                 <SubMenu
                   className={activeSubTab === "이벤트" ? "active" : ""}
                   onClick={() => setActiveSubTab("이벤트")}
@@ -144,12 +144,22 @@ export const AdminNavToggle = () => {
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/eventnews">
+              <LinkToMenu to="/admin/eventnews/news">
                 <SubMenu
                   className={activeSubTab === "뉴스" ? "active" : ""}
                   onClick={() => setActiveSubTab("뉴스")}
                 >
                   뉴스
+                </SubMenu>
+              </LinkToMenu>
+            </SubMenuBox>
+            <SubMenuBox>
+              <LinkToMenu to="/admin/eventnews/post">
+                <SubMenu
+                  className={activeSubTab === "글작성" ? "active" : ""}
+                  onClick={() => setActiveSubTab("글작성")}
+                >
+                  글작성
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>

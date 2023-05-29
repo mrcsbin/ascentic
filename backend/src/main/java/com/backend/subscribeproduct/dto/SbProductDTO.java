@@ -16,14 +16,17 @@ public class SbProductDTO {
 
     private Scent scentName;
 
-    private String sbProdPrice;
+    private Integer sbProdPrice;
 
     private String sbProdIntro;
 
     private String sbProdImage;
 
+    private Integer sbProdStock;
+
     public static SbProductDTO of(SubscribeProduct subscribeProduct){
         return new SbProductDTO(subscribeProduct.getSbProdNum(), subscribeProduct.getScentName(),
-                subscribeProduct.getSbProdPrice(), subscribeProduct.getSbProdIntro(), subscribeProduct.getSbProdImage());
+                subscribeProduct.getSbProdPrice(), subscribeProduct.getSbProdIntro(), subscribeProduct.getSbProdImage(),
+                subscribeProduct.getSbProdStock());
     }
 }

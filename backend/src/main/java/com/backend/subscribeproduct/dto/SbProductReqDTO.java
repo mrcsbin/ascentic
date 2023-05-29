@@ -13,9 +13,11 @@ import lombok.NoArgsConstructor;
 public class SbProductReqDTO {
     private String scentName;
 
-    private String sbProdPrice;
+    private Integer sbProdPrice;
 
     private String sbProdIntro;
 
     private String sbProdImage;
+
+    private Integer sbProdStock;
 }

@@ -8,28 +8,38 @@ import com.backend.subscribeproduct.dto.SbProductDTO;
 import com.backend.subscribeproduct.entity.SubscribeProduct;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class SbProductServiceImpl implements SbProductService{
 
+    @Value("${spring.servlet.multipart.location}")
+    String uploadDir;
+
     private final SbProductRepository sbProductRepository;
     private final ScentRepository scentRepository;
     @Override
-    public void addSbProduct(SbProductReqDTO sbProductReqDTO) {
-        SubscribeProduct subscribeProduct = SubscribeProduct.builder()
-                .scentName(scentRepository.findById(sbProductReqDTO.getScentName()).orElse(null))
-                .sbProdPrice(sbProductReqDTO.getSbProdPrice())
-                .sbProdIntro(sbProductReqDTO.getSbProdIntro())
-                .sbProdImage(sbProductReqDTO.getSbProdImage())
-                .build();
-
-        sbProductRepository.save(subscribeProduct);
+    public void addSbProduct(MultipartFile file, SbProductReqDTO sbProductReqDTO) throws IOException {
+            File storedFilename = new File(UUID.randomUUID().toString() + "_" + file.getOriginalFilename()); // 저장명을 지정
+            file.transferTo(storedFilename); //이미지 파일을 서버에 저장 (업로드)
+            SubscribeProduct subscribeProduct = SubscribeProduct.builder()
+                    .scentName(scentRepository.findById(sbProductReqDTO.getScentName()).orElse(null))
+                    .sbProdPrice(sbProductReqDTO.getSbProdPrice())
+                    .sbProdIntro(sbProductReqDTO.getSbProdIntro())
+                    .sbProdImage(storedFilename.toString())
+                    .sbProdStock(sbProductReqDTO.getSbProdStock())
+                    .build();
+            sbProductRepository.save(subscribeProduct);
     }
 
     @Override
@@ -74,12 +84,23 @@ public class SbProductServiceImpl implements SbProductService{
 
     @Override
     @Transactional
-    public void updateSbProduct(Integer sbProdNum, SbProductReqDTO sbProductReqDTO){
-        SubscribeProduct sbProduct = sbProductRepository.findById(sbProdNum).orElse(null);
-        sbProduct.updateSbProduct(
-                scentRepository.findById(sbProductReqDTO.getScentName()).orElse(null),
-                sbProductReqDTO.getSbProdPrice(), sbProductReqDTO.getSbProdIntro(),
-                sbProductReqDTO.getSbProdImage());
+    public void updateSbProduct(Integer sbProdNum, MultipartFile file, SbProductReqDTO sbProductReqDTO) throws IOException {
+        if (file==null){
+            SubscribeProduct sbProduct = sbProductRepository.findById(sbProdNum).orElse(null);
+            sbProduct.updateSbProduct(
+                    scentRepository.findById(sbProductReqDTO.getScentName()).orElse(null),
+                    sbProductReqDTO.getSbProdPrice(), sbProductReqDTO.getSbProdIntro(),
+                    sbProductReqDTO.getSbProdImage(), sbProductReqDTO.getSbProdStock());
+        } else {
+            File storedFilename = new File(UUID.randomUUID().toString() + "_" + file.getOriginalFilename()); // 저장명을 지정
+            file.transferTo(storedFilename); //이미지 파일을 서버에 저장 (업로드)
+
+            SubscribeProduct sbProduct = sbProductRepository.findById(sbProdNum).orElse(null);
+            sbProduct.updateSbProduct(
+                    scentRepository.findById(sbProductReqDTO.getScentName()).orElse(null),
+                    sbProductReqDTO.getSbProdPrice(), sbProductReqDTO.getSbProdIntro(),
+                    storedFilename.toString(), sbProductReqDTO.getSbProdStock());
+        }
     }
 
     @Override

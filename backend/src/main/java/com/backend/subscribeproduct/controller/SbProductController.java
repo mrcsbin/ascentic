@@ -5,7 +5,9 @@ import com.backend.subscribeproduct.dto.SbProductReqDTO;
 import com.backend.subscribeproduct.service.SbProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,8 +18,9 @@ public class SbProductController {
     private final SbProductServiceImpl sbProductService;
 
     @PostMapping("/add")
-    public void createSbProduct(@RequestBody SbProductReqDTO sbProductReqDTO){
-        sbProductService.addSbProduct(sbProductReqDTO);
+    public void createSbProduct(@RequestPart("image") MultipartFile file,
+                                @RequestPart("sbProduct") SbProductReqDTO sbProductReqDTO) throws IOException {
+        sbProductService.addSbProduct(file, sbProductReqDTO);
     }
 
     @GetMapping ("/list")
@@ -26,8 +29,10 @@ public class SbProductController {
     }
 
     @PostMapping("/update/{id}")
-    public void updateSbProduct(@PathVariable("id") Integer sbProdNum, @RequestBody SbProductReqDTO sbProductReqDTO){
-        sbProductService.updateSbProduct(sbProdNum, sbProductReqDTO);
+    public void updateSbProduct(@PathVariable("id") Integer sbProdNum,
+                                @RequestPart(value="image", required = false) MultipartFile file,
+                                @RequestPart("sbProduct") SbProductReqDTO sbProductReqDTO) throws IOException {
+        sbProductService.updateSbProduct(sbProdNum, file, sbProductReqDTO);
     }
 
     @PostMapping("/delete/{id}")

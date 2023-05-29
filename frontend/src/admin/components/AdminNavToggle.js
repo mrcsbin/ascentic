@@ -37,14 +37,11 @@ export const AdminNavToggle = () => {
         </Header>
       </LinkToMenu>
       <ToggleMenuBox className={activeTab === "통계" ? "active" : ""}>
-        <ToggleMenuHeader
-        // onClick={() => handleTabClick("통계")}
-        >
+        <ToggleMenuHeader onClick={() => handleTabClick("통계")}>
           <ToggleMenu>통계</ToggleMenu>
           <ToggleMenuIcon
             src={activeTab === "통계" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
-            onClick={() => handleTabClick("통계")}
           />
         </ToggleMenuHeader>
         {activeTab === "통계" && (
@@ -83,16 +80,11 @@ export const AdminNavToggle = () => {
         )}
       </ToggleMenuBox>
       <ToggleMenuBox className={activeTab === "고객서비스" ? "active" : ""}>
-        <ToggleMenuHeader
-        //  onClick={() => handleTabClick("고객서비스")}
-        >
+        <ToggleMenuHeader onClick={() => handleTabClick("고객서비스")}>
           <ToggleMenu>고객서비스</ToggleMenu>
           <ToggleMenuIcon
             src={activeTab === "고객서비스" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
-            onClick={() => {
-              handleTabClick("고객서비스");
-            }}
           />
         </ToggleMenuHeader>
         {activeTab === "고객서비스" && (
@@ -121,14 +113,11 @@ export const AdminNavToggle = () => {
         )}
       </ToggleMenuBox>
       <ToggleMenuBox className={activeTab === "이벤트 및 뉴스" ? "active" : ""}>
-        <ToggleMenuHeader
-        // onClick={() => handleTabClick("이벤트 및 뉴스")}
-        >
+        <ToggleMenuHeader onClick={() => handleTabClick("이벤트 및 뉴스")}>
           <ToggleMenu>이벤트 및 뉴스</ToggleMenu>
           <ToggleMenuIcon
             src={activeTab === "이벤트 및 뉴스" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
-            onClick={() => handleTabClick("이벤트 및 뉴스")}
           />
         </ToggleMenuHeader>
         {activeTab === "이벤트 및 뉴스" && (
@@ -167,14 +156,11 @@ export const AdminNavToggle = () => {
         )}
       </ToggleMenuBox>
       <ToggleMenuBox className={activeTab === "회원 관리" ? "active" : ""}>
-        <ToggleMenuHeader
-        // onClick={() => handleTabClick("회원 관리")}
-        >
+        <ToggleMenuHeader onClick={() => handleTabClick("회원 관리")}>
           <ToggleMenu>회원 관리</ToggleMenu>
           <ToggleMenuIcon
             src={activeTab === "회원 관리" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
-            onClick={() => handleTabClick("회원 관리")}
           />
         </ToggleMenuHeader>
         {activeTab === "회원 관리" && (
@@ -203,14 +189,11 @@ export const AdminNavToggle = () => {
         )}
       </ToggleMenuBox>
       <ToggleMenuBox className={activeTab === "상품 관리" ? "active" : ""}>
-        <ToggleMenuHeader
-        // onClick={() => handleTabClick("상품 관리")}
-        >
+        <ToggleMenuHeader onClick={() => handleTabClick("상품 관리")}>
           <ToggleMenu>상품 관리</ToggleMenu>
           <ToggleMenuIcon
             src={activeTab === "상품 관리" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
-            onClick={() => handleTabClick("상품 관리")}
           />
         </ToggleMenuHeader>
         {activeTab === "상품 관리" && (
@@ -239,20 +222,17 @@ export const AdminNavToggle = () => {
         )}
       </ToggleMenuBox>
       <ToggleMenuBox className={activeTab === "구독 관리" ? "active" : ""}>
-        <ToggleMenuHeader
-        // onClick={() => handleTabClick("구독 관리")}
-        >
+        <ToggleMenuHeader onClick={() => handleTabClick("구독 관리")}>
           <ToggleMenu>구독 관리</ToggleMenu>
           <ToggleMenuIcon
             src={activeTab === "구독 관리" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
-            onClick={() => handleTabClick("구독 관리")}
           />
         </ToggleMenuHeader>
         {activeTab === "구독 관리" && (
           <MenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/subscribemanagement">
+              <LinkToMenu to="/admin/subscribemanagement/member">
                 <SubMenu
                   className={activeSubTab === "구독 회원 관리" ? "active" : ""}
                   onClick={() => setActiveSubTab("구독 회원 관리")}
@@ -262,7 +242,7 @@ export const AdminNavToggle = () => {
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
-              <LinkToMenu to="/admin/subscribemanagement">
+              <LinkToMenu to="/admin/subscribemanagement/product">
                 <SubMenu
                   className={activeSubTab === "구독 상품 관리" ? "active" : ""}
                   onClick={() => setActiveSubTab("구독 상품 관리")}
@@ -279,6 +259,7 @@ export const AdminNavToggle = () => {
 };
 
 const Wrap = styled.div`
+  position: fixed;
   width: 15%;
   height: 100vh;
   background-color: #f8f9fa;

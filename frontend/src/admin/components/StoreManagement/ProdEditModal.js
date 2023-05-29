@@ -113,6 +113,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
     const updateProduct = async () => {
       try {
         await axios.post(`http://localhost:8080/adminProdUpdate`, productInfo);
+        alert("상품 정보가 수정되었습니다!");
       } catch (e) {
         console.log(e);
       }

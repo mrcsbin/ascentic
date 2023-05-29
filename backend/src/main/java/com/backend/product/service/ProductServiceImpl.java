@@ -168,27 +168,13 @@ public class ProductServiceImpl implements ProductService {
         product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
+        product.setProdState(adminProdUpdateInfoDto.getProdState());
         product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());
         Product resProduct = productRepository.save(product);
 
-        deleteOptionNum(adminProdUpdateInfoDto, product); // 옵션 삭제
         updateOptions(adminProdUpdateInfoDto, product); // 옵션 업데이트
 
         return resProduct.getProdNum();
-    }
-
-    // 옵션 삭제
-    private void deleteOptionNum(AdminProdUpdateInfoDto adminProdUpdateInfoDto, Product product) {
-        List<Integer> optionNum = product.getOptionNums();
-        List<Integer> updateOptionNum = adminProdUpdateInfoDto.getOptionNums();
-
-        List<Integer> delOptionNum = optionNum.stream()
-                .filter(num -> !updateOptionNum.contains(num))
-                .collect(Collectors.toList());
-
-        for (Integer delNum : delOptionNum) {
-            productOptionRepository.deleteById(delNum);
-        }
     }
 
     // 옵션 업데이트
@@ -204,6 +190,7 @@ public class ProductServiceImpl implements ProductService {
             option.setProdOption(optionDto.getProdOption());
             option.setProdPrice(optionDto.getProdPrice());
             option.setProdStock(optionDto.getProdStock());
+            option.setOptionState(optionDto.getOptionState());
             productOptionRepository.save(option);
         }
     }

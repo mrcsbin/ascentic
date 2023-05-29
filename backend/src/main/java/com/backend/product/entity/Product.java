@@ -55,8 +55,9 @@ public class Product {
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
 
+    @Setter
     @Column(name = "prod_state")
-    private Boolean prodState; // true: 판매중, false: 판매종료
+    private String prodState; //  판매중, 판매종료, 품절
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOption = new ArrayList<>();
@@ -98,9 +99,9 @@ public class Product {
         return false;
     }
 
-    public List<Integer> getOptionNums() {
-        return productOption.stream()
-                .map(ProductOption::getOptionNum)
-                .collect(Collectors.toList());
-    }
+//    public List<Integer> getOptionNums() {
+//        return productOption.stream()
+//                .map(ProductOption::getOptionNum)
+//                .collect(Collectors.toList());
+//    }
 }

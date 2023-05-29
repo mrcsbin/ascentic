@@ -28,8 +28,7 @@ public class ProductOption {
     private Integer prodStock;
 
     @Column(name = "option_state")
-    private Boolean optionState; // true: 판매중, false: 판매종료
-
+    private String optionState; // 판매중, 판매종료, 품절
 
     @ManyToOne
     @JoinColumn(name = "prod_num")

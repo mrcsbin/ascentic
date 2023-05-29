@@ -88,11 +88,16 @@ function ProdDetailView({ productData }) {
           },
         })
         .then(() => {
-          // navigate(`/cart`, { state: dataForCart });
+          if (
+            window.confirm("카트에 상품이 담겼습니다. 카트로 이동하시겠습니까?")
+          ) {
+            navigate(`/cart`, { state: dataForCart });
+          }
         })
         .catch((error) => {});
     } else {
       alert("로그인이 필요합니다.");
+      navigate("/login");
     }
   };
 

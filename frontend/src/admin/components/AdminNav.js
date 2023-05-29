@@ -42,7 +42,8 @@ function AdminNav() {
       </li>
     );
   };
-
+  if (location.pathname.startsWith("/admin")) return null;
+  if (location.pathname.startsWith("/NotFound")) return null;
   return (
     <nav className="admin-nav">
       <div className="link-to-main">

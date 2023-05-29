@@ -1,142 +1,147 @@
 /* 바디 세팅 */
 body {
-    /* margin-left: 230px; */
-    margin-top: 55px;
+  /* margin-left: 230px; */
+  /* margin-top: 55px; */
 }
 /*------------------------------------- 여기부터 orderComplete 페이지 title -------------------*/
 
 /* 주문 결제 타이틀 */
 .title {
-    margin-left: 230px;
-    width: 1600px;
-    height: 60px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #D9D9D9;
-    transform: matrix(1, 0, -0.01, 1, 0, 0);
-    font-size: 32px;
-
+  margin-left: 230px;
+  width: 1600px;
+  height: 60px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d9d9d9;
+  transform: matrix(1, 0, -0.01, 1, 0, 0);
+  font-size: 32px;
 }
 
 /*------------------------------------- 여기부터 orderComplete 페이지 body -------------------*/
 .complete_body {
-    margin-top: 50px;
-    margin-left: 230px;
-    /* text-align: center; */
+  margin-top: 50px;
+  margin-left: 100px;
+  /* text-align: center; */
 }
 
 /* 주문완료 인사 */
 .complete_message {
-    /* margin-left: 600px; */
-    text-align: center;
+  /* margin-left: 600px; */
+  text-align: center;
 }
 
 /* 주문완료 인사 */
 .complete_message > div:nth-child(1) {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 /* 구매상품 정보 */
 .complete_message > div:nth-child(2) {
-    margin-top: 40px;
-    font-size: 15px;
+  margin-top: 40px;
+  font-size: 15px;
 }
 
 /* table  */
 .complete_body > table {
-    margin-top:70px;
-    text-align: center;
-    font-size: 18px;
+  margin-top: 70px;
+  text-align: center;
+  font-size: 18px;
 }
 
 /* 첫번째 tr */
 .complete_body > table > tr:nth-child(1) {
-    background-color: #EFEFEF;
-    border-top: 1px solid #E3E3E3;
-    border-bottom: 1px solid #E3E3E3;
-    height: 45px;
-    line-height: 45px;
+  background-color: #efefef;
+  border-top: 1px solid #e3e3e3;
+  border-bottom: 1px solid #e3e3e3;
+  height: 45px;
+  line-height: 45px;
 }
 
 /* 두번째 tr */
 .complete_body > table > tr:nth-child(2) {
-    border-bottom: 1px solid #E3E3E3;
-    height: 45px;
-    line-height: 45px;
-} 
+  border-bottom: 1px solid #e3e3e3;
+  height: 45px;
+  line-height: 45px;
+}
 
 /* 첫번째 tr */
 .complete_body > table > tr:nth-child(3) {
-    border-bottom: 1px solid #E3E3E3;
-    height: 50px;
+  border-bottom: 1px solid #e3e3e3;
+  height: 50px;
 }
 
 /* 첫번째 td */
 .complete_body > table > tr > td:nth-child(1) {
-    width: 530px;
-    border-right: 1px solid #E3E3E3;
+  width: 530px;
+  border-right: 1px solid #e3e3e3;
 }
 
 /* 첫번째 td의 주문일자, 주문번호 간격 조정 */
 .complete_body > table > tr > td:nth-child(1) > span:nth-child(2) {
-    margin-left: 70px;
+  margin-left: 70px;
 }
 
 /* 두번째 td */
 .complete_body > table > tr > td:nth-child(2) {
-    width: 530px;
-    border-right: 1px solid #E3E3E3;
+  width: 530px;
+  border-right: 1px solid #e3e3e3;
 }
 
 /* 세번째 td */
 .complete_body > table > tr > td:nth-child(3) {
-    width: 530px;
+  width: 530px;
 }
 
 /* 결제 수단, 총 금액 td */
-.complete_body > table > tr > td:nth-child(3) > div:nth-child(3),div:nth-child(5){
-    font-size: 20px;
+.complete_body > table > tr > td:nth-child(3) > div:nth-child(3),
+div:nth-child(5) {
+  font-size: 20px;
 }
 
 /* 주문금액, 배송비, 총 결제 금액 표*/
-.complete_body > table > tr > td:nth-child(3) > div:nth-child(6){
-    margin-left: 80px;
-    width: 400px;
-    height: 150px;
+.complete_body > table > tr > td:nth-child(3) > div:nth-child(6) {
+  margin-left: 80px;
+  width: 400px;
+  height: 150px;
 }
 
 /* 주문금액, 배송비 row */
-.complete_body > table > tr > td:nth-child(3) > div:nth-child(6) > div{
-    clear: both;
-    padding-top: 10px;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #D9D9D9;
+.complete_body > table > tr > td:nth-child(3) > div:nth-child(6) > div {
+  clear: both;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #d9d9d9;
 }
 
 /* 총 결제 금액 row  */
-.complete_body > table > tr > td:nth-child(3) > div:nth-child(6) > div:nth-child(3){
-   border: none;
+.complete_body
+  > table
+  > tr
+  > td:nth-child(3)
+  > div:nth-child(6)
+  > div:nth-child(3) {
+  border: none;
 }
 /* 주문금액, 배송비, 총결제금액 */
-.complete_body > table > tr > td:nth-child(3) > div:nth-child(6) > div > div:nth-child(1){
-    float: left;
+.complete_body
+  > table
+  > tr
+  > td:nth-child(3)
+  > div:nth-child(6)
+  > div
+  > div:nth-child(1) {
+  float: left;
 }
 /* 금액 정보 td */
-.complete_body > table > tr > td:nth-child(3) > div:nth-child(6) > div > div:nth-child(2){
-    float: right;
+.complete_body
+  > table
+  > tr
+  > td:nth-child(3)
+  > div:nth-child(6)
+  > div
+  > div:nth-child(2) {
+  float: right;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.order_complete_wrap {
+  padding-top: 120px;
+}

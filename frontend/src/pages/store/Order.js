@@ -6,7 +6,7 @@ import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import { useLocation } from "react-router-dom";
 import ExtendAble from "../../components/order/ExtendAble";
-
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { extendChange } from "../../store/modules/order";
 
@@ -14,39 +14,43 @@ import styled from "styled-components";
 
 // 구매 과정 페이지
 const Order = () => {
-  // 확장
-  const dispatch = useDispatch(); // action 객체를 보내는 훅
-  const extend = useSelector((state) => state.order.extend); // state를 가져오는 훅
-
-  const handleExtendChange = (type) => {
-    dispatch(extendChange({ type }));
+  const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
+  const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
+  const handleOrderFormCompleteChange = (value) => {
+    setIsOrderFormComplete(value);
   };
+  const handleDeliveryFormCompleteChange = (value) => {
+    setIsDeliveryFormComplete(value);
+  };
+  const [extend, setExtend] = useState({
+    prod: true,
+    order: false,
+    delivery: false,
+    disCount: false,
+    payment: false,
+  });
+  const handleExtendChange = (type) => {
+    setExtend((prevExtend) => ({
+      ...prevExtend,
+      [type]: !prevExtend[type],
+    }));
 
+    // 다른 확장 가능한 컴포넌트 닫기
+    Object.keys(extend).forEach((key) => {
+      if (key !== type && extend[key] === true) {
+        setExtend((prevExtend) => ({
+          ...prevExtend,
+          [key]: false,
+        }));
+      }
+    });
+  };
+  const handleSaveAndNext = () => {
+    handleExtendChange("delivery");
+  };
   // 상품정보 (서버에 전송할 데이터)
   const location = useLocation();
-  console.log(location.state.cartItems);
   const cartItems = location.state.cartItems;
-
-  // const products = [
-  //   // 서버로 전송할 정보
-  //   // 옵션, 수량
-  //   {
-  //     option: location.state.prodOption.optionNum,
-  //     count: location.state.prodQuantity,
-  //   },
-  // ];
-
-  // // 상품 정보
-  // const products = [
-  //   {
-  //     prodImage: cartItems.prodImage,
-  //     prodName: cartItems.prodName,
-  //     prodOption: cartItems.prodOption,
-  //     prodQuantity: cartItems.prodCount,
-  //     prodPrice: cartItems.prodPrice * cartItems.prodCount, // 수량  x 가격
-  //     prodNum: cartItems.prodNum,
-  //   },
-  // ];
 
   return (
     <OrderWrap>
@@ -68,7 +72,11 @@ const Order = () => {
             isOpen={extend.order}
             onClick={() => handleExtendChange("order")}
           >
-            <OrderInfo />
+            <OrderInfo
+              isOrderFormComplete={isOrderFormComplete}
+              onChange={handleOrderFormCompleteChange}
+              onSaveAndNext={handleSaveAndNext}
+            />
           </ExtendAble>
 
           <ExtendAble
@@ -76,10 +84,13 @@ const Order = () => {
             isOpen={extend.delivery}
             onClick={() => handleExtendChange("delivery")}
           >
-            <DeliveryInfo />
+            <DeliveryInfo
+              isDeliveryFormComplete={isDeliveryFormComplete}
+              onChange={handleDeliveryFormCompleteChange}
+            />
           </ExtendAble>
 
-          <ExtendAble
+          {/* <ExtendAble
             title="할인 혜택"
             isOpen={extend.disCount}
             onClick={() => handleExtendChange("disCount")}
@@ -91,15 +102,15 @@ const Order = () => {
             title="결제 수단"
             isOpen={extend.payment}
             onClick={() => handleExtendChange("payment")}
-          >
-            <Payment />
-          </ExtendAble>
+          > */}
+          {/* <Payment />
+          </ExtendAble> */}
 
           <OrderNotice>
             · 환경부 고시에 따라, 기본 쇼핑백이 제공되지 않습니다.
             <br />
             <br />· 수령일로부터 14일 이내 청약철회(반품)가 가능합니다. 단, 제품
-            개봉 시 반품 불가합니다. 자세한 내용은 <a href="#">반품 및 환불</a>
+            개봉 시 반품 불가합니다. 자세한 내용은 <a href="/">반품 및 환불</a>
             을 확인해주세요.
             <br />
             <br />· (주말 및 공휴일 제외) 주문 상품 품절/배송 지연 예상 시
@@ -110,8 +121,11 @@ const Order = () => {
           </OrderNotice>
         </Left>
         <Right>
-          {/* <FinalPayment prods={prods} products={products}></FinalPayment> */}
-          <FinalPayment products={cartItems} />
+          <FinalPayment
+            products={cartItems}
+            isOrderFormComplete={isOrderFormComplete}
+            isDeliveryFormComplete={isDeliveryFormComplete}
+          />
         </Right>
       </OrderBody>
     </OrderWrap>
@@ -122,7 +136,7 @@ export default Order;
 
 const OrderWrap = styled.div`
   // OrderWrap 스타일 정의
-  margin-top: 30px;
+  padding-top: 110px;
   margin-left: 150px;
 `;
 
@@ -159,5 +173,8 @@ const OrderNotice = styled.div`
 
 const Right = styled.div`
   // Right 스타일 정의
-  margin-left: 142px;
+  margin-left: 143px;
+  top: 13%;
+  height: 100%;
+  position: sticky;
 `;

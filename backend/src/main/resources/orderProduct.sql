@@ -1,4 +1,5 @@
 insert into ascentic.tb_order_prod (order_prod_num, member_id, order_state, prod_count, order_num, option_num)
+
 values  (1, 'sungbin', false, 2, 1, 1),
         (2, 'hansic', false, 2, 2, 2),
         (3, 'kyungmin', false, 2, 3, 3),
@@ -125,3 +126,4 @@ values  (1, 'sungbin', false, 2, 1, 1),
         (124, 'haesung', false, 2, 24, 124),
         (125, 'chaeeun', false, 2, 25, 125),
         (126, 'sungmin', false, 5, 26, 126);
+

@@ -1,3 +1,4 @@
+
 insert into ascentic.tb_order (order_num, member_id, orderDate, order_email, order_name, order_payment, order_payment_info, order_payment_state, order_price_sum, order_state, order_tel, ship_charge, ship_main_address, ship_message, ship_name, ship_sub_address, ship_tel)
 values  (1, 'sungbin', '2023-05-14 19:03:45.460968', 'test1@ascentic.com', '조성빈', 'kakao', '결제정보', false, 20000, '결제완료', '01000000000', 2500, '경기 성남시 분당구 판교역로10번길 3', '조심하게 오세용', '조성빈', '101동 202호', '01000000000'),
         (2, 'hansic', '2023-05-14 19:05:26.754525', 'test2@ascentic.com', '조한식', 'kakao', '결제정보', false, 25000, '결제완료', '01000000001', 2500, '경기 성남시 분당구 판교역로10번길 3', '빠른 배송 부탁드려요', '조한식', '101동 202호', '01000000001'),

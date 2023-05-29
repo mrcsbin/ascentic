@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useDispatch, useSelector } from "react-redux";
 import { sameOrderInfo, updateShip } from "../../store/modules/order";
@@ -8,7 +8,7 @@ import { getCookie } from "../../utils/Cookies";
 import styled from "styled-components";
 
 // 배송 정보
-const DeliveryInfo = () => {
+const DeliveryInfo = ({ isDeliveryFormComplete, onChange }) => {
   const dispatch = useDispatch(); // action 객체를 보내는 훅
   const shipInfo = useSelector((state) => state.order.shipInfo);
 
@@ -51,7 +51,27 @@ const DeliveryInfo = () => {
       console.error(e);
     }
   };
+  useEffect(() => {
+    // 모든 필수 입력값 확인 함수
+    const checkFormCompletion = () => {
+      const isShipNameFilled = shipInfo.shipName.trim() !== "";
+      const isShipTelFilled = shipInfo.shipTel.trim() !== "";
+      const isMainAddressFilled = shipInfo.mainAddress.trim() !== "";
+      const isSubAddressFilled = shipInfo.subAddress.trim() !== "";
+      const isShipMessageFilled = shipInfo.shipMessage.trim() !== "";
+      const isComplete =
+        isShipNameFilled &&
+        isShipTelFilled &&
+        isMainAddressFilled &&
+        isSubAddressFilled &&
+        isShipMessageFilled;
 
+      onChange(isComplete);
+      console.log("이거다 " + isComplete);
+    };
+
+    checkFormCompletion();
+  }, [onChange, shipInfo]);
   return (
     <DeliveryForm>
       <RecipientContent>
@@ -67,7 +87,8 @@ const DeliveryInfo = () => {
         ></input>
       </RecipientContent>
       <TelContent>
-        <div>연락처</div>
+        <div>연락처</div>{" "}
+        {/* 연락처  아무렇게나 입력해도 010-1234-1234 형태로 바꾸는 기능 추가해야될 듯?*/}
         <input
           type="text"
           name="shipTel"

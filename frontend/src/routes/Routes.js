@@ -95,7 +95,10 @@ function Routes() {
         element={<AdminPages.AdminCustomerService />}
       />
       <Route path="/admin/eventnews" element={<AdminPages.AdminEventNews />} />
-      <Route path="/admin/eventnews/:category" element={<AdminPages.AdminEventNews />} />
+      <Route
+        path="/admin/eventnews/:category"
+        element={<AdminPages.AdminEventNews />}
+      />
       <Route
         path="/admin/membermanagement"
         element={<AdminPages.AdminMemberManagement />}
@@ -111,6 +114,10 @@ function Routes() {
       ></Route>
       <Route
         path="/admin/subscribemanagement"
+        element={<AdminPages.AdminSubscribeManagement />}
+      />
+      <Route
+        path="/admin/subscribemanagement/:category"
         element={<AdminPages.AdminSubscribeManagement />}
       />
     </BrowserRoutes>

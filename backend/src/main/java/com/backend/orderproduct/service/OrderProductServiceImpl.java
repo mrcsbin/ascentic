@@ -64,7 +64,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                         .orderDate(orderDate)
                         .orderProductQuantity(orderProduct.getProdCount())
                         .orderProductPrice(orderProduct.getProductOption().getProdPrice())
-                        .orderShippingState(orderProduct.getOrder().getOrderState())
+                        .orderShippingState(orderProduct.getOrderState())
                         .orderProductNumber(orderProduct.getOrderProdNum())
                         .build());
             }

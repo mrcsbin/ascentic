@@ -49,7 +49,7 @@ function AdminStoreManagement() {
       }
     };
     fetchProducts();
-  }, [category, isOpenEditModal, isOpenAddModal]);
+  }, [category]);
 
   return (
     <Wrapper>

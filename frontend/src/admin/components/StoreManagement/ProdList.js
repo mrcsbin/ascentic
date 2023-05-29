@@ -60,6 +60,7 @@ const ProdList = () => {
         const res = await axios.get(
           `http://localhost:8080/admingetprodlist?category=${category}`
         );
+        console.log(res.data);
         setProducts(res.data);
       } catch (e) {
         console.log(e);
@@ -95,7 +96,9 @@ const ProdList = () => {
             <CatTitle>카테고리</CatTitle>
             <StockTitle>재고</StockTitle>
             <OptionTitle>옵션</OptionTitle>
+            <StateTitle>상태</StateTitle>
             <DateTitle>등록일</DateTitle>
+            <EditTitle>수정</EditTitle>
           </ContentTitle>
         </ListBox>
         {products.map((item, index) => (
@@ -138,7 +141,7 @@ const CategoriesBox = styled.div`
 
 const ListWrapper = styled.div`
   margin: 0 auto;
-  width: 90%;
+  width: 95%;
   border-bottom: 2px solid black;
 `;
 
@@ -162,7 +165,7 @@ const ListBox = styled.div`
 `;
 const ContentTitle = styled.div`
   height: 40px;
-  font-size: 23px;
+  font-size: 18px;
   display: flex;
 `;
 const NumTitle = styled.div`
@@ -215,7 +218,7 @@ const OptionTitle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 15%;
+  width: 12%;
 `;
 
 const StockTitle = styled.div`
@@ -225,8 +228,24 @@ const StockTitle = styled.div`
   justify-content: center;
   width: 10%;
 `;
+
+const StateTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5%;
+`;
 const DateTitle = styled.div`
   width: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const EditTitle = styled.div`
+  width: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;

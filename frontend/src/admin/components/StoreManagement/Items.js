@@ -24,6 +24,7 @@ const Items = ({ item, index, hadleOpenEditModal }) => {
           </div>
         ))}
       </ProdOption>
+      <ProdState>{item.prodState}</ProdState>
       <ProdDate>{item.prodDate}</ProdDate>
       <EditBtn>
         <button onClick={() => hadleOpenEditModal(item.prodNum)}>수정</button>
@@ -104,7 +105,15 @@ const ProdOption = styled.div`
   /* flex-direction: column; */
   align-items: center;
   justify-content: center;
-  width: 15%;
+  width: 12%;
+`;
+
+const ProdState = styled.div`
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  width: 5%;
 `;
 
 const ProdDate = styled.div`

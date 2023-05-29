@@ -104,14 +104,14 @@ function Routes() {
         element={<AdminPages.AdminMemberManagement />}
       />
       <Route
-        path="/admin/storemanagement"
-        element={<AdminPages.AdminStoreManagement />}
-      />
-      <Route
         exact
         path="/admin/storemanagement/:category"
         element={<AdminPages.AdminStoreManagement />}
       ></Route>
+      {/* <Route
+        path="/admin/storemangement/add"
+        element={<ProdAdd></ProdAdd>}
+      ></Route> */}
       <Route
         path="/admin/subscribemanagement"
         element={<AdminPages.AdminSubscribeManagement />}

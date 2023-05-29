@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { categories, scentNames } from "./ProdSelectData";
 
-const ProdAddModal = ({ hadleCloseAddModal }) => {
+const ProdAdd = () => {
   const [productInfo, setProductInfo] = useState({
     prodName: "",
     scentName: "Ambergris",
@@ -156,144 +156,140 @@ const ProdAddModal = ({ hadleCloseAddModal }) => {
       }
     };
     updateProduct();
-    hadleCloseAddModal();
   };
 
   return (
     <>
-      <ModalBackground />
-      <ModalContainer>
-        <InputContainer>
-          <ProdInputContainer>
-            <OneInputContainer>
-              <Label>제품명</Label>
-              <NameInput
-                type="text"
-                value={productInfo.prodName}
-                onChange={(e) => handleChange(e, "prodName")}
-              ></NameInput>
-            </OneInputContainer>
-            <OneInputContainer>
-              <Label>향이름</Label>
-              <SelectInput
-                value={productInfo.scentName}
-                onChange={(e) => handleChange(e, "scentName")}
-              >
-                {scentNames.map((scent, index) => (
-                  <option key={index} value={scent}>
-                    {scent}
-                  </option>
-                ))}
-              </SelectInput>
-            </OneInputContainer>
-            <OneInputContainer>
-              <Label>분류</Label>
-              <SelectInput
-                value={productInfo.prodCategory}
-                onChange={(e) => handleChange(e, "prodCategory")}
-              >
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </SelectInput>
-            </OneInputContainer>
-            <BigOneInputContainer>
-              <Label>제품 설명</Label>
-              <ProdInfoInput
-                value={productInfo.prodInfo}
-                onChange={(e) => handleChange(e, "prodInfo")}
-              ></ProdInfoInput>
-            </BigOneInputContainer>
-            <ThumbnailContainer>
-              <Label>대표사진</Label>
-              <ThumInput
-                type="file"
-                onChange={(e) => setThumbnaililFile(e.target.files[0])}
-              ></ThumInput>
-            </ThumbnailContainer>
-            <Imagesontainer>
-              <Label>이미지</Label>
-              <ImageInput
-                type="file"
-                multiple
-                onChange={(e) => setImageFiles(Array.from(e.target.files))}
-              ></ImageInput>
-            </Imagesontainer>
-          </ProdInputContainer>
-          <OptionContainer>
-            <OneInputContainer>
-              <OptionLabel>
-                <OptionInfoLabel>옵션명</OptionInfoLabel>
-                <OptionInfoLabel>가격</OptionInfoLabel>
-                <OptionInfoLabel>재고</OptionInfoLabel>
-              </OptionLabel>
-            </OneInputContainer>
-            {productInfo.options.map((option, index) => (
-              <div key={index}>
-                <OptionOneInputContainer>
-                  <Label>옵션{index + 1}</Label>
-                  <InputOption
-                    type="text"
-                    value={option.prodOption}
-                    onChange={(e) => handleOptionChange(e, index, "prodOption")}
-                  />
-                  <InputOption
-                    type="text"
-                    value={option.prodPrice}
-                    onChange={(e) => handleOptionChange(e, index, "prodPrice")}
-                  />
-                  원
-                  <InputOption
-                    type="text"
-                    value={option.prodStock}
-                    onChange={(e) => handleOptionChange(e, index, "prodStock")}
-                  />
-                  개
-                  <OptionDelBtn onClick={() => handleDeleteOption(index)}>
-                    -
-                  </OptionDelBtn>
-                </OptionOneInputContainer>
-              </div>
-            ))}
-            <OptionAddBtn onClick={() => handleAddOption()}>+</OptionAddBtn>
-          </OptionContainer>
-          <EditBtnContainer>
-            <AddBtn onClick={() => handleProdAdd()}>상품 추가</AddBtn>
-            <CloseBtn onClick={() => hadleCloseAddModal()}>취소</CloseBtn>
-          </EditBtnContainer>
-        </InputContainer>
-      </ModalContainer>
+      <HeaderWrap>
+        <HeaderLeft>상품 추가</HeaderLeft>
+        <HeaderRight></HeaderRight>
+      </HeaderWrap>
+      <InputContainer>
+        <ProdInputContainer>
+          <OneInputContainer>
+            <Label>제품명</Label>
+            <NameInput
+              type="text"
+              value={productInfo.prodName}
+              onChange={(e) => handleChange(e, "prodName")}
+            ></NameInput>
+          </OneInputContainer>
+          <OneInputContainer>
+            <Label>향이름</Label>
+            <SelectInput
+              value={productInfo.scentName}
+              onChange={(e) => handleChange(e, "scentName")}
+            >
+              {scentNames.map((scent, index) => (
+                <option key={index} value={scent}>
+                  {scent}
+                </option>
+              ))}
+            </SelectInput>
+          </OneInputContainer>
+          <OneInputContainer>
+            <Label>분류</Label>
+            <SelectInput
+              value={productInfo.prodCategory}
+              onChange={(e) => handleChange(e, "prodCategory")}
+            >
+              {categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </SelectInput>
+          </OneInputContainer>
+          <BigOneInputContainer>
+            <Label>제품 설명</Label>
+            <ProdInfoInput
+              value={productInfo.prodInfo}
+              onChange={(e) => handleChange(e, "prodInfo")}
+            ></ProdInfoInput>
+          </BigOneInputContainer>
+          <ThumbnailContainer>
+            <Label>대표사진</Label>
+            <ThumInput
+              type="file"
+              onChange={(e) => setThumbnaililFile(e.target.files[0])}
+            ></ThumInput>
+          </ThumbnailContainer>
+          <Imagesontainer>
+            <Label>이미지</Label>
+            <ImageInput
+              type="file"
+              multiple
+              onChange={(e) => setImageFiles(Array.from(e.target.files))}
+            ></ImageInput>
+          </Imagesontainer>
+        </ProdInputContainer>
+        <OptionContainer>
+          <OneInputContainer>
+            <OptionLabel>
+              <OptionInfoLabel>옵션명</OptionInfoLabel>
+              <OptionInfoLabel>가격</OptionInfoLabel>
+              <OptionInfoLabel>재고</OptionInfoLabel>
+            </OptionLabel>
+          </OneInputContainer>
+          {productInfo.options.map((option, index) => (
+            <div key={index}>
+              <OptionOneInputContainer>
+                <Label>옵션{index + 1}</Label>
+                <InputOption
+                  type="text"
+                  value={option.prodOption}
+                  onChange={(e) => handleOptionChange(e, index, "prodOption")}
+                />
+                <InputOption
+                  type="text"
+                  value={option.prodPrice}
+                  onChange={(e) => handleOptionChange(e, index, "prodPrice")}
+                />
+                원
+                <InputOption
+                  type="text"
+                  value={option.prodStock}
+                  onChange={(e) => handleOptionChange(e, index, "prodStock")}
+                />
+                개
+                <OptionDelBtn onClick={() => handleDeleteOption(index)}>
+                  -
+                </OptionDelBtn>
+              </OptionOneInputContainer>
+            </div>
+          ))}
+          <OptionAddBtn onClick={() => handleAddOption()}>+</OptionAddBtn>
+        </OptionContainer>
+        <EditBtnContainer>
+          <AddBtn onClick={() => handleProdAdd()}>상품 추가</AddBtn>
+        </EditBtnContainer>
+      </InputContainer>
     </>
   );
 };
 
-export default ProdAddModal;
+export default ProdAdd;
 
-const ModalBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 50px;
+  border-bottom: 2px solid black;
 `;
 
-const ModalContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 900px;
-  background-color: white;
-  z-index: 1000;
-  border: 5px solid black;
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 700;
+`;
+
+const HeaderRight = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 `;
 
 const InputContainer = styled.div`

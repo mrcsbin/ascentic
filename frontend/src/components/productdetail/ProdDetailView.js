@@ -8,6 +8,7 @@ import unwish from "../../assets/unwish_icon.svg";
 import uptri from "../../assets/up_triangle.svg";
 import styled from "styled-components";
 import Carousel from "./Carousel";
+import ProductReview from "./ProductReview";
 
 function ProdDetailView({ productData }) {
   const navigate = useNavigate();
@@ -259,9 +260,10 @@ function ProdDetailView({ productData }) {
         <RecommendBar>
           <RecommendTitle>추천 제품</RecommendTitle>
           <RecommendItemBox>
-            <Carousel category={productData.prodCategory}></Carousel>
+            <Carousel category={productData.prodCategory} />
           </RecommendItemBox>
         </RecommendBar>
+        <ProductReview review={productData.review} />
       </Wrap>
     </>
   );
@@ -623,6 +625,7 @@ const ModalContent = styled.div`
 const RecommendBar = styled.div`
   width: 70%;
   margin: 0 auto;
+  margin-bottom: 5%;
 `;
 
 const RecommendTitle = styled.div`

@@ -5,6 +5,7 @@ import RIGHT_ARROW from "../../assets/productdetail/right-arrow.png";
 import LEFT_ARROW from "../../assets/productdetail/left-arrow.png";
 import axios from "axios";
 import Loading from "../common/Loading";
+import { Link } from "react-router-dom";
 
 // const items = [
 //   { id: 1, name: "Item 1" },
@@ -16,7 +17,7 @@ import Loading from "../common/Loading";
 //   { id: 7, name: "Item 7" },
 // ];
 
-const Carousel = ({ category }) => {
+const Carousel = ({ category, recommendClick }) => {
   const [loading, setLoading] = useState(true);
   const [recommendProduct, setRecommendProduct] = useState();
   const [translateXValue, setTranslateXValue] = useState(0);
@@ -107,12 +108,18 @@ const Carousel = ({ category }) => {
           >
             {recommendProduct.map((item, index) => (
               <CarouselItem key={index}>
-                <CarouselImage
-                  src={`http://localhost:8080/images/${item.productImage}`}
-                  alt="상품 이미지"
-                />
-                <CarouselName>{item.productName}</CarouselName>
-                <CarouselPrice>{addComma(item.productPrice)}원</CarouselPrice>
+                <Link
+                  to={`/store/productdetail/${item.productNum}`}
+                  style={{ color: "black", textDecoration: "none" }}
+                  onClick={() => recommendClick()}
+                >
+                  <CarouselImage
+                    src={`http://localhost:8080/images/${item.productImage}`}
+                    alt="상품 이미지"
+                  />
+                  <CarouselName>{item.productName}</CarouselName>
+                  <CarouselPrice>{addComma(item.productPrice)}원</CarouselPrice>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContainer>

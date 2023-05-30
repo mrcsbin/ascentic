@@ -6,7 +6,8 @@ import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import { useLocation } from "react-router-dom";
 import ExtendAble from "../../components/order/ExtendAble";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extendChange } from "../../store/modules/order";
 
@@ -14,8 +15,19 @@ import styled from "styled-components";
 
 // 구매 과정 페이지
 const Order = () => {
+  const nav = useNavigate();
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
+  const [cartItems, setCartItems] = useState();
+  // 상품정보 (서버에 전송할 데이터)
+  const location = useLocation();
+  useEffect(() => {
+    if (location.state.cartItems === null) {
+      nav("/NotFound");
+    } else {
+      setCartItems(location.state.cartItems);
+    }
+  }, []);
   const handleOrderFormCompleteChange = (value) => {
     setIsOrderFormComplete(value);
   };
@@ -48,9 +60,6 @@ const Order = () => {
   const handleSaveAndNext = () => {
     handleExtendChange("delivery");
   };
-  // 상품정보 (서버에 전송할 데이터)
-  const location = useLocation();
-  const cartItems = location.state.cartItems;
 
   return (
     <OrderWrap>

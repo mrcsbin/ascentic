@@ -67,7 +67,10 @@ function Routes() {
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
 
       <Route path="/order" element={<Pages.Order />}></Route>
-      <Route path="/ordercomplete" element={<Pages.OrderComplete />}></Route>
+      <Route
+        path="/ordercomplete/:orderId"
+        element={<Pages.OrderComplete />}
+      ></Route>
       <Route path="/proddetail" element={<Pages.ProdDetail />}></Route>
       <Route exact path="/storemain/" element={<Pages.StoreMain />}></Route>
       <Route
@@ -92,6 +95,11 @@ function Routes() {
         element={<Pages.TestResult></Pages.TestResult>}
       ></Route>
       <Route path="/exp/subs" element={<Pages.ExpSubs></Pages.ExpSubs>}></Route>
+
+      <Route
+        path="/exp/subs/:code/:message"
+        element={<Pages.ExpSubs></Pages.ExpSubs>}
+      ></Route>
 
       <Route
         path="/exp/subsmanage"

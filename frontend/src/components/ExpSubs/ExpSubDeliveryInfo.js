@@ -8,7 +8,7 @@ import { getCookie } from "../../utils/Cookies";
 import styled from "styled-components";
 
 // 배송 정보
-const DeliveryInfo = ({ isDeliveryFormComplete, onChange }) => {
+const DeliveryInfo = () => {
   const dispatch = useDispatch(); // action 객체를 보내는 훅
   const shipInfo = useSelector((state) => state.order.shipInfo);
 
@@ -65,12 +65,10 @@ const DeliveryInfo = ({ isDeliveryFormComplete, onChange }) => {
         isMainAddressFilled &&
         isSubAddressFilled &&
         isShipMessageFilled;
-
-      onChange(isComplete);
     };
 
     checkFormCompletion();
-  }, [onChange, shipInfo]);
+  }, [shipInfo]);
   return (
     <DeliveryForm>
       <RecipientContent>

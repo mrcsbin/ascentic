@@ -24,6 +24,7 @@ const EventDetail = lazy(() => import("./community/EventDetail"));
 const ProdDetailV2 = lazy(() => import("./store/ProdDetailV2"));
 const MainTest = lazy(() => import("./MainTest"));
 const MainTest2 = lazy(() => import("./MainTest2"));
+const MainTest3 = lazy(() => import("./MainTest3"));
 
 export {
   Order,
@@ -50,4 +51,5 @@ export {
   ProdDetailV2,
   MainTest,
   MainTest2,
+  MainTest3,
 };

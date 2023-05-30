@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TEST_IMAGE from "../../assets/correct.png";
 import RIGHT_ARROW from "../../assets/productdetail/right-arrow.png";
 import LEFT_ARROW from "../../assets/productdetail/left-arrow.png";
+import axios from "axios";
+import Loading from "../common/Loading";
 
-const items = [
-  { id: 1, name: "Item 1" },
-  { id: 2, name: "Item 2" },
-  { id: 3, name: "Item 3" },
-  { id: 4, name: "Item 4" },
-  { id: 5, name: "Item 5" },
-  { id: 6, name: "Item 6" },
-  { id: 7, name: "Item 7" },
-];
+// const items = [
+//   { id: 1, name: "Item 1" },
+//   { id: 2, name: "Item 2" },
+//   { id: 3, name: "Item 3" },
+//   { id: 4, name: "Item 4" },
+//   { id: 5, name: "Item 5" },
+//   { id: 6, name: "Item 6" },
+//   { id: 7, name: "Item 7" },
+// ];
 
-const Carousel = () => {
+const Carousel = ({ category }) => {
+  const [loading, setLoading] = useState(true);
+  const [recommendProduct, setRecommendProduct] = useState();
   const [translateXValue, setTranslateXValue] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,7 +28,7 @@ const Carousel = () => {
     const visibleItems = 3;
 
     const itemCardWidth = containerWidth / visibleItems;
-    const totalItems = items.length;
+    const totalItems = recommendProduct.length;
     const totalPages = Math.ceil(totalItems / visibleItems);
     const maxTranslateX = -(itemCardWidth * (totalPages - 1));
 
@@ -46,7 +50,7 @@ const Carousel = () => {
     const visibleItems = 3;
 
     const itemCardWidth = containerWidth / visibleItems;
-    const totalItems = items.length;
+    const totalItems = recommendProduct.length;
     const totalPages = Math.ceil(totalItems / visibleItems);
     const maxTranslateX = -(itemCardWidth * (totalPages - 1));
 
@@ -61,6 +65,30 @@ const Carousel = () => {
       setCurrentPage(totalPages);
     }
   };
+
+  useEffect(() => {
+    const fetchRecommendList = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/recommend?category=${category}`
+        );
+        console.log(res.data);
+        setRecommendProduct(res.data);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRecommendList();
+  }, []);
+
+  function addComma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -77,25 +105,28 @@ const Carousel = () => {
             className="carousel-container"
             style={{ transform: `translateX(${translateXValue}px)` }}
           >
-            {items.map((item) => (
-              <CarouselItem key={item.id}>
-                <CarouselImage src={TEST_IMAGE} alt="상품 이미지" />
-                <CarouselName>{item.name}</CarouselName>
-                <CarouselPrice>30,000원</CarouselPrice>
+            {recommendProduct.map((item, index) => (
+              <CarouselItem key={index}>
+                <CarouselImage
+                  src={`http://localhost:8080/images/${item.productImage}`}
+                  alt="상품 이미지"
+                />
+                <CarouselName>{item.productName}</CarouselName>
+                <CarouselPrice>{addComma(item.productPrice)}원</CarouselPrice>
               </CarouselItem>
             ))}
           </CarouselContainer>
         </CarouselWrapper>
         <ButtonBox>
           <NextButton
-            show={currentPage !== Math.ceil(items.length / 3)}
+            show={currentPage !== Math.ceil(recommendProduct.length / 3)}
             onClick={slideNext}
             src={RIGHT_ARROW}
           />
         </ButtonBox>
       </Wrapper>
       <PageIndicator>{`${currentPage}/${Math.ceil(
-        items.length / 3
+        recommendProduct.length / 3
       )}`}</PageIndicator>
     </>
   );

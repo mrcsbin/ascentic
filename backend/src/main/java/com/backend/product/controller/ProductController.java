@@ -46,4 +46,13 @@ public class ProductController {
         return productServiceImpl.updateAdminProd(adminProdUpdateInfoDto);
     }
 
+    @GetMapping("/search")
+    public List<ProductResponse.ProductSearchDto> getSearchList(String searchData) {
+        return productServiceImpl.getSearchList(searchData);
+    }
+
+    @GetMapping("/recommend")
+    public List<ProductResponse.RecommendProductDto> getRecommendList(String category) {
+        return productServiceImpl.getRecommendList(category);
+    }
 }

@@ -15,14 +15,15 @@ import com.backend.productimage.entity.ProductImage;
 import com.backend.productimage.repository.ProductImageRepository;
 import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -57,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
 
         if (findProduct.isPresent()) {
             Product product = findProduct.get();
-            List<Integer> prodPrice = new ArrayList<>(Arrays.asList(product.getProdPrice(0), product.getProdPrice(1)));
             List<String> prodOption = new ArrayList<>(Arrays.asList(product.getProdOption(0), product.getProdOption(1)));
             List<Integer> prodOptionNum = new ArrayList<>(Arrays.asList(product.getProdOptionNum(0), product.getProdOptionNum(1)));
             List<String> prodImages = new ArrayList<>();
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
                     .prodName(product.getProdName())
                     .prodCategory(product.getProdCategory())
                     .prodInfo(product.getProdInfo())
-                    .prodPrice(prodPrice)
+                    .prodPrice(product.getProdPriceList())
                     .prodOption(prodOption)
                     .prodImage(prodImages)
                     .scent(product.getScent())
@@ -110,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
                         .prodReadCount(product.getProdReadCount())
                         .prodCategory(product.getProdCategory())
                         .prodImage(productImage.getProdSaveName())
-                        .prodPrice(product.getProdPrice(0))
+                        .prodPrice(product.getProdPriceList().get(0))
                         .build());
             }
         } else {
@@ -125,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
                         .prodReadCount(product.getProdReadCount())
                         .prodCategory(product.getProdCategory())
                         .prodImage(productImage.getProdSaveName())
-                        .prodPrice(product.getProdPrice(0))
+                        .prodPrice(product.getProdPriceList().get(0))
                         .build());
             }
         }
@@ -157,7 +157,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
         Product product;
-        if(adminProdUpdateInfoDto.getProdNum() != null) {
+        if (adminProdUpdateInfoDto.getProdNum() != null) {
             product = productRepository.findById(adminProdUpdateInfoDto.getProdNum()).orElse(null);
         } else {
             product = new Product();
@@ -208,4 +208,28 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    public List<ProductResponse.ProductSearchDto> getSearchList(String searchData) {
+        System.out.println("searchData = " + searchData);
+        if (searchData.length() < 2) {
+            return Collections.emptyList();
+        }
+        return productRepository.findByProdNameContaining(searchData)
+                .stream()
+                .map(ProductResponse.ProductSearchDto::of)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductResponse.RecommendProductDto> getRecommendList(String category) {
+        int pageNumber = 0; // 첫 번째 페이지
+        int pageSize = 6; // 페이지 크기는 6
+
+        System.out.println("category = " + category);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Product> productPage = productRepository.findByProdCategory(category, pageable);
+
+        return productPage.getContent()
+                .stream()
+                .map(ProductResponse.RecommendProductDto::of)
+                .collect(Collectors.toList());
+    }
 }

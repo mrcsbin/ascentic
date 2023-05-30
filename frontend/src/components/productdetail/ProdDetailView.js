@@ -259,7 +259,7 @@ function ProdDetailView({ productData }) {
         <RecommendBar>
           <RecommendTitle>추천 제품</RecommendTitle>
           <RecommendItemBox>
-            <Carousel></Carousel>
+            <Carousel category={productData.prodCategory}></Carousel>
           </RecommendItemBox>
         </RecommendBar>
       </Wrap>

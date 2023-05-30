@@ -64,8 +64,10 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch =  FetchType.LAZY)
     private List<ProductImage> productImages = new ArrayList<>();
 
-    public Integer getProdPrice(Integer index) {
-        return productOption.get(index).getProdPrice();
+    public List<Integer> getProdPriceList() {
+        return productOption.stream()
+                .map(ProductOption::getProdPrice)
+                .collect(Collectors.toList());
     }
 
     public String getProdOption(Integer index) {

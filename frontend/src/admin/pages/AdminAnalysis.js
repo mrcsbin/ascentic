@@ -1,12 +1,27 @@
 import React from "react";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { ProductAnalysis } from "../components/analysis/ProductAnalysis";
+import { MemberAnalysis } from "../components/analysis/MemberAnalysis";
+import { SubscribeAnalysis } from "../components/analysis/SubscribeAnalysis";
 
-function AdminAnalysis() {
+const AdminAnalysis = () => {
+  const params = useParams();
+
   return (
-    <div>
-      <h2>통계 페이지</h2>
-      <p>통계가 좋다~</p>
-    </div>
+    <Wrap>
+      {params.category === "product" && <ProductAnalysis />}
+      {params.category === "member" && <MemberAnalysis />}
+      {params.category === "subscribe" && <SubscribeAnalysis />}
+    </Wrap>
   );
-}
+};
 
 export default AdminAnalysis;
+
+const Wrap = styled.div`
+  display: block;
+  float: right;
+  margin: 0;
+  width: 85%;
+`;

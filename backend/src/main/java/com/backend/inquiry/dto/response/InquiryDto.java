@@ -8,7 +8,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 public class InquiryDto {
@@ -19,6 +20,7 @@ public class InquiryDto {
     private String inquiryComment;
     private Boolean inquiryState;
     private LocalDateTime commentDate;
+    private Integer inquiryNum;
 
     public static InquiryDto of(Inquiry inquiry) {
         return new InquiryDto(inquiry.getInquiryTitle(),
@@ -27,6 +29,7 @@ public class InquiryDto {
                 inquiry.getInquiryCategory(),
                 inquiry.getInquiryComment(),
                 inquiry.getInquiryState(),
-                inquiry.getCommentDate());
+                inquiry.getCommentDate(),
+                inquiry.getInquiryNum());
     }
 }

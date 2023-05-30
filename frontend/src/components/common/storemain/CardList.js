@@ -3,8 +3,7 @@ import "../../../styles/StoreMain.css";
 import ProductCard from "./ProductCard";
 import styled from "styled-components";
 
-const CardList = ({ products }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const CardList = ({ products, currentPage, setCurrentPage }) => {
   const productsPerPage = 12;
 
   // 페이지 수 계산
@@ -20,7 +19,7 @@ const CardList = ({ products }) => {
 
   // 페이지 변경 함수
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    setCurrentPage(Number(pageNumber));
   };
 
   return (
@@ -34,7 +33,7 @@ const CardList = ({ products }) => {
         {currentPage - 3 <= 0 ? (
           ""
         ) : (
-          <PageBtn onClick={() => handlePageChange(currentPage - 3)}>
+          <PageBtn onClick={() => handlePageChange(currentPage - 1)}>
             이전
           </PageBtn>
         )}
@@ -48,8 +47,8 @@ const CardList = ({ products }) => {
               key={pageNumber}
               onClick={() => handlePageChange(pageNumber)}
               style={{
-                pointerEvents: pageNumber == currentPage ? "none" : "auto",
-                borderColor: pageNumber == currentPage ? "black" : "white",
+                pointerEvents: pageNumber === currentPage ? "none" : "auto",
+                borderColor: pageNumber === currentPage ? "black" : "white",
               }}
             >
               {pageNumber}
@@ -58,7 +57,7 @@ const CardList = ({ products }) => {
         {currentPage + 3 > totalPages ? (
           ""
         ) : (
-          <PageBtn onClick={() => handlePageChange(currentPage + 3)}>
+          <PageBtn onClick={() => handlePageChange(currentPage + 1)}>
             다음
           </PageBtn>
         )}
@@ -67,7 +66,7 @@ const CardList = ({ products }) => {
         {products.length === 0 ? (
           <div style={{ margin: "100px auto" }}>
             <center style={{ fontSize: "20px", fontFamily: "Pretendard" }}>
-              해당하는 상품이 없습니다.
+              로딩중입니다.
             </center>
             <div style={{ height: "100px" }}></div>
           </div>

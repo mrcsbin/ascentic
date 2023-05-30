@@ -34,14 +34,13 @@ function Routes() {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Pages.Main />}></Route>
-
+      <Route path="/test" element={<Pages.MainTest />}></Route>
+      <Route path="/test2" element={<Pages.MainTest2 />}></Route>
       <Route
         path="/login"
         element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
       />
-
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
-
       <Route
         path="/mypage"
         element={
@@ -56,17 +55,15 @@ function Routes() {
           )
         }
       />
-
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
       <Route path="/member/find" element={<Pages.FindIdPw />} />
       <Route path="/signup" element={<Pages.SignUp />}></Route>
       <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
-
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
-
       <Route path="/order" element={<Pages.Order />}></Route>
+
       <Route
         path="/ordercomplete/:orderId"
         element={<Pages.OrderComplete />}
@@ -106,31 +103,48 @@ function Routes() {
         element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
       ></Route>
       <Route path="/community/event" element={<Pages.Event />}></Route>
+
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />
+
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
       <Route path="/admin" element={<AdminPages.AdminMainPage />} />
-
       <Route path="/admin/analysis" element={<AdminPages.AdminAnalysis />} />
+      <Route
+        path="/admin/analysis/:category"
+        element={<AdminPages.AdminAnalysis />}
+      />
       <Route
         path="/admin/customerservice"
         element={<AdminPages.AdminCustomerService />}
       />
+      <Route
+        path="/admin/customerservice/:category"
+        element={<AdminPages.AdminCustomerService />}
+      />
       <Route path="/admin/eventnews" element={<AdminPages.AdminEventNews />} />
+      <Route
+        path="/admin/eventnews/:category"
+        element={<AdminPages.AdminEventNews />}
+      />
       <Route
         path="/admin/membermanagement"
         element={<AdminPages.AdminMemberManagement />}
-      />
-      <Route
-        path="/admin/storemanagement"
-        element={<AdminPages.AdminStoreManagement />}
       />
       <Route
         exact
         path="/admin/storemanagement/:category"
         element={<AdminPages.AdminStoreManagement />}
       ></Route>
+      {/* <Route
+        path="/admin/storemangement/add"
+        element={<ProdAdd></ProdAdd>}
+      ></Route> */}
       <Route
         path="/admin/subscribemanagement"
+        element={<AdminPages.AdminSubscribeManagement />}
+      />
+      <Route
+        path="/admin/subscribemanagement/:category"
         element={<AdminPages.AdminSubscribeManagement />}
       />
     </BrowserRoutes>

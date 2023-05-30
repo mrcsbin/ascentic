@@ -176,7 +176,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("관리자")
                 .birthDate("0101")
-                .phone("01012341234")
+                .phone("01100000000")
                 .role(Collections.singletonList("ADMIN"))
                 .build();
         memberRepository.save(member);
@@ -188,7 +188,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("조성빈")
                 .birthDate("0101")
-                .phone("01000000000")
+                .phone("01100000001")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member1);
@@ -200,7 +200,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("조한식")
                 .birthDate("0101")
-                .phone("01000000001")
+                .phone("01100000002")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member2);
@@ -212,7 +212,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("강경민")
                 .birthDate("0101")
-                .phone("01000000002")
+                .phone("01100000003")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member3);
@@ -224,7 +224,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("나해성")
                 .birthDate("0101")
-                .phone("01000000003")
+                .phone("01100000004")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member4);
@@ -236,7 +236,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("전채은")
                 .birthDate("0101")
-                .phone("01000000004")
+                .phone("01100000005")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member5);
@@ -248,7 +248,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("황성민")
                 .birthDate("0101")
-                .phone("01000000005")
+                .phone("01100000006")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member6);

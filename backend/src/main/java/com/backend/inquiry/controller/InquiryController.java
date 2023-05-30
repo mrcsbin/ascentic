@@ -7,6 +7,7 @@ import com.backend.inquiry.entity.Inquiry;
 import com.backend.inquiry.service.InquiryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequestMapping("/inquiry")
@@ -36,5 +37,10 @@ public class InquiryController {
         System.out.println(commentInquiryDto.getInquiryNum());
         System.out.println("GGGG");
         inquiryService.updateInquiry(commentInquiryDto);
+    }
+
+    @GetMapping("/new")
+    public List<Inquiry> getNewInquiryList() {
+        return inquiryService.getNewInquiryList();
     }
 }

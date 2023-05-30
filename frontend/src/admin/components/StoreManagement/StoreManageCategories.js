@@ -63,7 +63,7 @@ const StoreManageCategories = () => {
               isActive ? "catebox-active" : "catebox"
             }
             key={c.name}
-            to={"/admin/storemanagement/" + c.text}
+            to={"/admin/storemanagement/list/" + c.text}
           >
             <CategoryImgEffect className="cateimgEffect">
               <CategoryImgBox className="cateimgbox">

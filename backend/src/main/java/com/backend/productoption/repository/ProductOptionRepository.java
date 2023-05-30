@@ -10,4 +10,6 @@ public interface ProductOptionRepository extends JpaRepository<ProductOption, In
 
     ProductOption findByProdOption(String prodOption);
 
+    int countByProduct(Product product);
+
 }

@@ -1,18 +1,24 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
 import com.backend.product.dto.ProductResponse;
+import com.backend.product.dto.admindto.OptionDto;
 import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
+import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
 import com.backend.productimage.entity.ProductImage;
 import com.backend.productimage.repository.ProductImageRepository;
+import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +32,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
     private final ReviewRepository reviewRepository;
+    private final ProductOptionRepository productOptionRepository;
+    private final ScentRepository scentRepository;
 
     public void create(Product product) {
         productRepository.save(product);
@@ -140,4 +148,64 @@ public class ProductServiceImpl implements ProductService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public AdminProdUpdateInfoDto getAdminProdUpdateInfo(Integer prodNum) {
+        return AdminProdUpdateInfoDto.of(productRepository.findById(prodNum).orElse(null));
+    }
+
+    @Override
+    public Integer updateAdminProd(AdminProdUpdateInfoDto adminProdUpdateInfoDto) {
+        Product product;
+        if(adminProdUpdateInfoDto.getProdNum() != null) {
+            product = productRepository.findById(adminProdUpdateInfoDto.getProdNum()).orElse(null);
+        } else {
+            product = new Product();
+            product.setProdDate(LocalDateTime.now());
+            product.setProdReadCount(0);
+            product.setProdWishCount(0);
+        }
+        product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
+        product.setProdName(adminProdUpdateInfoDto.getProdName());
+        product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
+        product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());
+        Product resProduct = productRepository.save(product);
+
+        deleteOptionNum(adminProdUpdateInfoDto, product); // 옵션 삭제
+        updateOptions(adminProdUpdateInfoDto, product); // 옵션 업데이트
+
+        return resProduct.getProdNum();
+    }
+
+    // 옵션 삭제
+    private void deleteOptionNum(AdminProdUpdateInfoDto adminProdUpdateInfoDto, Product product) {
+        List<Integer> optionNum = product.getOptionNums();
+        List<Integer> updateOptionNum = adminProdUpdateInfoDto.getOptionNums();
+
+        List<Integer> delOptionNum = optionNum.stream()
+                .filter(num -> !updateOptionNum.contains(num))
+                .collect(Collectors.toList());
+
+        for (Integer delNum : delOptionNum) {
+            productOptionRepository.deleteById(delNum);
+        }
+    }
+
+    // 옵션 업데이트
+    private void updateOptions(AdminProdUpdateInfoDto adminProdUpdateInfoDto, Product product) {
+        List<OptionDto> optionDtos = adminProdUpdateInfoDto.getOptions();
+
+        for (OptionDto optionDto : optionDtos) {
+            ProductOption option = optionDto.getOptionNum() != null ?
+                    productOptionRepository.findById(optionDto.getOptionNum()).orElse(new ProductOption()) :
+                    new ProductOption();
+
+            option.setProduct(product);
+            option.setProdOption(optionDto.getProdOption());
+            option.setProdPrice(optionDto.getProdPrice());
+            option.setProdStock(optionDto.getProdStock());
+            productOptionRepository.save(option);
+        }
+    }
+
 }

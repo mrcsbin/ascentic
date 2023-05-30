@@ -29,6 +29,7 @@ function StoreMain() {
   // 카테고리가 선택되지 않았으면 기본값 all로 사용
   const category = params.category || "all";
   const encodecategory = escape(category);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [sortOption, setSortOption] = useState("latest");
   const [prodcategory, setProdcategory] = useState("all");
@@ -102,6 +103,7 @@ function StoreMain() {
         );
         setProducts(res.data);
         productCategory(res.data, prodcategory);
+        setCurrentPage(1);
       } catch (e) {
         console.log(e);
       }
@@ -198,7 +200,11 @@ function StoreMain() {
         getProdcategory={prodcategory}
       />
       {sortByOption(productList, sortOption)}
-      <CardList products={productList} />
+      <CardList
+        products={productList}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

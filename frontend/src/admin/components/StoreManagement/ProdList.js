@@ -1,61 +1,159 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Items from "./Items";
+import axios from "axios";
+import ProdEditModal from "./ProdEditModal";
 
-const ProdList = (products) => {
+const ProdList = () => {
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState("all");
+  const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [selectProdNum, setSelectProdNum] = useState(0);
+
+  const hadleOpenEditModal = (prodNum) => {
+    setIsOpenEditModal(true);
+    setSelectProdNum(prodNum);
+  };
+
+  const hadleCloseEditModal = () => {
+    setIsOpenEditModal(false);
+  };
+
+  const categories = [
+    {
+      name: "all",
+      text: "all",
+    },
+    {
+      name: "향수",
+      text: "향수",
+    },
+    {
+      name: "디퓨저",
+      text: "디퓨저",
+    },
+    {
+      name: "향초",
+      text: "향초",
+    },
+    {
+      name: "핸드크림",
+      text: "핸드크림",
+    },
+    {
+      name: "샴푸",
+      text: "샴푸",
+    },
+    {
+      name: "바디워시",
+      text: "바디워시",
+    },
+    {
+      name: "섬유향수",
+      text: "섬유향수",
+    },
+  ];
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/admingetprodlist?category=${category}`
+        );
+        setProducts(res.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchProducts();
+  }, [category]);
+
   return (
-    <ListWrapper>
-      <ListTitle>제품 목록</ListTitle>
-      <ListBox>
-        <ContentTitle>
-          <NumTitle>No</NumTitle>
-          <ImgTitle>이미지</ImgTitle>
-          <NameTitle>상품명</NameTitle>
-          <PriceTitle>판매가</PriceTitle>
-          <CatTitle>카테고리</CatTitle>
-          <StockTitle>재고</StockTitle>
-          <OptionTitle>옵션</OptionTitle>
-          <DateTitle>등록일</DateTitle>
-        </ContentTitle>
-      </ListBox>
-      {products.products.map((item, index) => (
-        <Content>
-          <ProdNum>{item.prodNum}</ProdNum>
-          <ProdImage>
-            <img
-              src={`http://localhost:8080/images/${item.prodImage}`}
-              alt="상품 이미지"
-            ></img>
-          </ProdImage>
-          <ProdName>{item.prodName}</ProdName>
-          <ProdPrice>{item.prodPrice.toLocaleString()}원</ProdPrice>
-          <ProdCategory>{item.prodCategory}</ProdCategory>
-          <ProdStock>{item.prodStock}개</ProdStock>
-          <ProdOption>
-            {item.options.map((option, index) => (
-              <div key={index}>
-                {option}
-                {index !== item.options.length - 1 && "/"}{" "}
-              </div>
-            ))}
-          </ProdOption>
-          <ProdDate>{item.prodDate}</ProdDate>
-          <EditBtn>
-            <Button>수정</Button>
-          </EditBtn>
-        </Content>
-      ))}
-    </ListWrapper>
+    <>
+      <CategoriesBox>
+        {categories.map((c) => (
+          <button
+            key={c.text}
+            className={c.text === category ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory(c.name)}
+          >
+            {c.name}
+          </button>
+        ))}
+      </CategoriesBox>
+      <TitleContainer>
+        <ListTitle>제품 목록</ListTitle>
+      </TitleContainer>
+      <ListWrapper>
+        <ListBox>
+          <ContentTitle>
+            <NumTitle>No</NumTitle>
+            <ImgTitle>이미지</ImgTitle>
+            <NameTitle>상품명</NameTitle>
+            <ScentTitle>향이름</ScentTitle>
+            <PriceTitle>판매가</PriceTitle>
+            <CatTitle>카테고리</CatTitle>
+            <StockTitle>재고</StockTitle>
+            <OptionTitle>옵션</OptionTitle>
+            <DateTitle>등록일</DateTitle>
+          </ContentTitle>
+        </ListBox>
+        {products.map((item, index) => (
+          <Items
+            item={item}
+            index={index}
+            hadleOpenEditModal={hadleOpenEditModal}
+          />
+        ))}
+        {isOpenEditModal && (
+          <ProdEditModal
+            prodNum={selectProdNum}
+            hadleCloseEditModal={hadleCloseEditModal}
+          />
+        )}
+      </ListWrapper>
+    </>
   );
 };
 
+const CategoriesBox = styled.div`
+  padding: 10px auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid black;
+  button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+  }
+  .activeCateBtn,
+  .cateBtn:hover {
+    font-weight: 700;
+  }
+`;
+
 const ListWrapper = styled.div`
+  margin: 0 auto;
+  width: 90%;
   border-bottom: 2px solid black;
 `;
+
+const TitleContainer = styled.div`
+  margin: 2% 5%;
+  font-weight: 700;
+  display: flex;
+`;
+
 const ListTitle = styled.div`
+  width: 90%;
   font-size: 30px;
   font-weight: 700;
 `;
+
 const ListBox = styled.div`
   margin-top: 30px;
   border-top: 2px solid black;
@@ -72,7 +170,7 @@ const NumTitle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 5%;
+  width: 3%;
 `;
 const ImgTitle = styled.div`
   display: flex;
@@ -81,13 +179,23 @@ const ImgTitle = styled.div`
   justify-content: center;
   width: 10%;
 `;
+
 const NameTitle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 25%;
+  width: 12%;
 `;
+
+const ScentTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 13%;
+`;
+
 const PriceTitle = styled.div`
   display: flex;
   flex-direction: column;
@@ -118,101 +226,11 @@ const StockTitle = styled.div`
   width: 10%;
 `;
 const DateTitle = styled.div`
-  width: 12%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Content = styled.div`
-  font-size: 16px;
-  display: flex;
-  height: 100px;
-  border-bottom: 1px solid black;
-`;
-
-const ProdNum = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 5%;
-`;
-
-const ProdImage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 10%;
-  > img {
-    width: 70px;
-    height: 70px;
-  }
-`;
-
-const ProdName = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 25%;
-`;
-
-const ProdPrice = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const ProdCategory = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const ProdStock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const ProdOption = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  width: 15%;
-`;
-
-const ProdDate = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-`;
-
-const EditBtn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 5%;
-
-  > button {
-    width: 50px;
-    height: 30px;
-    background-color: black;
-    color: white;
-  }
 `;
 
 export default ProdList;

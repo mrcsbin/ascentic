@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.net.MalformedURLException;
 import java.io.File;
 import java.io.IOException;
@@ -53,18 +55,41 @@ public class ProductImageServiceImpl implements ProductImageService {
 
 
     // 상품이미지를 등록할 때
-    public void saveImages(MultipartFile[] uploadFiles, Integer prodNum, Integer prodImageType) throws IOException {
-        for (MultipartFile file : uploadFiles) {
-            if (!file.isEmpty()) {
-                File storedFilename = new File(UUID.randomUUID().toString() + "_" + file.getOriginalFilename()); // 저장명을 지정
-                ProductImage productImage = new ProductImage();
-                productImage.setProduct(productRepository.findById(prodNum).orElse(null));
-                productImage.setProdSaveName(storedFilename.toString()); // 저장명 set
-                productImage.setProdUploadName(file.getOriginalFilename()); // 업로드명 set
-                productImage.setProdImageType(prodImageType);
-                prodImgRepository.save(productImage); // DB에 저장
-                file.transferTo(storedFilename); //이미지 파일을 서버에 저장 (업로드)
-            }
+//    public void saveImages(MultipartFile[] uploadFiles, Integer prodNum, Integer prodImageType) throws IOException {
+//        for (MultipartFile file : uploadFiles) {
+//            if (!file.isEmpty()) {
+//                File storedFilename = new File(UUID.randomUUID().toString() + "_" + file.getOriginalFilename()); // 저장명을 지정
+//                ProductImage productImage = new ProductImage();
+//                productImage.setProduct(productRepository.findById(prodNum).orElse(null));
+//                productImage.setProdSaveName(storedFilename.toString()); // 저장명 set
+//                productImage.setProdUploadName(file.getOriginalFilename()); // 업로드명 set
+//                productImage.setProdImageType(prodImageType);
+//                prodImgRepository.save(productImage); // DB에 저장
+//                file.transferTo(storedFilename); //이미지 파일을 서버에 저장 (업로드)
+//            }
+//        }
+//    }
+
+    // 상품 이미지 등록
+    @Override
+    public void uploadImage(MultipartFile thumbnail, MultipartFile[] imageFiles, Integer prodNum) throws IOException {
+        saveProdImg(thumbnail, prodNum, 0);
+
+        for (MultipartFile file : imageFiles) {
+            saveProdImg(file, prodNum, 1);
         }
+    }
+
+    private void saveProdImg(MultipartFile file, Integer prodNum, Integer prodImageType) throws IOException {
+        if(file.isEmpty()) return;
+
+        File storedFilename = new File(UUID.randomUUID().toString() + "_" + file.getOriginalFilename());
+        prodImgRepository.save(ProductImage.builder()
+                .product(productRepository.findById(prodNum).orElse(null))
+                .prodSaveName(storedFilename.toString())
+                .prodUploadName(file.getOriginalFilename())
+                .prodImageType(prodImageType)
+                .build());
+        file.transferTo(storedFilename);
     }
 }

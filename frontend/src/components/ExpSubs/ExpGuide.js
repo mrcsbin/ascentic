@@ -108,7 +108,10 @@ const ExpGuide = (props) => {
 
           <GuideContent>
             <div>체험 패키지 구독 서비스</div>
-            <div>당신을 위한 Note {props.userTasteRes} </div>
+            <div>
+              당신을 위한 Note{" "}
+              {props.userTasteRes === "null" ? "" : props.userTasteRes}
+            </div>
             <div>
               매달 취향에 맞는 향의 체험 패키지를 정기 배송해드리는 에이센틱의
               구독 서비스입니다. 일주일 분량의 향수, 디퓨저, 향초, 핸드워시,
@@ -123,13 +126,13 @@ const ExpGuide = (props) => {
               예상 도착일: 결제 3일 후
             </div>
             <PriceInfo>매월 22,900원 정기결제 (배송비 포함)</PriceInfo>
-            {/* {props.userTasteRes === "none" ? (
+            {props.userTasteRes === "null" ? (
               <ApplyBtn onClick={() => navigate("/exp/taste")}>
                 취향 테스트 먼저하기
               </ApplyBtn>
-            ) : ( */}
-            <ApplyBtn onClick={() => expApply()}>구독 신청하기</ApplyBtn>
-            {/* )} */}
+            ) : (
+              <ApplyBtn onClick={() => expApply()}>구독 신청하기</ApplyBtn>
+            )}
           </GuideContent>
         </ExpGuide1>
       );
@@ -266,6 +269,7 @@ const ApplyBtn = styled.button`
   background-color: black;
   color: white;
   font-size: 23px;
+  border: 0;
   cursor: pointer;
 `;
 

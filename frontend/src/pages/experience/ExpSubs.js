@@ -22,11 +22,7 @@ const ExpSubs = () => {
       setLoading(true);
       const result = await requestTasteRes(accessToken); // api 함수 호출
       console.log(result);
-      if (result === undefined || result.data === undefined) {
-        setTasteRes("none");
-      } else {
-        setTasteRes(result.firstPlace); // 결과를 state에 저장
-      }
+      setTasteRes(result.firstPlace); // 결과를 state에 저장
       setLoading(false);
     };
 

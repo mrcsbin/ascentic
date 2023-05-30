@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 //   { id: 7, name: "Item 7" },
 // ];
 
-const Carousel = ({ category, recommendClick }) => {
+const Carousel = ({ prodNum, category, navigate }) => {
   const [loading, setLoading] = useState(true);
   const [recommendProduct, setRecommendProduct] = useState();
   const [translateXValue, setTranslateXValue] = useState(0);
@@ -71,7 +71,7 @@ const Carousel = ({ category, recommendClick }) => {
     const fetchRecommendList = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/recommend?category=${category}`
+          `http://localhost:8080/recommend/${prodNum}?category=${category}`
         );
         console.log(res.data);
         setRecommendProduct(res.data);
@@ -109,9 +109,11 @@ const Carousel = ({ category, recommendClick }) => {
             {recommendProduct.map((item, index) => (
               <CarouselItem key={index}>
                 <Link
-                  to={`/store/productdetail/${item.productNum}`}
                   style={{ color: "black", textDecoration: "none" }}
-                  onClick={() => recommendClick()}
+                  onClick={() => {
+                    navigate(`/store/productdetail/${item.productNum}`);
+                    window.location.reload();
+                  }}
                 >
                   <CarouselImage
                     src={`http://localhost:8080/images/${item.productImage}`}

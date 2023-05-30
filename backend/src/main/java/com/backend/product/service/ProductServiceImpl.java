@@ -219,13 +219,13 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductResponse.RecommendProductDto> getRecommendList(String category) {
+    public List<ProductResponse.RecommendProductDto> getRecommendList(String category, Integer productNum) {
         int pageNumber = 0; // 첫 번째 페이지
         int pageSize = 6; // 페이지 크기는 6
 
         System.out.println("category = " + category);
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Product> productPage = productRepository.findByProdCategory(category, pageable);
+        Page<Product> productPage = productRepository.findByProdCategoryAndProdNumNot(category, productNum, pageable);
 
         return productPage.getContent()
                 .stream()

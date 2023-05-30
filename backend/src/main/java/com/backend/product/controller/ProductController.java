@@ -51,8 +51,10 @@ public class ProductController {
         return productServiceImpl.getSearchList(searchData);
     }
 
-    @GetMapping("/recommend")
-    public List<ProductResponse.RecommendProductDto> getRecommendList(String category) {
-        return productServiceImpl.getRecommendList(category);
+    @GetMapping("/recommend/{productNum}")
+    public List<ProductResponse.RecommendProductDto> getRecommendList(@PathVariable Integer productNum, @RequestParam String category) {
+        System.out.println("productNum = " + productNum);
+        System.out.println("category = " + category);
+        return productServiceImpl.getRecommendList(category, productNum);
     }
 }

@@ -8,6 +8,7 @@ export const SearchResult = ({ searchData, handleHideSearch }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState();
+  const [sortOption, setSortOption] = useState("wishCount");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +50,30 @@ export const SearchResult = ({ searchData, handleHideSearch }) => {
     return <div></div>;
   }
 
+  // function sortByOption(productList, sortOption) {
+  //   if (sortOption === "wishCount") {
+  //     productList.sort((a, b) => {
+  //       return b.prodWishCount - a.prodWishCount;
+  //     });
+  //   } else if (sortOption === "latest") {
+  //     productList.sort((a, b) => {
+  //       return b.prodNum - a.prodNum;
+  //     });
+  //   } else if (sortOption === "highPrice") {
+  //     productList.sort((a, b) => {
+  //       return b.prodPrice - a.prodPrice;
+  //     });
+  //   } else if (sortOption === "lowPrice") {
+  //     productList.sort((a, b) => {
+  //       return a.prodPrice - b.prodPrice;
+  //     });
+  //   } else if (sortOption === "viewCount") {
+  //     productList.sort((a, b) => {
+  //       return b.prodReadCount - a.prodReadCount;
+  //     });
+  //   } else return;
+  // }
+
   return (
     <>
       {Object.keys(data).length === 0 ? (
@@ -71,43 +96,81 @@ export const SearchResult = ({ searchData, handleHideSearch }) => {
               </CategoryBox>
             ))}
           </ResultCategory>
+          <FilterBar>
+            <Count>{data[selectedCategory].length} 제품</Count>
+            <FilterBox>
+              <Filter
+                onClick={() => setSortOption("wishCount")}
+                className={sortOption === "wishCount" ? "active" : ""}
+              >
+                인기순
+              </Filter>
+              <span>|</span>
+              <Filter
+                onClick={() => setSortOption("highPrice")}
+                className={sortOption === "highPrice" ? "active" : ""}
+              >
+                높은 가격순
+              </Filter>
+              <span>|</span>
+              <Filter
+                onClick={() => setSortOption("lowPrice")}
+                className={sortOption === "lowPrice" ? "active" : ""}
+              >
+                낮은 가격순
+              </Filter>
+            </FilterBox>
+          </FilterBar>
           <ItemCardContainer id="item-card-container">
-            {data[selectedCategory].map((product) => (
-              <ItemCard>
-                <Link
-                  to={`/store/productdetail/${product.productNum}`}
-                  style={{ textDecoration: "none", color: "black" }}
-                  onClick={handleHideSearch}
-                >
-                  <ItemCardContent key={product.productNum}>
-                    <ImageBox>
-                      <Image
-                        src={`http://localhost:8080/images/${product.productImage}`}
-                        alt="상품 이미지"
-                      />
-                    </ImageBox>
-                    <ContentBox>
-                      <ItemBox>
-                        <NameBox>
-                          <Name>{product.productName}</Name>
-                        </NameBox>
-                        <InfoBox>
-                          <Info>{product.productInfo}</Info>
-                        </InfoBox>
-                        <PriceBox>
-                          <Price>
-                            {addComma(product.productPrice) + " 원"}
-                          </Price>
-                        </PriceBox>
-                      </ItemBox>
-                      <IconBox>
-                        <Icon src={ARROW_ICON} alt="바로가기 이미지" />
-                      </IconBox>
-                    </ContentBox>
-                  </ItemCardContent>
-                </Link>
-              </ItemCard>
-            ))}
+            {data[selectedCategory]
+              .sort((a, b) => {
+                if (sortOption === "wishCount") {
+                  // Sort by popularity
+                  return b.productWishCount - a.productWishCount;
+                } else if (sortOption === "highPrice") {
+                  // Sort by high price
+                  return b.productPrice - a.productPrice;
+                } else if (sortOption === "lowPrice") {
+                  // Sort by low price
+                  return a.productPrice - b.productPrice;
+                }
+              })
+              .map((product) => (
+                <ItemCard>
+                  <Link
+                    to={`/store/productdetail/${product.productNum}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                    onClick={handleHideSearch}
+                  >
+                    <ItemCardContent key={product.productNum}>
+                      <ImageBox>
+                        <Image
+                          src={`http://localhost:8080/images/${product.productImage}`}
+                          alt="상품 이미지"
+                        />
+                      </ImageBox>
+                      <ContentBox>
+                        <ItemBox>
+                          <NameBox>
+                            <Name>{product.productName}</Name>
+                          </NameBox>
+                          <InfoBox>
+                            <Info>{product.productInfo}</Info>
+                          </InfoBox>
+                          <PriceBox>
+                            <Price>
+                              {addComma(product.productPrice) + " 원"}
+                            </Price>
+                          </PriceBox>
+                        </ItemBox>
+                        <IconBox>
+                          <Icon src={ARROW_ICON} alt="바로가기 이미지" />
+                        </IconBox>
+                      </ContentBox>
+                    </ItemCardContent>
+                  </Link>
+                </ItemCard>
+              ))}
           </ItemCardContainer>
         </>
       )}
@@ -119,6 +182,9 @@ const ResultCategory = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 5%;
+  font-weight: 400;
+  color: black;
+  font-size: 0.9rem;
 `;
 
 const CategoryBox = styled.div`
@@ -134,12 +200,36 @@ const Category = styled.span`
     isSelected &&
     `
     border-bottom: 3px solid black;
+    font-weight: 600;
   `}
+`;
+
+const FilterBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20%;
+  margin: 2% 0;
+`;
+
+const FilterBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  font-weight: 400;
+`;
+
+const Filter = styled.div`
+  cursor: pointer;
+`;
+
+const Count = styled.div`
+  font-weight: 400;
+  color: black;
 `;
 
 const ItemCardContainer = styled.div`
   overflow: auto;
-  max-height: 60vh;
+  max-height: 50vh;
 `;
 
 const ItemCard = styled.div`
@@ -160,12 +250,12 @@ const ImageBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   width: 25%;
 `;
 
 const Image = styled.img`
-  width: 50%;
+  width: 70%;
 `;
 
 const ContentBox = styled.div`

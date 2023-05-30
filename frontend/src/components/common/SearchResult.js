@@ -50,30 +50,6 @@ export const SearchResult = ({ searchData, handleHideSearch }) => {
     return <div></div>;
   }
 
-  // function sortByOption(productList, sortOption) {
-  //   if (sortOption === "wishCount") {
-  //     productList.sort((a, b) => {
-  //       return b.prodWishCount - a.prodWishCount;
-  //     });
-  //   } else if (sortOption === "latest") {
-  //     productList.sort((a, b) => {
-  //       return b.prodNum - a.prodNum;
-  //     });
-  //   } else if (sortOption === "highPrice") {
-  //     productList.sort((a, b) => {
-  //       return b.prodPrice - a.prodPrice;
-  //     });
-  //   } else if (sortOption === "lowPrice") {
-  //     productList.sort((a, b) => {
-  //       return a.prodPrice - b.prodPrice;
-  //     });
-  //   } else if (sortOption === "viewCount") {
-  //     productList.sort((a, b) => {
-  //       return b.prodReadCount - a.prodReadCount;
-  //     });
-  //   } else return;
-  // }
-
   return (
     <>
       {Object.keys(data).length === 0 ? (

@@ -7,7 +7,7 @@ import unwish from "../../assets/unwish_icon.svg";
 import uptri from "../../assets/up_triangle.svg";
 import styled from "styled-components";
 import Carousel from "./Carousel";
-import ProductReview from "./ProductReview";
+import ProductInfo from "./ProductInfo";
 import { setWish } from "../../api/WishApi";
 import { addCart } from "../../api/CartApi";
 
@@ -18,8 +18,6 @@ function ProdDetailView({ productData }) {
   const [prodPrice, setProdPrice] = useState(0);
   const [prodOptionNum, setProdOptionNum] = useState(0);
   const [isWish, setIsWish] = useState(productData.wish);
-  const [ProdInfoModal, setProdInfoModal] = useState(false);
-  const [deliInfoModal, setDeliInfoModal] = useState(false);
 
   useEffect(() => {
     // 판매중인 상품을 초기값으로 set
@@ -200,68 +198,14 @@ function ProdDetailView({ productData }) {
                   장바구니 담기
                 </OrderCartButton>
               </OrderCartBox>
-              <AdditionalWrapper className="additional-content">
-                <AdditionalModal className="prod-info-modal">
-                  <ModalName className="modalname">
-                    제품 세부정보
-                    {ProdInfoModal === false ? (
-                      <ShowAndHideButton onClick={() => setProdInfoModal(true)}>
-                        +
-                      </ShowAndHideButton>
-                    ) : (
-                      <ShowAndHideButton
-                        onClick={() => setProdInfoModal(false)}
-                      >
-                        -
-                      </ShowAndHideButton>
-                    )}
-                  </ModalName>
-                  {ProdInfoModal && (
-                    <ModalContent className="modal-content">
-                      <p>{productData.prodInfo}</p>
-                    </ModalContent>
-                  )}
-                </AdditionalModal>
-                <AdditionalModal className="prod-info-modal">
-                  <ModalName className="modalname">
-                    배송 & 반품
-                    {deliInfoModal === false ? (
-                      <ShowAndHideButton onClick={() => setDeliInfoModal(true)}>
-                        +
-                      </ShowAndHideButton>
-                    ) : (
-                      <ShowAndHideButton
-                        onClick={() => setDeliInfoModal(false)}
-                      >
-                        -
-                      </ShowAndHideButton>
-                    )}
-                  </ModalName>
-                  {deliInfoModal && (
-                    <ModalContent className="modal-content">
-                      <p>3만원 이상 구매하실 경우 배송 비용은 무료입니다. </p>
-                      <p>
-                        주문일로부터 1-2 영업일 이내 출고됩니다. 배송은 지역
-                        택배사 사정에 따라 약간의 지연이 생길 수 있습니다.
-                        배송이 시작되면 구매자에게는 이메일, 수령인에게는 카카오
-                        알림톡으로 배송 정보를 전송해 드립니다.
-                        CJ대한통운(https://www.cjlogistics.com){" "}
-                      </p>
-                      <p>
-                        * 상품 혹은 증정품의 포장(랩핑)을 개봉 및 훼손한 경우
-                        반품이 불가합니다.
-                      </p>
-                      <p>
-                        * 단순 변심 또는 주문 실수로 인한 교환이 불가합니다.
-                        신중한 구매 부탁드립니다.
-                      </p>
-                    </ModalContent>
-                  )}
-                </AdditionalModal>
-              </AdditionalWrapper>
             </SideBar>
           </RightContainer>
         </Container>
+        <ProductInfo
+          review={productData.reviewList}
+          productName={productData.prodName}
+          productCategory={productData.prodCategory}
+        />
         <RecommendBar>
           <RecommendTitle>추천 제품</RecommendTitle>
           <RecommendItemBox>
@@ -272,7 +216,6 @@ function ProdDetailView({ productData }) {
             />
           </RecommendItemBox>
         </RecommendBar>
-        <ProductReview review={productData.review} />
       </Wrap>
     </>
   );
@@ -301,7 +244,7 @@ const LeftContainer = styled.div`
   /* float: left; */
   /* width: 55vw; */
   width: 60%;
-  height: 800px;
+  height: 700px;
   margin: 0;
   /* margin-bottom: 5vw; */
   margin-bottom: 10vw;
@@ -324,6 +267,7 @@ const LeftContainer = styled.div`
 `;
 
 const ProductImageBox = styled.div`
+  height: 100%;
   /* width: 55vw; */
   width: 100%;
   height: fit-content;
@@ -370,7 +314,7 @@ const ProductNameBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
-  margin: 1.5rem 0;
+  margin: 2rem 0;
 `;
 
 const ProductName = styled.div`
@@ -397,7 +341,7 @@ const ProductPrice = styled.div`
   font-family: "Pretendard";
   font-size: 1.8rem;
   font-weight: 500;
-  margin: 2rem 0;
+  margin: 2.5rem 0;
   text-align: right;
 `;
 
@@ -441,7 +385,7 @@ const OptionWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 3rem 0 2rem 0;
+  margin: 2.5rem 0;
   p {
     font-family: "Pretendard";
     font-size: 1.1rem;
@@ -558,7 +502,7 @@ const AmountBox = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  margin: 2rem 0;
+  margin: 2.5rem 0;
   p {
     font-family: "Pretendard";
     font-size: 1.1rem;
@@ -651,10 +595,12 @@ const ModalContent = styled.div`
 const RecommendBar = styled.div`
   width: 70%;
   margin: 0 auto;
+  margin-top: 10%;
   margin-bottom: 5%;
 `;
 
 const RecommendTitle = styled.div`
+  /* padding-bottom: 5%; */
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
@@ -666,14 +612,3 @@ const RecommendItemBox = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 `;
-
-const ItemCard = styled.div`
-  width: 33.333%;
-  height: 33.333%;
-`;
-
-const ItemImage = styled.img``;
-
-const ItemName = styled.div``;
-
-const ItemPrice = styled.div``;

@@ -8,6 +8,7 @@ import {
   updateCartItem,
 } from "../../store/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
+import SOLD_OUT from "../../assets/storeMain/soldout.png";
 
 function CountButton({ cartNum, productCount }) {
   const dispatch = useDispatch();
@@ -30,6 +31,11 @@ function CountButton({ cartNum, productCount }) {
       ></PlusButton>
     </CountButtonBox>
   );
+}
+
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
 }
 
 export const CartItemCard = ({ item }) => {
@@ -56,6 +62,7 @@ export const CartItemCard = ({ item }) => {
 
   return (
     <ItemCard>
+      <TEST src={SOLD_OUT} alt="" />
       <SelectButtonBox>
         <SelectButton
           type="checkbox"
@@ -81,7 +88,7 @@ export const CartItemCard = ({ item }) => {
         <CountButton productCount={productCount} cartNum={item.cartNum} />
       </CountBox>
       <PriceBox>
-        <ItemPrice>{productCount * item.productPrice}</ItemPrice>
+        <ItemPrice>{addComma(productCount * item.productPrice)}원</ItemPrice>
       </PriceBox>
       <DeleteButtonBox>
         <DeleteButton onClick={handleDeleteClick} />
@@ -91,6 +98,11 @@ export const CartItemCard = ({ item }) => {
 };
 
 // countButton
+const TEST = styled.img`
+  position: absolute;
+  width: 50%;
+`;
+
 const CountButtonBox = styled.div`
   display: inline-flex;
   align-items: center;

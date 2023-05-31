@@ -5,7 +5,6 @@ export const OrderItem = ({ item }) => {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
     return num.toString().replace(regexp, ",");
   }
-  console.log(item)
 
   return (
     <>

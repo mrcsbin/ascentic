@@ -7,6 +7,7 @@ import FinalPayment from "../../components/order/FinalPayment";
 import { useLocation } from "react-router-dom";
 import ExtendAble from "../../components/order/ExtendAble";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extendChange } from "../../store/modules/order";
 
@@ -16,6 +17,9 @@ import styled from "styled-components";
 const Order = () => {
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
+  // 상품정보 (서버에 전송할 데이터)
+  const location = useLocation();
+  const cartItems = location.state.cartItems;
   const handleOrderFormCompleteChange = (value) => {
     setIsOrderFormComplete(value);
   };
@@ -48,9 +52,6 @@ const Order = () => {
   const handleSaveAndNext = () => {
     handleExtendChange("delivery");
   };
-  // 상품정보 (서버에 전송할 데이터)
-  const location = useLocation();
-  const cartItems = location.state.cartItems;
 
   return (
     <OrderWrap>

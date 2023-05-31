@@ -2,6 +2,8 @@ package com.backend.order.controller;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
+import com.backend.order.entity.Card;
+import com.backend.order.entity.Failure;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;

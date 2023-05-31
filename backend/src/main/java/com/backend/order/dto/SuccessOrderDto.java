@@ -1,10 +1,10 @@
 package com.backend.order.dto;
 
-import jakarta.persistence.Embeddable;
+import com.backend.order.entity.Card;
+import com.backend.order.entity.Failure;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder

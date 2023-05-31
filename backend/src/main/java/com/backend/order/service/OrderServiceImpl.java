@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
                 .shipTel(orderDTO.getShipTel())
                 .shipMainAddress(orderDTO.getShipMainAddress())
                 .shipSubAddress(orderDTO.getShipSubAddress())
-                .shipMessage(orderDTO.getShipMessage())
+                .shipMessage(orderDTO.getShippingMessage())
                 .orderPayment(orderDTO.getOrderPayment())
                 .orderPaymentInfo(orderDTO.getOrderPaymentInfo())
                 .orderPaymentState(orderDTO.getOrderPaymentState())

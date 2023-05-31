@@ -1,21 +1,51 @@
 import styled from "styled-components";
 import ExpGuide from "../../components/ExpSubs/ExpGuide";
 import { useState } from "react";
-import DeliveryInfo from "../../components/order/DeliveryInfo";
-import Payment from "../../components/order/Payment";
 import SubsPayInfo from "../../components/ExpSubs/SubsPayInfo";
+import Payment from "../../components/order/Payment";
+import ExpSubDeliveryInfo from "../../components/ExpSubs/ExpSubDeliveryInfo";
 import expSubsBackground from "../../assets/expMain/expmain_content3.webp";
 import { getCookie } from "../../utils/Cookies";
 import { useEffect } from "react";
 import { requestTasteRes } from "../../api/SubsMemberApi";
 import Loading from "../../components/common/Loading";
 import logow from "../../assets/ascentic_logo_w.svg";
-
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const ExpSubs = () => {
   const accessToken = getCookie("accessToken");
   const [loading, setLoading] = useState(false);
 
   const [userTasteRes, setTasteRes] = useState("");
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const message = searchParams.get("message");
+
+  // 파라미터가 존재하는 경우 params.message를 alert로 표시
+  useEffect(() => {
+    if (message) {
+      alert(message);
+    }
+  }, [message]);
+
+  // .then((res) => {
+  //   console.log(res.data);
+  //   requestApplySubs(accessToken, requestData); //구독회원 테이블에 추가
+  // });
+  // if (e.code === "PAY_PROCESS_CANCELED") {
+  //   alert("사용자가 결제를 취소하였습니다!");
+  //   window.location.reload();
+  // } else if (e.code === "INVALID_CARD_COMPANY") {
+  //   alert("유효하지 않은 카드번호 입니다!");
+  //   window.location.reload();
+  // } else if (e.code === "NOT_SUPPORTED_CARD_TYPE") {
+  //   alert("지원하지 않는 카드입니다!");
+  //   window.location.reload();
+  // } else if (e.code === "INVALID_CARD_NUMBER") {
+  //   alert("신용카드가 아니거나, 카드번호를 잘못 입력하였습니다!");
+  //   window.location.reload();
+  // }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +91,7 @@ const ExpSubs = () => {
     if (modalPage === 1) {
       return (
         <>
-          <DeliveryInfo></DeliveryInfo>
+          <ExpSubDeliveryInfo />
           <button className="next_page_btn" onClick={() => nextPage()}>
             다음
           </button>

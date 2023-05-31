@@ -10,65 +10,32 @@ import uptri from "../assets/up_triangle.svg";
 function ProdDetailView({ productData }) {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [prodOption, setProdOption] = useState(productData.prodOption[0]);
-  const [prodPrice, setProdPrice] = useState(productData.prodPrice[0]);
-  const [prodOptionNum, setProdOptionNum] = useState(
-    productData.prodOptionNum[0]
-  );
+  const [prodOption, setProdOption] = useState("");
+  const [prodPrice, setProdPrice] = useState(0);
+  const [prodOptionNum, setProdOptionNum] = useState(0);
   const [isWish, setIsWish] = useState(productData.wish);
 
   const [ProdInfoModal, setProdInfoModal] = useState(false);
   const [deliInfoModal, setDeliInfoModal] = useState(false);
 
-  //이미지 배열 가져오기
-  const [imgArr, setImgArr] = useState([]);
-  // useEffect(() => {
-  //   const fetchProductData = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `http://localhost:8080/getProdImgDetailPage/${productData.prodNum}/1`
-  //       );
-  //       setImgArr(res.data);
-  //       await axios
-  //         .get(`/iswish?prodNum=${productData.prodNum}`, {
-  //           headers: {
-  //             Authorization: "Bearer " + getCookie("accessToken"),
-  //           },
-  //         })
-  //         .then((response) => {
-  //           if (response.data === 1) {
-  //             setOnWish(true);
-  //           } else {
-  //             setOnWish(false);
-  //           }
-  //           console.log("onwish" + response.data);
-  //         })
-  //         .catch((e) => {
-  //           console.error(e);
-  //         });
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchProductData();
-  // }, []);
+  useEffect(() => {
+    // 판매중인 상품을 초기값으로 set
+    const saleOption = productData.prodOptions.find(
+      (option) => option.optionState === "판매중"
+    );
+
+    if (saleOption) {
+      setProdOption(saleOption.prodOption);
+      setProdPrice(saleOption.prodPrice);
+      setProdOptionNum(saleOption.prodOptionNum);
+    }
+  }, [productData.prodOptions]);
 
   //수량 설정
   function QuantButton(x) {
-    if (x == "+") setQuantity(quantity + 1);
+    if (x === "+") setQuantity(quantity + 1);
     else if (quantity > 1) setQuantity(quantity - 1);
   }
-
-  // prodNum, 이름, 가격, 옵션 선택한거, 수량 총 5개 객체로 해서 넘기면 될듯
-
-  // 주문창으로 이동
-  // const handleOrderClick = () => {
-  //   const dataForOrder = {
-  //     prodQuantity: quantity,
-  //     prodOption: prodOption,
-  //   };
-  //   navigate(`/order`, { state: dataForOrder });
-  // };
 
   // 장바구니 페이지 이동
   const handleCartClick = () => {
@@ -101,46 +68,6 @@ function ProdDetailView({ productData }) {
     }
   };
 
-  // 찜하기 구현
-  // const handleWishClick = () => {
-  //   if (onWish === true) {
-  //     //찜했다 안했다 하기 위함
-  //     axios
-  //       .post(
-  //         `/wish/set`,
-  //         { prodNum: productData.prodNum },
-  //         {
-  //           headers: {
-  //             Authorization: "Bearer " + getCookie("accessToken"),
-  //           },
-  //         }
-  //       ) // url별로 추가/삭제 백에서 처리
-  //       .then(() => {
-  //         setOnWish(!onWish);
-  //       })
-  //       .catch((e) => {
-  //         console.error(e);
-  //       });
-  //   } else {
-  //     axios
-  //       .post(
-  //         `/addwish`,
-  //         { prodNum: productData.prodNum },
-  //         {
-  //           headers: {
-  //             Authorization: "Bearer " + getCookie("accessToken"),
-  //           },
-  //         }
-  //       ) // url별로 추가/삭제 백에서 처리
-  //       .then(() => {
-  //         setOnWish(!onWish);
-  //       })
-  //       .catch((e) => {
-  //         console.error(e);
-  //       });
-  //   }
-  // };
-
   const handleWishClick = () => {
     if (getCookie("accessToken")) {
       axios
@@ -164,45 +91,32 @@ function ProdDetailView({ productData }) {
     }
   };
 
-  //옵션 고르는 버튼
-  // const Optioncard = (options) => {
-  //   // console.log('this is in OptionCard', options);
-  //   //아니 여기서 왜 options.options 로 써야되는지 모르겠음
-  //   const option = options.options.prodOption;
-
-  //   return (
-  //     <button
-  // className={
-  //   prodOption === options.options
-  //     ? "prodOptionBtn-active"
-  //     : "prodOptionBtn"
-  // }
-  //       onClick={() => {
-  //         setProdOption(
-  //           options.options
-  //           // console.log(options.options.optionNum)
-  //         );
-  //       }}
-  //     >
-  //       {option}
-  //     </button>
-  //   );
-  // };
-
   const OptionCard = ({ options, index }) => {
     return (
-      <button
-        className={
-          prodOption === options ? "prodOptionBtn-active" : "prodOptionBtn"
-        }
-        onClick={() => {
-          setProdOption(options);
-          setProdPrice(productData.prodPrice[index]);
-          setProdOptionNum(productData.prodOptionNum[index]);
-        }}
-      >
-        {options}
-      </button>
+      <>
+        {productData.prodOptions[index].optionState === "판매중" ? (
+          <button
+            className={
+              prodOption === options ? "prodOptionBtn-active" : "prodOptionBtn"
+            }
+            onClick={() => {
+              console.log("Gg");
+              console.log(options);
+              console.log(productData.prodOptions[index].prodPrice);
+              console.log(productData.prodOptions[index].prodOptionNum);
+              setProdOption(options);
+              setProdPrice(productData.prodOptions[index].prodPrice);
+              setProdOptionNum(productData.prodOptions[index].prodOptionNum);
+            }}
+          >
+            {options}
+          </button>
+        ) : (
+          <button className="prodOptionSoldOutBtn" disabled>
+            {options} 품절
+          </button>
+        )}
+      </>
     );
   };
 
@@ -264,9 +178,13 @@ function ProdDetailView({ productData }) {
           <div className="optionwrapper">
             <p>옵션</p>
             <div className="optionbox">
-              {productData.prodOption.map((options, index) => {
+              {Object.keys(productData.prodOptions).map((options, index) => {
                 return (
-                  <OptionCard options={options} key={index} index={index} />
+                  <OptionCard
+                    options={productData.prodOptions[options].prodOption}
+                    key={index}
+                    index={index}
+                  />
                 );
               })}
             </div>

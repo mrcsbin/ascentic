@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { requestApplySubs } from "../../api/SubsMemberApi";
 import { getCookie } from "../../utils/Cookies";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SubsPayInfo = (props) => {
   const [agree, setAgree] = useState(false);
+
   const now = new Date();
   const accessToken = getCookie("accessToken");
 
@@ -45,7 +48,7 @@ const SubsPayInfo = (props) => {
 
   const requestData = {
     startDate: new Date(getToday()), // 구독 시작일
-    endDate: new Date(getNextMonthSameDate()), // 구독 종료일 (다음 달)
+    // endDate: new Date(getNextMonthSameDate()), // 구독 종료일 (다음 달)
     memberName: shipInfo.shipName, // 구독자 성함
     memberTel: shipInfo.shipTel, // 구독자 연락처
     mainAddress: shipInfo.mainAddress, // 배송지 주소
@@ -59,11 +62,36 @@ const SubsPayInfo = (props) => {
 
   const payStart = async () => {
     if (agree) {
-      alert("결제 진행");
-      await requestApplySubs(accessToken, requestData);
-      nav("/ordercomplete");
+      try {
+        await axios.post("/startSubscribe", requestData, {
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        });
+
+        await axios
+          .get("http://localhost:8080/subscribePayment/getCustomerKey", {
+            headers: {
+              Authorization: "Bearer " + getCookie("accessToken"),
+            },
+          })
+          .then((res) => {
+            //customerKey 받아와서 billingKey 발급요청 하는거임~
+            const data = res.data;
+            const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+            const tossPayments = window.TossPayments(clientKey);
+
+            tossPayments.requestBillingAuth("카드", {
+              customerKey: data.customerKey,
+              successUrl: "http://localhost:8080/billingAuthSuccess",
+              failUrl: "http://localhost:3000/exp/subs/",
+            });
+          });
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      alert("서비스 가입에 동의 해주세요.");
+      alert("서비스 가입에 동의해주세요.");
     }
   };
 

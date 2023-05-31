@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "tb_member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -59,6 +60,9 @@ public class Member {
 
     @Column(name = "member_buyWelcomeYn")
     private boolean buyWelcomePackageYn;
+
+//    @Column(name = "customer_key")
+//    private String customerKey;
 
 //    @Column
 //    @Enumerated(EnumType.STRING)

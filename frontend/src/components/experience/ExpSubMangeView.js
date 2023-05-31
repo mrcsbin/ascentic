@@ -4,7 +4,7 @@ import "../../styles/ExpSubManageView.css";
 import RatingComponent from "./RatingComponent";
 import { getCookie } from "../../utils/Cookies";
 
-const ExpSubsManageView = ({ sbMember, subscribe }) => {
+const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
   // ------------------------------------ 구독기간 관련 ---------------------------------------
   // const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
   const start = new Date("2020-11-30"); // 구독시작 날짜
@@ -14,6 +14,26 @@ const ExpSubsManageView = ({ sbMember, subscribe }) => {
     currentDate.getFullYear(),
     currentDate.getMonth(),
   ];
+
+  console.log("view 안이다잇~~~");
+  console.log(success);
+
+  useEffect(() => {
+    if (success) {
+      console.log("success안이다잇~");
+      setTimeout(alert("성공했다잇@!!!"), 5000);
+    }
+  }, [success]);
+
+  // if (success) {
+  //   console.log("success안이다잇~");
+  // if (success) {
+  //   console.log("success안이다잇~");
+  //   setTimeout(() => {
+  //   alert("성공했다잇@!!!");
+  //   }, 500);
+  // }
+  // }
 
   console.log("gggg");
   console.log(subscribe);

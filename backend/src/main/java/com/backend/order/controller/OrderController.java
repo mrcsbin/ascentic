@@ -2,6 +2,7 @@ package com.backend.order.controller;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
+import com.backend.order.entity.*;
 import com.backend.order.dto.admin.AdminOrderManageDto;
 import com.backend.order.dto.admin.AdminOrderUpdateDto;
 import com.backend.order.entity.Card;
@@ -48,9 +49,20 @@ public class OrderController {
             orderService.verifyRequest(paymentKey, orderId, amount);
             PaymentFinalRes result = orderService.requestFinalPayment(paymentKey, orderId, amount);
             finalRes.setOrderName(result.getOrderName());
-            finalRes.setCard(result.getCard());
+            System.out.println("========================================================");
+            System.out.println(result);
+
+            //when the payment method is not Card
+           if(result.getCard() ==null) {
+               finalRes.setEasyPay(result.getEasyPay());
+               orderService.saveRes(result);
+               //버그 고치는용~
+               System.out.println(result);
+           } else //when the payment method is Card
+           { finalRes.setCard(result.getCard());
             finalRes.setTotalAmount(result.getTotalAmount());
-            orderService.saveRes(result);
+            System.out.println(result);
+            orderService.saveRes(result);}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,8 +114,17 @@ public class OrderController {
                     .build();
         }
 
+        // 널포인터 익셉션 방지용
         String failureCode = finalRes.getFailure() != null ? finalRes.getFailure().getCode() : "";
         String failureMessage = finalRes.getFailure() != null ? finalRes.getFailure().getMessage() : "";
+
+        String issuerCode= finalRes.getCard() != null ? finalRes.getCard().getIssuerCode() : "";
+        String number =(finalRes.getCard() != null ? finalRes.getCard().getNumber() : "");
+        Integer installmentPlanMonths= (finalRes.getCard() != null ? finalRes.getCard().getInstallmentPlanMonths() : 0);
+        String cardType = finalRes.getCard() != null ? finalRes.getCard().getCardType() : "";
+        String ownerType = finalRes.getCard() != null ? finalRes.getCard().getOwnerType() : "";
+        String provider = finalRes.getEasyPay() != null ? finalRes.getEasyPay().getProvider() : "";
+
 
         SuccessOrderDto successreturn = SuccessOrderDto.builder()
                 .orderName(orderRes.getOrderName()) // 주문자
@@ -121,11 +142,15 @@ public class OrderController {
                 .orderState(orderRes.getOrderState()) // 결제 상태
                 .card( // 카드 정보
                         Card.builder()
-                                .issuerCode(finalRes.getCard().getIssuerCode())
-                                .number(finalRes.getCard().getNumber())
-                                .installmentPlanMonths(finalRes.getCard().getInstallmentPlanMonths())
-                                .cardType(finalRes.getCard().getCardType())
-                                .ownerType(finalRes.getCard().getOwnerType())
+                                .issuerCode(issuerCode)
+                                .number(number)
+                                .installmentPlanMonths(installmentPlanMonths)
+                                .cardType(cardType)
+                                .ownerType(ownerType)
+                                .build()
+                ).easyPay(
+                        EasyPay.builder()
+                                .provider(provider)
                                 .build()
                 )
                 .failure(

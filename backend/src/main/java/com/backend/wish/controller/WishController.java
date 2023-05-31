@@ -1,11 +1,9 @@
 package com.backend.wish.controller;
 
 import com.backend.wish.dto.WishResponse;
-import com.backend.wish.service.WishServiceImpl;
+import com.backend.wish.service.WishService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,15 +12,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WishController {
 
-    private final WishServiceImpl wishServiceImpl;
+    private final WishService wishService;
 
-    @GetMapping("/set")
-    public void setWish(Integer prodNum) {
-        wishServiceImpl.setWish(prodNum);
+    @PostMapping("/set")
+    public void setWish(@RequestBody Integer productNum) {
+        wishService.setWish(productNum);
     }
 
     @GetMapping("/get")
     public List<WishResponse.WishListDto> getWishList() {
-        return wishServiceImpl.getWishList();
+        return wishService.getWishList();
     }
 }

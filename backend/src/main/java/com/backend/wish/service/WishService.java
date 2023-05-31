@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WishService {
 
-    void setWish(Integer prodNum);
+    void setWish(Integer productNum);
 
     List<WishResponse.WishListDto> getWishList();
 }

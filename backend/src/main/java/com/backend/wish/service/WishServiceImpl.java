@@ -20,9 +20,10 @@ public class WishServiceImpl implements WishService {
     private final WishRepository wishRepository;
     private final ProductRepository productRepository;
 
-    public void setWish(Integer prodNum) {
+    @Override
+    public void setWish(Integer productNum) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Product product = productRepository.findById(prodNum).get();
+        Product product = productRepository.findById(productNum).get();
         Optional<Wish> findWish = wishRepository.findByMemberIdAndProduct(currentMemberId, product);
         if (findWish.isPresent()) {
             wishRepository.delete(wishRepository.findByMemberIdAndProduct(currentMemberId, product).get());
@@ -30,13 +31,14 @@ public class WishServiceImpl implements WishService {
         } else {
             wishRepository.save(Wish.builder()
                     .memberId(currentMemberId)
-                    .product(productRepository.findById(prodNum).get())
+                    .product(productRepository.findById(productNum).get())
                     .build());
             product.setProdWishCount(product.getProdWishCount() + 1);
         }
         productRepository.save(product);
     }
 
+    @Override
     public List<WishResponse.WishListDto> getWishList() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);

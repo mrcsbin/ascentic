@@ -1,32 +1,21 @@
 import styled from "styled-components";
 import HEART from "../../../assets/mypage/heart.png";
 import HEART_EMPTY from "../../../assets/mypage/heart_empty.png";
-import TEST_ITEM_IMAGE from "../../../assets/storemain.webp";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { getCookie } from "../../../utils/Cookies";
+import { getWishList, setWish } from "../../../api/WishApi";
+import { useNavigate } from "react-router-dom";
 
 function WishItems({ item }) {
   const [isWish, setIsWish] = useState(true);
+  const navigate = useNavigate();
 
-  const clickHandle = () => {
+  const clickHandle = (e) => {
+    e.stopPropagation();
     if (getCookie("accessToken")) {
-      axios
-        .post(
-          `http://localhost:8080/wish/set`,
-          { prodNum: item.productNum },
-          {
-            headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
-            },
-          }
-        )
-        .then(() => {
-          setIsWish(!isWish);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      setWish(getCookie("accessToken"), item.productNum).then(() => {
+        setIsWish(!isWish);
+      });
     } else {
       alert("로그인이 필요합니다.");
     }
@@ -34,7 +23,9 @@ function WishItems({ item }) {
 
   return (
     <>
-      <WishItemCard>
+      <WishItemCard
+        onClick={() => navigate(`/store/productdetail/${item.productNum}`)}
+      >
         <ImageBox>
           <WishItemImage
             src={`http://localhost:8080/images/${item.productImage}`}
@@ -55,25 +46,19 @@ function WishItems({ item }) {
 export const WishList = () => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(wishList);
 
   useEffect(() => {
     const fetchProductData = async () => {
-      try {
-        const res = await axios.get("http://localhost:8080/wish/get", {
-          headers: {
-            Authorization: `Bearer ${getCookie("accessToken")}`,
-          },
-        });
-        setWishList(res.data);
-      } catch (error) {
-        console.error("Error fetching order list:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      const response = await getWishList(getCookie("accessToken"));
+      setWishList(response.data);
+      setIsLoading(false);
     };
     fetchProductData();
   }, []);
+
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <WishListWrap>
@@ -108,6 +93,7 @@ const WishItemsContents = styled.div`
 `;
 
 const WishItemCard = styled.div`
+  cursor: pointer;
   box-sizing: border-box;
   padding: 20px;
   text-align: center;
@@ -147,6 +133,7 @@ const ButtonImage = styled.img`
   :hover {
     transform: scale(1.1);
   }
+  z-index: 9999;
 `;
 
 const IsNotItem = styled.div``;

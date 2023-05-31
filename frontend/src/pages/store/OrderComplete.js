@@ -30,6 +30,8 @@ function OrderComplete() {
       })
       .then((res) => {
         const data = res.data;
+        console.log("이거 provider 찾기 위한 거임~");
+        console.log(data);
 
         if (data.orderId === "0") {
           navigate("/NotFound");
@@ -53,9 +55,12 @@ function OrderComplete() {
             cardType: data.card.cardType,
             cardOwnerType: data.card.ownerType,
             cardInstallmentPlanMonths: data.card.installmentPlanMonths,
+            easyPay: data.easyPay.provider,
             failureCode: data.failure.code,
             failureMessage: data.failure.message,
           });
+          console.log("이거 이지페이 출력되야 됨~");
+          console.log(data.easyPay);
         }
         setLoading(false);
       })
@@ -104,20 +109,22 @@ function OrderComplete() {
                   {orderInfo.orderMemberEmail}) <br />
                 </td>
                 <td>
-                  {`${CardInfo[orderInfo.cardIssuerCode]} ${
-                    orderInfo.cardType
-                  } `}
-                  <br />
-                  {orderInfo.cardNumber}
-                  {/* <br /> */}
-                  {/* 신용/체크 : {orderInfo.cardType} */}
-                  {/* <br /> */}
-                  {/* 개인/법인 : {orderInfo.cardOwnerType} */}
-                  <br />
-                  {orderInfo.cardInstallmentPlanMonths === 0 ? (
-                    <span>일시불</span>
+                  {!orderInfo.cardNumber ? (
+                    <span>{orderInfo.easyPay}</span>
                   ) : (
-                    <span>{orderInfo.cardInstallmentPlanMonths}개월</span>
+                    <>
+                      {`${CardInfo[orderInfo.cardIssuerCode]} ${
+                        orderInfo.cardType
+                      }`}
+                      <br />
+                      {orderInfo.cardNumber}
+                      <br />
+                      {orderInfo.cardInstallmentPlanMonths === 0 ? (
+                        <span>일시불</span>
+                      ) : (
+                        <span>{orderInfo.cardInstallmentPlanMonths}개월</span>
+                      )}
+                    </>
                   )}
                 </td>
               </tr>
@@ -126,7 +133,8 @@ function OrderComplete() {
                   <br />
                   <br />
                   <br />
-                  {orderInfo.ProdNames} <br />총 {orderInfo.count} 개
+                  {orderInfo.ProdNames} <br />
+                  <br />총 {orderInfo.count} 개
                   <br />
                   {/* <a href="#">더보기</a> */}
                 </td>
@@ -135,6 +143,8 @@ function OrderComplete() {
                   <br />
                   <br />
                   {orderInfo.shipMainAddr}
+                  <br />
+                  <br />
                   {orderInfo.shipSubAddr}
                   <br />
                   <br />

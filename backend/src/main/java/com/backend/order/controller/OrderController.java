@@ -2,10 +2,7 @@ package com.backend.order.controller;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
-import com.backend.order.entity.Card;
-import com.backend.order.entity.Failure;
-import com.backend.order.entity.Order;
-import com.backend.order.entity.PaymentFinalRes;
+import com.backend.order.entity.*;
 import com.backend.order.repository.OrderRepository;
 import com.backend.order.service.OrderServiceImpl;
 import com.backend.orderproduct.repository.OrderProductRepository;
@@ -40,18 +37,44 @@ public class OrderController {
                                              @RequestParam String orderId, @RequestParam Integer amount) {
 
         PaymentFinalRes finalRes = new PaymentFinalRes();
+
         try {
             orderService.verifyRequest(paymentKey, orderId, amount);
             PaymentFinalRes result = orderService.requestFinalPayment(paymentKey, orderId, amount);
+            System.out.println(result.getOrderName());
             finalRes.setOrderName(result.getOrderName());
-            finalRes.setCard(result.getCard());
+            System.out.println("========================================================");
+            System.out.println(result);
+
+            //when the payment method is not Card
+           if(result.getCard() ==null) {
+               finalRes.setEasyPay(result.getEasyPay());
+               orderService.saveRes(result);
+               //버그 고치는용~
+               System.out.println(result);
+           } else //when the payment method is Card
+           { finalRes.setCard(result.getCard());
             finalRes.setTotalAmount(result.getTotalAmount());
-            orderService.saveRes(result);
+            System.out.println(result);
+            orderService.saveRes(result);}
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+//
+//        {"mId":"tvivarepublica","lastTransactionKey":"02D61857B027C91963EBC067A1527C2D"
+//                ,"paymentKey":"OR1ZwdkQD5GePWvyJnrKavKzKQjoNa3gLzN97EoqYA60XKx4","orderId":"20230531455ab1",
+//                "orderName":"우디 디퓨저외 5 종","taxExemptionAmount":0,"status":"DONE","requestedAt":"2023-05-31T22:27:01+09:00",
+//                "approvedAt":"2023-05-31T22:27:22+09:00","useEscrow":false,"cultureExpense":false,"card":null,
+//                "virtualAccount":null,"transfer":null,"mobilePhone":null,"giftCertificate":null,"cashReceipt":null,
+//                "cashReceipts":null,"discount":null,"cancels":null,"secret":"ps_kYG57Eba3G20n0R7zkGw8pWDOxmA",
+//                "type":"NORMAL","easyPay":{"provider":"토스페이","amount":115000,"discountAmount":0},"country":"KR",
+//                "failure":null,"isPartialCancelable":true,
+//                "receipt":{"url":"https://dashboard.tosspayments.com/receipt/redirection?transactionId=tviva20230531222705yy3q4&ref=PX"},"checkout":{"url":"https://api.tosspayments.com/v1/payments/OR1ZwdkQD5GePWvyJnrKavKzKQjoNa3gLzN97EoqYA60XKx4/checkout"},"currency":"KRW","totalAmount":115000,"balanceAmount":115000,"suppliedAmount":104545,"vat":10455,"taxFreeAmount":0,"method":"간편결제","version":"2022-11-16"}
+//
+
         Order orderRes = orderRepository.findByOrderId(orderId);
+
 
         SuccessOrderDto successreturn = (SuccessOrderDto.builder()
                 .orderName(orderRes.getOrderName()) //주문자
@@ -67,7 +90,10 @@ public class OrderController {
                 .prodNames(finalRes.getOrderName()) //구매한 제품명
                 .totalProdCount(orderProductRepository.getProdCountSum(orderRes.getOrderNum())) // 총 구매한 제품 개수
                 .orderState("결제 완료")  //결제 상태
+
+
                 .card(finalRes.getCard()) //카드 정보
+
                 .failure(finalRes.getFailure()) //결제실패시
                 .build());
 
@@ -97,8 +123,17 @@ public class OrderController {
                     .build();
         }
 
+        // 널포인터 익셉션 방지용
         String failureCode = finalRes.getFailure() != null ? finalRes.getFailure().getCode() : "";
         String failureMessage = finalRes.getFailure() != null ? finalRes.getFailure().getMessage() : "";
+
+        String issuerCode= finalRes.getCard() != null ? finalRes.getCard().getIssuerCode() : "";
+        String number =(finalRes.getCard() != null ? finalRes.getCard().getNumber() : "");
+        Integer installmentPlanMonths= (finalRes.getCard() != null ? finalRes.getCard().getInstallmentPlanMonths() : 0);
+        String cardType = finalRes.getCard() != null ? finalRes.getCard().getCardType() : "";
+        String ownerType = finalRes.getCard() != null ? finalRes.getCard().getOwnerType() : "";
+        String provider = finalRes.getEasyPay() != null ? finalRes.getEasyPay().getProvider() : "";
+
 
         SuccessOrderDto successreturn = SuccessOrderDto.builder()
                 .orderName(orderRes.getOrderName()) // 주문자
@@ -116,11 +151,15 @@ public class OrderController {
                 .orderState(orderRes.getOrderState()) // 결제 상태
                 .card( // 카드 정보
                         Card.builder()
-                                .issuerCode(finalRes.getCard().getIssuerCode())
-                                .number(finalRes.getCard().getNumber())
-                                .installmentPlanMonths(finalRes.getCard().getInstallmentPlanMonths())
-                                .cardType(finalRes.getCard().getCardType())
-                                .ownerType(finalRes.getCard().getOwnerType())
+                                .issuerCode(issuerCode)
+                                .number(number)
+                                .installmentPlanMonths(installmentPlanMonths)
+                                .cardType(cardType)
+                                .ownerType(ownerType)
+                                .build()
+                ).easyPay(
+                        EasyPay.builder()
+                                .provider(provider)
                                 .build()
                 )
                 .failure(

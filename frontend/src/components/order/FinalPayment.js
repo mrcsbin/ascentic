@@ -84,8 +84,16 @@ const FinalPayment = ({
   // requestData.shipCharge
   const [buttonDisable, setButtonDisable] = useState(false);
   useEffect(() => {
-    setButtonDisable(!isOrderFormComplete || !isDeliveryFormComplete);
-  }, [isOrderFormComplete, isDeliveryFormComplete, buttonDisable]);
+    const { check1, check2, check3, check4 } = checkValues;
+    setButtonDisable(
+      !isOrderFormComplete ||
+        !isDeliveryFormComplete ||
+        !check1 ||
+        !check2 ||
+        !check3 ||
+        !check4
+    );
+  }, [isOrderFormComplete, isDeliveryFormComplete, buttonDisable, checkValues]);
   // 구매하기 버튼 클릭 이벤트
   const buySubmit = async () => {
     const { check1, check2, check3, check4 } = checkValues;
@@ -93,8 +101,8 @@ const FinalPayment = ({
     if (check1 && check2 && check3 && check4) {
       alert("결제를 진행하겠습니다.");
       try {
-        console.log("FinalPayment")
-        console.log(products)
+        console.log("FinalPayment");
+        console.log(products);
         const res = await requestOrder(accessToken, requestData, products);
       } catch (e) {
         console.error(e);

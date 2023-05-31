@@ -7,20 +7,18 @@ body {
 
 /* 주문 결제 타이틀 */
 .title {
-  margin-left: 230px;
-  width: 1600px;
-  height: 60px;
+  text-align: center;
   padding-bottom: 20px;
   border-bottom: 1px solid #d9d9d9;
   transform: matrix(1, 0, -0.01, 1, 0, 0);
   font-size: 32px;
+  margin: 3%;
 }
 
 /*------------------------------------- 여기부터 orderComplete 페이지 body -------------------*/
+
 .complete_body {
-  margin-top: 50px;
-  margin-left: 100px;
-  /* text-align: center; */
+  margin: 0 auto;
 }
 
 /* 주문완료 인사 */
@@ -42,9 +40,11 @@ body {
 
 /* table  */
 .complete_body > table {
-  margin-top: 70px;
   text-align: center;
   font-size: 18px;
+  margin: 3% auto;
+  width: 70%;
+  
 }
 
 /* 첫번째 tr */
@@ -99,7 +99,7 @@ div:nth-child(5) {
 
 /* 주문금액, 배송비, 총 결제 금액 표*/
 .complete_body > table > tr > td:nth-child(3) > div:nth-child(6) {
-  margin-left: 80px;
+  margin: 0 auto;
   width: 400px;
   height: 150px;
 }

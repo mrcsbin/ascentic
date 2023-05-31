@@ -1,5 +1,6 @@
 package com.backend.order.dto;
 
+import com.backend.order.entity.Card;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

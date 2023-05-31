@@ -35,7 +35,7 @@ function OrderComplete() {
           navigate("/NotFound");
         } else {
           setOrderInfo({
-            orderMembeName: data.orderName,
+            orderMemberName: data.orderName,
             orderNum: data.orderId,
             date: formatDateString(data.orderDate),
             orderMemberEmail: data.email,
@@ -43,7 +43,7 @@ function OrderComplete() {
             shipMainAddr: data.shipMainAddress,
             shipSubAddr: data.shipSubAddress,
             orderMemberPhone: data.shipTel,
-            delivCharge: data.shipCharge,
+            ShippingCharge: data.shipCharge,
             Price: data.orderPriceSum,
             ProdNames: data.prodNames,
             count: data.totalProdCount,
@@ -52,7 +52,7 @@ function OrderComplete() {
             cardIssuerCode: data.card.issuerCode,
             cardType: data.card.cardType,
             cardOwnerType: data.card.ownerType,
-            cardinstallmentPlanMonths: data.card.installmentPlanMonths,
+            cardInstallmentPlanMonths: data.card.installmentPlanMonths,
             failureCode: data.failure.code,
             failureMessage: data.failure.message,
           });
@@ -87,7 +87,7 @@ function OrderComplete() {
                 입니다.
               </div>
             </div>
-            <table>
+            <table className="table">
               <tr>
                 <td>상품 정보</td>
                 <td>배송지 정보</td>
@@ -100,7 +100,7 @@ function OrderComplete() {
                   <span>주문번호: {orderInfo.orderNum}</span>
                 </td>
                 <td>
-                  주문자: {orderInfo.orderMembeName} (
+                  주문자: {orderInfo.orderMemberName} (
                   {orderInfo.orderMemberEmail}) <br />
                 </td>
                 <td>
@@ -114,10 +114,10 @@ function OrderComplete() {
                   {/* <br /> */}
                   {/* 개인/법인 : {orderInfo.cardOwnerType} */}
                   <br />
-                  {orderInfo.cardinstallmentPlanMonths === 0 ? (
+                  {orderInfo.cardInstallmentPlanMonths === 0 ? (
                     <span>일시불</span>
                   ) : (
-                    <span>{orderInfo.cardinstallmentPlanMonths}개월</span>
+                    <span>{orderInfo.cardInstallmentPlanMonths}개월</span>
                   )}
                 </td>
               </tr>
@@ -145,7 +145,7 @@ function OrderComplete() {
                   <br />
                   <div>{orderInfo.paymentMethod}</div>
                   <br />
-                  <div>{orderInfo.Price + orderInfo.delivCharge}원</div>
+                  <div>{orderInfo.Price + orderInfo.ShippingCharge}원</div>
                   <div>
                     <div>
                       <div>주문 금액</div>
@@ -153,11 +153,13 @@ function OrderComplete() {
                     </div>
                     <div>
                       <div>배송비</div>
-                      <div>+{orderInfo.delivCharge} 원</div>
+                      <div>+{orderInfo.ShippingCharge} 원</div>
                     </div>
                     <div>
                       <div>총 결제 금액</div>
-                      <div>+{orderInfo.Price + orderInfo.delivCharge} 원</div>
+                      <div>
+                        +{orderInfo.Price + orderInfo.ShippingCharge} 원
+                      </div>
                     </div>
                   </div>
                 </td>

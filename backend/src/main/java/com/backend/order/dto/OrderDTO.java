@@ -17,7 +17,7 @@ public class OrderDTO {
     private String shipTel;
     private String shipMainAddress;
     private String shipSubAddress;
-    private String shipMessage;
+    private String shippingMessage;
     private String orderPayment;
     private String orderPaymentInfo;
     private Boolean orderPaymentState;

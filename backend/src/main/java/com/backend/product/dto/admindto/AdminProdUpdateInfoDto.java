@@ -21,20 +21,26 @@ public class AdminProdUpdateInfoDto {
     private List<OptionDto> options;
     private String prodCategory;
     private String prodInfo;
+    private String prodState;
 
     // 상품 업데이트 request/response 전부 사용 중
 
-    private AdminProdUpdateInfoDto(Integer prodNum, String prodName, String scentName, String prodCategory, String prodInfo) {
+    private AdminProdUpdateInfoDto(Integer prodNum, String prodName, String scentName, String prodCategory, String prodInfo, String prodState) {
         this.prodNum = prodNum;
         this.prodName = prodName;
         this.scentName = scentName;
         this.prodCategory = prodCategory;
         this.prodInfo = prodInfo;
+        this.prodState = prodState;
     }
 
     public static AdminProdUpdateInfoDto of(Product product) {
         AdminProdUpdateInfoDto adminProdUpdateInfoDto = new AdminProdUpdateInfoDto(product.getProdNum(),
-                product.getProdName(), product.getScent().getScentName(), product.getProdCategory(), product.getProdInfo());
+                product.getProdName(),
+                product.getScent().getScentName(),
+                product.getProdCategory(),
+                product.getProdInfo(),
+                product.getProdState());
         adminProdUpdateInfoDto.setOptions(product.getProductOption());
 
         return adminProdUpdateInfoDto;
@@ -46,9 +52,9 @@ public class AdminProdUpdateInfoDto {
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> getOptionNums() {
-        return options.stream()
-                .map(OptionDto::getOptionNum)
-                .collect(Collectors.toList());
-    }
+//    public List<Integer> getOptionNums() {
+//        return options.stream()
+//                .map(OptionDto::getOptionNum)
+//                .collect(Collectors.toList());
+//    }
 }

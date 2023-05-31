@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { categories, scentNames } from "./ProdSelectData";
+import { categories, prodState, scentNames } from "./ProdSelectData";
 
 const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
   const [productInfo, setProductInfo] = useState({
@@ -11,8 +11,16 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
     prodName: "",
     scentName: "Ambergris",
     prodCategory: "향수",
+    prodState: "판매중",
     prodInfo: "",
-    options: [],
+    options: [
+      {
+        prodOption: "",
+        prodPrice: 0,
+        optionState: "판매중",
+        prdStock: 0,
+      },
+    ],
   });
 
   // 옵션 추가 버튼 클릭 시 실행
@@ -25,7 +33,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
       ...prevProductInfo,
       options: [
         ...prevProductInfo.options,
-        { prodOption: "", prodPrice: "", prodStock: "" },
+        { prodOption: "", prodPrice: "", prodStock: "", optionState: "판매중" },
       ],
     }));
   };
@@ -114,6 +122,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
       try {
         await axios.post(`http://localhost:8080/adminProdUpdate`, productInfo);
         alert("상품 정보가 수정되었습니다!");
+        window.location.reload();
       } catch (e) {
         console.log(e);
       }
@@ -123,12 +132,15 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
     hadleCloseEditModal();
   };
 
+  const [optionLen, setOptionLen] = useState(0);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
           `http://localhost:8080/admingetProdUpdateInfo?prodNum=${prodNum}`
         );
+        setOptionLen(res.data.options.length);
         setProductInfo(res.data);
       } catch (e) {
         console.log(e);
@@ -177,6 +189,19 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
                 ))}
               </SelectInput>
             </OneInputContainer>
+            <OneInputContainer>
+              <Label>상태</Label>
+              <SelectInput
+                value={productInfo.prodState}
+                onChange={(e) => handleChange(e, "prodState")}
+              >
+                {prodState.map((state, index) => (
+                  <option key={index} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </SelectInput>
+            </OneInputContainer>
             <BigOneInputContainer>
               <Label>제품 설명</Label>
               <ProdInfoInput
@@ -187,36 +212,67 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
           </ProdInputContainer>
           <OptionContainer>
             <OneInputContainer>
-              <OptionLabel>
-                <OptionInfoLabel>옵션명</OptionInfoLabel>
-                <OptionInfoLabel>가격</OptionInfoLabel>
-                <OptionInfoLabel>재고</OptionInfoLabel>
-              </OptionLabel>
+              <Label></Label>
+              <OptionInfoLabel>옵션명</OptionInfoLabel>
+              <OptionInfoLabel>가격</OptionInfoLabel>
+              <OptionInfoLabel>재고</OptionInfoLabel>
+              <OptionInfoLabel>상태</OptionInfoLabel>
+              <DelLabel>삭제</DelLabel>
             </OneInputContainer>
             {productInfo.options.map((option, index) => (
               <div key={index}>
                 <OptionOneInputContainer>
                   <Label>옵션{index + 1}</Label>
-                  <InputOption
-                    type="text"
-                    value={option.prodOption}
-                    onChange={(e) => handleOptionChange(e, index, "prodOption")}
-                  />
-                  <InputOption
-                    type="text"
-                    value={option.prodPrice}
-                    onChange={(e) => handleOptionChange(e, index, "prodPrice")}
-                  />
-                  원
-                  <InputOption
-                    type="text"
-                    value={option.prodStock}
-                    onChange={(e) => handleOptionChange(e, index, "prodStock")}
-                  />
-                  개
-                  <OptionDelBtn onClick={() => handleDeleteOption(index)}>
-                    -
-                  </OptionDelBtn>
+                  <OneOptionInput>
+                    <InputOption
+                      type="text"
+                      value={option.prodOption}
+                      onChange={(e) =>
+                        handleOptionChange(e, index, "prodOption")
+                      }
+                    />
+                  </OneOptionInput>
+                  <OneOptionInput>
+                    <InputOption
+                      type="text"
+                      value={option.prodPrice}
+                      onChange={(e) =>
+                        handleOptionChange(e, index, "prodPrice")
+                      }
+                    />
+                    원
+                  </OneOptionInput>
+                  <OneOptionInput>
+                    <InputOption
+                      type="text"
+                      value={option.prodStock}
+                      onChange={(e) =>
+                        handleOptionChange(e, index, "prodStock")
+                      }
+                    />
+                    개
+                  </OneOptionInput>
+                  <OneOptionInput>
+                    <OptionStateSelect
+                      value={option.optionState}
+                      onChange={(e) =>
+                        handleOptionChange(e, index, "optionState")
+                      }
+                    >
+                      {prodState.map((state, index) => (
+                        <option key={index} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                    </OptionStateSelect>
+                  </OneOptionInput>
+                  {index > optionLen - 1 ? (
+                    <OptionDelBtn onClick={() => handleDeleteOption(index)}>
+                      -
+                    </OptionDelBtn>
+                  ) : (
+                    <div>삭제x</div>
+                  )}
                 </OptionOneInputContainer>
               </div>
             ))}
@@ -250,7 +306,7 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 800px;
-  height: 800px;
+  height: 850px;
   background-color: white;
   z-index: 1000;
   border: 5px solid black;
@@ -287,8 +343,8 @@ const OneInputContainer = styled.div`
 `;
 
 const Label = styled.div`
-  width: 15%;
-  font-size: 20px;
+  width: 12%;
+  font-size: 16px;
   font-weight: 600;
 `;
 
@@ -321,33 +377,36 @@ const OptionOneInputContainer = styled.div`
   height: 50px;
   margin-bottom: 10px;
   align-items: center;
-
-  > input:nth-child(3),
-  input:nth-child(4) {
-    margin-left: 60px;
-  }
-`;
-
-const OptionLabel = styled.div`
-  font-size: 20px;
-  width: 80%;
-  display: flex;
-  margin-left: 15%;
 `;
 
 const OptionInfoLabel = styled.div`
-  width: 33.3%;
+  width: 20%;
+`;
+
+const DelLabel = styled.div`
+  width: 8%;
+`;
+
+const OneOptionInput = styled.div`
+  width: 20%;
 `;
 
 const InputOption = styled.input`
-  width: 100px;
+  width: 70%;
   height: 30px;
   gap: 10px;
   border: 1px solid;
 `;
 
+const OptionStateSelect = styled.select`
+  width: 70%;
+  height: 30px;
+  border: 1px solid;
+`;
+
 const OptionDelBtn = styled.button`
-  margin-left: 10px;
+  /* width: 8%; */
+  margin-left: 0.7%;
   font-size: 20px;
   background-color: white;
   color: red;

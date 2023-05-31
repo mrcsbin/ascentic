@@ -33,6 +33,9 @@ public class AdminProductListDto {
     @Setter
     private LocalDate prodDate; // 등록 날짜
 
+    @Setter
+    private String prodState; // 상품 상태
+
     private Integer prodStock; // 재고
 
     private String prodImage; // 이미지
@@ -54,6 +57,7 @@ public class AdminProductListDto {
         dto.setProdImage(product);
         dto.setProdPrice(product);
         dto.setOptions(product);
+        dto.setProdState(product.getProdState());
         dto.setProdDate(product.getProdDate().toLocalDate());
         return dto;
     }

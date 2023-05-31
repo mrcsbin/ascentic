@@ -39,7 +39,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .prodCount(orderProductDTO.getProdCount())
                 .orderState(orderProductDTO.getOrderState())
                 .memberId(currentMemberId)
-                .orderReview(false)
+                .orderReviewState(false)
                 .build();
         cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
         orderProductRepository.save(orderProduct);

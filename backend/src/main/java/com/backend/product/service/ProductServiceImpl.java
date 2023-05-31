@@ -1,29 +1,26 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
-import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.OptionDto;
-import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
+import com.backend.product.repository.ProductRepository;
+import com.backend.productimage.repository.ProductImageRepository;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
-import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
-import com.backend.productimage.entity.ProductImage;
-import com.backend.productimage.repository.ProductImageRepository;
 import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -46,106 +43,36 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
     public ProductResponse.ProductDetailDto getProductDetail(Integer prodNum) {
-//        Member member = memberRepository.findById(currentMemberId).get();
-//        member.buyWelcomePackageYn();
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        System.out.println("ggg");
-        System.out.println(currentMemberId);
-        Optional<Product> findProduct = productRepository.findById(prodNum);
-        findProduct.get().setProdReadCount(findProduct.get().getProdReadCount() + 1);
-        productRepository.save(findProduct.get());
+        Product findProduct = productRepository.findById(prodNum).orElseThrow(() -> new RuntimeException("상품 없삼"));
+        findProduct.setProdReadCount(findProduct.getProdReadCount() + 1);
+        productRepository.save(findProduct);
 
-        if (findProduct.isPresent()) {
-            Product product = findProduct.get();
-            List<String> prodOption = new ArrayList<>(Arrays.asList(product.getProdOption(0), product.getProdOption(1)));
-            List<Integer> prodOptionNum = new ArrayList<>(Arrays.asList(product.getProdOptionNum(0), product.getProdOptionNum(1)));
-            List<String> prodImages = new ArrayList<>();
-            List<ProductImage> productImageList = productImageRepository.findAllByProdImageTypeAndProductProdNum(1, product.getProdNum());
-            List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
-            List<ProductResponse.Review> reviews = new ArrayList<>();
-            for (Review review : reviewList) {
-                reviews.add(ProductResponse.Review.builder()
-                        .memberId(review.getMemberId())
-                        .reviewContent(review.getReviewContent())
-                        .reviewDate(review.getReviewDate())
-                        .reviewScore(review.getReviewScore())
-                        .reviewCommentList(review.getComments())
-                        .build());
-            }
-            for (ProductImage productImage : productImageList) {
-                prodImages.add(productImage.getProdSaveName());
-            }
+        List<ProductResponse.ReviewDto> reviews = reviewRepository.findByProdNum(prodNum).stream()
+                        .map(ProductResponse.ReviewDto::of)
+                        .collect(Collectors.toList());
 
-            return ProductResponse.ProductDetailDto.builder()
-                    .prodNum(prodNum)
-                    .prodName(product.getProdName())
-                    .prodCategory(product.getProdCategory())
-                    .prodInfo(product.getProdInfo())
-                    .prodPrice(product.getProdPriceList())
-                    .prodOption(prodOption)
-                    .prodImage(prodImages)
-                    .scent(product.getScent())
-                    .isWish(product.isWish(currentMemberId, prodNum))
-                    .reviewList(reviews)
-                    .prodOptionNum(prodOptionNum)
-                    .build();
-        } else {
-            throw new RuntimeException("상품 없삼");
-        }
+        return ProductResponse.ProductDetailDto.of(findProduct, currentMemberId, reviews);
     }
 
     @Override
-    public List<ProductResponse.ProductListDto> getListByCategory(String ScentName) {
-        List<ProductResponse.ProductListDto> productList = new ArrayList<>();
-        if (ScentName.equals("all")) {
-            List<Product> products = productRepository.findAll();
-            for (Product product : products) {
-                ProductImage productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, product.getProdNum());
-                productList.add(ProductResponse.ProductListDto.builder()
-                        .prodNum(product.getProdNum())
-                        .prodName(product.getProdName())
-                        .prodInfo(product.getProdInfo())
-                        .prodWishCount(product.getProdWishCount())
-                        .prodReadCount(product.getProdReadCount())
-                        .prodCategory(product.getProdCategory())
-                        .prodImage(productImage.getProdSaveName())
-                        .prodPrice(product.getProdPriceList().get(0))
-                        .build());
-            }
-        } else {
-            List<Product> products = productRepository.findByScentScentNoteName(ScentName);
-            for (Product product : products) {
-                ProductImage productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, product.getProdNum());
-                productList.add(ProductResponse.ProductListDto.builder()
-                        .prodNum(product.getProdNum())
-                        .prodName(product.getProdName())
-                        .prodInfo(product.getProdInfo())
-                        .prodWishCount(product.getProdWishCount())
-                        .prodReadCount(product.getProdReadCount())
-                        .prodCategory(product.getProdCategory())
-                        .prodImage(productImage.getProdSaveName())
-                        .prodPrice(product.getProdPriceList().get(0))
-                        .build());
-            }
-        }
-        return productList;
+    public List<ProductResponse.ProductListDto> getListByCategory(String scentName) {
+        List<Product> products = scentName.equals("all") ? productRepository.findAll() : productRepository.findByScentScentNoteName(scentName);
+
+        return products.stream()
+                .filter(product -> !product.getProdState().equals("판매종료"))
+                .map(ProductResponse.ProductListDto::of)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<AdminProductListDto> getAdminProdList(String category) {
-        List<Product> products;
-
-        if (category.equals("all")) {
-            products = productRepository.findAll();
-        } else {
-            products = productRepository.findByProdCategory(category);
-        }
+        List<Product> products = category.equals("all") ? productRepository.findAll() : productRepository.findByProdCategory(category);
 
         return products.stream()
-                .map(product -> {
-                    return AdminProductListDto.of(product);
-                })
+                .map(AdminProductListDto::of)
                 .collect(Collectors.toList());
     }
 
@@ -168,27 +95,13 @@ public class ProductServiceImpl implements ProductService {
         product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
+        product.setProdState(adminProdUpdateInfoDto.getProdState());
         product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());
         Product resProduct = productRepository.save(product);
 
-        deleteOptionNum(adminProdUpdateInfoDto, product); // 옵션 삭제
         updateOptions(adminProdUpdateInfoDto, product); // 옵션 업데이트
 
         return resProduct.getProdNum();
-    }
-
-    // 옵션 삭제
-    private void deleteOptionNum(AdminProdUpdateInfoDto adminProdUpdateInfoDto, Product product) {
-        List<Integer> optionNum = product.getOptionNums();
-        List<Integer> updateOptionNum = adminProdUpdateInfoDto.getOptionNums();
-
-        List<Integer> delOptionNum = optionNum.stream()
-                .filter(num -> !updateOptionNum.contains(num))
-                .collect(Collectors.toList());
-
-        for (Integer delNum : delOptionNum) {
-            productOptionRepository.deleteById(delNum);
-        }
     }
 
     // 옵션 업데이트
@@ -197,13 +110,14 @@ public class ProductServiceImpl implements ProductService {
 
         for (OptionDto optionDto : optionDtos) {
             ProductOption option = optionDto.getOptionNum() != null ?
-                    productOptionRepository.findById(optionDto.getOptionNum()).orElse(new ProductOption()) :
+                    productOptionRepository.findById(optionDto.getOptionNum()).orElse(null) :
                     new ProductOption();
 
             option.setProduct(product);
             option.setProdOption(optionDto.getProdOption());
             option.setProdPrice(optionDto.getProdPrice());
             option.setProdStock(optionDto.getProdStock());
+            option.setOptionState(optionDto.getOptionState());
             productOptionRepository.save(option);
         }
     }

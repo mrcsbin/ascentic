@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
-import { categories, scentNames } from "./ProdSelectData";
+import { categories, prodState, scentNames } from "./ProdSelectData";
 
-const ProdAddModal = ({ hadleCloseAddModal }) => {
+const ProdAdd = () => {
   const [productInfo, setProductInfo] = useState({
     prodName: "",
+    prodState: "판매중",
     scentName: "Ambergris",
     prodCategory: "향수",
     prodInfo: "",
@@ -23,7 +24,7 @@ const ProdAddModal = ({ hadleCloseAddModal }) => {
       ...prevProductInfo,
       options: [
         ...prevProductInfo.options,
-        { prodOption: "", prodPrice: "", prodStock: "" },
+        { prodOption: "", prodPrice: "", prodStock: "", optionState: "판매중" },
       ],
     }));
   };
@@ -149,155 +150,187 @@ const ProdAddModal = ({ hadleCloseAddModal }) => {
         };
         uploadImages();
         alert("상품이 추가되었습니다.");
+        window.location.reload();
       } catch (e) {
         console.log(e);
         alert("상품 추가 오류");
       }
     };
     updateProduct();
-    hadleCloseAddModal();
   };
 
   return (
     <>
-      <ModalBackground />
-      <ModalContainer>
-        <InputContainer>
-          <ProdInputContainer>
-            <OneInputContainer>
-              <Label>제품명</Label>
-              <NameInput
-                type="text"
-                value={productInfo.prodName}
-                onChange={(e) => handleChange(e, "prodName")}
-              ></NameInput>
-            </OneInputContainer>
-            <OneInputContainer>
-              <Label>향이름</Label>
-              <SelectInput
-                value={productInfo.scentName}
-                onChange={(e) => handleChange(e, "scentName")}
-              >
-                {scentNames.map((scent, index) => (
-                  <option key={index} value={scent}>
-                    {scent}
-                  </option>
-                ))}
-              </SelectInput>
-            </OneInputContainer>
-            <OneInputContainer>
-              <Label>분류</Label>
-              <SelectInput
-                value={productInfo.prodCategory}
-                onChange={(e) => handleChange(e, "prodCategory")}
-              >
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </SelectInput>
-            </OneInputContainer>
-            <BigOneInputContainer>
-              <Label>제품 설명</Label>
-              <ProdInfoInput
-                value={productInfo.prodInfo}
-                onChange={(e) => handleChange(e, "prodInfo")}
-              ></ProdInfoInput>
-            </BigOneInputContainer>
-            <ThumbnailContainer>
-              <Label>대표사진</Label>
-              <ThumInput
-                type="file"
-                onChange={(e) => setThumbnaililFile(e.target.files[0])}
-              ></ThumInput>
-            </ThumbnailContainer>
-            <Imagesontainer>
-              <Label>이미지</Label>
-              <ImageInput
-                type="file"
-                multiple
-                onChange={(e) => setImageFiles(Array.from(e.target.files))}
-              ></ImageInput>
-            </Imagesontainer>
-          </ProdInputContainer>
-          <OptionContainer>
-            <OneInputContainer>
-              <OptionLabel>
-                <OptionInfoLabel>옵션명</OptionInfoLabel>
-                <OptionInfoLabel>가격</OptionInfoLabel>
-                <OptionInfoLabel>재고</OptionInfoLabel>
-              </OptionLabel>
-            </OneInputContainer>
-            {productInfo.options.map((option, index) => (
-              <div key={index}>
-                <OptionOneInputContainer>
-                  <Label>옵션{index + 1}</Label>
+      <HeaderWrap>
+        <HeaderLeft>상품 추가</HeaderLeft>
+        <HeaderRight></HeaderRight>
+      </HeaderWrap>
+      <InputContainer>
+        <ProdInputContainer>
+          <OneInputContainer>
+            <Label>제품명</Label>
+            <NameInput
+              type="text"
+              value={productInfo.prodName}
+              onChange={(e) => handleChange(e, "prodName")}
+            ></NameInput>
+          </OneInputContainer>
+          <OneInputContainer>
+            <Label>향이름</Label>
+            <SelectInput
+              value={productInfo.scentName}
+              onChange={(e) => handleChange(e, "scentName")}
+            >
+              {scentNames.map((scent, index) => (
+                <option key={index} value={scent}>
+                  {scent}
+                </option>
+              ))}
+            </SelectInput>
+          </OneInputContainer>
+          <OneInputContainer>
+            <Label>분류</Label>
+            <SelectInput
+              value={productInfo.prodCategory}
+              onChange={(e) => handleChange(e, "prodCategory")}
+            >
+              {categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </SelectInput>
+          </OneInputContainer>
+          <BigOneInputContainer>
+            <Label>제품 설명</Label>
+            <ProdInfoInput
+              value={productInfo.prodInfo}
+              onChange={(e) => handleChange(e, "prodInfo")}
+            ></ProdInfoInput>
+          </BigOneInputContainer>
+          <OneInputContainer>
+            <Label>상태</Label>
+            <SelectInput
+              value={productInfo.prodState}
+              onChange={(e) => handleChange(e, "prodState")}
+            >
+              {prodState.map((state, index) => (
+                <option key={index} value={state}>
+                  {state}
+                </option>
+              ))}
+            </SelectInput>
+          </OneInputContainer>
+          <ThumbnailContainer>
+            <Label>대표사진</Label>
+            <ThumInput
+              type="file"
+              onChange={(e) => setThumbnaililFile(e.target.files[0])}
+            ></ThumInput>
+          </ThumbnailContainer>
+          <Imagesontainer>
+            <Label>이미지</Label>
+            <ImageInput
+              type="file"
+              multiple
+              onChange={(e) => setImageFiles(Array.from(e.target.files))}
+            ></ImageInput>
+          </Imagesontainer>
+        </ProdInputContainer>
+        <OptionContainer>
+          <OneInputContainer>
+            <Label></Label>
+            <OptionInfoLabel>옵션명</OptionInfoLabel>
+            <OptionInfoLabel>가격</OptionInfoLabel>
+            <OptionInfoLabel>재고</OptionInfoLabel>
+            <OptionInfoLabel>상태</OptionInfoLabel>
+            <DelLabel>삭제</DelLabel>
+          </OneInputContainer>
+          {productInfo.options.map((option, index) => (
+            <div key={index}>
+              <OptionOneInputContainer>
+                <Label>옵션{index + 1}</Label>
+                <OneOptionInput>
                   <InputOption
                     type="text"
                     value={option.prodOption}
                     onChange={(e) => handleOptionChange(e, index, "prodOption")}
                   />
+                </OneOptionInput>
+                <OneOptionInput>
                   <InputOption
                     type="text"
                     value={option.prodPrice}
                     onChange={(e) => handleOptionChange(e, index, "prodPrice")}
                   />
                   원
+                </OneOptionInput>
+                <OneOptionInput>
                   <InputOption
                     type="text"
                     value={option.prodStock}
                     onChange={(e) => handleOptionChange(e, index, "prodStock")}
                   />
                   개
-                  <OptionDelBtn onClick={() => handleDeleteOption(index)}>
-                    -
-                  </OptionDelBtn>
-                </OptionOneInputContainer>
-              </div>
-            ))}
-            <OptionAddBtn onClick={() => handleAddOption()}>+</OptionAddBtn>
-          </OptionContainer>
-          <EditBtnContainer>
-            <AddBtn onClick={() => handleProdAdd()}>상품 추가</AddBtn>
-            <CloseBtn onClick={() => hadleCloseAddModal()}>취소</CloseBtn>
-          </EditBtnContainer>
-        </InputContainer>
-      </ModalContainer>
+                </OneOptionInput>
+                <OneOptionInput>
+                  <OptionStateSelect
+                    value={option.optionState}
+                    onChange={(e) =>
+                      handleOptionChange(e, index, "optionState")
+                    }
+                  >
+                    {prodState.map((state, index) => (
+                      <option key={index} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </OptionStateSelect>
+                </OneOptionInput>
+                <OptionDelBtn onClick={() => handleDeleteOption(index)}>
+                  -
+                </OptionDelBtn>
+              </OptionOneInputContainer>
+            </div>
+          ))}
+          <OptionAddBtn onClick={() => handleAddOption()}>+</OptionAddBtn>
+        </OptionContainer>
+        <EditBtnContainer>
+          <AddBtn onClick={() => handleProdAdd()}>상품 추가</AddBtn>
+        </EditBtnContainer>
+      </InputContainer>
     </>
   );
 };
 
-export default ProdAddModal;
+export default ProdAdd;
 
-const ModalBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 50px;
+  border-bottom: 2px solid black;
 `;
 
-const ModalContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 900px;
-  background-color: white;
-  z-index: 1000;
-  border: 5px solid black;
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 700;
+`;
+
+const HeaderRight = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 `;
 
 const InputContainer = styled.div`
   width: 80%;
   height: 90%;
+  margin: 2% auto;
 `;
 
 const ProdInputContainer = styled.div`
@@ -306,6 +339,7 @@ const ProdInputContainer = styled.div`
 `;
 
 const OptionContainer = styled.div`
+  margin: 3% auto;
   width: 100%;
   height: 45%;
 `;
@@ -323,8 +357,8 @@ const OneInputContainer = styled.div`
 `;
 
 const Label = styled.div`
-  width: 15%;
-  font-size: 20px;
+  width: 12%;
+  font-size: 16px;
   font-weight: 600;
 `;
 
@@ -357,33 +391,34 @@ const OptionOneInputContainer = styled.div`
   height: 50px;
   margin-bottom: 10px;
   align-items: center;
-
-  > input:nth-child(3),
-  input:nth-child(4) {
-    margin-left: 60px;
-  }
-`;
-
-const OptionLabel = styled.div`
-  font-size: 20px;
-  width: 80%;
-  display: flex;
-  margin-left: 15%;
 `;
 
 const OptionInfoLabel = styled.div`
-  width: 33.3%;
+  width: 20%;
+`;
+
+const DelLabel = styled.div`
+  width: 8%;
+`;
+
+const OneOptionInput = styled.div`
+  width: 20%;
 `;
 
 const InputOption = styled.input`
-  width: 100px;
+  width: 70%;
   height: 30px;
-  gap: 10px;
+  border: 1px solid;
+`;
+
+const OptionStateSelect = styled.select`
+  width: 70%;
+  height: 30px;
   border: 1px solid;
 `;
 
 const OptionDelBtn = styled.button`
-  margin-left: 10px;
+  margin-left: 0.7%;
   font-size: 20px;
   background-color: white;
   color: red;
@@ -419,18 +454,10 @@ const Imagesontainer = styled.div`
 const ImageInput = styled.input``;
 
 const AddBtn = styled.button`
-  width: 150px;
-  height: 30px;
-  margin-left: 50%;
+  width: 600px;
+  height: 50px;
+  margin: 2% 25%;
   background-color: black;
   color: white;
-  cursor: pointer;
-`;
-
-const CloseBtn = styled.button`
-  margin-left: 20px;
-  width: 150px;
-  height: 30px;
-  background-color: white;
   cursor: pointer;
 `;

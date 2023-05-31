@@ -1,6 +1,5 @@
 package com.backend.payment.entity;
 
-import com.backend.order.dto.Card;
 import com.backend.payment.dto.SubscribeCard;
 import jakarta.persistence.*;
 import lombok.*;

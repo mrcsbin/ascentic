@@ -93,6 +93,8 @@ const FinalPayment = ({
     if (check1 && check2 && check3 && check4) {
       alert("결제를 진행하겠습니다.");
       try {
+        console.log("FinalPayment")
+        console.log(products)
         const res = await requestOrder(accessToken, requestData, products);
       } catch (e) {
         console.error(e);

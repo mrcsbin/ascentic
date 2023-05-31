@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const SbProductAddModal = ({ open, close, Categories }) => {
+const SbProductAddModal = ({ open, close, Categories, setRerender }) => {
   const [sbProductDTO, setSbProductDTO] = useState({
     scentName: "",
     sbProdPrice: 22900,
@@ -15,6 +15,7 @@ const SbProductAddModal = ({ open, close, Categories }) => {
   const [scentloading, setScentloading] = useState(false);
   const [imgFile, setImgFile] = useState("");
   const [file, setFile] = useState("");
+  const inputfile = useRef();
   //   console.log(sbProductDTO, file);
   const handleNoteChange = (e) => {
     setNoteName(e.target.value);
@@ -25,8 +26,21 @@ const SbProductAddModal = ({ open, close, Categories }) => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleReset = () => {
+    setSbProductDTO({
+      scentName: "",
+      sbProdPrice: 22900,
+      sbProdIntro: "",
+      sbProdImage: "",
+      sbProdStock: "",
+    });
+    setImgFile("");
+    setFile("");
+    setNoteName("all");
+    inputfile.current.value = "";
+  };
   const loadImgFile = (e) => {
-    if (e.target.files) {
+    if (e.target.files.length !== 0) {
       const img = e.target.files[0];
       setFile(img);
       const reader = new FileReader();
@@ -34,8 +48,6 @@ const SbProductAddModal = ({ open, close, Categories }) => {
       reader.onloadend = () => {
         setImgFile(reader.result);
       };
-    } else {
-      return;
     }
   };
 
@@ -56,7 +68,10 @@ const SbProductAddModal = ({ open, close, Categories }) => {
       })
       .then(() => {
         alert("등록이 완료되었습니다.");
+        handleReset();
         close();
+        // window.location.replace("/admin/subscribemanagement/product");
+        setRerender(Math.random());
       })
       .catch((e) => {
         console.error(e);
@@ -94,7 +109,7 @@ const SbProductAddModal = ({ open, close, Categories }) => {
           <InlineContent>
             <div>Note</div>
             <div>
-              <select onChange={handleNoteChange}>
+              <select value={noteName} onChange={handleNoteChange}>
                 {Categories.map((note) => (
                   <option key={note.text} value={note.text}>
                     {note.name}
@@ -107,6 +122,7 @@ const SbProductAddModal = ({ open, close, Categories }) => {
             type="file"
             accept="image/*"
             id="spImg"
+            ref={inputfile}
             onChange={loadImgFile}
           />
           <ImgBox>{imgFile && <img src={imgFile} alt="sbProductImg" />}</ImgBox>
@@ -127,7 +143,11 @@ const SbProductAddModal = ({ open, close, Categories }) => {
             향
           </BlockContent>
           <BlockContentS>
-            <textarea name="sbProdIntro" onChange={handleChange} />
+            <textarea
+              name="sbProdIntro"
+              value={sbProductDTO.sbProdIntro}
+              onChange={handleChange}
+            />
           </BlockContentS>
           <InlineContent>
             <div>
@@ -147,13 +167,28 @@ const SbProductAddModal = ({ open, close, Categories }) => {
                 id="sbProdStock"
                 type="number"
                 name="sbProdStock"
+                value={sbProductDTO.sbProdStock}
                 onChange={handleChange}
               />{" "}
               개
             </div>
           </InlineContent>
           <Buttonbox>
-            <button onClick={() => addSbProduct()}>등록하기</button>
+            <button onClick={() => handleReset()}>초기화</button>
+            <button
+              disabled={
+                (sbProductDTO.scentName === "") |
+                (sbProductDTO.sbProdPrice === "") |
+                (sbProductDTO.sbProdIntro === "") |
+                (sbProductDTO.sbProdStock === "") |
+                (file === "")
+                  ? true
+                  : false
+              }
+              onClick={() => addSbProduct()}
+            >
+              등록하기
+            </button>
           </Buttonbox>
         </SbProdBox>
       </div>
@@ -224,6 +259,12 @@ const InlineContent = styled.div`
     width: 80px;
     text-align: right;
   }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 `;
 const InputImg = styled.input`
   display: block;
@@ -264,7 +305,17 @@ const Buttonbox = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  button {
+  button:nth-child(1) {
+    margin-top: 20px;
+    margin-right: 40px;
+    padding: 10px 30px;
+    font-size: 1.1rem;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    cursor: pointer;
+  }
+  button:nth-child(2) {
     margin-top: 20px;
     padding: 10px 30px;
     font-size: 1.1rem;
@@ -272,6 +323,15 @@ const Buttonbox = styled.div`
     color: white;
     border: 0;
     cursor: pointer;
+  }
+  button:nth-child(2):disabled {
+    margin-top: 20px;
+    padding: 10px 30px;
+    font-size: 1.1rem;
+    background-color: gray;
+    color: white;
+    border: 0;
+    cursor: default;
   }
 `;
 

@@ -11,11 +11,8 @@ const ExpSubsManage = () => {
   const searchParams = new URLSearchParams(location.search);
   // const startTime = performance.now();
   // console.log(`startTime = ${startTime}`);
-  // const success = searchParams.get("success") ? searchParams.get("success") : false;
-  const success = searchParams.get("success");
 
-  console.log("15번째 줄이다잇~~~~");
-  console.log(success);
+  const success = searchParams.get("success");
 
   const token = {
     headers: {

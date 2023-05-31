@@ -132,7 +132,7 @@ const ExpSubsBody = styled.div`
   background-size: cover;
   position: relative;
   width: 100vw;
-  height: 110vh;
+  height: 120vh;
   padding-top: 120px;
 `;
 
@@ -166,7 +166,7 @@ const ExpSubsIntro = styled.div`
 
 const GuideLocation = styled.div`
   float: right;
-  margin: 6% 5%;
+  margin: 3% 5%;
 `;
 
 const ModalBackground = styled.div`

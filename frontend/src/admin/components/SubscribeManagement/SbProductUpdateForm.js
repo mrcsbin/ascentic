@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const SbProductUpdateBox = ({ sbproduct, Categories, setUpdateMode }) => {
+const SbProductUpdateBox = ({ sbproduct, Categories }) => {
   const [sbProductDTO, setSbProductDTO] = useState({
     scentName: sbproduct.scentName.scentName,
     sbProdPrice: sbproduct.sbProdPrice,
@@ -60,7 +60,7 @@ const SbProductUpdateBox = ({ sbproduct, Categories, setUpdateMode }) => {
       .then(() => {
         alert("수정이 완료되었습니다.");
         //   window.location.replace("/admin/subscribemanagement");
-        setUpdateMode("");
+        // setUpdateMode("");
       })
       .catch((e) => {
         console.error(e);
@@ -166,7 +166,7 @@ const SbProductUpdateBox = ({ sbproduct, Categories, setUpdateMode }) => {
       </InlineContent>
       <Buttonbox>
         <button onClick={() => updateSbProduct()}>수정완료</button>
-        <button onClick={() => setUpdateMode("")}>수정취소</button>
+        <button>수정취소</button>
       </Buttonbox>
     </SbProdBox>
   );

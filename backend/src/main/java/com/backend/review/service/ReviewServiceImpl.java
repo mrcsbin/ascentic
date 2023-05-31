@@ -47,6 +47,8 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewScore(postReviewDto.getReviewScore())
                 .orderProduct(orderProductRepository.findById(postReviewDto.getOrderProductNum()).get())
                 .build());
+        orderProduct.setOrderReview(true);
+        orderProductRepository.save(orderProduct);
     }
 
     /**

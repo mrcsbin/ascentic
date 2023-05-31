@@ -7,9 +7,7 @@ import lombok.*;
 
 @Builder
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "tb_cart")
 public class Cart {
@@ -25,7 +23,15 @@ public class Cart {
     @Column(name = "member_id")
     private String memberId;
 
+    @Setter
     @Column(name = "prod_count")
     private Integer prodCount;
+
+    public Cart(Integer cartNum, ProductOption productOption, String memberId, Integer prodCount) {
+        this.cartNum = cartNum;
+        this.productOption = productOption;
+        this.memberId = memberId;
+        this.prodCount = prodCount;
+    }
 }
 

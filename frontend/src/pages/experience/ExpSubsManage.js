@@ -1,27 +1,33 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import Loading from '../../components/common/Loading';
-import ExpSubsManageView from '../../components/experience/ExpSubMangeView';
-import { getCookie } from '../../utils/Cookies';
-
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Loading from "../../components/common/Loading";
+import ExpSubsManageView from "../../components/experience/ExpSubMangeView";
+import { getCookie } from "../../utils/Cookies";
+import { useLocation } from "react-router-dom";
 const ExpSubsManage = () => {
-  const [sbMember, setSbmember] = useState({ initial: 'setting' });
+  const [sbMember, setSbmember] = useState({ initial: "setting" });
   const [subscribe, setSubscribe] = useState([]);
-
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   // const startTime = performance.now();
   // console.log(`startTime = ${startTime}`);
+  // const success = searchParams.get("success") ? searchParams.get("success") : false;
+  const success = searchParams.get("success");
+
+  console.log("15번째 줄이다잇~~~~");
+  console.log(success);
 
   const token = {
     headers: {
-      Authorization: 'Bearer ' + getCookie('accessToken'),
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
 
   useEffect(() => {
     axios
       .all([
-        axios.get('/lastSbMember', token),
-        axios.get('/getSubscribe', token),
+        axios.get("/lastSbMember", token),
+        axios.get("/getSubscribe", token),
       ])
       .then(
         axios.spread((res1, res2) => {
@@ -30,13 +36,13 @@ const ExpSubsManage = () => {
         })
       )
       .catch((e) => {
-        console.log('ExpSubsManage에서 문제생김', e);
+        console.log("ExpSubsManage에서 문제생김", e);
       });
   }, []);
 
   // const axiosEnd = performance.now();
 
-  if (sbMember.initial === 'setting') {
+  if (sbMember.initial === "setting") {
     return <Loading />;
   } else {
     // const endTime = performance.now();
@@ -47,7 +53,13 @@ const ExpSubsManage = () => {
     // );
     // console.log('설정제대로 됐나?', subscribe);
 
-    return <ExpSubsManageView sbMember={sbMember} subscribe={subscribe} />;
+    return (
+      <ExpSubsManageView
+        sbMember={sbMember}
+        subscribe={subscribe}
+        success={success}
+      />
+    );
   }
 };
 

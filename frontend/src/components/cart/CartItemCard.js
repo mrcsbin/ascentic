@@ -1,29 +1,31 @@
 import styled from "styled-components";
-import TEST_IMAGE from "../../assets/correct.png";
 import {
   decreaseCount,
   increaseCount,
   removeCartItem,
   fetchCartItems,
   toggleCheckItem,
+  updateCartItem,
 } from "../../store/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
 
-function CountButton({ prodCount, cartNum }) {
+function CountButton({ cartNum, productCount }) {
   const dispatch = useDispatch();
 
   return (
     <CountButtonBox>
       <MinusButton
-        onClick={() => {
+        onClick={async () => {
           dispatch(decreaseCount({ cartNum }));
+          dispatch(updateCartItem({ cartNum, productCount: productCount - 1 }));
         }}
-        disabled={prodCount === 1}
+        disabled={productCount === 1}
       ></MinusButton>
-      <NumCount>{prodCount}</NumCount>
+      <NumCount>{productCount}</NumCount>
       <PlusButton
-        onClick={() => {
+        onClick={async () => {
           dispatch(increaseCount({ cartNum }));
+          dispatch(updateCartItem({ cartNum, productCount: productCount + 1 }));
         }}
       ></PlusButton>
     </CountButtonBox>
@@ -36,7 +38,7 @@ export const CartItemCard = ({ item }) => {
   const cartItem = cartItems.find(
     (cartItem) => cartItem.cartNum === item.cartNum
   );
-  const prodCount = cartItem?.prodCount;
+  const productCount = cartItem?.productCount;
 
   const isChecked = useSelector((state) =>
     state.cart.checkedItems.includes(item.cartNum)
@@ -52,27 +54,38 @@ export const CartItemCard = ({ item }) => {
     );
   };
 
-  // "OMG 상품 번호도 받아와야됨 ..............."
   return (
     <ItemCard>
-      <SelectButton
-        type="checkbox"
-        checked={isChecked}
-        onChange={handleToggleCheck}
-      />
-      <ItemImageLink href={`store/productdetail/${item.prodNum}`}>
-        <ItemImage
-          src={`http://localhost:8080/images/${item.prodImage}`}
-          alt="상품 이미지"
+      <SelectButtonBox>
+        <SelectButton
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleToggleCheck}
         />
-      </ItemImageLink>
-      <ItemLink href={`store/productdetail/${item.prodNum}`}>
-        <ItemTitle>{item.prodName}</ItemTitle>
-        <ItemOption>{item.prodOption}</ItemOption>
-      </ItemLink>
-      <CountButton prodCount={prodCount} cartNum={item.cartNum} />
-      <ItemPrice>{prodCount * item.prodPrice}</ItemPrice>
-      <DeleteButton onClick={handleDeleteClick} />
+      </SelectButtonBox>
+      <ImageBox>
+        <ItemImageLink href={`store/productdetail/${item.productNum}`}>
+          <ItemImage
+            src={`http://localhost:8080/images/${item.productImage}`}
+            alt="상품 이미지"
+          />
+        </ItemImageLink>
+      </ImageBox>
+      <ItemBox>
+        <ItemLink href={`store/productdetail/${item.productNum}`}>
+          <ItemTitle>{item.productName}</ItemTitle>
+          <ItemOption>{item.productOptionName}</ItemOption>
+        </ItemLink>
+      </ItemBox>
+      <CountBox>
+        <CountButton productCount={productCount} cartNum={item.cartNum} />
+      </CountBox>
+      <PriceBox>
+        <ItemPrice>{productCount * item.productPrice}</ItemPrice>
+      </PriceBox>
+      <DeleteButtonBox>
+        <DeleteButton onClick={handleDeleteClick} />
+      </DeleteButtonBox>
     </ItemCard>
   );
 };
@@ -128,18 +141,28 @@ const ItemCard = styled.li`
   border-bottom: 0.5px solid grey;
 `;
 
-const SelectButton = styled.input`
-  margin: 0 10px;
+const SelectButtonBox = styled.div`
+  width: 5%;
+  display: flex;
+  justify-content: center;
 `;
 
-const ItemImageLink = styled.a`
-  width: 60px;
-  height: 60px;
-  margin: 0 30px 0 10px;
+const SelectButton = styled.input``;
+
+const ImageBox = styled.div`
+  width: 15%;
 `;
+
+const ItemImageLink = styled.a``;
 
 const ItemImage = styled.img`
-  height: 100%;
+  width: 100%;
+`;
+
+const ItemBox = styled.div`
+  width: 50%;
+  padding-left: 5%;
+  box-sizing: border-box;
 `;
 
 const ItemLink = styled.a`
@@ -165,10 +188,21 @@ const ItemOption = styled.p`
   color: grey;
 `;
 
+const CountBox = styled.div`
+  width: 15%;
+`;
+
+const PriceBox = styled.div`
+  width: 10%;
+  text-align: center;
+`;
+
 const ItemPrice = styled.div`
-  width: 100px;
-  text-align: right;
-  margin-right: 20px;
+  text-align: center;
+`;
+
+const DeleteButtonBox = styled.div`
+  width: 5%;
 `;
 
 const DeleteButton = styled.button`

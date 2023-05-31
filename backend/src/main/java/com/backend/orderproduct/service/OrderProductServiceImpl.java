@@ -1,5 +1,6 @@
 package com.backend.orderproduct.service;
 
+import com.backend.cart.repository.CartRepository;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.entity.Order;
 import com.backend.order.repository.OrderRepository;
@@ -25,20 +26,22 @@ public class OrderProductServiceImpl implements OrderProductService {
     private final OrderRepository orderRepository;
     private final ProductOptionRepository productOptionRepository;
     private final ProductImageRepository productImageRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public void insetOrderProduct(OrderProductDto orderProductDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Order order = orderRepository.findById(orderProductDTO.getOrderId()).orElse(null);
+        Order order = orderRepository.findById(orderProductDTO.getOrderNum()).orElse(null);
         ProductOption productOption = productOptionRepository.findById(orderProductDTO.getOptionNum()).orElse(null);
         OrderProduct orderProduct = OrderProduct.builder()
                 .order(order)
                 .productOption(productOption)
                 .prodCount(orderProductDTO.getProdCount())
-                .orderState(orderProductDTO.isOrderState())
+                .orderState(orderProductDTO.getOrderState())
                 .memberId(currentMemberId)
+                .orderReviewState(false)
                 .build();
-
+        cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
         orderProductRepository.save(orderProduct);
     }
 

@@ -11,6 +11,11 @@ smsapi:
   key: NCSJWR1HCFQOGI9P
   secret: 62U0TYOWLEC2O9HES0LEWTMRCX3HF7G2
 
+server:
+  tomcat:
+    max-http-form-post-size: 100000000
+    max-swallow-size: 100000000
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -87,6 +92,7 @@ spring:
           - classpath:review.sql
           - classpath:reviewcomment.sql
           - classpath:inquiry.sql
+          - classpath:member.sql
 
 # 멤버 이미지, 전화번호(-) 빼기
 # subscribeMember.sql (member_name, member_tel, member_addr 수정)

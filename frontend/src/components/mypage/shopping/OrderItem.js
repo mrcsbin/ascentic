@@ -5,6 +5,7 @@ export const OrderItem = ({ item }) => {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
     return num.toString().replace(regexp, ",");
   }
+  console.log(item)
 
   return (
     <>
@@ -22,7 +23,7 @@ export const OrderItem = ({ item }) => {
           <ItemCount>{item.orderProductQuantity} 개</ItemCount>
         </ItemAmountBox>
         <ItemOrderState>
-          {item.orderShippingState ? "배송 완료" : "배송 준비 중"}
+          {item.orderShippingState}
         </ItemOrderState>
       </ItemCard>
     </>

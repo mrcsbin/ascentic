@@ -1,16 +1,12 @@
 package com.backend.member.service;
 
+import com.backend.member.dto.*;
 import com.backend.messageandmail.controller.MailController;
-import com.backend.member.dto.FindDataDto;
-import com.backend.member.dto.JwtTokenDto;
-import com.backend.member.dto.LoginDto;
-import com.backend.member.dto.SignupDto;
 import com.backend.member.entity.Member;
 import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
-import com.backend.member.dto.MemberInfoDto;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -142,9 +139,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfoDto getMemberInfo() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
         Member findMember = memberRepository.findById(currentMemberId)
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         String[] emailParts = findMember.getEmail().split("@");
+
         return MemberInfoDto.builder()
                 .email(emailParts[0])
                 .domain(emailParts[1])
@@ -177,7 +176,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("관리자")
                 .birthDate("0101")
-                .phone("01012341234")
+                .phone("01100000000")
                 .role(Collections.singletonList("ADMIN"))
                 .build();
         memberRepository.save(member);
@@ -189,7 +188,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("조성빈")
                 .birthDate("0101")
-                .phone("01000000000")
+                .phone("01100000001")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member1);
@@ -201,7 +200,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("조한식")
                 .birthDate("0101")
-                .phone("01000000001")
+                .phone("01100000002")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member2);
@@ -213,7 +212,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("강경민")
                 .birthDate("0101")
-                .phone("01000000002")
+                .phone("01100000003")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member3);
@@ -225,7 +224,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("나해성")
                 .birthDate("0101")
-                .phone("01000000003")
+                .phone("01100000004")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member4);
@@ -237,7 +236,7 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("전채은")
                 .birthDate("0101")
-                .phone("01000000004")
+                .phone("01100000005")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member5);
@@ -249,9 +248,11 @@ public class MemberServiceImpl implements MemberService {
                 .image("profileimage1")
                 .name("황성민")
                 .birthDate("0101")
-                .phone("01000000005")
+                .phone("01100000006")
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member6);
     }
+
+
 }

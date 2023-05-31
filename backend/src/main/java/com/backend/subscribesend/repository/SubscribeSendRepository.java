@@ -1,6 +1,7 @@
 package com.backend.subscribesend.repository;
 
 import com.backend.subscribemember.entity.SubscribeMember;
+import com.backend.subscribeproduct.entity.SubscribeProduct;
 import com.backend.subscribesend.entity.SubscribeSend;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, In
 //    void updateReview(@Param("sb_send_num") Integer sb_send_num, @Param("sb_send_score") Integer sb_send_score, @Param("sb_send_review") String sb_send_review);
 
     List<SubscribeSend> findAllBySubscribeMember(SubscribeMember subscribeMember);
+
+    Double findAverageSbSendScoreBySubscribeProduct(SubscribeProduct subscribeProduct);
 }

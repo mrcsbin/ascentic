@@ -1,13 +1,13 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Contents({ cartItems }) {
   const checkedItem = useSelector((state) => state.cart.checkedItems);
 
   const prices = cartItems
     .filter((item) => checkedItem.includes(item.cartNum))
-    .map((item) => item.prodPrice * item.prodCount);
+    .map((item) => item.productPrice * item.productCount);
   const totalPrice = prices.reduce((acc, curr) => acc + curr, 0);
   const shippingFee = 3000;
   const discountAmount = 3000;

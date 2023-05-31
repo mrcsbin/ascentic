@@ -1,10 +1,11 @@
 package com.backend.product.entity;
 
+import com.backend.productimage.entity.ProductImage;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.scent.entity.Scent;
 import com.backend.wish.entity.Wish;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -25,19 +27,24 @@ public class Product {
     @Column(name = "prod_num")
     private Integer prodNum;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "scent_name")
     private Scent scent;
 
+    @Setter
     @Column(name = "prod_name")
     private String prodName;
 
+    @Setter
     @Column(name = "prod_category")
     private String prodCategory;
 
+    @Setter
     @Column(name = "prod_info")
     private String prodInfo;
 
+    @Setter
     @Column(name = "prod_date")
     private LocalDateTime prodDate;
 
@@ -49,23 +56,32 @@ public class Product {
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
 
+    @Setter
+    @Column(name = "prod_state")
+    private String prodState; //  판매중, 판매종료, 품절
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOption = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Wish> wish = new ArrayList<>();
 
-    public Integer getProdPrice(Integer index) {
-        return productOption.get(index).getProdPrice();
+    @OneToMany(mappedBy = "product", fetch =  FetchType.LAZY)
+    private List<ProductImage> productImages = new ArrayList<>();
+
+    public List<Integer> getProdPriceList() {
+        return productOption.stream()
+                .map(ProductOption::getProdPrice)
+                .collect(Collectors.toList());
     }
 
-    public String getProdOption(Integer index) {
-        return productOption.get(index).getProdOption();
-    }
+//    public String getProdOption(Integer index) {
+//        return productOption.get(index).getProdOption();
+//    }
 
-    public Integer getProdOptionNum(Integer index) {
-        return productOption.get(index).getOptionNum();
-    }
+//    public Integer getProdOptionNum(Integer index) {
+//        return productOption.get(index).getOptionNum();
+//    }
 
     public Integer getWishCount(Integer prodNum) {
         int count = 0;
@@ -85,4 +101,28 @@ public class Product {
         }
         return false;
     }
+
+//    public List<String> getProdOptionList() {
+//        return productOption.stream()
+//                .map(ProductOption::getProdOption)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<Integer> getOptionNum() {
+//        return productOption.stream()
+//                .map(ProductOption::getOptionNum)
+//                .collect(Collectors.toList());
+//    }
+
+    public List<String> getImageSaveNameList() {
+        return productImages.stream()
+                .map(ProductImage::getProdSaveName)
+                .collect(Collectors.toList());
+    }
+
+//    public List<Integer> getOptionNums() {
+//        return productOption.stream()
+//                .map(ProductOption::getOptionNum)
+//                .collect(Collectors.toList());
+//    }
 }

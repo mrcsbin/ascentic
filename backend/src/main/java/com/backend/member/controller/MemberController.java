@@ -1,17 +1,15 @@
 package com.backend.member.controller;
 
-import com.backend.member.dto.FindDataDto;
-import com.backend.member.dto.JwtTokenDto;
-import com.backend.member.dto.LoginDto;
-import com.backend.member.dto.SignupDto;
+import com.backend.member.dto.*;
 import com.backend.member.entity.Member;
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.service.MemberServiceImpl;
-import com.backend.member.dto.MemberInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/member")
@@ -131,4 +129,6 @@ public class MemberController {
         System.out.println("모르곘다");
         return memberInfo;
     }
+
+
 }

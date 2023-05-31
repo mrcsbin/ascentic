@@ -47,6 +47,8 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewScore(postReviewDto.getReviewScore())
                 .orderProduct(orderProductRepository.findById(postReviewDto.getOrderProductNum()).get())
                 .build());
+        orderProduct.setOrderReviewState(true);
+        orderProductRepository.save(orderProduct);
     }
 
     /**
@@ -69,7 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .orderDate(orderDate)
                     .orderProductQuantity(review.getOrderProduct().getProdCount())
                     .orderProductPrice(review.getOrderProduct().getProductOption().getProdPrice())
-                    .orderProductReviewState(review.getOrderProduct().getOrderState())
+                    .orderProductReviewState(review.getOrderProduct().isOrderReviewState())
                     .orderProductNum(review.getOrderProduct().getOrderProdNum())
                     .build());
         }
@@ -81,5 +83,11 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(Integer prodNum) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         reviewRepository.deleteByProdNumAndMemberId(prodNum, currentMemberId);
+    }
+
+    public Boolean reviewAble(String orderState) {
+        if (orderState == "배송완료")
+            return true;
+        else return false;
     }
 }

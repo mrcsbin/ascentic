@@ -7,7 +7,7 @@ import { getCookie } from "../../utils/Cookies";
 import { useEffect } from "react";
 
 // 주문자 정보
-const OrderInfo = () => {
+const OrderInfo = ({ isOrderFormComplete, onChange, onSaveAndNext }) => {
   const accessToken = getCookie("accessToken");
 
   const dispatch = useDispatch();
@@ -50,11 +50,12 @@ const OrderInfo = () => {
   const saveAndNext = (e) => {
     e.preventDefault();
 
-    if (checkValues.check1 && checkValues.check2) {
+    if (isOrderFormComplete) {
       handleSaveExtendChange("delivery");
       alert("저장되었습니다");
+      onSaveAndNext();
     } else {
-      alert("모두 동의가 필요합니다.");
+      alert("모든 칸을 입력바랍니다.");
     }
   };
 
@@ -70,9 +71,24 @@ const OrderInfo = () => {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    // 모든 필수 입력값 확인 함수
+    const checkFormCompletion = () => {
+      const isEmailFilled = orderInformation.email.trim() !== "";
+      const isNameFilled = orderInformation.name.trim() !== "";
+      const isTelFilled = orderInformation.tel.trim() !== "";
+      const areCheckValuesAllTrue = Object.values(checkValues).every(
+        (value) => value === true
+      );
+      const isComplete =
+        isEmailFilled && isNameFilled && isTelFilled && areCheckValuesAllTrue;
+      onChange(isComplete); // isOrderFormComplete 값을 업데이트
+    };
 
+    checkFormCompletion();
+  }, [checkValues, orderInformation, onChange]);
   return (
-    <OrderForm>
+    <OrderForm disabled={!isOrderFormComplete}>
       <EmailContent>
         <div>이메일</div>
         <input
@@ -99,6 +115,18 @@ const OrderInfo = () => {
           <option value="hanmail.net">hanmail.net</option>
           <option value="nate.com">nate.com</option>
           <option value="yahoo.com">yahoo.com</option>
+          {orderInformation.domain &&
+            ![
+              "naver.com",
+              "gmail.com",
+              "hanmail.net",
+              "nate.com",
+              "yahoo.com",
+            ].includes(orderInformation.domain) && (
+              <option value={orderInformation.domain} selected>
+                직접입력
+              </option>
+            )}
         </select>
       </EmailContent>
       <NameContent>
@@ -149,7 +177,9 @@ const OrderInfo = () => {
           (필수) 이용약관 동의 자세히 보기
         </div>
       </OrderAgree>
-      <button onClick={saveAndNext}>저장하고 다음 단계로</button>
+      <button onClick={saveAndNext} disabled={!isOrderFormComplete}>
+        저장하고 다음 단계로
+      </button>
     </OrderForm>
   );
 };
@@ -166,10 +196,13 @@ const OrderForm = styled.div`
   > button {
     margin-left: 60px;
     color: white;
-    background-color: black;
+    background-color: ${(props) => (props.disabled ? "gray" : "black")};
     width: 455px;
     height: 50px;
     font-size: 18px;
+    opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+    pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   }
 `;
 

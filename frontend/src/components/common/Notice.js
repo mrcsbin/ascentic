@@ -48,7 +48,7 @@ function Notice() {
 
   // "/admin" 산하의 페이지에는 Notice 컴포넌트를 렌더링하지 않음
   if (location.pathname.startsWith("/admin")) return null;
-
+  if (location.pathname.startsWith("/NotFound")) return null;
   return (
     <div
       className={`notice-bar ${showNotice ? "" : "hidden"}`}

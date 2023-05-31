@@ -5,7 +5,7 @@ import ImageResize from "@looop/quill-image-resize-module-react";
 import axios from "axios";
 import { ko } from "date-fns/esm/locale";
 import { storage } from "../../../utils/firebaseConfig";
-import "./QuillEditor.css";
+import "../../styles/QuillEditor.css";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";

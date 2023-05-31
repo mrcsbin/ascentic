@@ -509,67 +509,65 @@ const TasteTest5 = ({ taste, handleData, setActiveComp }) => {
       <div className="testimgBtnbox">
         <button
           className={
-            taste.tasteTest5 === 1 ? "testimgBtn-active" : "testimgBtn"
+            taste.tasteTest5 === 1 ? "testimgBtn2-active" : "testimgBtn2"
           }
           value={1}
           name="tasteTest5"
           onClick={handleData}
         >
-          <div className="testBtnimg">
+          <div className="testBtnimgmini">
             <img src={water5} alt="" />
           </div>
           물내음
         </button>
         <button
           className={
-            taste.tasteTest5 === 2 ? "testimgBtn-active" : "testimgBtn"
+            taste.tasteTest5 === 2 ? "testimgBtn2-active" : "testimgBtn2"
           }
           value={2}
           name="tasteTest5"
           onClick={handleData}
         >
-          <div className="testBtnimg">
+          <div className="testBtnimgmini">
             <img src={grass5} alt="" />
           </div>
           풀
         </button>
         <button
           className={
-            taste.tasteTest5 === 3 ? "testimgBtn-active" : "testimgBtn"
+            taste.tasteTest5 === 3 ? "testimgBtn2-active" : "testimgBtn2"
           }
           value={3}
           name="tasteTest5"
           onClick={handleData}
         >
-          <div className="testBtnimg">
+          <div className="testBtnimgmini">
             <img src={cinnamon5} alt="" />
           </div>
           시나몬
         </button>
-      </div>
-      <div className="testimgBtnbox">
         <button
           className={
-            taste.tasteTest5 === 4 ? "testimgBtn-active" : "testimgBtn"
+            taste.tasteTest5 === 4 ? "testimgBtn2-active" : "testimgBtn2"
           }
           value={4}
           name="tasteTest5"
           onClick={handleData}
         >
-          <div className="testBtnimg">
+          <div className="testBtnimgmini">
             <img src={fruit5} alt="" />
           </div>
           과일
         </button>
         <button
           className={
-            taste.tasteTest5 === 5 ? "testimgBtn-active" : "testimgBtn"
+            taste.tasteTest5 === 5 ? "testimgBtn2-active" : "testimgBtn2"
           }
           value={5}
           name="tasteTest5"
           onClick={handleData}
         >
-          <div className="testBtnimg">
+          <div className="testBtnimgmini">
             <img src={manskin5} alt="" />
           </div>
           남자스킨향

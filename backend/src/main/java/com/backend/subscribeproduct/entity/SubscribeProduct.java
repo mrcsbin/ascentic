@@ -22,12 +22,26 @@ public class SubscribeProduct {
     private Scent scentName;
 
     @Column(name = "sp_price")
-    private String sbProdPrice;
+    private Integer sbProdPrice;
 
     @Column(name = "sp_intro")
     private String sbProdIntro;
 
+    @Column(name = "sp_image")
+    private String sbProdImage;
+
+    @Column(name = "sp_stock")
+    private Integer sbProdStock;
+
     // 돌아가면 삭제
 //    @OneToMany(mappedBy = "subscribeProduct")
 //    private List<SubscribeSend> subscribeSends;
+
+    public void updateSbProduct(Scent scentName, Integer sbProdPrice, String sbProdIntro, String sbProdImage, Integer sbProdStock){
+        this.scentName = scentName;
+        this.sbProdPrice = sbProdPrice;
+        this.sbProdIntro = sbProdIntro;
+        this.sbProdImage = sbProdImage;
+        this.sbProdStock = sbProdStock;
+    }
 }

@@ -1,10 +1,8 @@
 package com.backend.cart.controller;
 
-import com.backend.cart.dto.AddCartDto;
-import com.backend.cart.service.CartServiceImpl;
-import com.backend.cart.dto.GetCartDto;
-import com.backend.cart.entity.Cart;
-import com.backend.productoption.entity.ProductOption;
+import com.backend.cart.dto.CartRequest;
+import com.backend.cart.dto.CartResponse;
+import com.backend.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,20 +13,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final CartServiceImpl cartServiceImpl;
+    private final CartService cartService;
 
     @GetMapping("/get")
-    public List<GetCartDto> getCart() {
-        return cartServiceImpl.getCart();
+    public List<CartResponse.GetCartDto> getCartList() {
+        return cartService.getCart();
     }
 
     @PostMapping("/add")
-    public void addCart(@RequestBody AddCartDto cartAddDto) {
-        cartServiceImpl.addCart(cartAddDto);
+    public void addCart(@RequestBody CartRequest.AddCartDto cartAddDto) {
+        cartService.addCart(cartAddDto);
     }
 
     @DeleteMapping("/del/{cartNum}")
     public void deleteCart(@PathVariable Integer cartNum) {
-        cartServiceImpl.deleteCart(cartNum);
+        cartService.deleteCart(cartNum);
+    }
+
+    @PostMapping("/update")
+    public void updateCart(@RequestBody CartRequest.UpdateCartDto updateCartDto) {
+        cartService.updateCart(updateCartDto);
     }
 }

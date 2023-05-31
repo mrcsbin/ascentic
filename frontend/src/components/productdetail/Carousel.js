@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TEST_IMAGE from "../../assets/correct.png";
 import RIGHT_ARROW from "../../assets/productdetail/right-arrow.png";
 import LEFT_ARROW from "../../assets/productdetail/left-arrow.png";
 import axios from "axios";
 import Loading from "../common/Loading";
 import { Link } from "react-router-dom";
-
-// const items = [
-//   { id: 1, name: "Item 1" },
-//   { id: 2, name: "Item 2" },
-//   { id: 3, name: "Item 3" },
-//   { id: 4, name: "Item 4" },
-//   { id: 5, name: "Item 5" },
-//   { id: 6, name: "Item 6" },
-//   { id: 7, name: "Item 7" },
-// ];
 
 const Carousel = ({ prodNum, category, navigate }) => {
   const [loading, setLoading] = useState(true);
@@ -166,7 +155,7 @@ const CarouselContainer = styled.div`
 `;
 
 const CarouselItem = styled.div`
-  flex: 0 0 calc(33.3333%);
+  flex: 0 0 calc(33.333%);
   height: 500px;
   padding: 5%;
   box-sizing: border-box;
@@ -186,6 +175,10 @@ const PrevButton = styled.img`
 
 const CarouselImage = styled.img`
   width: 100%;
+  transition: border-bottom 0.3s ease-in-out;
+  :hover {
+    border-bottom: 5px solid black;
+  }
 `;
 
 const CarouselName = styled.div`

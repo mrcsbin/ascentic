@@ -13,11 +13,13 @@ public class OptionDto {
     private String prodOption;
     private Integer prodPrice;
     private Integer prodStock;
+    private String optionState;
 
     public static OptionDto of(ProductOption productOption) {
         return new OptionDto(productOption.getOptionNum(),
                 productOption.getProdOption(),
                 productOption.getProdPrice(),
-                productOption.getProdStock());
+                productOption.getProdStock(),
+                productOption.getOptionState());
     }
 }

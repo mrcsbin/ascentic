@@ -5,6 +5,7 @@ import com.backend.productoption.entity.ProductOption;
 import com.backend.scent.entity.Scent;
 import com.backend.wish.entity.Wish;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -55,6 +56,10 @@ public class Product {
     @Column(name = "prod_wish_count")
     private Integer prodWishCount; // Service에서 구현 필요(addWish: +1, delWish: -1)
 
+    @Setter
+    @Column(name = "prod_state")
+    private String prodState; //  판매중, 판매종료, 품절
+
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<ProductOption> productOption = new ArrayList<>();
 
@@ -70,13 +75,13 @@ public class Product {
                 .collect(Collectors.toList());
     }
 
-    public String getProdOption(Integer index) {
-        return productOption.get(index).getProdOption();
-    }
+//    public String getProdOption(Integer index) {
+//        return productOption.get(index).getProdOption();
+//    }
 
-    public Integer getProdOptionNum(Integer index) {
-        return productOption.get(index).getOptionNum();
-    }
+//    public Integer getProdOptionNum(Integer index) {
+//        return productOption.get(index).getOptionNum();
+//    }
 
     public Integer getWishCount(Integer prodNum) {
         int count = 0;
@@ -97,9 +102,27 @@ public class Product {
         return false;
     }
 
-    public List<Integer> getOptionNums() {
-        return productOption.stream()
-                .map(ProductOption::getOptionNum)
+//    public List<String> getProdOptionList() {
+//        return productOption.stream()
+//                .map(ProductOption::getProdOption)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public List<Integer> getOptionNum() {
+//        return productOption.stream()
+//                .map(ProductOption::getOptionNum)
+//                .collect(Collectors.toList());
+//    }
+
+    public List<String> getImageSaveNameList() {
+        return productImages.stream()
+                .map(ProductImage::getProdSaveName)
                 .collect(Collectors.toList());
     }
+
+//    public List<Integer> getOptionNums() {
+//        return productOption.stream()
+//                .map(ProductOption::getOptionNum)
+//                .collect(Collectors.toList());
+//    }
 }

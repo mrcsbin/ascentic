@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "tb_card")
 @Entity
+@Table(name="tb_card")
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,8 +15,10 @@ import styled from "styled-components";
 
 // 구매 과정 페이지
 const Order = () => {
+  const nav = useNavigate();
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
+
   // 상품정보 (서버에 전송할 데이터)
   const location = useLocation();
   const cartItems = location.state.cartItems;

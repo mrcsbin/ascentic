@@ -80,7 +80,7 @@ export const WishList = () => {
       <ContentHeader>좋아요</ContentHeader>
       <WishItemsContents>
         {wishList.length === 0 ? (
-          <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
+          <IsNotItem>좋아요 목록이 없습니다.</IsNotItem>
         ) : (
           wishList.map((item, index) => <WishItems item={item} key={index} />)
         )}
@@ -105,7 +105,6 @@ const WishItemsContents = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 `;
 
 const WishItemCard = styled.div`

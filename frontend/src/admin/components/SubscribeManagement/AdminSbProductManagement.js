@@ -9,13 +9,15 @@ const SbProductManagement = () => {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
   const [updateMode, setUpdateMode] = useState("");
   const [sortOption, setSortOption] = useState("latest");
+  const [rerender, setRerender] = useState("");
   const openModal = () => {
-    setUpdateMode(0);
+    setShowModal(true);
   };
   const closeModal = () => {
-    setUpdateMode("");
+    setShowModal(false);
   };
 
   const Categories = [
@@ -97,7 +99,7 @@ const SbProductManagement = () => {
     };
     fetchProducts();
     setCurrentPage(1);
-  }, [category, updateMode]);
+  }, [category, updateMode, rerender]);
 
   // 대기 중일 때
   if (loading) {
@@ -180,9 +182,10 @@ const SbProductManagement = () => {
         </>
       )}
       <SbProductAddModal
-        open={updateMode === 0}
+        open={showModal}
         close={closeModal}
         Categories={Categories}
+        setRerender={setRerender}
       />
     </>
   );

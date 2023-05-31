@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 
-const SbProductUpdateBox = ({ sbproduct, Categories }) => {
+const SbProductUpdateBox = ({ sbproduct, Categories, setUpdateMode }) => {
   const [sbProductDTO, setSbProductDTO] = useState({
     scentName: sbproduct.scentName.scentName,
     sbProdPrice: sbproduct.sbProdPrice,
@@ -60,7 +60,7 @@ const SbProductUpdateBox = ({ sbproduct, Categories }) => {
       .then(() => {
         alert("수정이 완료되었습니다.");
         //   window.location.replace("/admin/subscribemanagement");
-        // setUpdateMode("");
+        setUpdateMode("");
       })
       .catch((e) => {
         console.error(e);
@@ -165,8 +165,20 @@ const SbProductUpdateBox = ({ sbproduct, Categories }) => {
         </div>
       </InlineContent>
       <Buttonbox>
-        <button onClick={() => updateSbProduct()}>수정완료</button>
-        <button>수정취소</button>
+        <button
+          disabled={
+            (sbProductDTO.scentName === "") |
+            (sbProductDTO.sbProdPrice === "") |
+            (sbProductDTO.sbProdIntro === "") |
+            (sbProductDTO.sbProdStock === "")
+              ? true
+              : false
+          }
+          onClick={() => updateSbProduct()}
+        >
+          수정완료
+        </button>
+        <button onClick={() => setUpdateMode("")}>수정취소</button>
       </Buttonbox>
     </SbProdBox>
   );
@@ -188,6 +200,12 @@ const InlineContent = styled.div`
     padding: 2px 2px;
     width: 80px;
     text-align: right;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 `;
 const InputImg = styled.input`
@@ -236,6 +254,15 @@ const Buttonbox = styled.div`
     color: white;
     border: 0;
     cursor: pointer;
+  }
+  button:nth-child(1):disabled {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 5px 15px;
+    background-color: gray;
+    color: white;
+    border: 0;
+    cursor: default;
   }
 `;
 

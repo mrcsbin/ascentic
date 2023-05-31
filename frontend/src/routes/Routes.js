@@ -102,6 +102,12 @@ function Routes() {
         path="/exp/subsmanage"
         element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
       ></Route>
+
+      <Route
+        path="/exp/subsmanage/:success"
+        element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
+      ></Route>
+
       <Route path="/community/event" element={<Pages.Event />}></Route>
 
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />

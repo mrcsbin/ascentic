@@ -56,7 +56,7 @@ const HeaderV2 = () => {
 
       if (
         location.pathname.startsWith("/exp/taste/res") |
-        location.pathname.startsWith("/exp/subsmanage/")
+        location.pathname.startsWith("/exp/subsmanage")
       ) {
         setIsDarkMode(false);
       }

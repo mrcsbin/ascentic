@@ -30,8 +30,6 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public void insetOrderProduct(OrderProductDto orderProductDTO) {
-
-
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Order order = orderRepository.findById(orderProductDTO.getOrderNum()).orElse(null);
         ProductOption productOption = productOptionRepository.findById(orderProductDTO.getOptionNum()).orElse(null);
@@ -41,6 +39,7 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .prodCount(orderProductDTO.getProdCount())
                 .orderState(orderProductDTO.getOrderState())
                 .memberId(currentMemberId)
+                .orderReview(false)
                 .build();
         cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
         orderProductRepository.save(orderProduct);

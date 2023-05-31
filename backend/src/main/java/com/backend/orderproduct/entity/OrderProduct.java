@@ -35,4 +35,7 @@ public class OrderProduct {
 
     @Column(name = "member_id")
     private String memberId;
+
+    @Column(name = "order_review")
+    private boolean orderReview;
 }

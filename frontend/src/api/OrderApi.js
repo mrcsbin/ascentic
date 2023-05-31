@@ -34,11 +34,11 @@ export const requestOrder = async (accessToken, requestData, products) => {
           });
 
         // ProdOrder 생성하기
-        const orderProd = products.map((item, index) => ({
+        const orderProd = products.map((item) => ({
           orderId: data.orderId,
           orderNum: data.orderNum,
-          optionNum: item.prodOptionNum,
-          prodCount: item.prodCount,
+          optionNum: item.productOptionNum,
+          prodCount: item.productCount,
           orderState: "결제대기중",
         }));
 

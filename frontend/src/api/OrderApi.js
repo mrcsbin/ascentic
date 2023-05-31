@@ -29,6 +29,7 @@ export const requestOrder = async (accessToken, requestData, products) => {
             successUrl: data.successUrl,
             failUrl: data.failUrl,
           })
+
           .then((res) => {
             console.log(res.data);
           });
@@ -55,8 +56,10 @@ export const requestOrder = async (accessToken, requestData, products) => {
           )
         );
       });
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    if (e.code === "USER_CANCEL") {
+      alert("사용자가 결제를 취소하였습니다!");
+    }
   }
 };
 

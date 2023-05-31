@@ -1,16 +1,12 @@
 package com.backend.member.service;
 
+import com.backend.member.dto.*;
 import com.backend.messageandmail.controller.MailController;
-import com.backend.member.dto.FindDataDto;
-import com.backend.member.dto.JwtTokenDto;
-import com.backend.member.dto.LoginDto;
-import com.backend.member.dto.SignupDto;
 import com.backend.member.entity.Member;
 import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
-import com.backend.member.dto.MemberInfoDto;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -142,9 +139,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberInfoDto getMemberInfo() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
         Member findMember = memberRepository.findById(currentMemberId)
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
         String[] emailParts = findMember.getEmail().split("@");
+
         return MemberInfoDto.builder()
                 .email(emailParts[0])
                 .domain(emailParts[1])
@@ -254,4 +253,6 @@ public class MemberServiceImpl implements MemberService {
                 .build();
         memberRepository.save(member6);
     }
+
+
 }

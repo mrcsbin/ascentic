@@ -1,13 +1,18 @@
 package com.backend.product.dto;
 
+import com.backend.product.entity.Product;
 import com.backend.productoption.entity.ProductOption;
+import com.backend.review.entity.Review;
 import com.backend.reviewcomment.entity.ReviewComment;
 import com.backend.scent.entity.Scent;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductResponse {
 

@@ -1,28 +1,26 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
-import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.OptionDto;
-import com.backend.product.repository.ProductRepository;
 import com.backend.product.entity.Product;
+import com.backend.product.repository.ProductRepository;
+import com.backend.productimage.repository.ProductImageRepository;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
-import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
-import com.backend.productimage.entity.ProductImage;
-import com.backend.productimage.repository.ProductImageRepository;
 import com.backend.scent.repository.ScentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

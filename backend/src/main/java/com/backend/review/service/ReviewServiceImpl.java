@@ -47,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .reviewScore(postReviewDto.getReviewScore())
                 .orderProduct(orderProductRepository.findById(postReviewDto.getOrderProductNum()).get())
                 .build());
-        orderProduct.setOrderReview(true);
+        orderProduct.setOrderReviewState(true);
         orderProductRepository.save(orderProduct);
     }
 
@@ -71,7 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
                     .orderDate(orderDate)
                     .orderProductQuantity(review.getOrderProduct().getProdCount())
                     .orderProductPrice(review.getOrderProduct().getProductOption().getProdPrice())
-                    .orderProductReviewState(reviewAble(review.getOrderProduct().getOrderState()))
+                    .orderProductReviewState(review.getOrderProduct().isOrderReviewState())
                     .orderProductNum(review.getOrderProduct().getOrderProdNum())
                     .build());
         }

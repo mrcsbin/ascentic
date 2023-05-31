@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/ProdDetail.css";
 import { getCookie } from "../../utils/Cookies";
@@ -15,15 +14,25 @@ import { addCart } from "../../api/CartApi";
 function ProdDetailView({ productData }) {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [prodOption, setProdOption] = useState(productData.prodOption[0]);
-  const [prodPrice, setProdPrice] = useState(productData.prodPrice[0]);
-  const [prodOptionNum, setProdOptionNum] = useState(
-    productData.prodOptionNum[0]
-  );
+  const [prodOption, setProdOption] = useState("");
+  const [prodPrice, setProdPrice] = useState(0);
+  const [prodOptionNum, setProdOptionNum] = useState(0);
   const [isWish, setIsWish] = useState(productData.wish);
-
   const [ProdInfoModal, setProdInfoModal] = useState(false);
   const [deliInfoModal, setDeliInfoModal] = useState(false);
+
+  useEffect(() => {
+    // 판매중인 상품을 초기값으로 set
+    const saleOption = productData.prodOptions.find(
+      (option) => option.optionState === "판매중"
+    );
+
+    if (saleOption) {
+      setProdOption(saleOption.prodOption);
+      setProdPrice(saleOption.prodPrice);
+      setProdOptionNum(saleOption.prodOptionNum);
+    }
+  }, [productData.prodOptions]);
 
   function QuantButton(x) {
     if (x === "+") setQuantity(quantity + 1);
@@ -63,19 +72,27 @@ function ProdDetailView({ productData }) {
 
   const OptionCard = ({ options, index }) => {
     return (
-      <OptionButton
-        isSelected={options === prodOption}
-        className={
-          prodOption === options ? "prodOptionBtn-active" : "prodOptionBtn"
-        }
-        onClick={() => {
-          setProdOption(options);
-          setProdPrice(productData.prodPrice[index]);
-          setProdOptionNum(productData.prodOptionNum[index]);
-        }}
-      >
-        {options}
-      </OptionButton>
+      <>
+        {productData.prodOptions[index].optionState === "판매중" ? (
+          <OptionButton
+            isSelected={options === prodOption}
+            className={
+              prodOption === options ? "prodOptionBtn-active" : "prodOptionBtn"
+            }
+            onClick={() => {
+              setProdOption(options);
+              setProdPrice(productData.prodOptions[index].prodPrice);
+              setProdOptionNum(productData.prodOptions[index].prodOptionNum);
+            }}
+          >
+            {options}
+          </OptionButton>
+        ) : (
+          <SoldOutButton className="prodOptionSoldOutBtn">
+            {options} 품절
+          </SoldOutButton>
+        )}
+      </>
     );
   };
 
@@ -127,7 +144,7 @@ function ProdDetailView({ productData }) {
               </ProduceInfo>
               <ScentBox className="scent-content">
                 <ScentName className="scentname">
-                  {productData.scent.scentNoteName} |{" "}
+                  {productData.scent.scentNoteName} |&nbsp;
                   {productData.scent.scentName}
                 </ScentName>
                 <ScentInfo className="scentinfo">
@@ -137,11 +154,17 @@ function ProdDetailView({ productData }) {
               <OptionWrapper className="optionwrapper">
                 <p>옵션</p>
                 <OptionBox className="optionbox">
-                  {productData.prodOption.map((options, index) => {
-                    return (
-                      <OptionCard options={options} key={index} index={index} />
-                    );
-                  })}
+                  {Object.keys(productData.prodOptions).map(
+                    (options, index) => {
+                      return (
+                        <OptionCard
+                          options={productData.prodOptions[options].prodOption}
+                          key={index}
+                          index={index}
+                        />
+                      );
+                    }
+                  )}
                 </OptionBox>
               </OptionWrapper>
               <QuantityWrapper className="detail-quantity">
@@ -449,6 +472,23 @@ const OptionButton = styled.button`
   border: 1.5px solid black;
   background-color: ${(props) => (props.isSelected ? "black" : "white")};
   cursor: pointer;
+`;
+
+const SoldOutButton = styled.button`
+  cursor: none;
+  display: block;
+  width: 40%;
+  height: 40px;
+  margin: 0;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: "Pretendard";
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  border: 1.5px solid black;
+  background-color: rgb(192, 190, 190);
 `;
 
 const QuantityWrapper = styled.div`

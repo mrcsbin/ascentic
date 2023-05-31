@@ -18,16 +18,10 @@ const Order = () => {
   const nav = useNavigate();
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
-  const [cartItems, setCartItems] = useState();
+
   // 상품정보 (서버에 전송할 데이터)
   const location = useLocation();
-  useEffect(() => {
-    if (location.state.cartItems === null) {
-      nav("/NotFound");
-    } else {
-      setCartItems(location.state.cartItems);
-    }
-  }, []);
+  const cartItems = location.state.cartItems;
   const handleOrderFormCompleteChange = (value) => {
     setIsOrderFormComplete(value);
   };

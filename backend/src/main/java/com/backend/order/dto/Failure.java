@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name="tb_failure")
 public class Failure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

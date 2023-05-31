@@ -64,53 +64,20 @@ function Routes() {
       <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
       <Route path="/order" element={<Pages.Order />}></Route>
-
-      <Route
-        path="/ordercomplete/:orderId"
-        element={<Pages.OrderComplete />}
-      ></Route>
-      <Route path="/proddetail" element={<Pages.ProdDetail />}></Route>
-      <Route exact path="/storemain/" element={<Pages.StoreMain />}></Route>
-      <Route
-        exact
-        path="/storemain/:category"
-        element={<Pages.StoreMain />}
-      ></Route>
-
+      <Route path="/ordercomplete" element={<Pages.OrderComplete />} />
+      <Route path="/proddetail" element={<Pages.ProdDetail />} />
       <Route
         path="/store/productdetail/:prod_num"
         element={<Pages.ProdDetail />}
-      ></Route>
-
-      <Route path="/exp" element={<Pages.ExpMain></Pages.ExpMain>}></Route>
-
-      <Route
-        path="/exp/taste"
-        element={<Pages.ExpTaste></Pages.ExpTaste>}
-      ></Route>
-      <Route
-        path="/exp/taste/res"
-        element={<Pages.TestResult></Pages.TestResult>}
-      ></Route>
-      <Route path="/exp/subs" element={<Pages.ExpSubs></Pages.ExpSubs>}></Route>
-
-      <Route
-        path="/exp/subs/:code/:message"
-        element={<Pages.ExpSubs></Pages.ExpSubs>}
-      ></Route>
-
-      <Route
-        path="/exp/subsmanage"
-        element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
-      ></Route>
-
-      <Route
-        path="/exp/subsmanage/:success"
-        element={<Pages.ExpSubsManage></Pages.ExpSubsManage>}
-      ></Route>
-
-      <Route path="/community/event" element={<Pages.Event />}></Route>
-
+      />
+      <Route exact path="/storemain/" element={<Pages.StoreMain />} />
+      <Route exact path="/storemain/:category" element={<Pages.StoreMain />} />
+      <Route path="/exp" element={<Pages.ExpMain />} />
+      <Route path="/exp/taste" element={<Pages.ExpTaste></Pages.ExpTaste>} />
+      <Route path="/exp/taste/res" element={<Pages.TestResult />} />
+      <Route path="/exp/subs" element={<Pages.ExpSubs />} />
+      <Route path="/exp/subsmanage" element={<Pages.ExpSubsManage />} />
+      <Route path="/community/event" element={<Pages.Event />} />
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />
 
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}

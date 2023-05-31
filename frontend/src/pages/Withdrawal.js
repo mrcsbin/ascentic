@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ASCENTIC_LOGO from "../assets/mainImage.svg";
+import ASCENTIC_LOGO from "../assets/mainwide.jpg";
 
 const Withdrawal = () => {
   return (
@@ -18,7 +18,8 @@ const Withdrawal = () => {
 
 export default Withdrawal;
 
-const Wrap = styled.div``;
+const Wrap = styled.div`
+`;
 
 const Header = styled.div``;
 

@@ -187,4 +187,10 @@ values  (1, 0, 'perfume0.jpg', '2023-05-04 00:00:00', 'perfume0.jpg', 1),
         (186, 1, 'body_wash2.jpg', '2023-05-04 00:00:00', 'body_wash2', 62),
         (187, 0, 'fabric_perfume0.jpg', '2023-05-04 00:00:00', 'fabric_perfume0', 63),
         (188, 1, 'fabric_perfume1.jpg', '2023-05-04 00:00:00', 'fabric_perfume1', 63),
-        (189, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 63);
+        (189, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 63),
+        (190, 0, 'fabric_perfume0.jpg', '2023-05-04 00:00:00', 'fabric_perfume0', 64),
+        (191, 1, 'fabric_perfume1.jpg', '2023-05-04 00:00:00', 'fabric_perfume1', 64),
+        (192, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 64),
+        (193, 0, 'fabric_perfume0.jpg', '2023-05-04 00:00:00', 'fabric_perfume0', 65),
+        (194, 1, 'fabric_perfume1.jpg', '2023-05-04 00:00:00', 'fabric_perfume1', 65),
+        (195, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 65);

@@ -25,7 +25,7 @@ public class Inquiry {
     @Column(name = "inquiry_title")
     private String inquiryTitle;
 
-    @Column(name = "inquiry_content")
+    @Column(name = "inquiry_content", columnDefinition = "TEXT")
     private String inquiryContent;
 
     @CreationTimestamp
@@ -35,7 +35,7 @@ public class Inquiry {
     @Column(name = "inquiry_category")
     private String inquiryCategory;
 
-    @Column(name = "inquiry_comment")
+    @Column(name = "inquiry_comment", columnDefinition = "TEXT")
     private String inquiryComment;
 
     @Column(name = "inquiry_state")

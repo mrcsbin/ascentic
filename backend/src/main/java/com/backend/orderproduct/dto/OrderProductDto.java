@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderProductDto {
-    private Integer orderId;
+    private String orderId;
+    private Integer orderNum;
     private Integer optionNum;
     private Integer prodCount;
-    private boolean orderState;
+    private String orderState;
+
+
 }

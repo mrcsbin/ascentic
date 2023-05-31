@@ -2,7 +2,7 @@ import axios from "axios";
 
 const CART_API_URL = "http://localhost:8080/cart";
 
-export const getCartItemList = async (accessToken) => {
+export const getCartList = async (accessToken) => {
   const response = await axios.get(`${CART_API_URL}/get`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -11,28 +11,25 @@ export const getCartItemList = async (accessToken) => {
   return response.data;
 };
 
-export const addCart = async (accessToken) => {
-  const response = await axios.post(`${CART_API_URL}/add`, {
+export const addCart = async (accessToken, cartData) => {
+  await axios.post(`${CART_API_URL}/add`, cartData, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  return response.data;
 };
 
-export const removeCart = async (cartNum, accessToken) => {
-  const response = await axios.delete(`${CART_API_URL}/del/${cartNum}`, {
+export const removeCart = async (accessToken, cartNum) => {
+  await axios.delete(`${CART_API_URL}/del/${cartNum}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  return response.data;
 };
 
-export const updateCart = async (cartNum, prodCount) => {
-  const response = await axios.post(`${CART_API_URL}/update`, {
+export const updateCart = async (cartNum, productCount) => {
+  await axios.post(`${CART_API_URL}/update`, {
     cartNum,
-    prodCount,
+    productCount,
   });
-  return response.data;
 };

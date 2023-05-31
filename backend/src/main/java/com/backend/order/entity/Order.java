@@ -24,6 +24,9 @@ public class Order {
     @Column(name = "member_id")
     private String memberId;
 
+    @Column(name="order_id")
+    private String orderId;
+
     @Column(name = "order_email", nullable = false)
     private String orderEmail;
 
@@ -65,8 +68,10 @@ public class Order {
 
     @Column(name = "ship_charge")
     private Integer shipCharge;
-
     @CreationTimestamp
     @Column(name = "orderDate", nullable = false)
     private LocalDateTime orderDate;
+
+    @Column(name = "tossPaymentKey")
+    private String tossPaymentKey;
 }

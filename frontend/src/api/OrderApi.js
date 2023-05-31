@@ -1,41 +1,65 @@
 import axios from "axios";
+import { useEffect, useState, useNavigate } from "react";
 
 const ORDER_API_URL = "http://localhost:8080";
 
 // 주문 요청
 export const requestOrder = async (accessToken, requestData, products) => {
   try {
-    const response = await axios.post("/finishorder", requestData, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    });
-    const orderNum = response.data;
-    console.log(products);
+    await axios
+      .post("/finishorder", requestData, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      })
 
-    const orderProd = products.map((item) => ({
-      orderId: orderNum,
-      optionNum: item.prodOptionNum,
-      prodCount: item.prodCount,
-      orderState: false,
-    }));
+      // 토스페이먼츠
+      .then(async (res) => {
+        const data = res.data;
+        const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+        const tossPayments = window.TossPayments(clientKey);
 
-    // 여러개의 요청을 동시에
-    await Promise.all(
-      orderProd.map((prod) =>
-        axios
-          .post("/finishorderprod", prod, {
-            headers: {
-              Authorization: "Bearer " + accessToken,
-            },
+        tossPayments
+          .requestPayment("card", {
+            orderId: data.orderId,
+            orderName: data.orderName,
+            customerName: data.customerName,
+            amount: data.amount,
+            customerEmail: data.order_email,
+            successUrl: data.successUrl,
+            failUrl: data.failUrl,
           })
-          .then((res) => res.data)
-      )
-    );
 
-    return orderNum;
-  } catch (error) {
-    console.error(error);
+          .then((res) => {
+            console.log(res.data);
+          });
+
+        // ProdOrder 생성하기
+        const orderProd = products.map((item) => ({
+          orderId: data.orderId,
+          orderNum: data.orderNum,
+          optionNum: item.productOptionNum,
+          prodCount: item.productCount,
+          orderState: "결제대기중",
+        }));
+
+        // // 여러개의 요청을 동시에 (각각의 상품들을)
+        await Promise.all(
+          orderProd.map((prod) =>
+            axios
+              .post("/finishorderprod", prod, {
+                headers: {
+                  Authorization: "Bearer " + accessToken,
+                },
+              })
+              .then((res) => res.data)
+          )
+        );
+      });
+  } catch (e) {
+    if (e.code === "USER_CANCEL") {
+      alert("사용자가 결제를 취소하였습니다!");
+    }
   }
 };
 

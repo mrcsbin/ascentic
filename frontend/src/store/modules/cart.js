@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCartItemList, removeCart, updateCart } from "../../api/CartApi";
+import { getCartList, removeCart, updateCart } from "../../api/CartApi";
 import { getCookie } from "../../utils/Cookies";
 
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async () => {
-    const res = await getCartItemList(getCookie("accessToken"));
+    const res = await getCartList(getCookie("accessToken"));
     return res;
   }
 );
@@ -13,16 +13,14 @@ export const fetchCartItems = createAsyncThunk(
 export const removeCartItem = createAsyncThunk(
   "cart/removeCartItem",
   async (cartNum, thunkAPI) => {
-    const res = await removeCart(cartNum, getCookie("accessToken"));
-    return res;
+    await removeCart(getCookie("accessToken"), cartNum);
   }
 );
 
 export const updateCartItem = createAsyncThunk(
   "cart/updateCartItem",
-  async ({ cartNum, prodCount }, thunkAPI) => {
-    const res = await updateCart(cartNum, prodCount);
-    return res;
+  async ({ cartNum, productCount }, thunkAPI) => {
+    await updateCart(cartNum, productCount);
   }
 );
 
@@ -40,14 +38,14 @@ const cartSlice = createSlice({
       const { cartNum } = action.payload;
       const cartItem = state.cartItem.find((item) => item.cartNum === cartNum);
       if (cartItem) {
-        cartItem.prodCount--;
+        cartItem.productCount--;
       }
     },
     increaseCount(state, action) {
       const { cartNum } = action.payload;
       const cartItem = state.cartItem.find((item) => item.cartNum === cartNum);
       if (cartItem) {
-        cartItem.prodCount++;
+        cartItem.productCount++;
       }
     },
     toggleCheckItem(state, action) {

@@ -6,7 +6,7 @@ import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import { useLocation } from "react-router-dom";
 import ExtendAble from "../../components/order/ExtendAble";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { extendChange } from "../../store/modules/order";
@@ -15,7 +15,6 @@ import styled from "styled-components";
 
 // 구매 과정 페이지
 const Order = () => {
-  const nav = useNavigate();
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
 

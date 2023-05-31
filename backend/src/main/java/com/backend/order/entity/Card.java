@@ -1,4 +1,4 @@
-package com.backend.order.dto;
+package com.backend.order.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "tb_card")
 @Entity
 @Table(name="tb_card")
 public class Card {

@@ -87,7 +87,7 @@ function OrderComplete() {
                 입니다.
               </div>
             </div>
-            <table>
+            <table className="table">
               <tr>
                 <td>상품 정보</td>
                 <td>배송지 정보</td>

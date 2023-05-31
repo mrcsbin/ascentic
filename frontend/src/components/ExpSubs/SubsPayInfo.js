@@ -53,7 +53,7 @@ const SubsPayInfo = (props) => {
     memberTel: shipInfo.shipTel, // 구독자 연락처
     mainAddress: shipInfo.mainAddress, // 배송지 주소
     subAddress: shipInfo.subAddress, // 배송지 상세주소
-    shipMessage: shipInfo.shipMessage, // 배송 메시지
+    shippingMessage: shipInfo.shipMessage, // 배송 메시지
     paymentMethod: paymentMethod, // 정기결제정보
     monthPaymentDate: getDay(), // 매달 결제일
     price: 29900, // 가격

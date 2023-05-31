@@ -1,7 +1,5 @@
 package com.backend.order.entity;
 
-import com.backend.order.dto.Card;
-import com.backend.order.dto.Failure;
 import jakarta.persistence.Column;
 import lombok.*;
 import jakarta.persistence.*;

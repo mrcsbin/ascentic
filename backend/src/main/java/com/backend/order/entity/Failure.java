@@ -1,4 +1,4 @@
-package com.backend.order.dto;
+package com.backend.order.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,7 +8,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name="tb_failure")
+
+
+@Table(name = "tb_failure")
+@Entity
+
 public class Failure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

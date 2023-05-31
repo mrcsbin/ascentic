@@ -9,6 +9,8 @@ import uptri from "../../assets/up_triangle.svg";
 import styled from "styled-components";
 import Carousel from "./Carousel";
 import ProductReview from "./ProductReview";
+import { setWish } from "../../api/WishApi";
+import { addCart } from "../../api/CartApi";
 
 function ProdDetailView({ productData }) {
   const navigate = useNavigate();
@@ -28,28 +30,21 @@ function ProdDetailView({ productData }) {
     else if (quantity > 1) setQuantity(quantity - 1);
   }
 
-  const handleCartClick = () => {
-    const dataForCart = {
-      optionName: prodOption,
-      prodCount: quantity,
-      optionNum: prodOptionNum,
+  const handleCartClick = async () => {
+    const cartData = {
+      productOptionName: prodOption,
+      productCount: quantity,
+      productOptionNum: prodOptionNum,
     };
 
     if (getCookie("accessToken")) {
-      axios
-        .post("http://localhost:8080/cart/add", dataForCart, {
-          headers: {
-            Authorization: "Bearer " + getCookie("accessToken"),
-          },
-        })
-        .then(() => {
-          if (
-            window.confirm("카트에 상품이 담겼습니다. 카트로 이동하시겠습니까?")
-          ) {
-            navigate(`/cart`, { state: dataForCart });
-          }
-        })
-        .catch((error) => {});
+      await addCart(getCookie("accessToken"), cartData).then(() => {
+        if (
+          window.confirm("카트에 상품이 담겼습니다. 카트로 이동하시겠습니까?")
+        ) {
+          navigate(`/cart`, { state: cartData });
+        }
+      });
     } else {
       alert("로그인이 필요합니다.");
       navigate("/login");
@@ -58,22 +53,9 @@ function ProdDetailView({ productData }) {
 
   const handleWishClick = () => {
     if (getCookie("accessToken")) {
-      axios
-        .post(
-          `http://localhost:8080/wish/set`,
-          { prodNum: productData.prodNum },
-          {
-            headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
-            },
-          }
-        )
-        .then(() => {
-          setIsWish(!isWish);
-        })
-        .catch((e) => {
-          console.error(e);
-        });
+      setWish(getCookie("accessToken"), productData.prodNum).then(() => {
+        setIsWish(!isWish);
+      });
     } else {
       alert("로그인이 필요합니다.");
     }

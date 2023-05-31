@@ -1,17 +1,17 @@
 package com.backend.cart.service;
 
-import com.backend.cart.dto.AddCartDto;
-import com.backend.cart.dto.GetCartDto;
-import com.backend.cart.entity.Cart;
-import com.backend.productoption.entity.ProductOption;
+import com.backend.cart.dto.CartRequest;
+import com.backend.cart.dto.CartResponse;
 
 import java.util.List;
 
 public interface CartService {
 
-    List<GetCartDto> getCart();
+    List<CartResponse.GetCartDto> getCart();
 
-    void addCart(AddCartDto cartAddDto);
+    void addCart(CartRequest.AddCartDto cartAddDto);
 
     void deleteCart(Integer cartNum);
+
+    void updateCart(CartRequest.UpdateCartDto updateCartDto);
 }

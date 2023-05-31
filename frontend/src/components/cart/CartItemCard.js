@@ -9,7 +9,7 @@ import {
 } from "../../store/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
 
-function CountButton({ cartNum, prodCount }) {
+function CountButton({ cartNum, productCount }) {
   const dispatch = useDispatch();
 
   return (
@@ -17,15 +17,15 @@ function CountButton({ cartNum, prodCount }) {
       <MinusButton
         onClick={async () => {
           dispatch(decreaseCount({ cartNum }));
-          dispatch(updateCartItem({ cartNum, prodCount: prodCount - 1 }));
+          dispatch(updateCartItem({ cartNum, productCount: productCount - 1 }));
         }}
-        disabled={prodCount === 1}
+        disabled={productCount === 1}
       ></MinusButton>
-      <NumCount>{prodCount}</NumCount>
+      <NumCount>{productCount}</NumCount>
       <PlusButton
         onClick={async () => {
           dispatch(increaseCount({ cartNum }));
-          dispatch(updateCartItem({ cartNum, prodCount: prodCount + 1 }));
+          dispatch(updateCartItem({ cartNum, productCount: productCount + 1 }));
         }}
       ></PlusButton>
     </CountButtonBox>
@@ -38,7 +38,7 @@ export const CartItemCard = ({ item }) => {
   const cartItem = cartItems.find(
     (cartItem) => cartItem.cartNum === item.cartNum
   );
-  const prodCount = cartItem?.prodCount;
+  const productCount = cartItem?.productCount;
 
   const isChecked = useSelector((state) =>
     state.cart.checkedItems.includes(item.cartNum)
@@ -61,18 +61,18 @@ export const CartItemCard = ({ item }) => {
         checked={isChecked}
         onChange={handleToggleCheck}
       />
-      <ItemImageLink href={`store/productdetail/${item.prodNum}`}>
+      <ItemImageLink href={`store/productdetail/${item.productNum}`}>
         <ItemImage
-          src={`http://localhost:8080/images/${item.prodImage}`}
+          src={`http://localhost:8080/images/${item.productImage}`}
           alt="상품 이미지"
         />
       </ItemImageLink>
-      <ItemLink href={`store/productdetail/${item.prodNum}`}>
-        <ItemTitle>{item.prodName}</ItemTitle>
-        <ItemOption>{item.prodOption}</ItemOption>
+      <ItemLink href={`store/productdetail/${item.productNum}`}>
+        <ItemTitle>{item.productName}</ItemTitle>
+        <ItemOption>{item.productOptionName}</ItemOption>
       </ItemLink>
-      <CountButton prodCount={prodCount} cartNum={item.cartNum} />
-      <ItemPrice>{prodCount * item.prodPrice}</ItemPrice>
+      <CountButton productCount={productCount} cartNum={item.cartNum} />
+      <ItemPrice>{productCount * item.productPrice}</ItemPrice>
       <DeleteButton onClick={handleDeleteClick} />
     </ItemCard>
   );

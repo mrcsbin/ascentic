@@ -32,7 +32,7 @@ const CartHeader = styled.h1`
 
 const CartContainer = styled.div`
   box-sizing: border-box;
-  margin 0 auto;
+  margin: 0 auto;
   width: 1000px;
   max-width: 100%;
   min-height: 1px;

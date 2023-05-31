@@ -8,8 +8,15 @@ import lombok.Getter;
 public class CartRequest {
 
     @Getter
+    public static class AddCartDto {
+        private Integer productCount;
+        private String productOptionName;
+        private Integer productOptionNum;
+    }
+
+    @Getter
     public static class UpdateCartDto {
         private Integer cartNum;
-        private Integer prodCount;
+        private Integer productCount;
     }
 }

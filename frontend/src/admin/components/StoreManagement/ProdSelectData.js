@@ -51,3 +51,5 @@ export const categories = [
   "바디워시",
   "섬유향수",
 ];
+
+export const prodState = ["판매중", "판매종료", "품절"];

@@ -11,7 +11,9 @@ public interface ProductService {
 
     Product ProdDetail(Integer prod_num);
 
-    List<ProductResponse.ProductListDto> getListByCategory(String ScentName);
+    ProductResponse.ProductDetailDto getProductDetail(Integer prodNum);
+
+    List<ProductResponse.ProductListDto> getListByCategory(String scentName);
 
     List<AdminProductListDto> getAdminProdList(String scent);
 

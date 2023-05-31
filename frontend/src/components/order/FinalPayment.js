@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { requestOrder } from "../../api/OrderApi";
 import { getCookie } from "../../utils/Cookies";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 // 최종 결제금액
 const FinalPayment = ({
@@ -50,17 +49,15 @@ const FinalPayment = ({
 
   // 상품들의 총금액 구하기
   const prodSumPrice = products.reduce((acc, cur) => {
-    return acc + cur.prodPrice * cur.prodCount;
+    return acc + cur.productPrice * cur.productCount;
   }, 0);
 
   const [shippingFee, setShippingFee] = useState(
     prodSumPrice > 30000 ? 0 : 2500
   );
 
-  const prodNames = products.map((product) => product.prodName);
+  const prodNames = products.map((product) => product.productName);
   const prodNamesString = prodNames.join(" ,");
-
-  const nav = useNavigate();
 
   // order 요청 데이터
   const requestData = {
@@ -82,8 +79,6 @@ const FinalPayment = ({
     discount: 0, //할인 금액
     prodNames: prodNamesString,
   };
-  console.log("requestData");
-  console.log(requestData);
 
   // requestData.orderPriceSum
   // requestData.shipCharge

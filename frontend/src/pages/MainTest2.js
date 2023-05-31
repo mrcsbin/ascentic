@@ -10,23 +10,23 @@ function MainTest() {
   const images = [SPRING, SUMMER, AUTUMN, WINTER];
   const captions = [
     {
+      name: "spring",
       text: "냥냥쓰",
-      position: "top-left",
       buttonText: "더 보기",
     },
     {
+      name: "summer",
       text: "Summer Caption",
-      position: "bottom-right",
       buttonText: "Summer Button",
     },
     {
+      name: "autumn",
       text: "Autumn Caption",
-      position: "top-right",
       buttonText: "Autumn Button",
     },
     {
+      name: "winter",
       text: "Winter Caption",
-      position: "bottom-left",
       buttonText: "Winter Button",
     },
   ];
@@ -55,7 +55,7 @@ function MainTest() {
       {images.map((image, index) => (
         <ImageContainer key={index} isActive={currentImage === index}>
           <Image src={image} alt="이미지" />
-          <CaptionBox position={captions[index].position}>
+          <CaptionBox name={captions[index].name}>
             <Caption>{captions[index].text}</Caption>
             <Button>{captions[index].buttonText}</Button>
           </CaptionBox>
@@ -75,10 +75,8 @@ const Wrap = styled.div`
 const ImageContainer = styled.div`
   margin-top: 108px;
   position: fixed;
-  /* top: 0; */
   width: 100%;
   height: auto;
-  /* display: ${(props) => (props.isActive ? "block" : "none")}; */
   opacity: ${(props) => (props.isActive ? 1 : 0)};
   transition: opacity 0.5s ease;
 `;
@@ -92,25 +90,27 @@ const Image = styled.img`
 const CaptionBox = styled.p`
   position: absolute;
   /* ${(props) => {
-    switch (props.position) {
-      case "top-left":
+    switch (props.name) {
+      case "spring":
         return "top: 20px; left: 20px;";
-      case "top-right":
-        return "top: 20px; right: 20px;";
-      case "bottom-right":
+      case "summer":
+        return "top: 20%; right: 10%;";
+      case "autumn":
         return "bottom: 20px; right: 20px;";
-      case "bottom-left":
+      case "winter":
         return "bottom: 20px; left: 20px;";
       default:
         return "top: 20px; left: 20px;";
     }
   }} */
+  width: 100%;
+  height: 40%;
   bottom: 30%;
-  left: 50%;
-  transform: translateX(-50%);
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
   font-size: 18px;
   font-weight: bold;
-  color: white;
+  color: black;
   text-align: center;
   white-space: pre-line;
 `;

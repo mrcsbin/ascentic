@@ -1,10 +1,10 @@
 package com.backend.product.controller;
 
+import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
-import com.backend.product.dto.ProductResponse;
-import com.backend.product.service.ProductServiceImpl;
 import com.backend.product.entity.Product;
+import com.backend.product.service.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,4 +46,15 @@ public class ProductController {
         return productServiceImpl.updateAdminProd(adminProdUpdateInfoDto);
     }
 
+    @GetMapping("/search")
+    public List<ProductResponse.ProductSearchDto> getSearchList(String searchData) {
+        return productServiceImpl.getSearchList(searchData);
+    }
+
+    @GetMapping("/recommend/{productNum}")
+    public List<ProductResponse.RecommendProductDto> getRecommendList(@PathVariable Integer productNum, @RequestParam String category) {
+        System.out.println("productNum = " + productNum);
+        System.out.println("category = " + category);
+        return productServiceImpl.getRecommendList(category, productNum);
+    }
 }

@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
-import { categories, scentNames } from "./ProdSelectData";
-import { Last } from "react-bootstrap/esm/PageItem";
+import { categories, prodState, scentNames } from "./ProdSelectData";
 
 const ProdAdd = () => {
   const [productInfo, setProductInfo] = useState({
     prodName: "",
+    prodState: "판매중",
     scentName: "Ambergris",
     prodCategory: "향수",
     prodInfo: "",
@@ -24,7 +24,7 @@ const ProdAdd = () => {
       ...prevProductInfo,
       options: [
         ...prevProductInfo.options,
-        { prodOption: "", prodPrice: "", prodStock: "" },
+        { prodOption: "", prodPrice: "", prodStock: "", optionState: "판매중" },
       ],
     }));
   };
@@ -208,6 +208,19 @@ const ProdAdd = () => {
               onChange={(e) => handleChange(e, "prodInfo")}
             ></ProdInfoInput>
           </BigOneInputContainer>
+          <OneInputContainer>
+            <Label>상태</Label>
+            <SelectInput
+              value={productInfo.prodState}
+              onChange={(e) => handleChange(e, "prodState")}
+            >
+              {prodState.map((state, index) => (
+                <option key={index} value={state}>
+                  {state}
+                </option>
+              ))}
+            </SelectInput>
+          </OneInputContainer>
           <ThumbnailContainer>
             <Label>대표사진</Label>
             <ThumInput
@@ -230,6 +243,8 @@ const ProdAdd = () => {
             <OptionInfoLabel>옵션명</OptionInfoLabel>
             <OptionInfoLabel>가격</OptionInfoLabel>
             <OptionInfoLabel>재고</OptionInfoLabel>
+            <OptionInfoLabel>상태</OptionInfoLabel>
+            <DelLabel>삭제</DelLabel>
           </OneInputContainer>
           {productInfo.options.map((option, index) => (
             <div key={index}>
@@ -257,6 +272,20 @@ const ProdAdd = () => {
                     onChange={(e) => handleOptionChange(e, index, "prodStock")}
                   />
                   개
+                </OneOptionInput>
+                <OneOptionInput>
+                  <OptionStateSelect
+                    value={option.optionState}
+                    onChange={(e) =>
+                      handleOptionChange(e, index, "optionState")
+                    }
+                  >
+                    {prodState.map((state, index) => (
+                      <option key={index} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </OptionStateSelect>
                 </OneOptionInput>
                 <OptionDelBtn onClick={() => handleDeleteOption(index)}>
                   -
@@ -328,8 +357,8 @@ const OneInputContainer = styled.div`
 `;
 
 const Label = styled.div`
-  width: 15%;
-  font-size: 20px;
+  width: 12%;
+  font-size: 16px;
   font-weight: 600;
 `;
 
@@ -365,21 +394,31 @@ const OptionOneInputContainer = styled.div`
 `;
 
 const OptionInfoLabel = styled.div`
-  width: 33.3%;
+  width: 20%;
+`;
+
+const DelLabel = styled.div`
+  width: 8%;
 `;
 
 const OneOptionInput = styled.div`
-  width: 33.3%;
+  width: 20%;
 `;
 
 const InputOption = styled.input`
-  width: 50%;
+  width: 70%;
+  height: 30px;
+  border: 1px solid;
+`;
+
+const OptionStateSelect = styled.select`
+  width: 70%;
   height: 30px;
   border: 1px solid;
 `;
 
 const OptionDelBtn = styled.button`
-  margin-left: 10px;
+  margin-left: 0.7%;
   font-size: 20px;
   background-color: white;
   color: red;

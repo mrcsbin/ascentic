@@ -47,5 +47,4 @@ public class Review {
     @JsonManagedReference
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ReviewComment> comments;
-
 }

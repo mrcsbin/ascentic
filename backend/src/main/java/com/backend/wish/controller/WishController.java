@@ -1,9 +1,7 @@
 package com.backend.wish.controller;
 
-import com.backend.wish.dto.WishDto;
-import com.backend.wish.dto.WishListDto;
-import com.backend.wish.service.WishServiceImpl;
-import com.backend.wish.entity.Wish;
+import com.backend.wish.dto.WishResponse;
+import com.backend.wish.service.WishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,36 +12,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WishController {
 
-    private final WishServiceImpl wishServiceImpl;
+    private final WishService wishService;
 
     @PostMapping("/set")
-    public void setWish(@RequestBody WishDto wishDto) {
-        wishServiceImpl.setWish(wishDto.getProdNum());
+    public void setWish(@RequestBody Integer productNum) {
+        wishService.setWish(productNum);
     }
 
     @GetMapping("/get")
-    public List<WishListDto> getWishList() {
-        return wishServiceImpl.getWishList();
+    public List<WishResponse.WishListDto> getWishList() {
+        return wishService.getWishList();
     }
-
-    @GetMapping("/iswish")
-    public boolean getIsWish(Integer prodNum) {
-        return wishServiceImpl.isWish(prodNum);
-    }
-
-//    @PostMapping("/addwish")
-//    public void addWish(@RequestBody WishDto wishDto) {
-//        this.wishServiceImpl.addWish(wishDto.getProdNum());
-//    }
-
-//    @PostMapping("/delwish")
-//    public void delWish(@RequestBody WishDto wishDto) {
-//        this.wishServiceImpl.delWish(wishDto.getProdNum());
-//    }
-
-//    @GetMapping("/iswish")
-//    public int isWish(Integer prodNum) {
-//        int res = this.wishServiceImpl.isWish(prodNum);
-//        return res;
-//    }
 }

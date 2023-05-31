@@ -65,11 +65,11 @@ export const CartContents = () => {
 
 // CartContentHeader
 const ContentHeaderWrap = styled.div`
-  box-sizing:border-box;
-  display:flex;
-  font-weight:600;
-  align-items:center;
-  justify-content-space-between;
+  box-sizing: border-box;
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: space-between;
   padding: 20px 10px 20px 0;
   border-bottom: 1.5px solid black;
 `;

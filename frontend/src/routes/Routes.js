@@ -36,6 +36,7 @@ function Routes() {
       <Route path="/" element={<Pages.Main />}></Route>
       <Route path="/test" element={<Pages.MainTest />}></Route>
       <Route path="/test2" element={<Pages.MainTest2 />}></Route>
+      <Route path="/test3" element={<Pages.MainTest3 />}></Route>
       <Route
         path="/login"
         element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}

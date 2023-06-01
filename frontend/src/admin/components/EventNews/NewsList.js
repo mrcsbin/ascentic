@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/NewsList.css";
+import styled from "styled-components";
 
 function NewsList(props) {
   const [posts, setPosts] = useState([]);
@@ -95,7 +96,10 @@ function NewsList(props) {
   return (
     <div className="news-list-wrapper">
       <div className="news-list">
-        <h1>[뉴스 관리]</h1>
+        <HeaderWrap>
+          <HeaderLeft>뉴스 관리</HeaderLeft>
+          <HeaderRight></HeaderRight>
+        </HeaderWrap>
         <div className="selected-status">
           <p>상태 보기 &nbsp;</p>
           <select value={selectedStatus} onChange={handleStatusChange}>
@@ -195,5 +199,26 @@ function NewsList(props) {
     </div>
   );
 }
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-bottom: 2px solid black;
+`;
+
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 600;
+`;
+
+const HeaderRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+`;
 
 export default NewsList;

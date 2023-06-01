@@ -201,11 +201,6 @@ function ProdDetailView({ productData }) {
             </SideBar>
           </RightContainer>
         </Container>
-        <ProductInfo
-          review={productData.reviewList}
-          productName={productData.prodName}
-          productCategory={productData.prodCategory}
-        />
         <RecommendBar>
           <RecommendTitle>추천 제품</RecommendTitle>
           <RecommendItemBox>
@@ -216,6 +211,12 @@ function ProdDetailView({ productData }) {
             />
           </RecommendItemBox>
         </RecommendBar>
+        <ProductInfo
+          review={productData.reviewList}
+          productName={productData.prodName}
+          productCategory={productData.prodCategory}
+        />
+
       </Wrap>
     </>
   );
@@ -279,6 +280,7 @@ const ProductImage = styled.img`
   width: 100%;
   object-fit: cover;
   object-position: center;
+  height: 700px;
 `;
 
 const RightContainer = styled.div`
@@ -595,13 +597,11 @@ const ModalContent = styled.div`
 const RecommendBar = styled.div`
   width: 70%;
   margin: 0 auto;
-  margin-top: 10%;
-  margin-bottom: 5%;
 `;
 
 const RecommendTitle = styled.div`
   /* padding-bottom: 5%; */
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 600;
   text-align: center;
 `;

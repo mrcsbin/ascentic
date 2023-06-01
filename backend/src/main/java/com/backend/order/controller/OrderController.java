@@ -54,6 +54,7 @@ public class OrderController {
         }
 
         Order orderRes = orderRepository.findByOrderId(orderId);
+        orderService.updatePaymentState(orderRes);
 
         SuccessOrderDto successreturn = (SuccessOrderDto.builder()
                 .orderName(orderRes.getOrderName()) //주문자
@@ -140,5 +141,5 @@ public class OrderController {
     public List<AdminOrderManageDto> getAdminOrderInfo(@RequestParam("orderState") String orderState) {
         return orderService.getAdminOrderInfo(orderState);
     }
-
+    
 }

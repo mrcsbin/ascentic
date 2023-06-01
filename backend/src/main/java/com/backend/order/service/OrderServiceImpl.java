@@ -166,6 +166,12 @@ public class OrderServiceImpl implements OrderService {
      return paymentFinalResRepository.findByOrderId(orderId);
     }
 
+    public void updatePaymentState(Order order) {
+        order.setOrderState("결제완료");
+        order.setOrderPaymentState(true);
+        orderRepository.save(order);
+    }
+
     @Override
     public List<AdminOrderManageDto> getAdminOrderInfo(String orderState) {
         List<Order> orders = orderState.equals("all") ? orderRepository.findAll() : orderRepository.findByOrderState(orderState);
@@ -174,4 +180,5 @@ public class OrderServiceImpl implements OrderService {
                 .map(AdminOrderManageDto::of)
                 .collect(Collectors.toList());
     }
+
 }

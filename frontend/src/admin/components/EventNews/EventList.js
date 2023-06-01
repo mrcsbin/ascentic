@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/EventList.css";
+import styled from "styled-components";
 
 function EventList(props) {
   const [posts, setPosts] = useState([]);
@@ -109,9 +110,52 @@ function EventList(props) {
   return (
     <div className="event-list-wrapper">
       <div className="event-list">
-        <h1>[이벤트 관리]</h1>
+        <HeaderWrap>
+          <HeaderLeft>이벤트 관리</HeaderLeft>
+          <HeaderRight></HeaderRight>
+        </HeaderWrap>
         <div className="selected-status">
           <p>상태 보기 &nbsp;</p>
+          {/* <OrderCategoryBox>
+          <button
+            className={category === "all" ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory("all")}
+          >
+            전체보기
+          </button>
+          <button
+            className={category === "결제완료" ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory("결제완료")}
+          >
+            결제완료
+          </button>
+          <button
+            className={category === "배송준비중" ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory("배송준비중")}
+          >
+            배송준비중
+          </button>
+          <button
+            className={category === "배송중" ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory("배송중")}
+          >
+            배송중
+          </button>
+          <button
+            className={category === "배송완료" ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory("배송완료")}
+          >
+            배송완료
+          </button>
+        </OrderCategoryBox>
+        <SortOptionBox>
+          <button
+            className={sortOption === "early" ? "active" : ""}
+            onClick={() => setSortOption("early")}
+          >
+            최근순
+          </button>
+        </SortOptionBox> */}
           <select value={selectedStatus} onChange={handleStatusChange}>
             <option value="all">모두 보기</option>
             <option value="0">저장 상태</option>
@@ -228,4 +272,60 @@ function EventList(props) {
   );
 }
 
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-bottom: 2px solid black;
+`;
+
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 600;
+`;
+
+const HeaderRight = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: end;
+`;
+// const OrderCategoryBox = styled.div`
+//   padding: 0 auto;
+//   margin-top: 10px;
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   button {
+//     margin: 10px;
+//     padding: 10px;
+//     font-size: 1.3rem;
+//     background-color: white;
+//     border: 0;
+//     cursor: pointer;
+//   }
+//   .activeCateBtn,
+//   .cateBtn:hover {
+//     font-weight: 600;
+//     border-bottom: 2px solid black;
+//   }
+// `;
+// const SortOptionBox = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: flex-end;
+//   button {
+//     background-color: white;
+//     border: 0;
+//     font-size: 1rem;
+//     font-weight: 500;
+//     margin: 10px 10px 20px 10px;
+//   }
+//   .active {
+//     color: red;
+//   }
+// `;
 export default EventList;

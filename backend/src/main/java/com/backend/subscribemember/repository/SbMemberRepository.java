@@ -3,9 +3,7 @@ package com.backend.subscribemember.repository;
 import com.backend.subscribemember.entity.SubscribeMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integer> {
@@ -22,4 +20,6 @@ public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integ
 //    List<Integer> getSbMemberNum(String memberId);
 
     Long countBySbEndDateIsNull();
+
+    List<SubscribeMember> findBySbPaymentDayAndSbEndDateIsNull(int currentDay);
 }

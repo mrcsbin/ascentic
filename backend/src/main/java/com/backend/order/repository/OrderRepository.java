@@ -15,4 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             , String memberId);
 
     List<Order> findByOrderState(String orderState);
+
+    List<Order> findAllByOrderByOrderNumDesc();
 }

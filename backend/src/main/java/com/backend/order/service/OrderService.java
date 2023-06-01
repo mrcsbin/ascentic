@@ -2,6 +2,7 @@ package com.backend.order.service;
 
 import com.backend.order.dto.*;
 import com.backend.order.dto.admin.AdminOrderManageDto;
+import com.backend.order.dto.admin.AdminOrderUpdateDto;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 
@@ -26,5 +27,5 @@ public interface OrderService {
 
     List<AdminOrderManageDto> getAdminOrderInfo(String orderState);
 
-    void updateOrder(AdminOrderManageDto adminOrderManageDto);
+    void updateOrder(AdminOrderUpdateDto adminOrderUpdateDto);
 }

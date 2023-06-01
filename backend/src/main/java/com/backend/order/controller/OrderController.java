@@ -3,6 +3,7 @@ package com.backend.order.controller;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
 import com.backend.order.dto.admin.AdminOrderManageDto;
+import com.backend.order.dto.admin.AdminOrderUpdateDto;
 import com.backend.order.entity.Card;
 import com.backend.order.entity.Failure;
 import com.backend.order.entity.Order;
@@ -94,7 +95,7 @@ public class OrderController {
         Order orderRes = orderService.findByOrderIdAndMemberId(orderId, currentMemberId);
         PaymentFinalRes finalRes = orderService.paymentFinalResFindByOrderId(orderId);
 
-        if (orderRes.getOrderId() ==  "0"){
+        if (orderRes.getOrderId() == "0") {
             return SuccessOrderDto.builder()
                     .orderId("0")
                     .build();
@@ -132,7 +133,7 @@ public class OrderController {
                                 .message(failureMessage)
                                 .build()
                 ) // 결제 실패 시
-        .build();
+                .build();
         System.out.println("============================================================오빠?오빠?차이써?");
         return successreturn;
     }
@@ -143,8 +144,8 @@ public class OrderController {
     }
 
     @PostMapping("/updateOrderInfo")
-    public void updateOrder(@RequestBody AdminOrderManageDto adminOrderManageDto) {
-        orderService.updateOrder(adminOrderManageDto);
+    public void updateOrder(@RequestBody AdminOrderUpdateDto AdminOrderUpdateDto) {
+        orderService.updateOrder(AdminOrderUpdateDto);
     }
 
 }

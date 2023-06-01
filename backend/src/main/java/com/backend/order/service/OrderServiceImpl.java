@@ -4,6 +4,7 @@ import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.order.dto.*;
 import com.backend.order.dto.admin.AdminOrderManageDto;
+import com.backend.order.dto.admin.AdminOrderUpdateDto;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
@@ -173,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<AdminOrderManageDto> getAdminOrderInfo(String orderState) {
-        List<Order> orders = orderState.equals("all") ? orderRepository.findAll() : orderRepository.findByOrderState(orderState);
+        List<Order> orders = orderState.equals("all") ? orderRepository.findAllByOrderByOrderNumDesc() : orderRepository.findByOrderState(orderState);
 
         return orders.stream()
                 .map(AdminOrderManageDto::of)
@@ -181,11 +182,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(AdminOrderManageDto adminOrderManageDto) {
-        Order order = orderRepository.findByOrderId(adminOrderManageDto.getOrderId());
-        order.updateOrder(adminOrderManageDto.getShipName(), adminOrderManageDto.getShipTel(),
-                adminOrderManageDto.getShipMainAddress(), adminOrderManageDto.getShipSubAddress(),
-                adminOrderManageDto.getShipMessage(), adminOrderManageDto.getShipCode());
+    public void updateOrder(AdminOrderUpdateDto adminOrderUpdateDto) {
+        Order order = orderRepository.findByOrderId(adminOrderUpdateDto.getOrderId());
+        order.updateOrder(adminOrderUpdateDto.getShipName(), adminOrderUpdateDto.getShipTel(),
+                adminOrderUpdateDto.getShipMainAddress(), adminOrderUpdateDto.getShipSubAddress(),
+                adminOrderUpdateDto.getShipMessage(), adminOrderUpdateDto.getShipCode(),
+                adminOrderUpdateDto.getOrderState());
 
         orderRepository.save(order);
 

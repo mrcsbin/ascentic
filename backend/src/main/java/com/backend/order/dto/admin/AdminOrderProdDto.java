@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class AdminOrderProdDto {
+    private Integer prodNum; // 상품번호
     private String prodName; // 상품명
     private String optionName; // 옵션명
     private Integer prodPrice; // 금액
@@ -14,7 +15,8 @@ public class AdminOrderProdDto {
     private String prodImgName; // 상품이미지
 
     public static AdminOrderProdDto of(OrderProduct orderProduct) {
-        return new AdminOrderProdDto(orderProduct.getProductOption().getProduct().getProdName(),
+        return new AdminOrderProdDto(orderProduct.getOrderProdNum(),
+                orderProduct.getProductOption().getProduct().getProdName(),
                 orderProduct.getProductOption().getProdOption(),
                 orderProduct.getProductOption().getProdPrice(),
                 orderProduct.getProdCount(),

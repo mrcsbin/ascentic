@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 public class AdminOrderManageDto {
     private String orderId; // 주문 id
     private String orderState; // 주문 상태
-    private LocalDateTime orderDate; // 주문일
+    private String orderDate; // 주문일
     private String orderPayment; // 결제수단
     private String orderPaymentInfo; // 결제 정보
 
@@ -37,10 +38,12 @@ public class AdminOrderManageDto {
     private List<AdminOrderProdDto> orderProdDtoList; // 상품 정보
 
     public static AdminOrderManageDto of(Order order) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         AdminOrderManageDto dto = AdminOrderManageDto.builder()
                 .orderId(order.getOrderId())
                 .orderState(order.getOrderState())
-                .orderDate(order.getOrderDate())
+                .orderDate(order.getOrderDate().format(formatter))
                 .orderPayment(order.getOrderPayment())
                 .orderPaymentInfo(order.getOrderPaymentInfo())
                 .memberId(order.getMemberId())

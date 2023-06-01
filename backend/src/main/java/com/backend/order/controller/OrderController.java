@@ -2,6 +2,7 @@ package com.backend.order.controller;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
+import com.backend.order.dto.admin.AdminOrderManageDto;
 import com.backend.order.entity.Card;
 import com.backend.order.entity.Failure;
 import com.backend.order.entity.Order;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -132,6 +134,11 @@ public class OrderController {
         .build();
         System.out.println("============================================================오빠?오빠?차이써?");
         return successreturn;
+    }
+
+    @GetMapping("/getAdminOrderInfo")
+    public List<AdminOrderManageDto> getAdminOrderInfo(@RequestParam("orderState") String orderState) {
+        return orderService.getAdminOrderInfo(orderState);
     }
 
 }

@@ -3,10 +3,12 @@ package com.backend.order.service;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.order.dto.*;
+import com.backend.order.dto.admin.AdminOrderManageDto;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
 import com.backend.order.repository.PaymentFinalResRepository;
+import com.backend.orderproduct.entity.OrderProduct;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -14,12 +16,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     public PaymentRes insertOrder(OrderDTO orderDTO) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
+        // order Id 만드는 과정
         LocalDate currentDate = LocalDate.now();
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String orderIdTemp = formattedDate + UUID.randomUUID().toString().substring(0, 6);
@@ -159,5 +164,14 @@ public class OrderServiceImpl implements OrderService {
 
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId){
      return paymentFinalResRepository.findByOrderId(orderId);
-    };
+    }
+
+    @Override
+    public List<AdminOrderManageDto> getAdminOrderInfo(String orderState) {
+        List<Order> orders = orderState.equals("all") ? orderRepository.findAll() : orderRepository.findByOrderState(orderState);
+
+        return orders.stream()
+                .map(AdminOrderManageDto::of)
+                .collect(Collectors.toList());
+    }
 }

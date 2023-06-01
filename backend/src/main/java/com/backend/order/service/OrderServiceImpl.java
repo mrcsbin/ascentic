@@ -181,4 +181,14 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void updateOrder(AdminOrderManageDto adminOrderManageDto) {
+        Order order = orderRepository.findByOrderId(adminOrderManageDto.getOrderId());
+        order.updateOrder(adminOrderManageDto.getShipName(), adminOrderManageDto.getShipTel(),
+                adminOrderManageDto.getShipMainAddress(), adminOrderManageDto.getShipSubAddress(),
+                adminOrderManageDto.getShipMessage(), adminOrderManageDto.getShipCode());
+
+        orderRepository.save(order);
+
+    }
 }

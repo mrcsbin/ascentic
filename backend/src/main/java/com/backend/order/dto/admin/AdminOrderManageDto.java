@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,8 @@ public class AdminOrderManageDto {
 
     private String shipName; // 배송인 이름
     private String shipTel; // 배송지 연락처
-    private String shipAddress; // 배송 주소
+    private String shipMainAddress; // 배송 주소
+    private String shipSubAddress; // 상세주소
     private String shipMessage; // 배송 메시지
     private Integer shipCharge; // 배송비
 
@@ -49,7 +49,8 @@ public class AdminOrderManageDto {
                 .orderTel(order.getOrderTel())
                 .shipName(order.getShipName())
                 .shipTel(order.getShipTel())
-                .shipAddress(order.getShipMainAddress() + order.getShipSubAddress())
+                .shipMainAddress(order.getShipMainAddress())
+                .shipSubAddress(order.getShipSubAddress())
                 .shipMessage(order.getShipMessage())
                 .shipCharge(order.getShipCharge())
                 .shipCode(order.getShipCode() == null ? "" : order.getShipCode())

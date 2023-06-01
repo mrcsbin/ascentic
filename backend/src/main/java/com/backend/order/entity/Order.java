@@ -83,4 +83,14 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> orderProducts = new ArrayList<>();
+
+    public void updateOrder(String shipName, String shipTel, String shipMainAddress,
+                       String shipSubAddress, String shipMessage, String shipCode) {
+        this.shipName = shipName;
+        this.shipTel = shipTel;
+        this.shipMainAddress = shipMainAddress;
+        this.shipSubAddress = shipSubAddress;
+        this.shipMessage = shipMessage;
+        this.shipCode = shipCode;
+    }
 }

@@ -141,5 +141,10 @@ public class OrderController {
     public List<AdminOrderManageDto> getAdminOrderInfo(@RequestParam("orderState") String orderState) {
         return orderService.getAdminOrderInfo(orderState);
     }
-    
+
+    @PostMapping("/updateOrderInfo")
+    public void updateOrder(@RequestBody AdminOrderManageDto adminOrderManageDto) {
+        orderService.updateOrder(adminOrderManageDto);
+    }
+
 }

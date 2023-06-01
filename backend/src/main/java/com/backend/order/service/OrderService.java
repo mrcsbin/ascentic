@@ -25,4 +25,6 @@ public interface OrderService {
     PaymentFinalRes paymentFinalResFindByOrderId(String orderId);
 
     List<AdminOrderManageDto> getAdminOrderInfo(String orderState);
+
+    void updateOrder(AdminOrderManageDto adminOrderManageDto);
 }

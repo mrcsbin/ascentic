@@ -167,8 +167,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void updatePaymentState(Order order) {
-        order.setOrderState("결제완료");
-        order.setOrderPaymentState(true);
+        order.updatePaymentState(order);
         orderRepository.save(order);
     }
 

@@ -84,6 +84,8 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
+    //  "관리자 order 정보 수정"
+    // 수령인 이름, 수령인 연락처, 주소, 배송메시지, 운송장 번호 등록  => 업데이트
     public void updateOrder(String shipName, String shipTel, String shipMainAddress,
                        String shipSubAddress, String shipMessage, String shipCode) {
         this.shipName = shipName;
@@ -92,5 +94,11 @@ public class Order {
         this.shipSubAddress = shipSubAddress;
         this.shipMessage = shipMessage;
         this.shipCode = shipCode;
+    }
+
+    // 결제완료시 주문상태 update
+    public void updatePaymentState(Order order) {
+        order.setOrderState("결제완료");
+        order.setOrderPaymentState(true);
     }
 }

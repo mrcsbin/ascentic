@@ -1,8 +1,24 @@
 import styled from "styled-components";
 import CHECK_IMAGE from "../../assets/productdetail/check.png";
 import StarRating from "./StarRating";
+import { setReviewCount } from "../../api/ReviewApi";
+import { getCookie } from "../../utils/Cookies";
+import { useNavigate } from "react-router-dom";
 
 const Review = ({ item }) => {
+  const navigate = useNavigate();
+  const clickHandle = async () => {
+    if (getCookie("accessToken")) {
+      await setReviewCount(getCookie("accessToken"), item.reviewNum);
+    } else {
+      if (
+        window.confirm("로그인 후 이용하실 수 있습니다.\n로그인 하시겠습니까?")
+      ) {
+        navigate("/login");
+      }
+    }
+  };
+
   return (
     <>
       <Wrapper>
@@ -17,8 +33,8 @@ const Review = ({ item }) => {
           <DownSide>
             <ReviewRecommend>
               <Title>이 리뷰가 도움이 되었나요?</Title>
-              <Good src={CHECK_IMAGE} />
-              <GoodCount>5</GoodCount>
+              <Good onClick={() => clickHandle()} src={CHECK_IMAGE} />
+              <GoodCount>{item.reviewGoodCount}</GoodCount>
             </ReviewRecommend>
             <ReviewId>작성자 : {item.memberId}</ReviewId>
           </DownSide>
@@ -92,6 +108,7 @@ const Title = styled.div`
 const Good = styled.img`
   width: 20px;
   padding: 0 10px 0 20px;
+  cursor: pointer;
 `;
 
 const GoodCount = styled.div`

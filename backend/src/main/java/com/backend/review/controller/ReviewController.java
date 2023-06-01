@@ -34,4 +34,9 @@ public class ReviewController {
     public void deleteReview(Integer prodNum) {
         reviewService.deleteReview(prodNum);
     }
+
+    @PostMapping("/count/set")
+    public void setReviewCount(@RequestBody Integer reviewNum) {
+        reviewService.setReviewCount(reviewNum);
+    }
 }

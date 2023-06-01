@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,7 +74,7 @@ public class ProductResponse {
             this.prodName = prodName;
             this.prodCategory = prodCategory;
             this.prodInfo = prodInfo;
-            this.prodImage =prodImage;
+            this.prodImage = prodImage;
             this.scent = scent;
             this.isWish = isWish;
             this.prodState = prodState;
@@ -82,7 +83,7 @@ public class ProductResponse {
 
         public static ProductDetailDto of(Product product,
                                           String memberId,
-                                          List<ProductResponse.ReviewDto> reviews){
+                                          List<ProductResponse.ReviewDto> reviews) {
             ProductDetailDto productDetailDto = new ProductDetailDto(product.getProdNum(),
                     product.getProdName(),
                     product.getProdCategory(),
@@ -155,7 +156,7 @@ public class ProductResponse {
         private Integer prodPrice;
         private String optionState;
 
-        public static OptionDetailDto of(ProductOption productOption){
+        public static OptionDetailDto of(ProductOption productOption) {
             return new OptionDetailDto(productOption.getOptionNum(),
                     productOption.getProdOption(),
                     productOption.getProdPrice(),
@@ -169,16 +170,23 @@ public class ProductResponse {
     public static class ReviewDto {
         private String memberId;
         private String reviewContent;
-        private LocalDateTime reviewDate;
+        private String reviewDate;
         private Integer reviewScore;
         private List<ReviewComment> reviewCommentList;
+        private Integer reviewNum;
+        private Integer reviewGoodCount;
 
         public static ReviewDto of(Review review) {
-            return  new ReviewDto(review.getMemberId(),
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy . MM . dd");
+            String formattedDate = review.getReviewDate().format(formatter);
+            return new ReviewDto(
+                    review.getMemberId(),
                     review.getReviewContent(),
-                    review.getReviewDate(),
+                    formattedDate,
                     review.getReviewScore(),
-                    review.getComments()
+                    review.getComments(),
+                    review.getReviewNum(),
+                    review.getReviewGoodCount()
             );
         }
     }

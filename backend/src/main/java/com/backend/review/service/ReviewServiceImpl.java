@@ -90,4 +90,14 @@ public class ReviewServiceImpl implements ReviewService {
             return true;
         else return false;
     }
+
+    public void setReviewCount(Integer reviewNum) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        Review review = reviewRepository.findById(reviewNum)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid reviewNum"));
+
+        review.setReviewCount(currentMemberId);
+        reviewRepository.save(review);
+    }
 }

@@ -1,11 +1,14 @@
 package com.backend.order.entity;
 
 import com.backend.member.entity.Member;
+import com.backend.orderproduct.entity.OrderProduct;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -74,4 +77,10 @@ public class Order {
 
     @Column(name = "tossPaymentKey")
     private String tossPaymentKey;
+
+    @Column(name = "ship_code")
+    private String shipCode;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderProduct> orderProducts = new ArrayList<>();
 }

@@ -11,6 +11,7 @@ import ProductInfo from "./ProductInfo";
 import { setWish } from "../../api/WishApi";
 import { addCart } from "../../api/CartApi";
 import { setReviewCount } from "../../api/ReviewApi";
+import TopButton from "../common/TopButton";
 
 function ProdDetailView({ productData }) {
   const navigate = useNavigate();
@@ -231,6 +232,7 @@ function ProdDetailView({ productData }) {
           handleReviewClick={handleReviewClick}
         />
       </Wrap>
+      <TopButton></TopButton>
     </>
   );
 }

@@ -11,7 +11,7 @@ function ProductInfo({
 }) {
   const contentRef = useRef();
   const [contentHeight, setContentHeight] = useState(0);
-  const [filter, setFilter] = useState("최신순");
+  const [filter, setFilter] = useState("인기순");
 
   const totalScore = review.reduce(
     (sum, review) => sum + review.reviewScore,

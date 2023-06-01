@@ -4,6 +4,7 @@ import com.backend.member.dto.CustomerKeyDto;
 import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
+import com.backend.payment.automation.AutomaticPayments;
 import com.backend.payment.dto.BillingKeyResponseDto;
 import com.backend.payment.dto.SubscribeCard;
 import com.backend.payment.entity.SubscribePayment;
@@ -41,6 +42,8 @@ public class SubscribePaymentController {
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
     private RestTemplate restTemplate = new RestTemplate();
 
+    private final AutomaticPayments automaticPayments;
+
 //    @GetMapping("/billingAuthSuccess2")
 //    public void handleSuccess2(@RequestParam("customerKey") String customerKey,
 //                                @RequestParam("authKey") String authKey) {
@@ -72,7 +75,7 @@ public class SubscribePaymentController {
 
         SubscribePayment subscribePayment = SubscribePayment.builder()
                 .customerKey(customerKey)
-                .memberID(currentMemberId)
+                .memberId(currentMemberId)
                 .build();
 
         System.out.println("76번째 줄++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -122,7 +125,7 @@ public class SubscribePaymentController {
 
         //subscribePayment 엔티티에 billingkey 저장
         SubscribePayment subscribePayment = subscribePaymentRepository.findByCustomerKey(customerKey);
-        String memberId =subscribePayment.getMemberID();
+        String memberId =subscribePayment.getMemberId();
         SubscribeMember subscribeMember = sbMemberRepository.getLastSbMemberByMemberId(memberId);
 
         Member member = memberRepository.findEmailById(memberId).get();
@@ -150,7 +153,7 @@ public class SubscribePaymentController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerKey", subscribePayment.getCustomerKey());
         jsonObject.put("orderId", subscribePayment.getOrderId());
-        jsonObject.put("memberID", subscribePayment.getMemberID());
+        jsonObject.put("memberID", subscribePayment.getMemberId());
         jsonObject.put("customerEmail", subscribePayment.getCustomerEmail());
         jsonObject.put("subscribeCard", subscribePayment.getSubscribeCard());
         jsonObject.put("amount", subscribePayment.getAmount());
@@ -209,6 +212,13 @@ public class SubscribePaymentController {
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
                 .headers(redirectHeaders)
                 .build();
+    }
+
+    @GetMapping("/automation")
+    public void automation() {
+
+    automaticPayments.processAutoPayment();
+
     }
 }
 

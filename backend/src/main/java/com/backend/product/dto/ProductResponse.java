@@ -1,5 +1,6 @@
 package com.backend.product.dto;
 
+import com.backend.member.jwt.SecurityUtils;
 import com.backend.product.entity.Product;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.review.entity.Review;
@@ -175,8 +176,10 @@ public class ProductResponse {
         private List<ReviewComment> reviewCommentList;
         private Integer reviewNum;
         private Integer reviewGoodCount;
+        private boolean reviewIsGood;
 
         public static ReviewDto of(Review review) {
+            String memberId = SecurityUtils.getCurrentMemberId().get();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy . MM . dd");
             String formattedDate = review.getReviewDate().format(formatter);
             return new ReviewDto(
@@ -186,7 +189,8 @@ public class ProductResponse {
                     review.getReviewScore(),
                     review.getComments(),
                     review.getReviewNum(),
-                    review.getReviewGoodCount()
+                    review.getReviewGoodCount(),
+                    review.isReviewGood(memberId)
             );
         }
     }

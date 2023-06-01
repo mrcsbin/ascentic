@@ -1,22 +1,21 @@
-import styled from "styled-components";
-import CHECK_IMAGE from "../../assets/productdetail/check.png";
+import styled, { css } from "styled-components";
+import IS_LIKE from "../../assets/productdetail/is-like.png";
+import IS_NOT_LIKE from "../../assets/productdetail/is-not-like.png";
 import StarRating from "./StarRating";
-import { setReviewCount } from "../../api/ReviewApi";
-import { getCookie } from "../../utils/Cookies";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const Review = ({ item }) => {
-  const navigate = useNavigate();
-  const clickHandle = async () => {
-    if (getCookie("accessToken")) {
-      await setReviewCount(getCookie("accessToken"), item.reviewNum);
+const Review = ({ item, handleReviewClick }) => {
+  const [isReviewGood, setIsReviewGood] = useState(item.reviewIsGood);
+  const [reviewGoodCount, setReviewGoodCount] = useState(item.reviewGoodCount);
+
+  const handleClick = () => {
+    if (isReviewGood) {
+      setReviewGoodCount(reviewGoodCount - 1);
     } else {
-      if (
-        window.confirm("로그인 후 이용하실 수 있습니다.\n로그인 하시겠습니까?")
-      ) {
-        navigate("/login");
-      }
+      setReviewGoodCount(reviewGoodCount + 1);
     }
+    setIsReviewGood(!isReviewGood);
+    handleReviewClick(item.reviewNum);
   };
 
   return (
@@ -33,8 +32,12 @@ const Review = ({ item }) => {
           <DownSide>
             <ReviewRecommend>
               <Title>이 리뷰가 도움이 되었나요?</Title>
-              <Good onClick={() => clickHandle()} src={CHECK_IMAGE} />
-              <GoodCount>{item.reviewGoodCount}</GoodCount>
+              <Good
+                onClick={() => handleClick()}
+                src={isReviewGood ? IS_LIKE : IS_NOT_LIKE}
+                isClicked={isReviewGood}
+              />
+              <GoodCount>{reviewGoodCount}</GoodCount>
             </ReviewRecommend>
             <ReviewId>작성자 : {item.memberId}</ReviewId>
           </DownSide>
@@ -107,7 +110,7 @@ const Title = styled.div`
 
 const Good = styled.img`
   width: 20px;
-  padding: 0 10px 0 20px;
+  padding: 0 5px 0 30px;
   cursor: pointer;
 `;
 

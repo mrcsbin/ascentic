@@ -71,5 +71,11 @@ public class Review {
         reviewGoodCount = reviewGoodMembers.size();
     }
 
-
+    public boolean isReviewGood(String memberId) {
+        if (reviewGoodMembers.contains(memberId)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

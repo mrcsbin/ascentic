@@ -3,15 +3,15 @@ import styled from "styled-components";
 import Review from "./Review";
 import StarRating from "./StarRating";
 
-function ProductInfo({ review, productName, productCategory }) {
+function ProductInfo({
+  review,
+  productName,
+  productCategory,
+  handleReviewClick,
+}) {
   const contentRef = useRef();
   const [contentHeight, setContentHeight] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState("최신순");
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
 
   const totalScore = review.reduce(
     (sum, review) => sum + review.reviewScore,
@@ -22,6 +22,38 @@ function ProductInfo({ review, productName, productCategory }) {
   useEffect(() => {
     setContentHeight(contentRef?.current?.clientHeight ?? 0);
   }, []);
+
+  const filteredReview = () => {
+    switch (filter) {
+      case "인기순":
+        return review.sort((a, b) => {
+          if (a.reviewGoodCount === b.reviewGoodCount) {
+            return new Date(b.reviewDate) - new Date(a.reviewDate);
+          }
+          return b.reviewGoodCount - a.reviewGoodCount;
+        });
+      case "최신순":
+        return review.sort(
+          (a, b) => new Date(b.reviewDate) - new Date(a.reviewDate)
+        );
+      case "별점 높은순":
+        return review.sort((a, b) => {
+          if (a.reviewScore === b.reviewScore) {
+            return new Date(b.reviewDate) - new Date(a.reviewDate);
+          }
+          return b.reviewScore - a.reviewScore;
+        });
+      case "별점 낮은순":
+        return review.sort((a, b) => {
+          if (a.reviewScore === b.reviewScore) {
+            return new Date(b.reviewDate) - new Date(a.reviewDate);
+          }
+          return a.reviewScore - b.reviewScore;
+        });
+      default:
+        return review;
+    }
+  };
 
   return (
     <Wrapper>
@@ -113,26 +145,18 @@ function ProductInfo({ review, productName, productCategory }) {
                     </Filter>
                   </RightBox>
                 </ReviewScoreBox>
-                {filter === "최신순" &&
-                  review
-                    .sort(
-                      (a, b) => new Date(b.reviewDate) - new Date(a.reviewDate)
-                    )
-                    .map((item, index) => <Review item={item} key={index} />)}
-                {filter === "별점 높은순" &&
-                  review
-                    .sort((a, b) => b.reviewScore - a.reviewScore)
-                    .map((item, index) => <Review item={item} key={index} />)}
-                {filter === "별점 낮은순" &&
-                  review
-                    .sort((a, b) => a.reviewScore - b.reviewScore)
-                    .map((item, index) => <Review item={item} key={index} />)}
+                {filteredReview().map((item) => (
+                  <Review
+                    handleReviewClick={() => handleReviewClick(item.reviewNum)}
+                    item={item}
+                    key={item.reviewNum}
+                  />
+                ))}
               </>
             )}
           </AccordionContent>
         </AccordionContentWrapper>
       </AccordionWrapper>
-
     </Wrapper>
   );
 }

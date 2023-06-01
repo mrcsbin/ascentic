@@ -10,6 +10,7 @@ import Carousel from "./Carousel";
 import ProductInfo from "./ProductInfo";
 import { setWish } from "../../api/WishApi";
 import { addCart } from "../../api/CartApi";
+import { setReviewCount } from "../../api/ReviewApi";
 
 function ProdDetailView({ productData }) {
   const navigate = useNavigate();
@@ -65,6 +66,18 @@ function ProdDetailView({ productData }) {
       });
     } else {
       alert("로그인이 필요합니다.");
+    }
+  };
+
+  const handleReviewClick = async (reviewNum) => {
+    if (getCookie("accessToken")) {
+      await setReviewCount(getCookie("accessToken"), reviewNum);
+    } else {
+      if (
+        window.confirm("로그인 후 이용하실 수 있습니다.\n로그인 하시겠습니까?")
+      ) {
+        navigate("/login");
+      }
     }
   };
 
@@ -215,8 +228,8 @@ function ProdDetailView({ productData }) {
           review={productData.reviewList}
           productName={productData.prodName}
           productCategory={productData.prodCategory}
+          handleReviewClick={handleReviewClick}
         />
-
       </Wrap>
     </>
   );

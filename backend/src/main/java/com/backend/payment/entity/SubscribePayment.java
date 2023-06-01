@@ -30,7 +30,7 @@ public class SubscribePayment {
     private String orderId;
 
     @Column
-    private String memberID; // 자동결제용
+    private String memberId; // 자동결제용
 
     @Column
     private String customerEmail;
@@ -52,11 +52,13 @@ public class SubscribePayment {
                 ", customerKey='" + customerKey + '\'' +
                 ", billingKey='" + billingKey + '\'' +
                 ", orderId='" + orderId + '\'' +
-                ", memberID='" + memberID + '\'' +
+                ", memberID='" + memberId + '\'' +
                 ", customerEmail='" + customerEmail + '\'' +
                 ", amount=" + amount +
                 ", authenticatedTime='" + authenticatedTime + '\'' +
                 ", subscribeCard=" + subscribeCard +
                 '}';
     }
+
+
 }

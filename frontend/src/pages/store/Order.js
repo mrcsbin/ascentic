@@ -17,6 +17,7 @@ import styled from "styled-components";
 const Order = () => {
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
+
   // 상품정보 (서버에 전송할 데이터)
   const location = useLocation();
   const cartItems = location.state.cartItems;

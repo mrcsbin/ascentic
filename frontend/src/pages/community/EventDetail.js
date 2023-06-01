@@ -26,6 +26,7 @@ const EventDetail = () => {
     <EventDetailWrap>
       postId : {postId}
       <div dangerouslySetInnerHTML={{ __html: data.postContent }} />
+      {/* dangerouslySetInnerHtml로 html에 직접 주입해야 이벤트 및 뉴스 글쓰기 에디터에서 적용한 서식들 적용됨 */}
     </EventDetailWrap>
   );
 };

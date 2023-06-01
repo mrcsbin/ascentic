@@ -47,9 +47,10 @@ const OrderList = ({ orders, currentPage, setCurrentPage }) => {
         <OrderDate>{order.orderDate}</OrderDate>
         <OrderName>{order.orderName}</OrderName>
         <OrderProd>
-          {order.orderProdDtoList.length === 1 ? (
-            order.orderProdDtoList[0].prodName
-          ) : (
+          {order.orderProdDtoList.length === 0 && ""}
+          {order.orderProdDtoList.length === 1 &&
+            order.orderProdDtoList[0].prodName}
+          {order.orderProdDtoList.length > 1 && (
             <>
               {order.orderProdDtoList[0].prodName} 외&nbsp;
               {order.orderProdDtoList.length - 1}건
@@ -72,7 +73,7 @@ const OrderList = ({ orders, currentPage, setCurrentPage }) => {
   return (
     <div>
       {orders.length === 0 ? (
-        <div>로딩중입니다.</div>
+        <OrderLoading>로딩중입니다.</OrderLoading>
       ) : (
         currentOrders.map((order, index) => (
           <OrderBox
@@ -124,7 +125,12 @@ const OrderList = ({ orders, currentPage, setCurrentPage }) => {
     </div>
   );
 };
-
+const OrderLoading = styled.div`
+  width: 100%;
+  margin-top: 40px;
+  font-size: 1.5rem;
+  text-align: center;
+`;
 const OrderItem = styled.div`
   height: 60px;
   font-size: 1rem;
@@ -140,15 +146,15 @@ const OrderItem = styled.div`
   }
 `;
 const OrderNum = styled.div`
-  width: 8%;
+  width: 12%;
   text-decoration: underline;
   cursor: pointer;
 `;
 const OrderDate = styled.div`
-  width: 10%;
+  width: 14%;
 `;
 const OrderName = styled.div`
-  width: 12%;
+  width: 8%;
 `;
 const OrderProd = styled.div`
   width: 13%;
@@ -157,14 +163,13 @@ const OrderPrice = styled.div`
   width: 8%;
 `;
 const OrderPay = styled.div`
-  width: 10%;
+  width: 6%;
 `;
 const OrderShipment = styled.div`
-  width: 12%;
+  width: 9%;
 `;
 const OrderStatus = styled.div`
-  display: flex;
-  width: 5%;
+  width: 8%;
 `;
 const EditBtn = styled.div`
   width: 5%;
@@ -182,7 +187,7 @@ const Pagination = styled.div`
   display: inline-block;
   width: 100%;
   height: 30px;
-  margin: 10px auto;
+  margin: 20px auto;
   text-align: center;
   align-items: center;
 `;

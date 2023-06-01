@@ -4,6 +4,7 @@ import axios from "axios";
 
 const OrderEditModal = ({ order, hadleCloseEditModal }) => {
   const [orderInfo, setOrderInfo] = useState({
+    orderId: order.orderId,
     orderState: order.orderState,
     shipName: order.shipName,
     shipTel: order.shipTel,
@@ -52,7 +53,6 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
       orderInfo.shipMainAddress,
       orderInfo.shipSubAddress,
       orderInfo.shipMessage,
-      orderInfo.shipCode,
     ].some((value) => value === "");
 
     if (isEmptyInfo) {
@@ -62,7 +62,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
 
     const updateProduct = async () => {
       try {
-        await axios.post(`http://localhost:8080/`, orderInfo);
+        await axios.post("http://localhost:8080/updateOrderInfo", orderInfo);
         alert("주문 정보가 수정되었습니다!");
         window.location.reload();
       } catch (e) {
@@ -73,6 +73,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
 
     hadleCloseEditModal();
   };
+
   return (
     <>
       <ModalBackground onClick={() => hadleCloseEditModal()} />
@@ -93,7 +94,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               <input
                 type="text"
                 name="shipName"
-                value={order.shipName}
+                value={orderInfo.shipName}
                 onChange={handleChange}
               />
             </td>
@@ -106,7 +107,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               <input
                 type="text"
                 name="shipTel"
-                value={order.shipTel}
+                value={orderInfo.shipTel}
                 onChange={handleChange}
               />
             </td>
@@ -119,7 +120,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               ) : (
                 <select
                   name="orderState"
-                  defaultValue={order.orderState}
+                  defaultValue={orderInfo.orderState}
                   onChange={handleChange}
                 >
                   <option value="결제완료">결제완료</option>
@@ -136,7 +137,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               <textarea
                 style={{ resize: "none" }}
                 name="shipMainAddress"
-                value={order.shipMainAddress}
+                value={orderInfo.shipMainAddress}
                 onChange={handleChange}
               />
             </td>
@@ -153,7 +154,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               <input
                 type="text"
                 name="shipSubAddress"
-                value={order.shipSubAddress}
+                value={orderInfo.shipSubAddress}
                 onChange={handleChange}
               />
             </td>
@@ -166,7 +167,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               <input
                 type="text"
                 name="shipMessage"
-                value={order.shipMessage}
+                value={orderInfo.shipMessage}
                 onChange={handleChange}
               />
             </td>
@@ -179,7 +180,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               <input
                 type="text"
                 name="shipCode"
-                value={order.shipCode}
+                value={orderInfo.shipCode}
                 onChange={handleChange}
               />
             </td>
@@ -219,7 +220,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
           <ProductItemList>
             {order.orderProdDtoList.map((orderProd) => (
               <ProductItem>
-                <td>{orderProd.productNum}</td>
+                <td>{orderProd.prodNum}</td>
                 <td>
                   <div>
                     <img

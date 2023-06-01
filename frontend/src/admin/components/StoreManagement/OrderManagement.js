@@ -4,85 +4,40 @@ import styled from "styled-components";
 import OrderList from "./OrderList";
 
 const OrderManagement = () => {
-  const [orders, setOrders] = useState([
-    {
-      //주문정보
-      orderId: "주문번호",
-      orderDate: "2023.06.01",
-      orderState: "결제완료",
-      //구매자정보
-      memberId: "sungbin",
-      orderName: "조성빈",
-      orderTel: "01000000000",
-      orderEmail: "test1@ascentic.com",
-      //배송지정보
-      shipName: "조성빈",
-      shipTel: "01000000000",
-      shipMainAddress: "경기 성남시 분당구 판교역로10번길 3",
-      shipSubAddress: "101동 202호",
-      shipMessage: "조심하게 오세용",
-      //상품정보
-      shipCharge: "3000",
-      //   orderPriceSum: "",
-      //   totalProdCount: "",
-      //상품정보리스트
-      orderProdDtoList: [
-        {
-          productNum: 1,
-          prodImgName: "expProduct3.webp",
-          prodName: "머스크 향수",
-          optionName: "300ml",
-          prodCount: 1,
-          prodPrice: 29000,
-        },
-        {
-          productNum: 2,
-          prodImgName: "expProduct2.webp",
-          prodName: "프루티 향초",
-          optionName: "200g",
-          prodPrice: 10000,
-          prodCount: 2,
-        },
-      ],
-      //결제정보
-      orderPayment: "kakao",
-      orderPaymentInfo: "결제정보",
-      //배송정보
-      shipCode: "",
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("all");
   const [sortOption, setSortOption] = useState("early");
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       setLoading(true);
-  //       try {
-  //         const res = await axios
-  //           .get
-  //           // `http://localhost:8080/subsProduct/list?scentnote=${category}`
-  //           ();
-  //         setOrders(res.data);
-  //         console.log(res.data);
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //       setLoading(false);
-  //     };
-  //     fetchData();
-  // if (sortOption === "early") {
-  //   orders.sort((a, b) => {
-  //     return new Date(b.orderDate) - new Date(a.orderDate);
-  //   });
-  // } else if(sortOption === "old"){
-  //   orders.sort((a, b) => {
-  //     return new Date(a.orderDate) - new Date(b.orderDate);
-  //   });
-  // }
-  //     setCurrentPage(1);
-  //   }, [category]);
+  const handleSort = () => {
+    if (sortOption === "early") {
+      orders.sort((a, b) => {
+        return new Date(b.orderDate) - new Date(a.orderDate);
+      });
+    } else if (sortOption === "old") {
+      orders.sort((a, b) => {
+        return new Date(a.orderDate) - new Date(b.orderDate);
+      });
+    }
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/getAdminOrderInfo?orderState=${category}`
+        );
+        setOrders(res.data);
+        console.log(res.data);
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    };
+    fetchData();
+    setCurrentPage(1);
+  }, [category, sortOption]);
 
   // 대기 중일 때
   if (loading) {
@@ -96,7 +51,6 @@ const OrderManagement = () => {
     <div>
       <HeaderWrap>
         <HeaderLeft>주문 관리</HeaderLeft>
-        <HeaderRight></HeaderRight>
       </HeaderWrap>
       <InputContainer>
         <OrderCategoryBox>
@@ -129,6 +83,12 @@ const OrderManagement = () => {
             onClick={() => setCategory("배송완료")}
           >
             배송완료
+          </button>
+          <button
+            className={category === "결제대기중" ? "activeCateBtn" : "cateBtn"}
+            onClick={() => setCategory("결제대기중")}
+          >
+            결제대기중
           </button>
           <button
             className={category === "주문취소" ? "activeCateBtn" : "cateBtn"}
@@ -165,6 +125,7 @@ const OrderManagement = () => {
               <EditTitle>수정</EditTitle>
             </ContentTitle>
           </ListBox>
+          {handleSort()}
           <OrderList
             orders={orders}
             currentPage={currentPage}
@@ -189,13 +150,6 @@ const HeaderLeft = styled.div`
   padding: 20px 0;
   font-size: 30px;
   font-weight: 600;
-`;
-
-const HeaderRight = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: end;
 `;
 const InputContainer = styled.div`
   width: 90%;
@@ -265,13 +219,13 @@ const ContentTitle = styled.div`
   }
 `;
 const NumTitle = styled.div`
-  width: 8%;
+  width: 12%;
 `;
 const DateTitle = styled.div`
-  width: 10%;
+  width: 14%;
 `;
 const NameTitle = styled.div`
-  width: 12%;
+  width: 8%;
 `;
 const ProdTitle = styled.div`
   width: 13%;
@@ -280,14 +234,13 @@ const PriceTitle = styled.div`
   width: 8%;
 `;
 const PayTitle = styled.div`
-  width: 10%;
+  width: 6%;
 `;
 const ShipmentTitle = styled.div`
-  width: 12%;
+  width: 9%;
 `;
 const StatusTitle = styled.div`
-  display: flex;
-  width: 5%;
+  width: 8%;
 `;
 const EditTitle = styled.div`
   width: 5%;

@@ -1,8 +1,11 @@
 package com.backend.subscribeproduct.entity;
 
 import com.backend.scent.entity.Scent;
+import com.backend.subscribesend.entity.SubscribeSend;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +35,9 @@ public class SubscribeProduct {
 
     @Column(name = "sp_stock")
     private Integer sbProdStock;
+
+    @OneToMany(mappedBy = "subscribeProduct")
+    List<SubscribeSend> subscribeSendList;
 
     // 돌아가면 삭제
 //    @OneToMany(mappedBy = "subscribeProduct")

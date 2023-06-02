@@ -18,11 +18,16 @@ public class OrderProductController {
 
     @PostMapping("/finishorderprod")
     public void insertOrderProduct(@RequestBody OrderRequest.OrderProductDto orderProductDto) {
-        orderProductService.insetOrderProduct(orderProductDto);
+        orderProductService.insertOrderProduct(orderProductDto);
     }
 
-    @GetMapping("/orderproduct/getlist")
-    public List<OrderResponse.OrderListDto> getOrderList() {
-        return orderProductService.getOrderList();
+    @GetMapping("/orderproduct/get/product")
+    public List<OrderResponse.OrderProductListDto> getOrderProductList() {
+        return orderProductService.getOrderProductList();
+    }
+
+    @GetMapping("/orderproduct/get/review")
+    public List<OrderResponse.OrderReviewListDto> getOrderReviewList() {
+        return orderProductService.getOrderReviewList();
     }
 }

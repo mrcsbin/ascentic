@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface OrderProductService {
 
-    void insetOrderProduct(OrderRequest.OrderProductDto orderProductDto);
+    void insertOrderProduct(OrderRequest.OrderProductDto orderProductDto);
 
-    List<OrderResponse.OrderListDto> getOrderList();
+    List<OrderResponse.OrderProductListDto> getOrderProductList();
+
+    List<OrderResponse.OrderReviewListDto> getOrderReviewList();
 }

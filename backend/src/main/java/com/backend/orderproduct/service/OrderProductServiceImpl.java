@@ -10,6 +10,8 @@ import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.productoption.repository.ProductOptionRepository;
+import com.backend.review.dto.ReviewResponse;
+import com.backend.review.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class OrderProductServiceImpl implements OrderProductService {
     private final CartRepository cartRepository;
 
     @Override
-    public void insetOrderProduct(OrderRequest.OrderProductDto orderProductDto) {
+    public void insertOrderProduct(OrderRequest.OrderProductDto orderProductDto) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Order order = orderRepository.findById(orderProductDto.getOrderNum()).orElse(null);
         ProductOption productOption = productOptionRepository.findById(orderProductDto.getOptionNum()).orElse(null);
@@ -44,16 +46,19 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public List<OrderResponse.OrderListDto> getOrderList() {
+    public List<OrderResponse.OrderProductListDto> getOrderProductList() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        List<OrderResponse.OrderListDto> orderListDto = new ArrayList<>();
-        Optional<List<OrderProduct>> orderProductList = orderProductRepository.findAllByMemberId(currentMemberId);
-        if (orderProductList.isPresent()) {
-            orderListDto = orderProductList.get().stream()
-                    .map(OrderResponse.OrderListDto::of)
-                    .collect(Collectors.toList());
-        }
-        return orderListDto;
+        return orderProductRepository.findAllByMemberId(currentMemberId).get().stream()
+                .map(OrderResponse.OrderProductListDto::of)
+                .collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderResponse.OrderReviewListDto> getOrderReviewList() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        return orderProductRepository.findAllByMemberId(currentMemberId).get().stream()
+                .filter(orderProduct -> orderProduct.getOrderState().equals("배송 완료"))
+                .map(OrderResponse.OrderReviewListDto::of)
+                .collect(Collectors.toList());
+    }
 }

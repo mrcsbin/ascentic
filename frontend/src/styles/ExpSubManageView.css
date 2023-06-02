@@ -136,6 +136,7 @@
 
 .intro-price span {
   float: right;
+  padding: 20px;
 }
 
 .address {

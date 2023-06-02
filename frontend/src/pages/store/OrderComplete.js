@@ -30,9 +30,6 @@ function OrderComplete() {
       })
       .then((res) => {
         const data = res.data;
-        console.log("이거 provider 찾기 위한 거임~");
-        console.log(data);
-
         if (data.orderId === "0") {
           navigate("/NotFound");
         } else {
@@ -59,8 +56,6 @@ function OrderComplete() {
             failureCode: data.failure.code,
             failureMessage: data.failure.message,
           });
-          console.log("이거 이지페이 출력되야 됨~");
-          console.log(data.easyPay);
         }
         setLoading(false);
       })

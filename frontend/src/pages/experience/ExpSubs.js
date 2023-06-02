@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { requestTasteRes } from "../../api/SubsMemberApi";
 import Loading from "../../components/common/Loading";
 import logow from "../../assets/ascentic_logo_w.svg";
-import { useParams } from "react-router-dom";
+
 import { useLocation } from "react-router-dom";
 const ExpSubs = () => {
   const accessToken = getCookie("accessToken");

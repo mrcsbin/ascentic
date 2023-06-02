@@ -12,9 +12,9 @@ function CartContentHeader() {
   const checkedItems = useSelector((state) => state.cart.checkedItems);
   const dispatch = useDispatch();
 
-  const isAllChecked = cartItems.every((item) =>
-    checkedItems.includes(item.cartNum)
-  );
+  const isAllChecked = cartItems
+    .filter((item) => item.optionState !== "품절")
+    .every((item) => checkedItems.includes(item.cartNum));
 
   const handleDeleteClick = () => {
     checkedItems.forEach((cartNum) => {

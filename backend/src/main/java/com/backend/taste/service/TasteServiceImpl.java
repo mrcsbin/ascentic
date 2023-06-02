@@ -67,7 +67,16 @@ public class TasteServiceImpl implements TasteService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 //        String currentMemberId = "kka12345";
 
-        Optional<Taste> findTaste = tasteRepository.findByMemberId(currentMemberId);
+        return getTasteResultDTO(currentMemberId);
+    }
+
+    @Override
+    public TasteResultDTO adminMemberTestResult(String memberId) {
+        return getTasteResultDTO(memberId);
+    }
+
+    private TasteResultDTO getTasteResultDTO(String memberId) {
+        Optional<Taste> findTaste = tasteRepository.findByMemberId(memberId);
 
         if (!findTaste.isPresent()) {
             return TasteResultDTO.builder()

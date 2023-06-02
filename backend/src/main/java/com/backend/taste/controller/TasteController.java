@@ -4,10 +4,7 @@ import com.backend.taste.dto.TasteDTO;
 import com.backend.taste.dto.TasteResultDTO;
 import com.backend.taste.service.TasteServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +19,11 @@ public class TasteController {
     @GetMapping("/getTaste")
     public TasteResultDTO getTestResult() {
         return tasteServiceImpl.getTestResult();
+    }
+
+    @GetMapping("/adminMemberTestResult")
+    public TasteResultDTO adminMemberTestResult(@RequestParam("memberId") String memberId) {
+        return tasteServiceImpl.adminMemberTestResult(memberId);
     }
 
 }

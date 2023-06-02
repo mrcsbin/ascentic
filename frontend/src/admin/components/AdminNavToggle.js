@@ -188,16 +188,26 @@ export const AdminNavToggle = () => {
           </MenuBox>
         )}
       </ToggleMenuBox>
-      <ToggleMenuBox className={activeTab === "상품 관리" ? "active" : ""}>
-        <ToggleMenuHeader onClick={() => handleTabClick("상품 관리")}>
-          <ToggleMenu>상품 관리</ToggleMenu>
+      <ToggleMenuBox className={activeTab === "스토어 관리" ? "active" : ""}>
+        <ToggleMenuHeader onClick={() => handleTabClick("스토어 관리")}>
+          <ToggleMenu>스토어 관리</ToggleMenu>
           <ToggleMenuIcon
-            src={activeTab === "상품 관리" ? DROP_UP : DROP_DOWN}
+            src={activeTab === "스토어 관리" ? DROP_UP : DROP_DOWN}
             alt="토글 아이콘"
           />
         </ToggleMenuHeader>
-        {activeTab === "상품 관리" && (
+        {activeTab === "스토어 관리" && (
           <MenuBox>
+            <SubMenuBox>
+              <LinkToMenu to="/admin/storemanagement/order">
+                <SubMenu
+                  className={activeSubTab === "주문 관리" ? "active" : ""}
+                  onClick={() => setActiveSubTab("주문 관리")}
+                >
+                  주문 관리
+                </SubMenu>
+              </LinkToMenu>
+            </SubMenuBox>
             <SubMenuBox>
               <LinkToMenu to="/admin/storemanagement/list">
                 <SubMenu
@@ -242,6 +252,16 @@ export const AdminNavToggle = () => {
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
+              <LinkToMenu to="/admin/subscribemanagement/send">
+                <SubMenu
+                  className={activeSubTab === "구독 주문 관리" ? "active" : ""}
+                  onClick={() => setActiveSubTab("구독 주문 관리")}
+                >
+                  구독 주문 관리
+                </SubMenu>
+              </LinkToMenu>
+            </SubMenuBox>
+            <SubMenuBox>
               <LinkToMenu to="/admin/subscribemanagement/product">
                 <SubMenu
                   className={activeSubTab === "구독 상품 관리" ? "active" : ""}
@@ -263,11 +283,10 @@ const Wrap = styled.div`
   width: 15%;
   height: 100vh;
   background-color: #f8f9fa;
-  padding: 0%;
   display: block;
   float: left;
   box-sizing: border-box;
-  padding: 15px 0;
+  padding: 15px 10px;
 `;
 
 const LinkBox = styled.div`
@@ -309,7 +328,7 @@ const ToggleMenuBox = styled.div`
   margin: 20px 0;
   font-size: 1.3rem;
   &.active {
-    font-weight: 900;
+    font-weight: 700;
   }
 `;
 
@@ -327,8 +346,8 @@ const ToggleMenuHeader = styled.div`
 const ToggleMenu = styled.div``;
 
 const ToggleMenuIcon = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
 `;
 
 const MenuBox = styled.div`
@@ -357,6 +376,6 @@ const SubMenuBox = styled.div`
 const SubMenu = styled.span`
   cursor: pointer;
   &.active {
-    font-weight: 900;
+    font-weight: 700;
   }
 `;

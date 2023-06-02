@@ -3,6 +3,7 @@ package com.backend.subscribeproduct.service;
 
 import com.backend.scent.repository.ScentRepository;
 import com.backend.subscribeproduct.dto.SbProductReqDTO;
+import com.backend.subscribeproduct.dto.admin.SbProdMemberRecordDto;
 import com.backend.subscribeproduct.repository.SbProductRepository;
 import com.backend.subscribeproduct.dto.SbProductDTO;
 import com.backend.subscribeproduct.entity.SubscribeProduct;
@@ -14,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -106,5 +106,14 @@ public class SbProductServiceImpl implements SbProductService{
     @Override
     public void deleteSbProduct(Integer sbProdNum){
         sbProductRepository.deleteById(sbProdNum);
+    }
+
+    @Override
+    public List<SbProdMemberRecordDto> adminGetSbMemberRecord(String memberId, String scentNoteName) {
+        List<SubscribeProduct> subscribeProducts = scentNoteName.equals("all") ? sbProductRepository.findAll() : sbProductRepository.findByScentNameScentNoteName(scentNoteName);
+
+        return subscribeProducts.stream()
+                .map(subscribeProduct -> SbProdMemberRecordDto.of(subscribeProduct, memberId))
+                .collect(Collectors.toList());
     }
 }

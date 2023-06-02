@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Items = ({ item, index, hadleOpenEditModal }) => {
+  function addComma(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
   return (
     <Content>
       <ProdNum>{item.prodNum}</ProdNum>
@@ -13,7 +17,7 @@ const Items = ({ item, index, hadleOpenEditModal }) => {
       </ProdImage>
       <ProdName>{item.prodName}</ProdName>
       <ScentName>{item.scentName}</ScentName>
-      <ProdPrice>{item.prodPrice.toLocaleString()}원</ProdPrice>
+      <ProdPrice>{addComma(item.prodPrice)}원</ProdPrice>
       <ProdCategory>{item.prodCategory}</ProdCategory>
       <ProdStock>{item.prodStock}개</ProdStock>
       <ProdOption>

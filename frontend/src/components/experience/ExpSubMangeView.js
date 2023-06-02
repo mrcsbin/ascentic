@@ -35,8 +35,8 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
   // }
   // }
 
-  console.log("gggg");
-  console.log(subscribe);
+  // console.log("gggg");
+  // console.log(subscribe);
 
   //구독중인 기간
   const subsDuration =
@@ -90,7 +90,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
 
       let filtered = subscribe.filter(
         (data) =>
-          data.sbSendStart.slice(0, 4) + data.sbSendStart.slice(5, 7) ==
+          data.sbSendPayDate.slice(0, 4) + data.sbSendPayDate.slice(5, 7) ==
           chosenDate
       );
       setFilterProd(filtered);
@@ -116,7 +116,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
             {chosenYear}년 {chosenMonth}월
           </span>
           <div className="on-delivery">
-            <span>{sbMember.sbSendEnd ? "배송 완료" : "배송중"}</span>
+            {/* <span>{sbMember.sbPaymentDay ? "배송 완료" : "배송중"}</span> */}
           </div>
           <div className="subs-prod-name-intro">
             <div>

@@ -2,6 +2,8 @@ package com.backend.order.controller;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.order.dto.*;
+import com.backend.order.dto.admin.AdminOrderManageDto;
+import com.backend.order.dto.admin.AdminOrderUpdateDto;
 import com.backend.order.entity.Card;
 import com.backend.order.entity.Failure;
 import com.backend.order.entity.Order;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -52,6 +55,7 @@ public class OrderController {
         }
 
         Order orderRes = orderRepository.findByOrderId(orderId);
+        orderService.updatePaymentState(orderRes);
 
         SuccessOrderDto successreturn = (SuccessOrderDto.builder()
                 .orderName(orderRes.getOrderName()) //주문자
@@ -91,7 +95,7 @@ public class OrderController {
         Order orderRes = orderService.findByOrderIdAndMemberId(orderId, currentMemberId);
         PaymentFinalRes finalRes = orderService.paymentFinalResFindByOrderId(orderId);
 
-        if (orderRes.getOrderId() ==  "0"){
+        if (orderRes.getOrderId() == "0") {
             return SuccessOrderDto.builder()
                     .orderId("0")
                     .build();
@@ -129,9 +133,19 @@ public class OrderController {
                                 .message(failureMessage)
                                 .build()
                 ) // 결제 실패 시
-        .build();
+                .build();
         System.out.println("============================================================오빠?오빠?차이써?");
         return successreturn;
+    }
+
+    @GetMapping("/getAdminOrderInfo")
+    public List<AdminOrderManageDto> getAdminOrderInfo(@RequestParam("orderState") String orderState) {
+        return orderService.getAdminOrderInfo(orderState);
+    }
+
+    @PostMapping("/updateOrderInfo")
+    public void updateOrder(@RequestBody AdminOrderUpdateDto AdminOrderUpdateDto) {
+        orderService.updateOrder(AdminOrderUpdateDto);
     }
 
 }

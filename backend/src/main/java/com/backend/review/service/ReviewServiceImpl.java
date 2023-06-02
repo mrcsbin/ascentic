@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final OrderProductRepository orderProductRepository;
 
     @Override
-    public void addReview(ReviewRequest.PostReviewDto postReviewDto) {
+    public void addReview(ReviewRequest.AddReviewDto postReviewDto) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().orElseThrow(() -> new RuntimeException("Current member ID not found"));
 
         OrderProduct orderProduct = orderProductRepository.findById(postReviewDto.getOrderProductNum())
@@ -32,8 +32,8 @@ public class ReviewServiceImpl implements ReviewService {
                 .memberId(currentMemberId)
                 .prodNum(postReviewDto.getProductNum())
                 .reviewContent(postReviewDto.getReviewContent())
-                .reviewDate(postReviewDto.getReviewDate())
                 .reviewScore(postReviewDto.getReviewScore())
+                .reviewGoodCount(0)
                 .orderProduct(orderProduct)
                 .build());
 

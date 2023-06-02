@@ -173,10 +173,10 @@ public class ProductResponse {
         private String reviewContent;
         private String reviewDate;
         private Integer reviewScore;
-        private List<ReviewComment> reviewCommentList;
         private Integer reviewNum;
         private Integer reviewGoodCount;
         private boolean reviewIsGood;
+        private String reviewProductOptionName;
 
         public static ReviewDto of(Review review) {
             String memberId = SecurityUtils.getCurrentMemberId().get();
@@ -187,10 +187,10 @@ public class ProductResponse {
                     review.getReviewContent(),
                     formattedDate,
                     review.getReviewScore(),
-                    review.getComments(),
                     review.getReviewNum(),
                     review.getReviewGoodCount(),
-                    review.isReviewGood(memberId)
+                    review.isReviewGood(memberId),
+                    review.getOrderProduct().getProductOption().getProdOption()
             );
         }
     }

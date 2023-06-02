@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { ReviewItem } from "./ReviewItem";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getCookie } from "../../../utils/Cookies";
-import { getReviewList } from "../../../api/ReviewApi";
+import { getOrderReviewList } from "../../../api/OrderProduct";
 
 export const ReviewList = () => {
   const [reviewList, setReviewList] = useState([]);
@@ -12,8 +11,10 @@ export const ReviewList = () => {
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const response = await getReviewList(getCookie("accessToken"));
-      setReviewList(response);
+      const response = await getOrderReviewList(getCookie("accessToken"));
+      setReviewList(
+        response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+      );
       setIsLoading(false);
     };
     fetchProductData();

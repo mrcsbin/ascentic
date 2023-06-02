@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EMPTY_STAR from "../../../assets/productdetail/empty-star-image.png";
 import FULL_STAR from "../../../assets/productdetail/full-star-image.png";
-
 import styled from "styled-components";
+import { addReview } from "../../../api/ReviewApi";
+import { getCookie } from "../../../utils/Cookies";
 
 const ARRAY = [0, 1, 2, 3, 4];
 
-const WriteReview = () => {
+const WriteReview = ({ item }) => {
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const [hovered, setHovered] = useState(-1);
   const [reviewText, setReviewText] = useState("");
@@ -32,23 +33,17 @@ const WriteReview = () => {
     setClicked(clickStates);
   };
 
-  // useEffect(() => {
-  //   sendReview();
-  // }, [clicked]); //컨디마 컨디업
-
-  // const sendReview = () => {
-  //   let score = clicked.filter(Boolean).length;
-  //   // fetch('http://52.78.63.175:8000/movie', {
-  //   //   method: 'POST',
-  //   //   Headers: {
-  //   //     Authroization: 'e7f59ef4b4900fe5aa839fcbe7c5ceb7',
-  //   //   },
-  //   //   body: JSON.stringify({
-  //   //     movie_id:1
-  //   //     star: score,
-  //   //   }),
-  //   // });
-  // };
+  const clickSubmitHandle = async () => {
+    const data = {
+      productNum: item.productNum,
+      reviewContent: reviewText,
+      reviewScore: clicked.filter(Boolean).length,
+      orderProductNum: item.orderProductNum,
+    };
+    await addReview(getCookie("accessToken"), data).then(() => {
+      window.location.reload();
+    });
+  };
 
   return (
     <Wrap>
@@ -75,7 +70,7 @@ const WriteReview = () => {
         {reviewText.length} / 50
       </CharacterCount>
       <SubmitButtonBox>
-        <SubmitButton>작성완료</SubmitButton>
+        <SubmitButton onClick={clickSubmitHandle}>작성완료</SubmitButton>
       </SubmitButtonBox>
     </Wrap>
   );
@@ -86,7 +81,7 @@ export default WriteReview;
 const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 3rem 0;
+  padding: 2rem 0;
 `;
 
 const RatingText = styled.div`
@@ -99,7 +94,7 @@ const RatingText = styled.div`
 const Stars = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
 `;
 
 const StarImage = styled.img`

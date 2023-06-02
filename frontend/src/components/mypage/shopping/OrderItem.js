@@ -22,6 +22,7 @@ export const OrderItem = ({ item }) => {
             <ItemNameOptionBox>
               <ItemName>{item.productName}</ItemName>
               <ItemOption>{item.productOptionName}</ItemOption>
+              <ItemName>{item.orderId}</ItemName>
             </ItemNameOptionBox>
           </ItemInfoBox>
         </StyledLink>

@@ -9,7 +9,6 @@ function addComma(num) {
 }
 
 const ReviewModal = ({ item, clickModalHandle }) => {
-  console.log(item);
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -41,7 +40,7 @@ const ReviewModal = ({ item, clickModalHandle }) => {
                 </ItemInfoBox>
               </ItemCard>
               <RatingBox>
-                <WriteReview></WriteReview>
+                <WriteReview item={item} />
               </RatingBox>
               <SubmitBox></SubmitBox>
             </ModalContents>

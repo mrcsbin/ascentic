@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import IS_LIKE from "../../assets/productdetail/is-like.png";
 import IS_NOT_LIKE from "../../assets/productdetail/is-not-like.png";
 import StarRating from "./StarRating";
@@ -39,7 +39,12 @@ const Review = ({ item, handleReviewClick }) => {
               />
               <GoodCount>{reviewGoodCount}</GoodCount>
             </ReviewRecommend>
-            <ReviewId>작성자 : {item.memberId}</ReviewId>
+            <ReviewIdAndProd>
+              <ReviewId>작성자 : {item.memberId}</ReviewId>
+              <ReviewProductOption>
+                구매한 옵션 : {item.reviewProductOptionName}
+              </ReviewProductOption>
+            </ReviewIdAndProd>
           </DownSide>
         </RightContainer>
       </Wrapper>
@@ -90,8 +95,6 @@ const ReviewComment = styled.div`
   font-size: 1.4rem;
 `;
 
-const UpSide = styled.div``;
-
 const DownSide = styled.div`
   display: flex;
   width: 100%;
@@ -102,6 +105,10 @@ const ReviewRecommend = styled.div`
   display: flex;
   padding: 20px 0;
   box-sizing: border-box;
+`;
+
+const ReviewIdAndProd = styled.div`
+  display: flex;
 `;
 
 const Title = styled.div`
@@ -119,6 +126,12 @@ const GoodCount = styled.div`
 `;
 
 const ReviewId = styled.div`
+  font-size: 1.2rem;
+  padding: 20px 20px;
+  box-sizing: border-box;
+`;
+
+const ReviewProductOption = styled.div`
   font-size: 1.2rem;
   padding: 20px 0;
   box-sizing: border-box;

@@ -16,8 +16,8 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/add")
-    public void addReview(@RequestBody ReviewRequest.PostReviewDto postReviewDto) {
-        reviewService.addReview(postReviewDto);
+    public void addReview(@RequestBody ReviewRequest.AddReviewDto addReviewDto) {
+        reviewService.addReview(addReviewDto);
     }
 
     @GetMapping("/get")

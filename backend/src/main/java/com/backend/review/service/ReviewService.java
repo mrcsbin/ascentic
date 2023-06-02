@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    void addReview(ReviewRequest.PostReviewDto postReviewDto);
+    void addReview(ReviewRequest.AddReviewDto addReviewDto);
 
     List<ReviewResponse.ReviewListDto> getReviewList();
 

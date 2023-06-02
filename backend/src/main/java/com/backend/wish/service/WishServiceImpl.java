@@ -44,6 +44,7 @@ public class WishServiceImpl implements WishService {
         List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
 
         return wishList.stream()
+                .filter(wish -> !wish.getProduct().getProdState().equals("판매종료"))
                 .map(WishResponse.WishListDto::of)
                 .collect(Collectors.toList());
     }

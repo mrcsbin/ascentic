@@ -4,10 +4,12 @@ import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.subscribemember.repository.SbMemberRepository;
 import com.backend.subscribemember.entity.SubscribeMember;
+import com.backend.subscribeproduct.entity.SubscribeProduct;
 import com.backend.subscribeproduct.repository.SbProductRepository;
 import com.backend.subscribesend.dto.SubsReviewDTO;
 import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
+import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
 import com.backend.subscribesend.entity.SubscribeSend;
 import com.backend.subscribesend.repository.SubscribeSendRepository;
@@ -91,6 +93,16 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
         return subscribeSends.stream()
                 .map(AdminSendDto::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateSbSend(AdminSbSendUpdateDto adminSbSendUpdateDto) {
+        SubscribeSend subscribeSend = subscribeSendRepository.findById(adminSbSendUpdateDto.getSbSendNum()).orElse(null);
+        subscribeSend.adminUpdate(adminSbSendUpdateDto.getSbSendPostcode(),
+                sbProductRepository.findById(adminSbSendUpdateDto.getSbProdNum()).orElse(null),
+                adminSbSendUpdateDto.getSbShippingCode());
+
+        subscribeSendRepository.save(subscribeSend);
     }
 
 

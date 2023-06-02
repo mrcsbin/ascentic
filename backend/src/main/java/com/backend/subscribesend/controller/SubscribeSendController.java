@@ -39,4 +39,10 @@ public class SubscribeSendController {
         return subscribeSendServiceImpl.getAdminSbSend(sbSendState);
     }
 
+    @PostMapping("/adminUpdateSbSend")
+    public void updateSbSend(@RequestBody AdminSbSendUpdateDto adminSbSendUpdateDto) {
+        System.out.println("asd");
+        System.out.println(adminSbSendUpdateDto.getSbSendPostcode());
+        subscribeSendServiceImpl.updateSbSend(adminSbSendUpdateDto);
+    }
 }

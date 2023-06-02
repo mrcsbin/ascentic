@@ -97,6 +97,16 @@ export const CartItemCard = ({ item }) => {
   );
 };
 
+const SoldOutText = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: red;
+  font-weight: 600;
+`;
+
 const CountButtonBox = styled.div`
   display: inline-flex;
   align-items: center;

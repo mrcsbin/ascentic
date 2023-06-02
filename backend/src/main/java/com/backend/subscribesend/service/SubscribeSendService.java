@@ -5,6 +5,7 @@ import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
 import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
+import com.backend.subscribesend.dto.admin.SbMemberRecord;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface SubscribeSendService {
     List<AdminSendDto> getAdminSbSend(String sbSendState);
 
     void updateSbSend(AdminSbSendUpdateDto adminSbSendUpdateDto);
+
+    List<SbMemberRecord> adminGetSbMemberRecord(String memberId, String scentNoteName);
 }

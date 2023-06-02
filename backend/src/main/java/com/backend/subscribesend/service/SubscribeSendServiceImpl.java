@@ -2,6 +2,8 @@ package com.backend.subscribesend.service;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
+import com.backend.scent.entity.Scent;
+import com.backend.scent.repository.ScentRepository;
 import com.backend.subscribemember.repository.SbMemberRepository;
 import com.backend.subscribemember.entity.SubscribeMember;
 import com.backend.subscribeproduct.entity.SubscribeProduct;
@@ -11,13 +13,13 @@ import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
 import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
+import com.backend.subscribesend.dto.admin.SbMemberRecord;
 import com.backend.subscribesend.entity.SubscribeSend;
 import com.backend.subscribesend.repository.SubscribeSendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
     private final SubscribeSendRepository subscribeSendRepository;
     private final SbMemberRepository sbMemberRepository;
     private final SbProductRepository sbProductRepository;
+    private final ScentRepository scentRepository;
 
     @Override
     public void insertSubsSend(SubsSendInsertDTO subsSendInsertDTO){
@@ -54,7 +57,7 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
         //예전 구독상품에 대해서는 조회 불가. 탭따로만들거나 없는 기능으로
         //구독멤버레퍼지토리에 SubscribeMember findByMember(Member member); 추가;
         SubscribeMember subsMember = sbMemberRepository
-                .findByMemberId(currentMemberId);
+                .findTopByMemberId(currentMemberId);
 
         List<SubscribeSend> subslist = subscribeSendRepository
                 .findAllBySubscribeMember(subsMember);
@@ -86,7 +89,6 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
 
     @Override
     public List<AdminSendDto> getAdminSbSend(String sbSendState) {
-
         List<SubscribeSend> subscribeSends = sbSendState.equals("all") ? subscribeSendRepository.findAll()
                 : subscribeSendRepository.findBySbSendState(sbSendState);
 
@@ -105,5 +107,18 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
         subscribeSendRepository.save(subscribeSend);
     }
 
+    @Override
+    public List<SbMemberRecord> adminGetSbMemberRecord(String memberId, String scentNoteName) {
+        List<SubscribeMember> subscribeMembers = sbMemberRepository.findByMemberId(memberId);
+        List<SubscribeProduct> subscribeProducts = sbProductRepository.findByScentNameScentNoteName(scentNoteName);
+        List<SubscribeSend> subscribeSends = subscribeMembers.stream().
+                flatMap(subscribeMember -> subscribeProducts.stream()
+                        .map(subscribeProduct -> subscribeSendRepository.findDistinctTopBySubscribeMemberAndSubscribeProduct(subscribeMember,subscribeProduct))
+                .filter(Objects::nonNull))
+                .collect(Collectors.toList());
 
+        return subscribeSends.stream()
+                .map(SbMemberRecord::of)
+                .collect(Collectors.toList());
+    }
 }

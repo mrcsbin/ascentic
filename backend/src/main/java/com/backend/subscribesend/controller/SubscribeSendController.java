@@ -5,6 +5,7 @@ import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
 import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
+import com.backend.subscribesend.dto.admin.SbMemberRecord;
 import com.backend.subscribesend.service.SubscribeSendServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,11 @@ public class SubscribeSendController {
         System.out.println("asd");
         System.out.println(adminSbSendUpdateDto.getSbSendPostcode());
         subscribeSendServiceImpl.updateSbSend(adminSbSendUpdateDto);
+    }
+
+    @GetMapping("/adminSbMemberRecord")
+    public List<SbMemberRecord> adminGetSbMemberRecord (@RequestParam("memberId") String memberId,
+                                                        @RequestParam("scentNoteName") String scentNoteName) {
+        return subscribeSendServiceImpl.adminGetSbMemberRecord(memberId, scentNoteName);
     }
 }

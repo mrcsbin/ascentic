@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Getter
 public class SbProdMemberRecordDto {
     private Integer sbProdNum;
-    private String sbProdImg;
+    private String sbProdImage;
     private String scentNoteName;
     private String scentName;
     private Integer sbProdPrice;
@@ -26,7 +26,7 @@ public class SbProdMemberRecordDto {
     public static SbProdMemberRecordDto of(SubscribeProduct subscribeProduct, String memberId) {
         SbProdMemberRecordDto sbProdMemberRecordDto = SbProdMemberRecordDto.builder()
                 .sbProdNum(subscribeProduct.getSbProdNum())
-                .sbProdImg(subscribeProduct.getSbProdImage())
+                .sbProdImage(subscribeProduct.getSbProdImage())
                 .scentNoteName(subscribeProduct.getScentName().getScentNoteName())
                 .scentName(subscribeProduct.getScentName().getScentName())
                 .sbProdPrice(subscribeProduct.getSbProdPrice())

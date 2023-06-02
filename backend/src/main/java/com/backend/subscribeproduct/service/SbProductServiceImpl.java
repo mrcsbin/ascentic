@@ -110,7 +110,7 @@ public class SbProductServiceImpl implements SbProductService{
 
     @Override
     public List<SbProdMemberRecordDto> adminGetSbMemberRecord(String memberId, String scentNoteName) {
-        List<SubscribeProduct> subscribeProducts = sbProductRepository.findByScentNameScentNoteName(scentNoteName);
+        List<SubscribeProduct> subscribeProducts = scentNoteName.equals("all") ? sbProductRepository.findAll() : sbProductRepository.findByScentNameScentNoteName(scentNoteName);
 
         return subscribeProducts.stream()
                 .map(subscribeProduct -> SbProdMemberRecordDto.of(subscribeProduct, memberId))

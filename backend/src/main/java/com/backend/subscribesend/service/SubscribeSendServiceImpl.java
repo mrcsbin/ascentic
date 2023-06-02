@@ -8,6 +8,7 @@ import com.backend.subscribeproduct.repository.SbProductRepository;
 import com.backend.subscribesend.dto.SubsReviewDTO;
 import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
+import com.backend.subscribesend.dto.admin.AdminSendDto;
 import com.backend.subscribesend.entity.SubscribeSend;
 import com.backend.subscribesend.repository.SubscribeSendRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -68,8 +70,8 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
                     .spScent(subssend.getSubscribeProduct().getScentName())
                     .spPrice(subssend.getSubscribeProduct().getSbProdPrice())
                     .spIntro(subssend.getSubscribeProduct().getSbProdIntro())
-                    .sbSendStart(subssend.getSbSendStart())
-                    .sbSendEnd(subssend.getSbSendEnd())
+//                    .sbSendStart(subssend.getSbSendStart())
+//                    .sbSendEnd(subssend.getSbSendEnd())
                     .sbSendPostcode(subssend.getSbSendPostcode())
                     .sbSendScore(subssend.getSbSendScore())
                     .sbSendReview(subssend.getSbSendReview())
@@ -79,4 +81,17 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
         }
         return subsDTOlist;
     }
+
+    @Override
+    public List<AdminSendDto> getAdminSbSend(String sbSendState) {
+
+        List<SubscribeSend> subscribeSends = sbSendState.equals("all") ? subscribeSendRepository.findAll()
+                : subscribeSendRepository.findBySbSendState(sbSendState);
+
+        return subscribeSends.stream()
+                .map(AdminSendDto::of)
+                .collect(Collectors.toList());
+    }
+
+
 }

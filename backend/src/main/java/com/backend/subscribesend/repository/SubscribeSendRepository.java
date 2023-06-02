@@ -20,4 +20,6 @@ public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, In
     List<SubscribeSend> findAllBySubscribeMember(SubscribeMember subscribeMember);
 
     Double findAverageSbSendScoreBySubscribeProduct(SubscribeProduct subscribeProduct);
+
+    List<SubscribeSend> findBySbSendState(String sbSendState);
 }

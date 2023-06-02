@@ -29,12 +29,6 @@ public class SubscribeSend {
     @JoinColumn(name = "sp_num")
     private SubscribeProduct subscribeProduct;
 
-    @Column(name = "sb_send_start")
-    private LocalDate sbSendStart;
-
-    @Column(name = "sb_send_end")
-    private LocalDate sbSendEnd;
-
     @Column(name = "sb_send_postcode")
     private String sbSendPostcode;
 
@@ -53,5 +47,8 @@ public class SubscribeSend {
 
     @Column(name = "sb_shipping_code")
     private String sbShippingCode;
+
+    @Column(name = "sb_send_state")
+    private String sbSendState; // 결제완료, 상품준비중, 배송준비중, 배송중, 배송완료
 }
 

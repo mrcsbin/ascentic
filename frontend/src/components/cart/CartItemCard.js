@@ -61,6 +61,7 @@ export const CartItemCard = ({ item }) => {
           type="checkbox"
           checked={isChecked}
           onChange={handleToggleCheck}
+          disabled={item.optionState === "품절"}
         />
       </SelectButtonBox>
       <ImageBox>
@@ -69,6 +70,7 @@ export const CartItemCard = ({ item }) => {
             src={`http://localhost:8080/images/${item.productImage}`}
             alt="상품 이미지"
           />
+          {item.optionState === "품절" && <SoldOutText>SOLD OUT</SoldOutText>}
         </ItemImageLink>
       </ImageBox>
       <ItemBox>
@@ -150,6 +152,7 @@ const SelectButtonBox = styled.div`
 const SelectButton = styled.input``;
 
 const ImageBox = styled.div`
+  position: relative;
   width: 15%;
 `;
 
@@ -157,6 +160,16 @@ const ItemImageLink = styled.a``;
 
 const ItemImage = styled.img`
   width: 100%;
+`;
+
+const SoldOutText = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: red;
+  font-weight: 600;
 `;
 
 const ItemBox = styled.div`

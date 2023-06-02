@@ -6,6 +6,7 @@ export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
   async () => {
     const res = await getCartList(getCookie("accessToken"));
+    console.log(res);
     return res;
   }
 );
@@ -60,10 +61,16 @@ const cartSlice = createSlice({
       }
     },
     toggleAllCheckItem(state) {
-      if (state.checkedItems.length === state.cartItem.length) {
+      const cartLen = state.cartItem
+        .filter((item) => item.optionState === "품절")
+        .map((item) => item.cartNum).length;
+
+      if (state.checkedItems.length === state.cartItem.length - cartLen) {
         state.checkedItems = [];
       } else {
-        const allCartNum = state.cartItem.map((item) => item.cartNum);
+        const allCartNum = state.cartItem
+          .filter((item) => item.optionState !== "품절")
+          .map((item) => item.cartNum);
         state.checkedItems = [...allCartNum];
       }
     },
@@ -75,7 +82,9 @@ const cartSlice = createSlice({
     [fetchCartItems.fulfilled]: (state, action) => {
       state.loading = false;
       state.cartItem = action.payload;
-      state.checkedItems = action.payload.map((item) => item.cartNum);
+      state.checkedItems = action.payload
+        .filter((item) => item.optionState !== "품절")
+        .map((item) => item.cartNum);
     },
   },
 });

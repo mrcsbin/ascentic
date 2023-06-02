@@ -1,8 +1,8 @@
 package com.backend.review.controller;
 
-import com.backend.review.dto.PostReviewDto;
-import com.backend.review.dto.ReviewListDto;
-import com.backend.review.service.ReviewServiceImpl;
+import com.backend.review.dto.ReviewRequest;
+import com.backend.review.dto.ReviewResponse;
+import com.backend.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,21 +12,16 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/review")
 public class ReviewController {
-    private final ReviewServiceImpl reviewService;
 
-//    @GetMapping("/get")
-//    public List<ReviewDto> getReview(Integer prodNum) {
-//        return reviewService.findAllByProdNum(prodNum);
-//    }
+    private final ReviewService reviewService;
 
     @PostMapping("/add")
-    public void addReview(@RequestBody PostReviewDto postReviewDto) {
-        System.out.println("postReviewDto.getReviewContent() = " + postReviewDto.getReviewContent());
+    public void addReview(@RequestBody ReviewRequest.PostReviewDto postReviewDto) {
         reviewService.addReview(postReviewDto);
     }
 
     @GetMapping("/get")
-    public List<ReviewListDto> getReviewList() {
+    public List<ReviewResponse.ReviewListDto> getReviewList() {
         return reviewService.getReviewList();
     }
 

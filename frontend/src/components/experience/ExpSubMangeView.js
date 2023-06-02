@@ -4,7 +4,7 @@ import "../../styles/ExpSubManageView.css";
 import RatingComponent from "./RatingComponent";
 import { getCookie } from "../../utils/Cookies";
 
-const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
+const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // ------------------------------------ 구독기간 관련 ---------------------------------------
   // const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
   const start = new Date("2020-11-30"); // 구독시작 날짜
@@ -204,8 +204,13 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
           </div>
           {/* <div className="scentNote-payInfo"> */}
           <div className="duration-payDay">
+            <p> ScentNote</p>
             <p>
-              ScentNote <span> 여기채워야 됨 // </span>
+              <span> 첫번째 향 {TasteRes.firstPlace}</span>
+              <br />
+              <span> 두번째 향 {TasteRes.secondPlace}</span>
+              <br />
+              <span> 세번째 향 {TasteRes.thirdPlace}</span>
             </p>
             결제정보 = <span> {sbMember.sbPay}</span>
           </div>

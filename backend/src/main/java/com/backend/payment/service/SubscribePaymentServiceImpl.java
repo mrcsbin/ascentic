@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -38,11 +39,13 @@ public class SubscribePaymentServiceImpl implements SubscribePaymentService{
         HttpHeaders billingHeader = new HttpHeaders();
         billingHeader.setContentType(MediaType.APPLICATION_JSON);
         billingHeader.set("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==");
+        
+
 
         //바디에 넣을 토스 포맷 json 데이터임~~~
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerKey", subscribePayment.getCustomerKey());
-        jsonObject.put("orderId", subscribePayment.getOrderId());
+        jsonObject.put("orderId", UUID.randomUUID().toString());
         jsonObject.put("memberID", subscribePayment.getMemberId());
         jsonObject.put("customerEmail", subscribePayment.getCustomerEmail());
         jsonObject.put("subscribeCard", subscribePayment.getSubscribeCard());

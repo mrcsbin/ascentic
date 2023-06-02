@@ -14,11 +14,13 @@ public class WishResponse {
                     .productNum(wish.getProduct().getProdNum())
                     .productName(wish.getProduct().getProdName())
                     .productImage(wish.getProduct().getProductImages().get(0).getProdSaveName())
+                    .productState(wish.getProduct().getProdState())
                     .build();
         }
 
         private Integer productNum;
         private String productName;
         private String productImage;
+        private String productState;
     }
 }

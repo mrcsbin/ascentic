@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import card1 from "../../assets/expSubs/expCard3.webp";
 import card2 from "../../assets/expSubs/expCard2.webp";
 import package1 from "../../assets/expSubs/expPackage4.webp";
@@ -19,9 +19,9 @@ const ExpGuide = (props) => {
     setGuideMode(2);
   };
 
-  const cardApply = () => {
-    alert("상품 상세 페이지로 이동");
-  };
+  // const cardApply = () => {
+  //   alert("상품 상세 페이지로 이동");
+  // };
 
   const expApply = () => {
     // alert("주문관련 컴포넌트 불러오기");
@@ -73,9 +73,14 @@ const ExpGuide = (props) => {
               <div>에이센틱의 9가지 노트를 직접 체험해보세요.</div>
               <PriceInfo>6,600원 (배송비 포함)</PriceInfo>
               <AddInfo>
-                <div>회원당 1회만 신청가능</div>
+                <div>회원당 1회만 구매가능</div>
               </AddInfo>
-              <ApplyBtn onClick={() => cardApply()}>지금 신청하기</ApplyBtn>
+              <Link
+                to="/store/productdetail/1"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <ApplyBtn>지금 구매하기</ApplyBtn>
+              </Link>
             </GuideContent>
           </ExpGuide1>
         </>

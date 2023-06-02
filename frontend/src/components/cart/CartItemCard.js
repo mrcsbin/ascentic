@@ -32,6 +32,11 @@ function CountButton({ cartNum, productCount }) {
   );
 }
 
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
+}
+
 export const CartItemCard = ({ item }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItem);
@@ -83,7 +88,7 @@ export const CartItemCard = ({ item }) => {
         <CountButton productCount={productCount} cartNum={item.cartNum} />
       </CountBox>
       <PriceBox>
-        <ItemPrice>{productCount * item.productPrice}</ItemPrice>
+        <ItemPrice>{addComma(productCount * item.productPrice)}원</ItemPrice>
       </PriceBox>
       <DeleteButtonBox>
         <DeleteButton onClick={handleDeleteClick} />
@@ -93,6 +98,16 @@ export const CartItemCard = ({ item }) => {
 };
 
 // countButton
+const SoldOutText = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: red;
+  font-weight: 600;
+`;
+
 const CountButtonBox = styled.div`
   display: inline-flex;
   align-items: center;

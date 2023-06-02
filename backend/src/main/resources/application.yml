@@ -90,7 +90,6 @@ spring:
           - classpath:subscribeSend.sql
           - classpath:prodImage.sql
           - classpath:review.sql
-          - classpath:reviewcomment.sql
           - classpath:inquiry.sql
           - classpath:member.sql
           - classpath:eventnews.sql

@@ -1,28 +1,20 @@
 import styled from "styled-components";
 import { ReviewItem } from "./ReviewItem";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getCookie } from "../../../utils/Cookies";
+import { getOrderReviewList } from "../../../api/OrderProduct";
 
 export const ReviewList = () => {
   const [reviewList, setReviewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(reviewList)
 
   useEffect(() => {
     const fetchProductData = async () => {
-      try {
-        const res = await axios.get("http://localhost:8080/review/get", {
-          headers: {
-            Authorization: `Bearer ${getCookie("accessToken")}`,
-          },
-        });
-        setReviewList(res.data);
-      } catch (error) {
-        console.error("Error fetching order list:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      const response = await getOrderReviewList(getCookie("accessToken"));
+      setReviewList(
+        response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+      );
+      setIsLoading(false);
     };
     fetchProductData();
   }, []);

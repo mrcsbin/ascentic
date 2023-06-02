@@ -252,6 +252,16 @@ export const AdminNavToggle = () => {
               </LinkToMenu>
             </SubMenuBox>
             <SubMenuBox>
+              <LinkToMenu to="/admin/subscribemanagement/send">
+                <SubMenu
+                  className={activeSubTab === "구독 주문 관리" ? "active" : ""}
+                  onClick={() => setActiveSubTab("구독 주문 관리")}
+                >
+                  구독 주문 관리
+                </SubMenu>
+              </LinkToMenu>
+            </SubMenuBox>
+            <SubMenuBox>
               <LinkToMenu to="/admin/subscribemanagement/product">
                 <SubMenu
                   className={activeSubTab === "구독 상품 관리" ? "active" : ""}

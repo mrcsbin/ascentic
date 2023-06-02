@@ -1,4 +1,5 @@
 import React from "react";
+import SbSendManagement from "../components/SubscribeManagement/AdminSbSendManagement";
 import SbProductManagement from "../components/SubscribeManagement/AdminSbProductManagement";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
@@ -11,6 +12,7 @@ function AdminSubscribeManagement() {
     <Wrapper>
       <div>
         {category === "member" && <div />}
+        {category === "send" && <SbSendManagement />}
         {category === "product" && <SbProductManagement />}
       </div>
     </Wrapper>

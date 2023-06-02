@@ -30,8 +30,7 @@ import java.util.List;
 public class AutomaticPayments {
     private final SbMemberRepository sbMemberRepository;
     private final SubscribePaymentRepository subscribePaymentRepository;
-    private SubscribePaymentServiceImpl subscribePaymentService;
-
+    private final SubscribePaymentServiceImpl subscribePaymentService;
 
     @Scheduled(cron = "0 10 10 * * *") //매년 매월 매일 10시 10분 0초에 결제
     public void processAutoPayment() {
@@ -45,18 +44,16 @@ public class AutomaticPayments {
         // 3. 조회된 SubscribeMember 목록을 순회하면서 각 회원의 memberId를 사용하여 SubscribePayment 엔티티에서 해당 회원의 paymentCompletionDate 값을 조회합니다.
         for (SubscribeMember member : membersToAutoPay) {
             String memberId = member.getMemberId();
-            System.out.println("이거 멤버 Id 임~~~~");
+
             System.out.println(memberId);
 
             //payments 에서 가장 최신의 결제 정보 => 가장 최근 구독 정보 가져오기
             SubscribePayment payment = subscribePaymentRepository.findFirstByMemberIdOrderBySubscribePaymentNumDesc(memberId); // 한 멤버의 모든 구독결제정보 가져오기
-            System.out.println("이거 payment 임~~~~");
+
             System.out.println(payment.toString());
 
             // 4. paymentCompletionDate가 이번 달에 없는 경우에는 자동 결제 로직을 수행합니다.
             if (!isPaymentCompletedThisMonth(payment, currentDate.getMonth())) {
-
-                System.out.println("autopayment 90번째 줄~~~~~~~~~~~~~~~~~~~~~~~~");
                 String tasteRes = member.getTasteResult();
                 subscribePaymentService.performSubscribePayment(payment, tasteRes);
             }

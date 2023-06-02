@@ -50,13 +50,14 @@ public class OrderController {
            if(result.getCard() ==null) {
                finalRes.setEasyPay(result.getEasyPay());
                orderService.saveRes(result);
-               //버그 고치는용~
-               System.out.println(result);
            } else //when the payment method is Card
            { finalRes.setCard(result.getCard());
             finalRes.setTotalAmount(result.getTotalAmount());
             System.out.println(result);
             orderService.saveRes(result);}
+         Order order= orderRepository.findByOrderId(finalRes.getOrderId());
+           orderService.changeOrderState(order,"결제완료");
+            orderService.changePaymentState(order,true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,27 +76,27 @@ public class OrderController {
 
         Order orderRes = orderRepository.findByOrderId(orderId);
 
-
-        SuccessOrderDto successreturn = (SuccessOrderDto.builder()
-                .orderName(orderRes.getOrderName()) //주문자
-                .orderId(orderRes.getOrderId()) // 토스용 orderId
-                .orderDate(orderRes.getOrderDate()) //구매날짜
-                .email(orderRes.getOrderEmail()) //구매자 이메일
-                .shipName(orderRes.getOrderName())  // 수령인 이름
-                .shipMainAddress(orderRes.getShipMainAddress()) //수령인 배송지
-                .shipSubAddress(orderRes.getShipSubAddress()) //수령인 배송지
-                .shipTel(orderRes.getShipTel()) //수령인 전번
-                .shipCharge(orderRes.getShipCharge()) //배송비
-                .orderPriceSum(finalRes.getTotalAmount()) //상품가격
-                .prodNames(finalRes.getOrderName()) //구매한 제품명
-                .totalProdCount(orderProductRepository.getProdCountSum(orderRes.getOrderNum())) // 총 구매한 제품 개수
-                .orderState("결제 완료")  //결제 상태
-
-
-                .card(finalRes.getCard()) //카드 정보
-
-                .failure(finalRes.getFailure()) //결제실패시
-                .build());
+// 이거 지금 어디서 쓰는지 모르겠음
+//        SuccessOrderDto successreturn = (SuccessOrderDto.builder()
+//                .orderName(orderRes.getOrderName()) //주문자
+//                .orderId(orderRes.getOrderId()) // 토스용 orderId
+//                .orderDate(orderRes.getOrderDate()) //구매날짜
+//                .email(orderRes.getOrderEmail()) //구매자 이메일
+//                .shipName(orderRes.getOrderName())  // 수령인 이름
+//                .shipMainAddress(orderRes.getShipMainAddress()) //수령인 배송지
+//                .shipSubAddress(orderRes.getShipSubAddress()) //수령인 배송지
+//                .shipTel(orderRes.getShipTel()) //수령인 전번
+//                .shipCharge(orderRes.getShipCharge()) //배송비
+//                .orderPriceSum(finalRes.getTotalAmount()) //상품가격
+//                .prodNames(finalRes.getOrderName()) //구매한 제품명
+//                .totalProdCount(orderProductRepository.getProdCountSum(orderRes.getOrderNum())) // 총 구매한 제품 개수
+//                .orderState("결제 완료")  //결제 상태
+//
+//
+//                .card(finalRes.getCard()) //카드 정보
+//
+//                .failure(finalRes.getFailure()) //결제실패시
+//                .build());
 
         String failureCode = finalRes.getFailure() != null ? finalRes.getFailure().getCode() : "";
         String failureMessage = finalRes.getFailure() != null ? finalRes.getFailure().getMessage() : "";

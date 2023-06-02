@@ -1,4 +1,4 @@
-insert into ascentic.tb_order_prod (order_prod_num, member_id, order_review, order_state, prod_count, order_num, option_num)
+insert into ascentic.tb_order_prod (order_prod_num, member_id, order_review_state, order_state, prod_count, order_num, option_num)
 values  (1, 'sungbin', true, '결제 대기', 2, 1, 1),
         (2, 'hansic', true, '결제중', 2, 2, 2),
         (3, 'kyungmin', true, '결제 완료', 2, 3, 3),

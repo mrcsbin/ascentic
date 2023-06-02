@@ -19,7 +19,7 @@ export const OrderItem = ({ item }) => {
         <ItemOrderDate>{item.orderDate}</ItemOrderDate>
         <ItemAmountBox>
           <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
-          <ItemCount>{item.orderProductQuantity} 개</ItemCount>
+          <ItemCount>{item.orderProductCount} 개</ItemCount>
         </ItemAmountBox>
         <ItemOrderState>
           {item.orderShippingState}

@@ -1,7 +1,7 @@
 package com.backend.orderproduct.controller;
 
-import com.backend.orderproduct.dto.OrderListDto;
-import com.backend.orderproduct.dto.OrderProductDto;
+import com.backend.orderproduct.dto.OrderRequest;
+import com.backend.orderproduct.dto.OrderResponse;
 import com.backend.orderproduct.service.OrderProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +17,12 @@ public class OrderProductController {
     private final OrderProductService orderProductService;
 
     @PostMapping("/finishorderprod")
-    public void insertOrderProduct(@RequestBody OrderProductDto orderProductDTO) {
-        orderProductService.insetOrderProduct(orderProductDTO);
+    public void insertOrderProduct(@RequestBody OrderRequest.OrderProductDto orderProductDto) {
+        orderProductService.insetOrderProduct(orderProductDto);
     }
 
     @GetMapping("/orderproduct/getlist")
-    public List<OrderListDto> getOrderList() {
+    public List<OrderResponse.OrderListDto> getOrderList() {
         return orderProductService.getOrderList();
     }
 }

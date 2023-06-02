@@ -62,7 +62,7 @@ const SbSendUpdateForm = ({ sbSend, hadleCloseEditModal }) => {
 
     const updateProduct = async () => {
       try {
-        await axios.post("http://localhost:8080/updateOrderInfo", sbSendInfo);
+        await axios.post("http://localhost:8080/adminUpdateSbSend", sbSendInfo);
         alert("구독 주문 정보가 수정되었습니다!");
         window.location.reload();
       } catch (e) {

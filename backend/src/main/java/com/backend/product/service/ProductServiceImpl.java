@@ -63,7 +63,8 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = scentName.equals("all") ? productRepository.findAll() : productRepository.findByScentScentNoteName(scentName);
 
         return products.stream()
-                .filter(product -> !product.getProdState().equals("판매종료"))
+                .filter(product -> product.getProductOption().stream()
+                        .anyMatch(productOption -> productOption.getOptionState().equals("판매중")))
                 .map(ProductResponse.ProductListDto::of)
                 .collect(Collectors.toList());
     }

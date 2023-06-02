@@ -51,7 +51,7 @@ spring:
 #      location: c:\\Project\\ascentic_file
 #      location: e:\\Project\\ascentic_file
       # mac
-      location: /Users/user/ascentic
+      location: /Users/sungbincho/Desktop/ascenticfile
       #location: /Users/hansic/Desktop/ascentic
       #location: /Users/jo4921/ascentic_file
       #location: /Users/user/ascentic

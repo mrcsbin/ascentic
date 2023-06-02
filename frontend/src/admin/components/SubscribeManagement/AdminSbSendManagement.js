@@ -56,11 +56,11 @@ const SbSendManagement = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // const res = await axios.get(
-        //   `http://localhost:8080/adminGetSbSend?sbSendState=${category}`
-        // );
-        // setSbSends(res.data);
-        // console.log(res.data);
+        const res = await axios.get(
+          `http://localhost:8080/adminGetSbSend?sbSendState=${category}`
+        );
+        setSbSends(res.data);
+        console.log(res.data);
       } catch (e) {
         console.log(e);
       }
@@ -256,30 +256,30 @@ const ContentTitle = styled.div`
   }
 `;
 const NumTitle = styled.div`
-  width: 12%;
+  width: 10%;
 `;
 const DateTitle = styled.div`
-  width: 14%;
+  width: 15%;
 `;
 const NameTitle = styled.div`
-  width: 8%;
+  width: 10%;
 `;
 const ProdTitle = styled.div`
-  width: 13%;
+  width: 10%;
 `;
 const PriceTitle = styled.div`
-  width: 8%;
+  width: 10%;
 `;
 const PayTitle = styled.div`
-  width: 6%;
+  width: 10%;
 `;
 const ShipmentTitle = styled.div`
-  width: 9%;
+  width: 10%;
 `;
 const StatusTitle = styled.div`
-  width: 8%;
+  width: 10%;
 `;
 const EditTitle = styled.div`
-  width: 5%;
+  width: 10%;
 `;
 export default SbSendManagement;

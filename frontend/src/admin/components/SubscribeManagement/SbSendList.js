@@ -135,33 +135,33 @@ const SendItem = styled.div`
   }
 `;
 const SendNum = styled.div`
-  width: 12%;
+  width: 10%;
   text-decoration: underline;
   cursor: pointer;
 `;
 const SendDate = styled.div`
-  width: 14%;
+  width: 15%;
 `;
 const SendName = styled.div`
-  width: 8%;
+  width: 10%;
 `;
 const SendProd = styled.div`
-  width: 13%;
+  width: 10%;
 `;
 const SendPrice = styled.div`
-  width: 8%;
+  width: 10%;
 `;
 const SendPay = styled.div`
-  width: 6%;
+  width: 10%;
 `;
 const SendShipment = styled.div`
-  width: 9%;
+  width: 10%;
 `;
 const SendStatus = styled.div`
-  width: 8%;
+  width: 10%;
 `;
 const EditBtn = styled.div`
-  width: 5%;
+  width: 10%;
   button {
     font-size: 1rem;
     font-weight: 500;

@@ -9,58 +9,7 @@ const SbSendProductSelect = ({
   hadleCloseSelectModal,
 }) => {
   const [nowSelect, setNowSelect] = useState(sbProduct);
-  const [sbProdList, setSbProdList] = useState([
-    {
-      sbProdNum: 2,
-      scentName: "Castoreum",
-      scentNoteName: "Animal",
-      sbProdPrice: 22900,
-      sbProdIntro:
-        "향초, 섬유향수, 샴푸 세가지 상품으로 구성된 캐스토리움향의 패키지입니다. 에이센틱과 함께 일상을 향기로 채워보세요.",
-      sbProdImage: "expProduct2.webp",
-      sbProdStock: 8,
-    },
-    {
-      sbProdNum: 2,
-      scentName: "Castoreum",
-      scentNoteName: "Animal",
-      sbProdPrice: 22900,
-      sbProdIntro:
-        "향초, 섬유향수, 샴푸 세가지 상품으로 구성된 캐스토리움향의 패키지입니다. 에이센틱과 함께 일상을 향기로 채워보세요.",
-      sbProdImage: "expProduct2.webp",
-      sbProdStock: 8,
-    },
-    {
-      sbProdNum: 2,
-      scentName: "Castoreum",
-      scentNoteName: "Animal",
-      sbProdPrice: 22900,
-      sbProdIntro:
-        "향초, 섬유향수, 샴푸 세가지 상품으로 구성된 캐스토리움향의 패키지입니다. 에이센틱과 함께 일상을 향기로 채워보세요.",
-      sbProdImage: "expProduct2.webp",
-      sbProdStock: 8,
-    },
-    {
-      sbProdNum: 2,
-      scentName: "Castoreum",
-      scentNoteName: "Animal",
-      sbProdPrice: 22900,
-      sbProdIntro:
-        "향초, 섬유향수, 샴푸 세가지 상품으로 구성된 캐스토리움향의 패키지입니다. 에이센틱과 함께 일상을 향기로 채워보세요.",
-      sbProdImage: "expProduct2.webp",
-      sbProdStock: 8,
-    },
-    {
-      sbProdNum: 2,
-      scentName: "Castoreum",
-      scentNoteName: "Animal",
-      sbProdPrice: 22900,
-      sbProdIntro:
-        "향초, 섬유향수, 샴푸 세가지 상품으로 구성된 캐스토리움향의 패키지입니다. 에이센틱과 함께 일상을 향기로 채워보세요.",
-      sbProdImage: "expProduct2.webp",
-      sbProdStock: 8,
-    },
-  ]);
+  const [sbProdList, setSbProdList] = useState([]);
   const [prodloading, setProdloading] = useState(false);
   const [category, setCategory] = useState(sbMember.tasteResult);
   const [tasteRes, setTasteRes] = useState("");
@@ -118,13 +67,16 @@ const SbSendProductSelect = ({
     const fetchProducts = async () => {
       setProdloading(true);
       try {
-        // const res = await axios.get(
-        //   `http://localhost:8080/subsProduct/list?scentnote=${category}`
-        // );
-        // const result = await axios.get(`http://localhost:8080/subsProduct/list?scentnote=${sbMember.memberId}`);
-        // setSbProdList(res.data);
-        // setTasteRes(result);
-        // console.log(res.data);
+        const res = await axios.get(
+          `http://localhost:8080/adminSbMemberRecord?memberId=${sbMember.memberId}&scentNoteName=${category}`
+        );
+        const result = await axios.get(
+          `http://localhost:8080/adminMemberTestResult?memberId=${sbMember.memberId}`
+        );
+        setSbProdList(res.data);
+        setTasteRes(result.data);
+        console.log(res.data);
+        console.log(result.data);
       } catch (e) {
         console.log(e);
       }
@@ -149,14 +101,13 @@ const SbSendProductSelect = ({
           &times;
         </button>
         <TasteResBox>
-          <div>
-            {sbMember.memberId}님의 구독취향: {sbMember.tasteResult}
-          </div>
+          <div>{sbMember.memberId}님의 구독취향</div>
+          <div>{sbMember.tasteResult}</div>
           <div>
             {tasteRes !== "" && (
               <div>
-                취향테스트 결과: 1위 {tasteRes.firstPlace}, 2위{" "}
-                {tasteRes.secondPlace}, 3위 {tasteRes.thirdPlace}
+                1위 {tasteRes.firstPlace}&nbsp; | &nbsp;2위{" "}
+                {tasteRes.secondPlace}&nbsp; | &nbsp;3위 {tasteRes.thirdPlace}
               </div>
             )}
           </div>
@@ -179,7 +130,7 @@ const SbSendProductSelect = ({
           </tr>
           <ProductItemList>
             {sbProdList.length === 0 ? (
-              <div>결과가 없습니다.</div>
+              <div className="noResult">결과가 없습니다.</div>
             ) : (
               sbProdList.map((sbproduct) => (
                 <SbProdBox
@@ -235,11 +186,11 @@ const SbSendProductSelect = ({
 
 const ModalBackground = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  top: -2%;
+  left: -44%;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 1100;
 `;
 const ModalContainer = styled.div`
@@ -268,8 +219,37 @@ const ModalContainer = styled.div`
   }
 `;
 
-const TasteResBox = styled.div``;
-const OptionBox = styled.div``;
+const OptionBox = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  select {
+    width: 40%;
+    height: 40px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+`;
+const TasteResBox = styled.div`
+  width: 100%;
+  text-align: center;
+  > div:nth-child(1) {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  > div:nth-child(2) {
+    font-size: 1.2rem;
+    line-height: 2;
+    font-weight: 500;
+  }
+  > div {
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+`;
 const ProductContainer = styled.table`
   width: 100%;
   display: flex;
@@ -321,6 +301,9 @@ const ProductItemList = styled.div`
   }
   .active {
     background-color: rgba(245, 245, 245, 1);
+  }
+  .noResult {
+    margin-top: 100px;
   }
 `;
 const SbProdBox = styled.div`

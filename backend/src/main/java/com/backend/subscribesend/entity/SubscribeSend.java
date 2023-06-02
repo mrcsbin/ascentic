@@ -51,7 +51,8 @@ public class SubscribeSend {
     @Column(name = "sb_send_state")
     private String sbSendState; // 결제완료, 상품준비중, 배송준비중, 배송중, 배송완료
 
-    public void adminUpdate(String sbSendPostcode, SubscribeProduct subscribeProduct, String sbShippingCode) {
+    public void adminUpdate(String sbSendPostcode, String sbSendState, SubscribeProduct subscribeProduct, String sbShippingCode) {
+        this.sbSendState = sbSendState;
         this.sbSendPostcode = sbSendPostcode;
         this.subscribeProduct = subscribeProduct;
         this.sbShippingCode = sbShippingCode;

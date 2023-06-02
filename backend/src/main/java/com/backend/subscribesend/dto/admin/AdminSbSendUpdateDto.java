@@ -8,6 +8,7 @@ import lombok.Setter;
 public class AdminSbSendUpdateDto {
     private Integer sbSendNum;
     private String sbSendPostcode;
+    private String sbSendState;
     private Integer sbProdNum;
     private String sbShippingCode;
 }

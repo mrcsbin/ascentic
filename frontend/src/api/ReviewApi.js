@@ -10,3 +10,12 @@ export const setReviewCount = async (accessToken, reviewNum) => {
     },
   });
 };
+
+export const getReviewList = async (accessToken) => {
+  const response = await axios.get(`${REVIEW_API_URL}/get`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};

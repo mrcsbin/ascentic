@@ -7,11 +7,14 @@ import { getOrderProductList } from "../../../api/OrderProduct";
 export const OrderList = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(orderList)
 
   useEffect(() => {
     const fetchProductData = async () => {
       const response = await getOrderProductList(getCookie("accessToken"));
-      setOrderList(response);
+      setOrderList(
+        response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+      );
       setIsLoading(false);
     };
     fetchProductData();

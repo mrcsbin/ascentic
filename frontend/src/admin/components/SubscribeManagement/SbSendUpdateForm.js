@@ -188,9 +188,12 @@ const SbSendUpdateForm = ({ sbSend, hadleCloseEditModal }) => {
               <tr className="productTitle">
                 <th colSpan={5}>구독상품정보</th>
                 <th>
-                  <button onClick={() => hadleOpenSelectModal()}>
-                    변경하기
-                  </button>
+                  {sbSend.sbSendState !== "배송중" &&
+                    sbSend.sbSendState !== "배송완료" && (
+                      <button onClick={() => hadleOpenSelectModal()}>
+                        변경하기
+                      </button>
+                    )}
                 </th>
               </tr>
               <tr>

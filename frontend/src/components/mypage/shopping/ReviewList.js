@@ -7,7 +7,6 @@ import { getOrderReviewList } from "../../../api/OrderProduct";
 export const ReviewList = () => {
   const [reviewList, setReviewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(reviewList);
 
   useEffect(() => {
     const fetchProductData = async () => {

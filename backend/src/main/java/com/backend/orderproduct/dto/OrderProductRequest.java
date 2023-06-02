@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class OrderRequest {
+public class OrderProductRequest {
 
     @Getter
     public static class OrderProductDto {

@@ -37,5 +37,5 @@ public class OrderProduct {
     private String memberId;
 
     @Column(name = "order_review_state")
-    private boolean orderReviewState;
+    private String orderReviewState;
 }

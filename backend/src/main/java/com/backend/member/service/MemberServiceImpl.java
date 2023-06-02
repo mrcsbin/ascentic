@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,6 @@ public class MemberServiceImpl implements MemberService {
                 .role(Collections.singletonList("USER"))
                 .birthDate(signupDto.getBirth())
                 .build();
-
         return memberRepository.save(member).getId();
     }
 
@@ -76,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void updateMember(Member member) {
         member.setRole(Collections.singletonList("USER"));
-        member.ChangeEncodedPassword(passwordEncoder.encode(member.getPassword()));
+        member.changeEncodedPassword(passwordEncoder.encode(member.getPassword()));
         memberRepository.save(member);
     }
 
@@ -100,11 +98,6 @@ public class MemberServiceImpl implements MemberService {
             Member member = findData.get();
             if (passwordEncoder.matches(loginDto.getPassword(), member.getPassword()) && loginDto.getId().equals(member.getId())) {
                 JwtTokenDto jwtTokenDto = jwtTokenProvider.generateToken(member);
-//                JwtTokenDto jwtTokenDto = JwtTokenDto.builder()
-//                        .grantType("bearer")
-//                        .accessToken(jwtToken)
-//                        .refreshToken(jwtToken)
-//                        .build();
                 log.debug("jwtToken : {}", jwtTokenDto);
                 return jwtTokenDto;
             } else {
@@ -155,7 +148,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     public void changeTempPw(Member member, String tempPassword) {
-        member.ChangeEncodedPassword(passwordEncoder.encode(tempPassword));
+        member.changeEncodedPassword(passwordEncoder.encode(tempPassword));
         memberRepository.save(member);
     }
 
@@ -253,6 +246,4 @@ public class MemberServiceImpl implements MemberService {
                 .build();
         memberRepository.save(member6);
     }
-
-
 }

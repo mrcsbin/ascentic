@@ -2,6 +2,11 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
+}
+
 function Contents({ cartItems }) {
   const checkedItem = useSelector((state) => state.cart.checkedItems);
 
@@ -16,14 +21,14 @@ function Contents({ cartItems }) {
     <>
       <ContentsBox>
         <LeftSpan>상품금액&nbsp;&nbsp;</LeftSpan>
-        <RightSpan>{totalPrice}원</RightSpan>
+        <RightSpan>{addComma(totalPrice)}원</RightSpan>
       </ContentsBox>
       <ContentsBox>
         <LeftSpan>배송비&nbsp;</LeftSpan>
         {totalPrice === 0 ? (
           <RightSpan> 0 원</RightSpan>
         ) : (
-          <RightSpan>+ {shippingFee} 원</RightSpan>
+          <RightSpan>+ {addComma(shippingFee)} 원</RightSpan>
         )}
       </ContentsBox>
       <ContentsBox>
@@ -31,7 +36,7 @@ function Contents({ cartItems }) {
         {totalPrice === 0 ? (
           <RightSpan> 0 원</RightSpan>
         ) : (
-          <RightSpan> - {discountAmount} 원</RightSpan>
+          <RightSpan> - {addComma(discountAmount)} 원</RightSpan>
         )}
       </ContentsBox>
       <Amounts>
@@ -39,7 +44,7 @@ function Contents({ cartItems }) {
           결제 예정금액&nbsp;
         </LeftSpan>
         <RightSpan style={{ fontWeight: 900, fontSize: 20 }}>
-          {shippingFee + totalPrice - discountAmount} 원
+          {addComma(shippingFee + totalPrice - discountAmount)} 원
         </RightSpan>
       </Amounts>
     </>

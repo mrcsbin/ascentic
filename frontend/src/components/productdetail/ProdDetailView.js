@@ -35,6 +35,13 @@ function ProdDetailView({ productData }) {
   }, [productData.prodOptions]);
 
   function QuantButton(x) {
+    if (x === "+") {
+      if (productData.prodNum === 1) {
+        alert("수량 조절이 불가능한 상품입니다.");
+        return;
+      }
+    }
+
     if (x === "+") setQuantity(quantity + 1);
     else if (quantity > 1) setQuantity(quantity - 1);
   }
@@ -208,9 +215,22 @@ function ProdDetailView({ productData }) {
                 </Amount>
               </AmountBox>
               <OrderCartBox className="order-cart">
-                <OrderCartButton className="cartbtn" onClick={handleCartClick}>
-                  장바구니 담기
-                </OrderCartButton>
+                {productData.buyWelcomePackage ? (
+                  <OrderCartButton
+                    onClick={() => {
+                      alert("회원당 1회에 한 해 구매 가능한 상품입니다.");
+                    }}
+                  >
+                    구매 불가
+                  </OrderCartButton>
+                ) : (
+                  <OrderCartButton
+                    className="cartbtn"
+                    onClick={handleCartClick}
+                  >
+                    장바구니 담기
+                  </OrderCartButton>
+                )}
               </OrderCartBox>
             </SideBar>
           </RightContainer>

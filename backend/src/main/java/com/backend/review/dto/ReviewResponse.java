@@ -20,7 +20,7 @@ public class ReviewResponse {
         private Integer orderProductPrice;
         private Integer orderProductCount;
         private Integer orderProductNum;
-        private boolean orderReviewState;
+        private String orderReviewState;
 
         public static ReviewListDto of(Review review) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy . MM . dd");
@@ -35,8 +35,21 @@ public class ReviewResponse {
                     review.getOrderProduct().getProductOption().getProdPrice(),
                     review.getOrderProduct().getProdCount(),
                     review.getOrderProduct().getOrderProdNum(),
-                    review.getOrderProduct().isOrderReviewState()
+                    review.getOrderProduct().getOrderReviewState()
             );
+        }
+    }
+
+    @Getter
+    @Builder
+    public static class ReviewDto {
+        private Integer reviewScore;
+        private String reviewComment;
+
+        public static ReviewDto of(Review review) {
+            return new ReviewDto(
+                    review.getReviewScore(),
+                    review.getReviewContent());
         }
     }
 }

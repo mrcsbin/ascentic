@@ -37,7 +37,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orderProduct(orderProduct)
                 .build());
 
-        orderProduct.setOrderReviewState(true);
+        orderProduct.setOrderReviewState("리뷰 작성 완료");
         orderProductRepository.save(orderProduct);
     }
 
@@ -53,6 +53,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public ReviewResponse.ReviewDto getReview(String orderProductNum) {
+        Review review = reviewRepository.findByOrderProductOrderProdNum(orderProductNum);
+        return ReviewResponse.ReviewDto.of(review);
+    }
+
+    @Override
     @Transactional
     public void deleteReview(Integer prodNum) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
@@ -64,9 +70,11 @@ public class ReviewServiceImpl implements ReviewService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
         Review review = reviewRepository.findById(reviewNum)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid reviewNum"));
+                .orElseThrow(() -> new IllegalArgumentException("reviewNum 에 해당하는 리뷰가 없음"));
 
         review.setReviewCount(currentMemberId);
         reviewRepository.save(review);
     }
+
+
 }

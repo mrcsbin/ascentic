@@ -1,17 +1,16 @@
 package com.backend.product.dto;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.product.entity.Product;
 import com.backend.productoption.entity.ProductOption;
 import com.backend.review.entity.Review;
-import com.backend.reviewcomment.entity.ReviewComment;
 import com.backend.scent.entity.Scent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,49 +60,32 @@ public class ProductResponse {
         private boolean isWish;
         private String prodState;
         private List<ReviewDto> reviewList;
+        private boolean isBuyWelcomePackage;
 
-        private ProductDetailDto(Integer prodNum,
-                                 String prodName,
-                                 String prodCategory,
-                                 String prodInfo,
-                                 List<String> prodImage,
-                                 Scent scent,
-                                 boolean isWish,
-                                 String prodState,
-                                 List<ReviewDto> reviewList) {
-            this.prodNum = prodNum;
-            this.prodName = prodName;
-            this.prodCategory = prodCategory;
-            this.prodInfo = prodInfo;
-            this.prodImage = prodImage;
-            this.scent = scent;
-            this.isWish = isWish;
-            this.prodState = prodState;
-            this.reviewList = reviewList;
-        }
-
-        public static ProductDetailDto of(Product product,
-                                          String memberId,
-                                          List<ProductResponse.ReviewDto> reviews) {
-            ProductDetailDto productDetailDto = new ProductDetailDto(product.getProdNum(),
-                    product.getProdName(),
-                    product.getProdCategory(),
-                    product.getProdInfo(),
-                    product.getImageSaveNameList(),
-                    product.getScent(),
-                    product.isWish(memberId, product.getProdNum()),
-                    product.getProdState(),
-                    reviews);
-            productDetailDto.setOptions(product.getProductOption());
-
-            return productDetailDto;
-        }
-
-        public void setOptions(List<ProductOption> options) {
-            prodOptions = options.stream()
+        public static ProductDetailDto of(Product product, String memberId, List<ProductResponse.ReviewDto> reviews) {
+            List<OptionDetailDto> prodOptions = product.getProductOption().stream()
                     .filter(option -> !option.getOptionState().equals("판매종료"))
                     .map(OptionDetailDto::of)
                     .collect(Collectors.toList());
+
+            boolean isBuyWelcomePackage = product.getProductOption().stream()
+                    .flatMap(option -> option.getOrderProduct().stream())
+                    .filter(orderProduct -> orderProduct.getProductOption().getProduct().getProdNum() == 1)
+                    .anyMatch(orderProduct -> orderProduct.getMemberId().equals(memberId));
+
+            return ProductDetailDto.builder()
+                    .prodNum(product.getProdNum())
+                    .prodName(product.getProdName())
+                    .prodCategory(product.getProdCategory())
+                    .prodInfo(product.getProdInfo())
+                    .prodOptions(prodOptions)
+                    .prodImage(product.getImageSaveNameList())
+                    .scent(product.getScent())
+                    .isWish(product.isWish(memberId, product.getProdNum()))
+                    .prodState(product.getProdState())
+                    .reviewList(reviews)
+                    .isBuyWelcomePackage(isBuyWelcomePackage)
+                    .build();
         }
     }
 

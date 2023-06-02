@@ -1,12 +1,14 @@
 package com.backend.orderproduct.dto;
 
+import com.backend.order.entity.Order;
 import com.backend.orderproduct.entity.OrderProduct;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class OrderResponse {
+public class OrderProductResponse {
 
     @Getter
     @Builder
@@ -52,7 +54,8 @@ public class OrderResponse {
         private Integer orderProductPrice; // 주문 상품 가격
         private Integer orderProductCount; // 주문 상품 수량
         private Integer orderProductNum; // 주문 상품 번호(PK)
-        private boolean orderProductReviewState; // 주문 상품 리뷰 상태
+        private String orderProductReviewState; // 주문 상품 리뷰 상태
+
 
         public static OrderReviewListDto of(OrderProduct orderProduct) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy . MM . dd");
@@ -68,8 +71,9 @@ public class OrderResponse {
                     orderProduct.getProductOption().getProdPrice(),
                     orderProduct.getProdCount(),
                     orderProduct.getOrderProdNum(),
-                    orderProduct.isOrderReviewState()
+                    orderProduct.getOrderReviewState()
             );
         }
     }
+
 }

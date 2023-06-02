@@ -11,14 +11,14 @@ export const setReviewCount = async (accessToken, reviewNum) => {
   });
 };
 
-// export const getReviewList = async (accessToken) => {
-//   const response = await axios.get(`${REVIEW_API_URL}/get`, {
-//     headers: {
-//       Authorization: `Bearer ${accessToken}`,
-//     },
-//   });
-//   return response.data;
-// };
+export const getReview = async (accessToken, orderProductNum) => {
+  const response = await axios.get(`${REVIEW_API_URL}/get/${orderProductNum}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
 
 export const addReview = async (accessToken, data) => {
   await axios.post(`${REVIEW_API_URL}/add`, data, {

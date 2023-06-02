@@ -8,7 +8,7 @@ function addComma(num) {
   return num.toString().replace(regexp, ",");
 }
 
-const ReviewModal = ({ item, clickModalHandle }) => {
+const ReviewModal = ({ item, clickModalHandle, isComplete }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -40,9 +40,8 @@ const ReviewModal = ({ item, clickModalHandle }) => {
                 </ItemInfoBox>
               </ItemCard>
               <RatingBox>
-                <WriteReview item={item} />
+                <WriteReview item={item} isComplete={isComplete} />
               </RatingBox>
-              <SubmitBox></SubmitBox>
             </ModalContents>
           </ModalView>
         </ModalBackdrop>

@@ -61,21 +61,6 @@ public class Member {
     @Column(name = "member_buyWelcomeYn")
     private boolean buyWelcomePackageYn;
 
-//    @Column(name = "customer_key")
-//    private String customerKey;
-
-//    @Column
-//    @Enumerated(EnumType.STRING)
-//    private Authority authority;
-
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "authority_id") // 외래키
-//    private Authority authority;
-
-//    @OneToMany(mappedBy = "memberTest")
-//    private Set<Authority> authorities;
-
     @Builder
     public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role) {
         this.id = id;
@@ -88,7 +73,7 @@ public class Member {
         this.role = role;
     }
 
-    public void ChangeEncodedPassword(String password) {
+    public void changeEncodedPassword(String password) {
         this.password = password;
     }
 

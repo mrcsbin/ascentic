@@ -8,7 +8,6 @@ import {
   updateCartItem,
 } from "../../store/modules/cart";
 import { useDispatch, useSelector } from "react-redux";
-import SOLD_OUT from "../../assets/storeMain/soldout.png";
 
 function CountButton({ cartNum, productCount }) {
   const dispatch = useDispatch();
@@ -62,7 +61,6 @@ export const CartItemCard = ({ item }) => {
 
   return (
     <ItemCard>
-      <TEST src={SOLD_OUT} alt="" />
       <SelectButtonBox>
         <SelectButton
           type="checkbox"
@@ -76,6 +74,7 @@ export const CartItemCard = ({ item }) => {
             src={`http://localhost:8080/images/${item.productImage}`}
             alt="상품 이미지"
           />
+          <SoldOutText>SOLD OUT</SoldOutText>
         </ItemImageLink>
       </ImageBox>
       <ItemBox>
@@ -98,9 +97,14 @@ export const CartItemCard = ({ item }) => {
 };
 
 // countButton
-const TEST = styled.img`
+const SoldOutText = styled.div`
   position: absolute;
-  width: 50%;
+  width: 100%;
+  top: 50%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: red;
+  font-weight: 600;
 `;
 
 const CountButtonBox = styled.div`
@@ -162,6 +166,7 @@ const SelectButtonBox = styled.div`
 const SelectButton = styled.input``;
 
 const ImageBox = styled.div`
+  position: relative;
   width: 15%;
 `;
 

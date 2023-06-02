@@ -1,7 +1,6 @@
 package com.backend.review.entity;
 
 import com.backend.orderproduct.entity.OrderProduct;
-import com.backend.reviewcomment.entity.ReviewComment;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,10 +44,6 @@ public class Review {
 
     @Column(name = "review_score", nullable = false)
     private Integer reviewScore;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ReviewComment> comments;
 
     @Column(name = "review_good_count")
     private Integer reviewGoodCount;

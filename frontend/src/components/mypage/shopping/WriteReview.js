@@ -2,15 +2,36 @@ import React, { useState } from "react";
 import EMPTY_STAR from "../../../assets/productdetail/empty-star-image.png";
 import FULL_STAR from "../../../assets/productdetail/full-star-image.png";
 import styled from "styled-components";
-import { addReview } from "../../../api/ReviewApi";
+import { addReview, getReview } from "../../../api/ReviewApi";
 import { getCookie } from "../../../utils/Cookies";
+import { useEffect } from "react";
 
 const ARRAY = [0, 1, 2, 3, 4];
 
-const WriteReview = ({ item }) => {
+const WriteReview = ({ item, isComplete }) => {
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const [hovered, setHovered] = useState(-1);
   const [reviewText, setReviewText] = useState("");
+  const [review, setReview] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getReview(
+        getCookie("accessToken"),
+        item.orderProductNum
+      );
+      setReview(response);
+      let clickStates = [false, false, false, false, false];
+      for (let i = 0; i < 5; i++) {
+        clickStates[i] = i <= response.reviewScore ? true : false;
+      }
+      setClicked(clickStates);
+    };
+
+    if (isComplete) {
+      fetchData();
+    }
+  }, []);
 
   const handleReviewTextChange = (event) => {
     const text = event.target.value;
@@ -40,14 +61,64 @@ const WriteReview = ({ item }) => {
       reviewScore: clicked.filter(Boolean).length,
       orderProductNum: item.orderProductNum,
     };
-    await addReview(getCookie("accessToken"), data).then(() => {
-      window.location.reload();
-    });
+    await addReview(getCookie("accessToken"), data).then(() =>
+      window.location.reload()
+    );
   };
+
+  const clickDeleteHandle = async () => {};
 
   return (
     <Wrap>
-      <RatingText>이 상품에 만족하셨나요 ?</RatingText>
+      {review === undefined ? (
+        <>
+          <RatingText>이 상품에 만족하셨나요 ?</RatingText>
+          <Stars>
+            {ARRAY.map((el, idx) => {
+              return (
+                <StarImage
+                  src={idx <= hovered || clicked[idx] ? FULL_STAR : EMPTY_STAR}
+                  key={idx}
+                  onClick={() => handleStarClick(idx)}
+                  onMouseEnter={() => handleStarHover(idx)}
+                  onMouseLeave={() => handleStarHover(-1)}
+                />
+              );
+            })}
+          </Stars>
+          <ReviewText
+            placeholder="상세한 리뷰는 다른 회원들에게 도움이 됩니다. (최소 20자 이상)"
+            value={reviewText}
+            onChange={handleReviewTextChange}
+          />
+          <CharacterCount isFull={reviewText.length === 50}>
+            {reviewText.length} / 50
+          </CharacterCount>
+          <SubmitButtonBox>
+            <SubmitButton onClick={clickSubmitHandle}>작성완료</SubmitButton>
+          </SubmitButtonBox>
+        </>
+      ) : (
+        <>
+          <RatingText>이 상품에 만족하셨나요 ?</RatingText>
+          <Stars>
+            {ARRAY.map((el, idx) => {
+              return (
+                <StarImage
+                  src={idx <= clicked[idx] ? FULL_STAR : EMPTY_STAR}
+                  key={idx}
+                />
+              );
+            })}
+          </Stars>
+          <ReviewText value={review.reviewComment} disabled />
+          <CharacterCount isFull={reviewText.length === 50}></CharacterCount>
+          <SubmitButtonBox>
+            <SubmitButton onClick={clickDeleteHandle}>삭제하기</SubmitButton>
+          </SubmitButtonBox>
+        </>
+      )}
+      {/* <RatingText>이 상품에 만족하셨나요 ?</RatingText>
       <Stars>
         {ARRAY.map((el, idx) => {
           return (
@@ -71,7 +142,7 @@ const WriteReview = ({ item }) => {
       </CharacterCount>
       <SubmitButtonBox>
         <SubmitButton onClick={clickSubmitHandle}>작성완료</SubmitButton>
-      </SubmitButtonBox>
+      </SubmitButtonBox> */}
     </Wrap>
   );
 };

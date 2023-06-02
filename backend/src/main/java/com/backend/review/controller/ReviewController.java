@@ -25,6 +25,11 @@ public class ReviewController {
         return reviewService.getReviewList();
     }
 
+    @GetMapping("/get/{orderProductNum}")
+    public ReviewResponse.ReviewDto getReview(@PathVariable String orderProductNum) {
+        return reviewService.getReview(orderProductNum);
+    }
+
     @GetMapping("/delete")
     public void deleteReview(Integer prodNum) {
         reviewService.deleteReview(prodNum);

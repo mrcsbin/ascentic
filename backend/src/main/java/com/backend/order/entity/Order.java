@@ -1,11 +1,13 @@
 package com.backend.order.entity;
 
 import com.backend.member.entity.Member;
+import com.backend.orderproduct.entity.OrderProduct;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,7 +26,7 @@ public class Order {
     @Column(name = "member_id")
     private String memberId;
 
-    @Column(name="order_id")
+    @Column(name = "order_id")
     private String orderId;
 
     @Column(name = "order_email", nullable = false)
@@ -68,6 +70,7 @@ public class Order {
 
     @Column(name = "ship_charge")
     private Integer shipCharge;
+
     @CreationTimestamp
     @Column(name = "orderDate", nullable = false)
     private LocalDateTime orderDate;

@@ -1,15 +1,15 @@
 package com.backend.orderproduct.service;
 
-import com.backend.orderproduct.dto.OrderRequest;
-import com.backend.orderproduct.dto.OrderResponse;
+import com.backend.orderproduct.dto.OrderProductRequest;
+import com.backend.orderproduct.dto.OrderProductResponse;
 
 import java.util.List;
 
 public interface OrderProductService {
 
-    void insertOrderProduct(OrderRequest.OrderProductDto orderProductDto);
+    void insertOrderProduct(OrderProductRequest.OrderProductDto orderProductDto);
 
-    List<OrderResponse.OrderProductListDto> getOrderProductList();
+    List<OrderProductResponse.OrderProductListDto> getOrderProductList();
 
-    List<OrderResponse.OrderReviewListDto> getOrderReviewList();
+    List<OrderProductResponse.OrderReviewListDto> getOrderReviewList();
 }

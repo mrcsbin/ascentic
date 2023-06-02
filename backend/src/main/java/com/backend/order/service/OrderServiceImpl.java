@@ -17,7 +17,6 @@ import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -172,6 +171,21 @@ public class OrderServiceImpl implements OrderService {
 
     ;
 
+    public PaymentFinalRes paymentFinalResFindByOrderId(String orderId){
+     return paymentFinalResRepository.findByOrderId(orderId);
+    };
+
+    public void changeOrderState(Order order, String state){
+        order.setOrderState(state);
+        orderRepository.save(order);
+    };
+
+    public void changePaymentState(Order order, boolean state){
+        order.setOrderPaymentState(state);
+        orderRepository.save(order);
+    };
+
+}
 
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId) {
         return paymentFinalResRepository.findByOrderId(orderId);

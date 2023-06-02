@@ -56,16 +56,29 @@ public class OrderController {
            if(result.getCard() ==null) {
                finalRes.setEasyPay(result.getEasyPay());
                orderService.saveRes(result);
-               //버그 고치는용~
-               System.out.println(result);
            } else //when the payment method is Card
            { finalRes.setCard(result.getCard());
             finalRes.setTotalAmount(result.getTotalAmount());
             System.out.println(result);
             orderService.saveRes(result);}
+         Order order= orderRepository.findByOrderId(finalRes.getOrderId());
+           orderService.changeOrderState(order,"결제완료");
+            orderService.changePaymentState(order,true);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+//
+//        {"mId":"tvivarepublica","lastTransactionKey":"02D61857B027C91963EBC067A1527C2D"
+//                ,"paymentKey":"OR1ZwdkQD5GePWvyJnrKavKzKQjoNa3gLzN97EoqYA60XKx4","orderId":"20230531455ab1",
+//                "orderName":"우디 디퓨저외 5 종","taxExemptionAmount":0,"status":"DONE","requestedAt":"2023-05-31T22:27:01+09:00",
+//                "approvedAt":"2023-05-31T22:27:22+09:00","useEscrow":false,"cultureExpense":false,"card":null,
+//                "virtualAccount":null,"transfer":null,"mobilePhone":null,"giftCertificate":null,"cashReceipt":null,
+//                "cashReceipts":null,"discount":null,"cancels":null,"secret":"ps_kYG57Eba3G20n0R7zkGw8pWDOxmA",
+//                "type":"NORMAL","easyPay":{"provider":"토스페이","amount":115000,"discountAmount":0},"country":"KR",
+//                "failure":null,"isPartialCancelable":true,
+//                "receipt":{"url":"https://dashboard.tosspayments.com/receipt/redirection?transactionId=tviva20230531222705yy3q4&ref=PX"},"checkout":{"url":"https://api.tosspayments.com/v1/payments/OR1ZwdkQD5GePWvyJnrKavKzKQjoNa3gLzN97EoqYA60XKx4/checkout"},"currency":"KRW","totalAmount":115000,"balanceAmount":115000,"suppliedAmount":104545,"vat":10455,"taxFreeAmount":0,"method":"간편결제","version":"2022-11-16"}
+//
 
         Order orderRes = orderRepository.findByOrderId(orderId);
         orderService.updatePaymentState(orderRes);

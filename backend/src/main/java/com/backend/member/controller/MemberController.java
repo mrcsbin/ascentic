@@ -97,7 +97,6 @@ public class MemberController {
         } else {
             return jwtTokenDto;
         }
-
     }
 
     // 아이디 찾기
@@ -129,6 +128,4 @@ public class MemberController {
         System.out.println("모르곘다");
         return memberInfo;
     }
-
-
 }

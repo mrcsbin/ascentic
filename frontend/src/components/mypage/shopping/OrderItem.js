@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const OrderItem = ({ item }) => {
@@ -5,26 +6,32 @@ export const OrderItem = ({ item }) => {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
     return num.toString().replace(regexp, ",");
   }
-  console.log(item)
 
   return (
     <>
-       <ItemCard>
-        <ItemInfoBox>
-          <ItemImage src={`http://localhost:8080/images/${item.productImage}`} alt="상품 이미지" />
-          <ItemNameOptionBox>
-            <ItemName>{item.productName}</ItemName>
-            <ItemOption>{item.productOptionName}</ItemOption>
-          </ItemNameOptionBox>
-        </ItemInfoBox>
+      <ItemCard>
+        <StyledLink
+          to={`/store/productdetail/${item.productNum}`}
+          style={{ color: "black", textDecoration: "none", display: "flex" }}
+        >
+          <ItemInfoBox>
+            <ItemImage
+              src={`http://localhost:8080/images/${item.productImage}`}
+              alt="상품 이미지"
+            />
+            <ItemNameOptionBox>
+              <ItemName>{item.productName}</ItemName>
+              <ItemOption>{item.productOptionName}</ItemOption>
+              <ItemName>{item.orderId}</ItemName>
+            </ItemNameOptionBox>
+          </ItemInfoBox>
+        </StyledLink>
         <ItemOrderDate>{item.orderDate}</ItemOrderDate>
         <ItemAmountBox>
           <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
-          <ItemCount>{item.orderProductQuantity} 개</ItemCount>
+          <ItemCount>{item.orderProductCount} 개</ItemCount>
         </ItemAmountBox>
-        <ItemOrderState>
-          {item.orderShippingState}
-        </ItemOrderState>
+        <ItemOrderState>{item.orderShippingState}</ItemOrderState>
       </ItemCard>
     </>
   );
@@ -37,8 +44,15 @@ const ItemCard = styled.div`
   border-bottom: 1px solid grey;
 `;
 
-const ItemInfoBox = styled.div`
+const StyledLink = styled(Link)`
+  color: "black";
+  text-align: none;
+  display: flex;
   width: 40%;
+`;
+
+const ItemInfoBox = styled.div`
+  width: 100%;
   display: flex;
 `;
 

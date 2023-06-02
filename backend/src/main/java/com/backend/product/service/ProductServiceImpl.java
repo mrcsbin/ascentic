@@ -1,6 +1,7 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.orderproduct.repository.OrderProductRepository;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;

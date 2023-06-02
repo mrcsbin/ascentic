@@ -1,30 +1,21 @@
 import styled from "styled-components";
 import { OrderItem } from "./OrderItem";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { getCookie } from "../../../utils/Cookies";
+import { getOrderProductList } from "../../../api/OrderProduct";
 
 export const OrderList = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  console.log(orderList)
 
   useEffect(() => {
     const fetchProductData = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:8080/orderproduct/getlist",
-          {
-            headers: {
-              Authorization: `Bearer ${getCookie("accessToken")}`,
-            },
-          }
-        );
-        setOrderList(res.data);
-      } catch (error) {
-        console.error("Error fetching order list:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      const response = await getOrderProductList(getCookie("accessToken"));
+      setOrderList(
+        response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+      );
+      setIsLoading(false);
     };
     fetchProductData();
   }, []);

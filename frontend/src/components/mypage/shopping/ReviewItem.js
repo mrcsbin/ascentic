@@ -1,33 +1,56 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ReviewModal from "./ReviewModal";
+
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
+}
 
 export const ReviewItem = ({ item }) => {
-  function addComma(num) {
-    var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return num.toString().replace(regexp, ",");
-  }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log(item);
+  const clickModalHandle = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <>
       <ItemCard>
-        <ItemInfoBox>
-          <ItemImage
-            src={`http://localhost:8080/images/${item.productImage}`}
-            alt="상품 이미지"
-          />
-          <ItemNameOptionBox>
-            <ItemName>{item.productName}</ItemName>
-            <ItemOption>{item.productOptionName}</ItemOption>
-          </ItemNameOptionBox>
-        </ItemInfoBox>
+        <StyledLink
+          to={`/store/productdetail/${item.productNum}`}
+          style={{ color: "black", textDecoration: "none", display: "flex" }}
+        >
+          <ItemInfoBox>
+            <ItemImage
+              src={`http://localhost:8080/images/${item.productImage}`}
+              alt="상품 이미지"
+            />
+            <ItemNameOptionBox>
+              <ItemName>{item.productName}</ItemName>
+              <ItemOption>{item.productOptionName}</ItemOption>
+              <ItemName>{item.orderId}</ItemName>
+            </ItemNameOptionBox>
+          </ItemInfoBox>
+        </StyledLink>
         <ItemOrderDate>{item.orderDate}</ItemOrderDate>
         <ItemAmountBox>
           <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
-          <ItemCount>{item.orderProductQuantity} 개</ItemCount>
+          <ItemCount>{item.orderProductCount} 개</ItemCount>
         </ItemAmountBox>
-        <ItemOrderState>
-          {item.orderShippingState ? "배송 완료" : "배송 준비 중"}
-        </ItemOrderState>
+        {item.orderProductReviewState === "리뷰쓰기" ? (
+          <ItemOrderState onClick={clickModalHandle}>
+            {item.orderProductReviewState}
+          </ItemOrderState>
+        ) : (
+          <ItemOrderState>{item.orderProductReviewState}</ItemOrderState>
+        )}
       </ItemCard>
+      {isModalOpen && (
+        <ReviewModal item={item} clickModalHandle={clickModalHandle} />
+      )}
     </>
   );
 };
@@ -40,8 +63,15 @@ const ItemCard = styled.div`
 `;
 
 const ItemInfoBox = styled.div`
-  width: 40%;
+  width: 100%;
   display: flex;
+`;
+
+const StyledLink = styled(Link)`
+  color: "black";
+  text-align: none;
+  display: flex;
+  width: 40%;
 `;
 
 const ItemImage = styled.img`
@@ -95,4 +125,5 @@ const ItemOrderState = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 20%;
+  cursor: pointer;
 `;

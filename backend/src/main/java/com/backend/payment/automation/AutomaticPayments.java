@@ -32,40 +32,8 @@ public class AutomaticPayments {
     private final SubscribePaymentRepository subscribePaymentRepository;
     private SubscribePaymentServiceImpl subscribePaymentService;
 
-//    public AutomaticPayments(SbMemberRepository sbMemberRepository, SubscribePaymentRepository subscribePaymentRepository) {
-//        this.sbMemberRepository = sbMemberRepository;
-//        this.subscribePaymentRepository = subscribePaymentRepository;
-//    }
 
-
-//    @Scheduled(cron = "0 14 15 * * *") //매년 매월 매일 15시 10분 0초에 결제
-        public void executeAtSpecificTime() {
-
-//             여기에 매일 아침 10시에 실행할 코드를 작성하십시오.
-//             1. sbMember에서 endDate 없음  + sbPaymentDay가 오늘임   //전체 데이터
-//
-//             2 sbMember의 memberId 와 tasteResult를 뽑은 후
-//                 MemberId로~
-//                 2-1.receipt의 마지막 결제 날짜 확인
-//                 2-1-1:
-//                 2-2.SubscribePayment 조회
-//
-//             3.
-
-
-//        jsonObject.put("customerKey", subscribePayment.getCustomerKey());
-//        jsonObject.put("orderId", subscribePayment.getOrderId());
-//        jsonObject.put("memberID", subscribePayment.getMemberID());
-//        jsonObject.put("customerEmail", subscribePayment.getCustomerEmail());
-//        jsonObject.put("subscribeCard", subscribePayment.getSubscribeCard());
-//        jsonObject.put("amount", subscribePayment.getAmount());
-//        jsonObject.put("authenticatedTime", subscribePayment.getAuthenticatedTime());
-//        jsonObject.put("orderName", subscribeMember.getTasteResult());
-        //
-
-
-        }
-//    @Scheduled(cron = "0 36 15 * * *") //매년 매월 매일 15시 10분 0초에 결제
+    @Scheduled(cron = "0 10 10 * * *") //매년 매월 매일 10시 10분 0초에 결제
     public void processAutoPayment() {
         // 1. 현재 날짜를 얻어오고 오늘의 일(day) 값을 가져옵니다.
         LocalDate currentDate = LocalDate.now();
@@ -90,26 +58,23 @@ public class AutomaticPayments {
 
                 System.out.println("autopayment 90번째 줄~~~~~~~~~~~~~~~~~~~~~~~~");
                 String tasteRes = member.getTasteResult();
-                subscribePaymentService.performSubscribePayment(payment,tasteRes);
+                subscribePaymentService.performSubscribePayment(payment, tasteRes);
             }
         }
     }
 
     private boolean isPaymentCompletedThisMonth(SubscribePayment payment, Month currentMonth) {
 
-            OffsetDateTime completionDate = OffsetDateTime.parse(payment.getAuthenticatedTime());
-        System.out.println("C바");
-        System.out.println(completionDate);
-        System.out.println(completionDate.getMonth());
-        System.out.println(currentMonth);
-            if (completionDate != null && (completionDate.getMonth() == currentMonth)) {
-                return true;
-            }
-        else{
-        return false;}
+        OffsetDateTime completionDate = OffsetDateTime.parse(payment.getAuthenticatedTime());
+
+        if (completionDate != null && (completionDate.getMonth() == currentMonth)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
-   
+
 }
 
 

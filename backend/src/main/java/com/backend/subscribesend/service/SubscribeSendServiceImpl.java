@@ -100,7 +100,7 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
     @Override
     public void updateSbSend(AdminSbSendUpdateDto adminSbSendUpdateDto) {
         SubscribeSend subscribeSend = subscribeSendRepository.findById(adminSbSendUpdateDto.getSbSendNum()).orElse(null);
-        subscribeSend.adminUpdate(adminSbSendUpdateDto.getSbSendPostcode(),
+        subscribeSend.adminUpdate(adminSbSendUpdateDto.getSbSendPostcode(), adminSbSendUpdateDto.getSbSendState(),
                 sbProductRepository.findById(adminSbSendUpdateDto.getSbProdNum()).orElse(null),
                 adminSbSendUpdateDto.getSbShippingCode());
 

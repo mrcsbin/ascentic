@@ -23,6 +23,7 @@ const HeaderV2 = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLogin);
+  const role = useSelector((state) => state.login.role);
   const location = useLocation();
   const [hoverMenu, setHoverMenu] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -192,7 +193,16 @@ const HeaderV2 = () => {
               ></Icon>
             </IconBox>
             <IconBox>
-              <StyledLink to="/login" isDarkMode={isDarkMode}>
+              <StyledLink
+                to={
+                  isLoggedIn
+                    ? role === "ADMIN"
+                      ? "/admin"
+                      : "/mypage/orderlist/"
+                    : "/login"
+                }
+                isDarkMode={isDarkMode}
+              >
                 <Icon src={iconUser} alt="iconMyPage"></Icon>
               </StyledLink>
             </IconBox>

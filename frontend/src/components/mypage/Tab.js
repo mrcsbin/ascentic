@@ -1,51 +1,61 @@
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../../store/modules/mypage";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Tab = () => {
   const dispatch = useDispatch();
-  const [clickedDiv, setClickedDiv] = useState("주문");
+  const clickedTab = useSelector((state) => state.mypage.activeTab);
 
-  const tabClickHandle = async (tab) => {
-    await dispatch(setActiveTab(tab));
-    setClickedDiv(tab);
+  const tabClickHandle = (tab) => {
+    dispatch(setActiveTab(tab));
   };
+
+  // const [clickedTab, setClickedDiv] = useState(
+  //   useSelector((state) => state.mypage.activeTab)
+  // );
 
   return (
     <TabArea>
       <TabBox>
         <TabHeader>나의 쇼핑</TabHeader>
         <TabList>
-          <TabBody
-            clicked={clickedDiv === "주문"}
-            onClick={() => tabClickHandle("주문")}
-          >
-            주문 내역조회
-          </TabBody>
+          <StyledLink to="/mypage/orderlist">
+            <TabBody
+              clicked={clickedTab === "주문 내역"}
+              onClick={() => tabClickHandle("주문 내역")}
+            >
+              주문 내역
+            </TabBody>
+          </StyledLink>
+        </TabList>
+        <TabList>
+          <StyledLink to="/mypage/reviewlist">
+            <TabBody
+              clicked={clickedTab === "리뷰 관리"}
+              onClick={() => tabClickHandle("리뷰 관리")}
+            >
+              리뷰 관리
+            </TabBody>
+          </StyledLink>
+        </TabList>
+        <TabList>
+          <StyledLink to="/mypage/wishlist">
+            <TabBody
+              clicked={clickedTab === "관심 상품"}
+              onClick={() => tabClickHandle("관심 상품")}
+            >
+              관심 상품
+            </TabBody>
+          </StyledLink>
         </TabList>
         <TabList>
           <TabBody
-            clicked={clickedDiv === "후기"}
-            onClick={() => tabClickHandle("후기")}
+            clicked={clickedTab === "구독 내역"}
+            onClick={() => tabClickHandle("구독 내역")}
           >
-            구매 후기
-          </TabBody>
-        </TabList>
-        <TabList>
-          <TabBody
-            clicked={clickedDiv === "좋아요"}
-            onClick={() => tabClickHandle("좋아요")}
-          >
-            좋아요
-          </TabBody>
-        </TabList>
-        <TabList>
-          <TabBody
-            clicked={clickedDiv === "구독"}
-            onClick={() => tabClickHandle("구독")}
-          >
-            구독
+            구독 내역
           </TabBody>
         </TabList>
       </TabBox>
@@ -68,7 +78,7 @@ export const Tab = () => {
         <TabHeader>고객 서비스</TabHeader>
         <TabList>
           <TabBody
-            clicked={clickedDiv === "회원정보수정"}
+            clicked={clickedTab === "회원정보수정"}
             onClick={() => tabClickHandle("회원정보수정")}
           >
             회원정보수정
@@ -76,7 +86,7 @@ export const Tab = () => {
         </TabList>
         <TabList>
           <TabBody
-            clicked={clickedDiv === "알림 설정"}
+            clicked={clickedTab === "알림 설정"}
             onClick={() => tabClickHandle("알림 설정")}
           >
             알림 설정
@@ -87,7 +97,7 @@ export const Tab = () => {
         </TabList>
         <TabList>
           <TabBody
-            clicked={clickedDiv === "1:1 문의 내역"}
+            clicked={clickedTab === "1:1 문의 내역"}
             onClick={() => tabClickHandle("1:1 문의 내역")}
           >
             1:1 문의 내역
@@ -127,4 +137,9 @@ const TabBody = styled.div`
     cursor: pointer;
     font-weight: 900;
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;

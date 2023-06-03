@@ -37,25 +37,16 @@ function Routes() {
       <Route path="/test" element={<Pages.MainTest />}></Route>
       <Route path="/test2" element={<Pages.MainTest2 />}></Route>
       <Route path="/test3" element={<Pages.MainTest3 />}></Route>
-      <Route
-        path="/login"
-        element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
-      />
+      <Route path="/login" element={<Pages.Login />} />
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
-      <Route
-        path="/mypage"
+      {/* <Route
+        path="/mypage/*"
         element={
-          isLoggedIn ? (
-            role === "ADMIN" ? (
-              <Navigate to="/admin" />
-            ) : (
-              <Pages.MyPage />
-            )
-          ) : (
-            <Navigate to="/login" />
-          )
+          isLoggedIn &&
+          (role === "ADMIN" ? <Navigate to="/admin" /> : <Pages.MyPage />)
         }
-      />
+      /> */}
+      <Route path="/mypage/:category" element={<Pages.MyPage />} />
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />

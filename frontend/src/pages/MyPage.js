@@ -5,25 +5,40 @@ import { Content } from "../components/mypage/Contents";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setActiveTab } from "../store/modules/mypage";
+import { useParams } from "react-router-dom";
+import { OrderList } from "../components/mypage/shopping/OrderList";
+import { ReviewList } from "../components/mypage/shopping/ReviewList";
+import { WishList } from "../components/mypage/shopping/WishList";
+import { Subscribe } from "../components/mypage/shopping/Subscribe";
+import { Update } from "../components/mypage/customerservice/Update";
+import { InquiryList } from "../components/mypage/customerservice/InquiryList";
+import { Notification } from "../components/mypage/customerservice/Notification";
 
 function MyPage() {
   const dispatch = useDispatch();
+  const params = useParams();
 
-  useEffect(() => {
-    const setDefaultTab = async () => {
-      await dispatch(setActiveTab("주문"));
-    };
-
-    // tabClickHandle를 이용한 초기 실행
-    setDefaultTab();
-  }, []);
+  // useEffect(() => {
+  //   const setDefaultTab = async () => {
+  //     await dispatch(setActiveTab("주문"));
+  //   };
+  //   setDefaultTab();
+  // }, []);
 
   return (
     <MyPageWrap>
       <Profile />
       <ContentWrap>
-        <Tab></Tab>
-        <Content></Content>
+        <Tab />
+        <ContentArea>
+          {params.category === "orderlist" && <OrderList />}
+          {params.category === "reviewlist" && <ReviewList />}
+          {params.category === "wishlist" && <WishList />}
+          {params.category === "subscribe" && <Subscribe />}
+          {params.category === "update" && <Update />}
+          {params.category === "alarm" && <Notification />}
+          {params.category === "inquirylist" && <InquiryList />}
+        </ContentArea>
       </ContentWrap>
     </MyPageWrap>
   );
@@ -40,4 +55,10 @@ const MyPageWrap = styled.div`
 
 const ContentWrap = styled.div`
   display: flex;
+`;
+
+const ContentArea = styled.div`
+  box-sizing: border-box;
+  padding: 30px 50px 50px 80px;
+  width: 70%;
 `;

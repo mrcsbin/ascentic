@@ -171,9 +171,7 @@ public class OrderServiceImpl implements OrderService {
 
     ;
 
-    public PaymentFinalRes paymentFinalResFindByOrderId(String orderId){
-     return paymentFinalResRepository.findByOrderId(orderId);
-    };
+
 
     public void changeOrderState(Order order, String state){
         order.setOrderState(state);
@@ -185,7 +183,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     };
 
-}
+
 
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId) {
         return paymentFinalResRepository.findByOrderId(orderId);

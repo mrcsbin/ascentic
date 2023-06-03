@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @AllArgsConstructor
+@Service
 public class PaymentCancelServiceImpl {
     private final OrderRepository orderRepository;
     private final PaymentFinalResRepository paymentFinalResRepository;

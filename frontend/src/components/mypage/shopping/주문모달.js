@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { 주문상품모달 } from "./주문상품모달";
+import { Link } from "react-router-dom";
 
 export const 주문모달 = ({ item }) => {
   function addComma(num) {
@@ -15,7 +16,9 @@ export const 주문모달 = ({ item }) => {
             <주문날짜>주문 날짜 : {item.orderDate} </주문날짜>
             <주문번호>주문 번호 : {item.orderId}</주문번호>
           </주문날짜주문번호>
-          <주문상세>주문 상세 보기</주문상세>
+          <StyledLink to={`/ordercomplete?orderId=${item.orderId}`}>
+            <주문상세>주문 상세 보기</주문상세>
+          </StyledLink>
         </상단바>
         {item.orderProductList.map((item, index) => (
           <주문상품모달 item={item} key={index} />
@@ -24,6 +27,11 @@ export const 주문모달 = ({ item }) => {
     </>
   );
 };
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
 
 const 주문모달Wrapper = styled.div`
   width: 80%;

@@ -15,6 +15,8 @@ import { setIsLogin } from "../../store/modules/login";
 import arrow from "../../assets/menu_arrow.svg";
 import Notice from "./Notice";
 import { Search } from "./Search";
+import { getCartCount } from "../../api/CartApi";
+import { fetchCartItems } from "../../store/modules/cart";
 
 //HSM
 //RouteTest.js 에 임시로 연결
@@ -48,11 +50,14 @@ const HeaderV2 = () => {
     setShowSearch(false);
   };
 
+  // 로그아웃 => 로그아웃 하면 메인페이지로 가진 후 새로고침
   function handleLogout() {
     removeCookie("accessToken");
     dispatch(setIsLogin(false));
     navigate("/", { replace: true });
+    window.location.reload();
   }
+
   useEffect(() => {
     if (location.pathname.startsWith("/exp")) {
       setIsDarkMode(true);
@@ -73,10 +78,18 @@ const HeaderV2 = () => {
       const token = getCookie("accessToken");
       if (token) {
         await dispatch(setIsLogin(true));
+        dispatch(fetchCartItems());
       }
     };
     checkLoginStatus();
   }, [dispatch]);
+
+  // 카트 개수 가져오기
+  const cartCount = useSelector((state) => state.cart.cartItem.length);
+  // useEffect(() => {
+  //   dispatch(fetchCartItems());
+  // }, [dispatch]);
+
   const logoSrc = isDarkMode ? logoW : logoB;
   if (location.pathname.startsWith("/admin")) return null;
   if (location.pathname.startsWith("/NotFound")) return null;
@@ -206,11 +219,14 @@ const HeaderV2 = () => {
                 <Icon src={iconUser} alt="iconMyPage"></Icon>
               </StyledLink>
             </IconBox>
-            <IconBox>
+            <CartBox>
               <StyledLink to="/cart" isDarkMode={isDarkMode}>
                 <Icon src={iconBag} alt="iconBag"></Icon>
+                <CountBox>
+                  <Count>{cartCount === 0 ? "" : cartCount}</Count>
+                </CountBox>
               </StyledLink>
-            </IconBox>
+            </CartBox>
             {isLoggedIn ? (
               <IconBox>
                 <StyledLink to="/" isDarkMode={isDarkMode}>
@@ -232,6 +248,16 @@ const HeaderV2 = () => {
 };
 
 export default HeaderV2;
+
+const CountBox = styled.div`
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  text-align: center;
+`;
+
+const Count = styled.div``;
+
 const Wrap = styled.div`
   height: 75px;
   z-index: 999;
@@ -296,11 +322,19 @@ const StyledLink = styled(Link)`
   color: ${({ isDarkMode }) => (isDarkMode ? "white;" : "black;")};
 `;
 
+const CartBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  margin: 0px 15px;
+  position: relative;
+`;
+
 const IconBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding: 0px 15px;
+  margin: 0px 15px;
 `;
 
 const Icon = styled.img`

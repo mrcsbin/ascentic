@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import iconUser from "../../assets/iconUser.svg";
-import iconBag from "../../assets/iconBag.svg";
-import logoW from "../../assets/logoW.svg";
-import logoB from "../../assets/logoB.svg";
-import iconSearch from "../../assets/iconSearch.svg";
-import LOGOUT_ICON from "../../assets/logout.png";
-import "../../styles/Header.css";
-import { getCookie, removeCookie } from "../../utils/Cookies";
-import Loading from "./Loading";
-import { useSelector, useDispatch } from "react-redux";
-import { setIsLogin } from "../../store/modules/login";
-import arrow from "../../assets/menu_arrow.svg";
-import Notice from "./Notice";
-import { Search } from "./Search";
-import { getCartCount } from "../../api/CartApi";
-import { fetchCartItems } from "../../store/modules/cart";
+import React, { useState, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import iconUser from '../../assets/iconUser.svg';
+import iconBag from '../../assets/iconBag.svg';
+import logoW from '../../assets/logoW.svg';
+import logoB from '../../assets/logoB.svg';
+import iconSearch from '../../assets/iconSearch.svg';
+import LOGOUT_ICON from '../../assets/logout.png';
+import '../../styles/Header.css';
+import { getCookie, removeCookie } from '../../utils/Cookies';
+import Loading from './Loading';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsLogin } from '../../store/modules/login';
+import arrow from '../../assets/menu_arrow.svg';
+import Notice from './Notice';
+import { Search } from './Search';
+import { getCartCount } from '../../api/CartApi';
+import { fetchCartItems } from '../../store/modules/cart';
 
 //HSM
 //RouteTest.js 에 임시로 연결
@@ -27,7 +27,7 @@ const HeaderV2 = () => {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
   const role = useSelector((state) => state.login.role);
   const location = useLocation();
-  const [hoverMenu, setHoverMenu] = useState("");
+  const [hoverMenu, setHoverMenu] = useState('');
   const [isDarkMode, setIsDarkMode] = useState(false);
   // 검색창
   const [showSearch, setShowSearch] = useState(false);
@@ -40,7 +40,7 @@ const HeaderV2 = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
   useEffect(() => {
-    window.addEventListener("scroll", updateScroll);
+    window.addEventListener('scroll', updateScroll);
   });
   const handleShowSearch = () => {
     setShowSearch(true);
@@ -52,19 +52,19 @@ const HeaderV2 = () => {
 
   // 로그아웃 => 로그아웃 하면 메인페이지로 가진 후 새로고침
   function handleLogout() {
-    removeCookie("accessToken");
+    removeCookie('accessToken');
     dispatch(setIsLogin(false));
-    navigate("/", { replace: true });
+    navigate('/', { replace: true });
     window.location.reload();
   }
 
   useEffect(() => {
-    if (location.pathname.startsWith("/exp")) {
+    if (location.pathname.startsWith('/exp')) {
       setIsDarkMode(true);
 
       if (
-        location.pathname.startsWith("/exp/taste/res") |
-        location.pathname.startsWith("/exp/subsmanage")
+        location.pathname.startsWith('/exp/taste/res') |
+        location.pathname.startsWith('/exp/subsmanage')
       ) {
         setIsDarkMode(false);
       }
@@ -75,7 +75,7 @@ const HeaderV2 = () => {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const token = getCookie("accessToken");
+      const token = getCookie('accessToken');
       if (token) {
         await dispatch(setIsLogin(true));
         dispatch(fetchCartItems());
@@ -91,16 +91,16 @@ const HeaderV2 = () => {
   // }, [dispatch]);
 
   const logoSrc = isDarkMode ? logoW : logoB;
-  if (location.pathname.startsWith("/admin")) return null;
-  if (location.pathname.startsWith("/NotFound")) return null;
+  if (location.pathname.startsWith('/admin')) return null;
+  if (location.pathname.startsWith('/NotFound')) return null;
   //isDarkMode leftBox CenterBox RightBox 단에서 props로 주니까 보라색으로 이상하게 바뀜요,,, 그래서 styledLink로,,
   return (
     <div className="NoticeHeader">
       <Notice />
       <Wrap
         className={`header-wrap-${
-          scrollPosition < 100 ? "original-header" : "change-header"
-        } ${hoverMenu !== "" ? "onHover" : "notHover"}`}
+          scrollPosition < 100 ? 'original-header' : 'change-header'
+        } ${hoverMenu !== '' ? 'onHover' : 'notHover'}`}
         isDarkMode={isDarkMode}
       >
         <TopContainer>
@@ -116,7 +116,7 @@ const HeaderV2 = () => {
                   to="/exp"
                   isDarkMode={isDarkMode}
                   onMouseEnter={() => {
-                    setHoverMenu("체험");
+                    setHoverMenu('체험');
                   }}
                 >
                   <Menu>체 험</Menu>
@@ -131,7 +131,7 @@ const HeaderV2 = () => {
                 <StyledLink
                   isDarkMode={isDarkMode}
                   to="/"
-                  onMouseEnter={() => setHoverMenu("커뮤니티")}
+                  onMouseEnter={() => setHoverMenu('커뮤니티')}
                 >
                   <Menu>커 뮤 니 티</Menu>
                 </StyledLink>
@@ -139,8 +139,8 @@ const HeaderV2 = () => {
             </MenuContainer>
 
             <ExpSubMenuContainer
-              isMenuHovered={hoverMenu === "체험"}
-              onMouseLeave={() => setHoverMenu("")}
+              isMenuHovered={hoverMenu === '체험'}
+              onMouseLeave={() => setHoverMenu('')}
               isDarkMode={isDarkMode}
             >
               <CategoryBox>
@@ -168,19 +168,14 @@ const HeaderV2 = () => {
             </ExpSubMenuContainer>
 
             <CommunitySubMenuContainer
-              isMenuHovered={hoverMenu === "커뮤니티"}
-              onMouseLeave={() => setHoverMenu("")}
+              isMenuHovered={hoverMenu === '커뮤니티'}
+              onMouseLeave={() => setHoverMenu('')}
               isDarkMode={isDarkMode}
             >
               <CategoryBox>
                 <CategoryItem>
                   <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>뉴스</SubMenu>
-                  </StyledLink>
-                </CategoryItem>
-                <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>공지사항</SubMenu>
+                    <SubMenu>뉴스 및 공지사항</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
@@ -202,17 +197,17 @@ const HeaderV2 = () => {
                 src={iconSearch}
                 alt="iconSearch"
                 onClick={handleShowSearch}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
               ></Icon>
             </IconBox>
             <IconBox>
               <StyledLink
                 to={
                   isLoggedIn
-                    ? role === "ADMIN"
-                      ? "/admin"
-                      : "/mypage/orderlist/"
-                    : "/login"
+                    ? role === 'ADMIN'
+                      ? '/admin'
+                      : '/mypage/orderlist/'
+                    : '/login'
                 }
                 isDarkMode={isDarkMode}
               >
@@ -223,7 +218,7 @@ const HeaderV2 = () => {
               <StyledLink to="/cart" isDarkMode={isDarkMode}>
                 <Icon src={iconBag} alt="iconBag"></Icon>
                 <CountBox>
-                  <Count>{cartCount === 0 ? "" : cartCount}</Count>
+                  <Count>{cartCount === 0 ? '' : cartCount}</Count>
                 </CountBox>
               </StyledLink>
             </CartBox>
@@ -279,7 +274,7 @@ const Wrap = styled.div`
 
   &.header-wrap-change-header {
     background-color: ${({ isDarkMode }) =>
-      isDarkMode ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.7)"};
+      isDarkMode ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)'};
   }
 `;
 
@@ -312,14 +307,14 @@ const RightBox = styled.div`
   margin: 20px 0;
   display: flex;
   filter: ${({ isDarkMode }) =>
-    isDarkMode ? "brightness(0) invert(1)" : "none"};
+    isDarkMode ? 'brightness(0) invert(1)' : 'none'};
 `;
 const Logo = styled.img`
   width: 150px;
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${({ isDarkMode }) => (isDarkMode ? "white;" : "black;")};
+  color: ${({ isDarkMode }) => (isDarkMode ? 'white;' : 'black;')};
 `;
 
 const CartBox = styled.div`
@@ -373,12 +368,12 @@ const ExpSubMenuContainer = styled.div`
   padding: 20px 0px;
   border-bottom: ${({ isDarkMode }) =>
     isDarkMode
-      ? "1px solid rgba(255, 255, 255, 0.3)"
-      : "1px solid rgba(0, 0, 0, 0.3)"};
+      ? '1px solid rgba(255, 255, 255, 0.3)'
+      : '1px solid rgba(0, 0, 0, 0.3)'};
   border-top: ${({ isDarkMode }) =>
     isDarkMode
-      ? "1px solid rgba(255, 255, 255, 0.3)"
-      : "1px solid rgba(0, 0, 0, 0.3)"};
+      ? '1px solid rgba(255, 255, 255, 0.3)'
+      : '1px solid rgba(0, 0, 0, 0.3)'};
   display: none;
   animation: ${fadeIn} 0.7s forwards;
 
@@ -419,12 +414,12 @@ const CommunitySubMenuContainer = styled.div`
   padding: 20px 0px;
   border-bottom: ${({ isDarkMode }) =>
     isDarkMode
-      ? "1px solid rgba(255, 255, 255, 0.3)"
-      : "1px solid rgba(0, 0, 0, 0.3)"};
+      ? '1px solid rgba(255, 255, 255, 0.3)'
+      : '1px solid rgba(0, 0, 0, 0.3)'};
   border-top: ${({ isDarkMode }) =>
     isDarkMode
-      ? "1px solid rgba(255, 255, 255, 0.3)"
-      : "1px solid rgba(0, 0, 0, 0.3)"};
+      ? '1px solid rgba(255, 255, 255, 0.3)'
+      : '1px solid rgba(0, 0, 0, 0.3)'};
   display: none;
   animation: ${fadeIn} 0.7s forwards;
 
@@ -454,7 +449,7 @@ const CategoryItem = styled.div`
 
 const SubMenu = styled.div`
   font-size: 15px;
-  width: 80px;
+  width: 120px;
 `;
 
 // 검색 CSS

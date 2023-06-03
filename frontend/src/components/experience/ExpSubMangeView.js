@@ -15,29 +15,6 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
     currentDate.getMonth(),
   ];
 
-  console.log("view 안이다잇~~~");
-  console.log(success);
-
-  useEffect(() => {
-    if (success) {
-      console.log("success안이다잇~");
-      setTimeout(alert("성공했다잇@!!!"), 5000);
-    }
-  }, [success]);
-
-  // if (success) {
-  //   console.log("success안이다잇~");
-  // if (success) {
-  //   console.log("success안이다잇~");
-  //   setTimeout(() => {
-  //   alert("성공했다잇@!!!");
-  //   }, 500);
-  // }
-  // }
-
-  // console.log("gggg");
-  // console.log(subscribe);
-
   //구독중인 기간
   const subsDuration =
     (currnetYear - startYear) * 12 + (currnetMonth - startMonth);
@@ -55,8 +32,6 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
     let months = [];
 
     if (value == currnetYear) {
-
-
       if (startYear == chosenYear) {
         for (let i = startMonth; i <= currnetMonth; i++) {
           months = [...months, i];

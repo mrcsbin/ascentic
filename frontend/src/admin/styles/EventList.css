@@ -44,7 +44,7 @@
 }
 
 .event-list-wrapper .event-list .post-grid table tbody tr td .post::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0px;
   bottom: 0px;
@@ -70,7 +70,7 @@
 }
 
 .event-list-wrapper .event-list .post-grid table tbody tr td .post::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 0px;
   top: 0px;
@@ -99,6 +99,7 @@
 }
 
 .event-list-wrapper .event-list .post-grid table tbody tr td img {
+  object-fit: cover;
   width: 100%;
   height: 100%;
   transition: 362ms;

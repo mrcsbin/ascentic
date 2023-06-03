@@ -92,3 +92,12 @@ export const getProductInfo = async (cartNum) => {
 
   return response.data;
 };
+
+export const getOrderList = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/getlist`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+}

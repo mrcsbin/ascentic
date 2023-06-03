@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -148,4 +149,8 @@ public class OrderController {
         orderService.updateOrder(AdminOrderUpdateDto);
     }
 
+    @GetMapping("/order/getlist")
+    public List<OrderResponse.OrderListDto> getOrderList() {
+        return orderService.getOrderList();
+    }
 }

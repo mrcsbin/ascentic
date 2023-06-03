@@ -2,14 +2,16 @@ package com.backend.order.service;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
-import com.backend.order.dto.*;
+import com.backend.order.dto.AddressDTO;
+import com.backend.order.dto.OrderDTO;
+import com.backend.order.dto.OrderResponse;
+import com.backend.order.dto.PaymentRes;
 import com.backend.order.dto.admin.AdminOrderManageDto;
 import com.backend.order.dto.admin.AdminOrderUpdateDto;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
 import com.backend.order.repository.PaymentFinalResRepository;
-import com.backend.orderproduct.entity.OrderProduct;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -17,13 +19,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -43,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String orderIdTemp = formattedDate + UUID.randomUUID().toString().substring(0, 6);
 
-        Order order =  orderRepository.save(Order.builder()
+        Order order = orderRepository.save(Order.builder()
                 .memberId(currentMemberId)
                 .orderEmail(orderDTO.getOrderEmail())
                 .orderName(orderDTO.getOrderName())
@@ -62,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(orderIdTemp)
                 .build());
         String prodNames = orderDTO.getProdNames();
-        String productNames= countProdNames(prodNames);
+        String productNames = countProdNames(prodNames);
         PaymentRes res = PaymentRes.builder()
                 .payment(orderDTO.getOrderPayment())
                 .amount(orderDTO.getOrderPriceSum())
@@ -96,22 +102,21 @@ public class OrderServiceImpl implements OrderService {
         int count = prodNamesArray.length - 1;
         String firstProduct = prodNamesArray[0].trim();
         String purchaseName;
-        if(prodNamesArray.length==1){
-            purchaseName=firstProduct;
-        }
-        else{
-           purchaseName  = firstProduct +"외 "+count+" 종";
+        if (prodNamesArray.length == 1) {
+            purchaseName = firstProduct;
+        } else {
+            purchaseName = firstProduct + "외 " + count + " 종";
         }
 
         return purchaseName;
     }
 
     @Transactional
-    public void verifyRequest(String tossPaymentKey, String orderId, Integer amount){
+    public void verifyRequest(String tossPaymentKey, String orderId, Integer amount) {
 
         Order result = orderRepository.findByOrderId(orderId);
 
-        if(result.getOrderPriceSum().equals(amount)){
+        if (result.getOrderPriceSum().equals(amount)) {
             result.setTossPaymentKey(tossPaymentKey);
         } else {
             result.setOrderState("결제 실패");
@@ -122,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public PaymentFinalRes requestFinalPayment(String tossPaymentKey, String orderId, Integer amount) {
         String testSecretApiKey = "test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R";
-        testSecretApiKey = testSecretApiKey +":";
+        testSecretApiKey = testSecretApiKey + ":";
         RestTemplate rest = new RestTemplate(); //RestTemplate Http요청 및 응답 헤더용 인스턴스 생성
         HttpHeaders headers = new HttpHeaders(); //Http요청 및 응답 헤더 나타내는 인스턴스 생성
         String encodedAuth = new String(Base64.getEncoder().encode(testSecretApiKey.getBytes(StandardCharsets.UTF_8)));
@@ -133,38 +138,41 @@ public class OrderServiceImpl implements OrderService {
 
         JSONObject param = new JSONObject(); //json 객체 인스턴스
         param.put("orderId", orderId);
-        param.put("amount",amount);
+        param.put("amount", amount);
         String tossOriginUrl = "https://api.tosspayments.com/v1/payments/";
         return rest.postForEntity(
                 tossOriginUrl + tossPaymentKey,
-                new HttpEntity<>(param,headers),
+                new HttpEntity<>(param, headers),
                 PaymentFinalRes.class
-                 ).getBody();
+        ).getBody();
     }
 
-    public void saveRes(PaymentFinalRes result){
+    public void saveRes(PaymentFinalRes result) {
         paymentFinalResRepository.save(result);
     }
 
     @Override
-   public Order orderFindByOrder(String orderId){
-    return orderRepository.findByOrderId(orderId);
-   };
+    public Order orderFindByOrder(String orderId) {
+        return orderRepository.findByOrderId(orderId);
+    }
 
-    public Order findByOrderIdAndMemberId(String orderId, String memberID){
+    ;
+
+    public Order findByOrderIdAndMemberId(String orderId, String memberID) {
         Order order = orderRepository.findByOrderIdAndMemberId(orderId, memberID);
-        if (order == null){
+        if (order == null) {
             Order orderNull = new Order();
             orderNull.setOrderId("0");
             return orderNull;
         }
         return order;
-    };
+    }
+
+    ;
 
 
-
-    public PaymentFinalRes paymentFinalResFindByOrderId(String orderId){
-     return paymentFinalResRepository.findByOrderId(orderId);
+    public PaymentFinalRes paymentFinalResFindByOrderId(String orderId) {
+        return paymentFinalResRepository.findByOrderId(orderId);
     }
 
     public void updatePaymentState(Order order) {
@@ -190,6 +198,20 @@ public class OrderServiceImpl implements OrderService {
                 adminOrderUpdateDto.getOrderState());
 
         orderRepository.save(order);
+    }
 
+    @Override
+    public List<OrderResponse.OrderListDto> getOrderList() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        return orderRepository.findByMemberId(currentMemberId).stream()
+                .map(order -> {
+                    List<OrderResponse.OrderProductDto> orderProductList = order.getOrderProducts().stream()
+                            .map(OrderResponse.OrderProductDto::of)
+                            .collect(Collectors.toList());
+
+                    return OrderResponse.OrderListDto.of(order, orderProductList);
+                })
+                .collect(Collectors.toList());
     }
 }

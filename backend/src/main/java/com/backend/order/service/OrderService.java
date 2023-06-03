@@ -28,4 +28,6 @@ public interface OrderService {
     List<AdminOrderManageDto> getAdminOrderInfo(String orderState);
 
     void updateOrder(AdminOrderUpdateDto adminOrderUpdateDto);
+
+    List<OrderResponse.OrderListDto> getOrderList();
 }

@@ -34,7 +34,7 @@ export const OrderList = () => {
   return (
     <OrderListWrap>
       <ContentHeader>주문 내역</ContentHeader>
-      {/* <ItemInfoBox>
+      <ItemInfoBox>
         <ItemBigBox>
           <ItemName>상품 정보</ItemName>
         </ItemBigBox>
@@ -47,7 +47,7 @@ export const OrderList = () => {
         <ItemSmallBox>
           <OrderState>주문상태</OrderState>
         </ItemSmallBox>
-      </ItemInfoBox> */}
+      </ItemInfoBox>
       {/* {orderList.length === 0 ? (
         <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
       ) : (
@@ -69,7 +69,6 @@ const ContentHeader = styled.div`
   font-size: 30px;
   font-weight: 700;
   border-bottom: 2px solid black;
-  margin-bottom: 2rem;
 `;
 
 const ItemInfoBox = styled.div`

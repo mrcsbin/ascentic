@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveTab } from "../../store/modules/mypage";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const Tab = () => {
@@ -11,10 +10,6 @@ export const Tab = () => {
   const tabClickHandle = (tab) => {
     dispatch(setActiveTab(tab));
   };
-
-  // const [clickedTab, setClickedDiv] = useState(
-  //   useSelector((state) => state.mypage.activeTab)
-  // );
 
   return (
     <TabArea>
@@ -51,15 +46,17 @@ export const Tab = () => {
           </StyledLink>
         </TabList>
         <TabList>
-          <TabBody
-            clicked={clickedTab === "구독 내역"}
-            onClick={() => tabClickHandle("구독 내역")}
-          >
-            구독 내역
-          </TabBody>
+          <StyledLink to="/mypage/subscribe">
+            <TabBody
+              clicked={clickedTab === "구독 내역"}
+              onClick={() => tabClickHandle("구독 내역")}
+            >
+              구독 내역
+            </TabBody>
+          </StyledLink>
         </TabList>
       </TabBox>
-      <TabBox>
+      {/* <TabBox>
         <TabHeader>커뮤니티</TabHeader>
         <TabList>
           <TabBody>주문 내역조회</TabBody>
@@ -73,35 +70,41 @@ export const Tab = () => {
         <TabList>
           <TabBody>구독</TabBody>
         </TabList>
-      </TabBox>
+      </TabBox> */}
       <TabBox>
         <TabHeader>고객 서비스</TabHeader>
         <TabList>
-          <TabBody
-            clicked={clickedTab === "회원정보수정"}
-            onClick={() => tabClickHandle("회원정보수정")}
-          >
-            회원정보수정
-          </TabBody>
+          <StyledLink to="/mypage/update">
+            <TabBody
+              clicked={clickedTab === "회원정보수정"}
+              onClick={() => tabClickHandle("회원정보수정")}
+            >
+              회원정보수정
+            </TabBody>
+          </StyledLink>
         </TabList>
         <TabList>
-          <TabBody
-            clicked={clickedTab === "알림 설정"}
-            onClick={() => tabClickHandle("알림 설정")}
-          >
-            알림 설정
-          </TabBody>
+          <StyledLink to="/mypage/alarm">
+            <TabBody
+              clicked={clickedTab === "알림 설정"}
+              onClick={() => tabClickHandle("알림 설정")}
+            >
+              알림 설정
+            </TabBody>
+          </StyledLink>
         </TabList>
         <TabList>
           <TabBody>고객센터</TabBody>
         </TabList>
         <TabList>
-          <TabBody
-            clicked={clickedTab === "1:1 문의 내역"}
-            onClick={() => tabClickHandle("1:1 문의 내역")}
-          >
-            1:1 문의 내역
-          </TabBody>
+          <StyledLink to="/mypage/inquirylist">
+            <TabBody
+              clicked={clickedTab === "1:1 문의 내역"}
+              onClick={() => tabClickHandle("1:1 문의 내역")}
+            >
+              1:1 문의 내역
+            </TabBody>
+          </StyledLink>
         </TabList>
       </TabBox>
     </TabArea>

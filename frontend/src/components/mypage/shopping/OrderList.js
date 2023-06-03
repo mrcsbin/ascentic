@@ -3,11 +3,13 @@ import { OrderItem } from "./OrderItem";
 import { useEffect, useState } from "react";
 import { getCookie } from "../../../utils/Cookies";
 import { getOrderProductList } from "../../../api/OrderProduct";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 export const OrderList = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(orderList)
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -15,6 +17,7 @@ export const OrderList = () => {
       setOrderList(
         response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
       );
+      await dispatch(setActiveTab("주문 내역"));
       setIsLoading(false);
     };
     fetchProductData();
@@ -26,7 +29,7 @@ export const OrderList = () => {
 
   return (
     <OrderListWrap>
-      <ContentHeader>주문 내역 조회</ContentHeader>
+      <ContentHeader>주문 내역</ContentHeader>
       <ItemInfoBox>
         <ItemBigBox>
           <ItemName>상품 정보</ItemName>

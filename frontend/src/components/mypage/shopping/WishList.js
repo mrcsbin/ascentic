@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { getCookie } from "../../../utils/Cookies";
 import { getWishList, setWish } from "../../../api/WishApi";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 function WishItems({ item }) {
   const [isWish, setIsWish] = useState(true);
@@ -46,11 +48,13 @@ function WishItems({ item }) {
 export const WishList = () => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProductData = async () => {
       const response = await getWishList(getCookie("accessToken"));
       setWishList(response.data);
+      await dispatch(setActiveTab("관심 상품"));
       setIsLoading(false);
     };
     fetchProductData();
@@ -62,7 +66,7 @@ export const WishList = () => {
 
   return (
     <WishListWrap>
-      <ContentHeader>좋아요</ContentHeader>
+      <ContentHeader>관심 상품</ContentHeader>
       <WishItemsContents>
         {wishList.length === 0 ? (
           <IsNotItem>좋아요 목록이 없습니다.</IsNotItem>

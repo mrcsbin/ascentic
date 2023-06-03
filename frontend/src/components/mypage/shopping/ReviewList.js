@@ -3,10 +3,13 @@ import { ReviewItem } from "./ReviewItem";
 import { useEffect, useState } from "react";
 import { getCookie } from "../../../utils/Cookies";
 import { getOrderReviewList } from "../../../api/OrderProduct";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 export const ReviewList = () => {
   const [reviewList, setReviewList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -14,6 +17,7 @@ export const ReviewList = () => {
       setReviewList(
         response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
       );
+      await dispatch(setActiveTab("리뷰 관리"));
       setIsLoading(false);
     };
     fetchProductData();
@@ -25,7 +29,7 @@ export const ReviewList = () => {
 
   return (
     <ReviewListWrap>
-      <ContentHeader>구매 후기</ContentHeader>
+      <ContentHeader>리뷰 관리</ContentHeader>
       <ItemInfoBox>
         <ItemBigBox>
           <ItemName>상품 정보</ItemName>

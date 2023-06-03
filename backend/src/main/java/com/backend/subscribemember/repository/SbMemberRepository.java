@@ -24,4 +24,6 @@ public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integ
     Long countBySbEndDateIsNull();
 
     List<SubscribeMember> findByMemberId(String memberId);
+
+    boolean existsByMemberIdAndSbEndDateIsNull(String memberId);
 }

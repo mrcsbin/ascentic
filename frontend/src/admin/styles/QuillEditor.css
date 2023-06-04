@@ -80,44 +80,52 @@
   margin-top: 0;
   margin-bottom: 1vw;
 }
-.QuillContainer .NameCategory .post-status {
+.QuillContainer .post-status {
   display: flex;
+  width: 100%;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
+  margin: 40px 0;
 }
-.QuillContainer .NameCategory .post-status button {
+.post-status button {
   text-align: center;
   all: unset;
   cursor: pointer;
-  padding: 8px;
-  margin: 5px;
+  padding: 15px 30px;
+  margin: 5px 10px;
   color: white;
   background-color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 .QuillContainer .NameCategory .post-category-input {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 100%;
+  margin: 10px auto;
+  width: 80%;
 }
 .QuillContainer .NameCategory .post-category-input select {
   font-size: 1vw;
-  margin: 7px 0;
-  width: 100%;
+  margin: 7px auto;
+  width: 80%;
   height: 2.2vw;
   border-width: 0px;
   border: 1px solid black;
+  padding-left: 10px;
 }
 .QuillContainer .NameCategory .post-category-input input {
-  width: 99%;
+  width: 80%;
   height: 1.5vw;
   font-size: 1vw;
-  margin: 7px 0;
+  margin: 7px auto;
   padding: 4px;
   border-width: 0px;
   border: 1px solid black;
+  padding-left: 10px;
+}
+.QuillContainer .event-date {
+  width: 100%;
 }
 .QuillContainer .event-date h4 {
   height: 1.5vw;
@@ -125,8 +133,23 @@
   font-size: 1vw;
   margin-top: 1vw;
   margin-bottom: 1vw;
+  font-weight: 600;
+}
+.QuillContainer .CalendarContainer {
+  text-align: center;
+  font-size: 1vw;
+  width: 100%;
+  margin: 0 auto;
 }
 
+.image-selection {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .selected-image {
   width: 200px;
   height: 200px;
@@ -134,11 +157,35 @@
 }
 .image-container {
   display: flex;
+  margin: 0 auto;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.image-container > img {
+  margin: 0 auto;
 }
 .image-buttons {
   display: flex;
-  margin: 0 15px;
+  width: fit-content;
+  margin: 15px auto;
+}
+.image-buttons > button {
+  margin: 0 10px;
+  font-size: 1rem;
+  background-color: white;
+  border: 1.5px solid black;
+  font-weight: 500;
+  padding: 5px 15px;
 }
 .image-selection h4 {
-  margin: 10px 0px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  height: 1.5vw;
+  text-align: center;
+  font-size: 1vw;
+  font-weight: 600;
+}
+.upload-container input {
+  font-size: 1rem;
 }

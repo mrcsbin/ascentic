@@ -98,51 +98,76 @@ function NewsList(props) {
       <div className="news-list">
         <HeaderWrap>
           <HeaderLeft>뉴스 관리</HeaderLeft>
-          <HeaderRight></HeaderRight>
         </HeaderWrap>
-        <div className="selected-status">
-          <p>상태 보기 &nbsp;</p>
-          <select value={selectedStatus} onChange={handleStatusChange}>
-            <option value="all">모두 보기</option>
-            <option value="0">저장 상태</option>
-            <option value="1">임시 저장 상태</option>
-            <option value="2">삭제 상태</option>
-          </select>
-        </div>
-        <table>
-          <tr>
-            <th>제목</th>
-            <th>기간</th>
-            <th>진행상황</th>
-            <th>게시글 상태</th>
-            <th>관리</th>
-          </tr>
-          {currentProducts.map((post) => (
-            <tr className="post" key={post.postId}>
-              <td>
-                <h3 className="post-title">{post.postTitle}</h3>
-              </td>
-              <td>
-                <p>
-                  {post.eventStartDate} ~ {post.eventEndDate}
-                </p>
-              </td>
-              <td>
-                <p>{getEventStatus(post.eventStartDate, post.eventEndDate)}</p>
-              </td>
-              <td>
-                <p>상태: {getStatusText(post.postStatus)}</p>
-              </td>
-              <td className="handle-post">
-                <button onClick={() => props.handleEdit(post.postId)}>
-                  수정
-                </button>
-                <button onClick={() => handleDelete(post.postId)}>삭제</button>
-              </td>
+        <InputContainer>
+          <CategoriesBox>
+            <button
+              className={selectedStatus === "all" ? "activeCateBtn" : "cateBtn"}
+              value="all"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              전체보기
+            </button>
+            <button
+              className={selectedStatus === "0" ? "activeCateBtn" : "cateBtn"}
+              value="0"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              저장상태
+            </button>
+            <button
+              className={selectedStatus === "1" ? "activeCateBtn" : "cateBtn"}
+              value="1"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              임시저장상태
+            </button>
+            <button
+              className={selectedStatus === "2" ? "activeCateBtn" : "cateBtn"}
+              value="2"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              삭제상태
+            </button>
+          </CategoriesBox>
+          <table>
+            <tr>
+              <th>제목</th>
+              <th>기간</th>
+              <th>진행상황</th>
+              <th>게시글 상태</th>
+              <th>관리</th>
             </tr>
-          ))}
-        </table>
-
+            {currentProducts.map((post) => (
+              <tr className="post" key={post.postId}>
+                <td>
+                  <h3 className="post-title">{post.postTitle}</h3>
+                </td>
+                <td>
+                  <p>
+                    {post.eventStartDate} ~ {post.eventEndDate}
+                  </p>
+                </td>
+                <td>
+                  <p>
+                    {getEventStatus(post.eventStartDate, post.eventEndDate)}
+                  </p>
+                </td>
+                <td>
+                  <p>상태: {getStatusText(post.postStatus)}</p>
+                </td>
+                <td className="handle-post">
+                  <button onClick={() => props.handleEdit(post.postId)}>
+                    수정
+                  </button>
+                  <button onClick={() => handleDelete(post.postId)}>
+                    삭제
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </table>
+        </InputContainer>
         <div className="pagination">
           {currentPage - 3 <= 0 ? (
             ""
@@ -207,18 +232,36 @@ const HeaderWrap = styled.div`
   padding-top: 30px;
   border-bottom: 2px solid black;
 `;
-
 const HeaderLeft = styled.div`
   padding: 20px 0;
   font-size: 30px;
   font-weight: 600;
 `;
-
-const HeaderRight = styled.div`
+const InputContainer = styled.div`
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+`;
+const CategoriesBox = styled.div`
+  padding: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: end;
+  button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+  }
+  .activeCateBtn,
+  .cateBtn:hover {
+    font-weight: 600;
+    border-bottom: 2px solid black;
+  }
 `;
 
 export default NewsList;

@@ -51,7 +51,7 @@ const HeaderWrap = styled.div`
 const HeaderLeft = styled.div`
   padding: 20px 0;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 600;
 `;
 
 const HeaderRight = styled.div`

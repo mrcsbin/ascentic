@@ -141,6 +141,8 @@ const ExpGuide = (props) => {
                 <ApplyBtn onClick={() => navigate("/exp/taste")}>
                   취향 테스트 먼저하기
                 </ApplyBtn>
+              ) : props.isSubsCribeMember ? (
+                <ApplyBtn>이미 구독중인 상품입니다.</ApplyBtn>
               ) : (
                 <ApplyBtn onClick={() => expApply()}>구독 신청하기</ApplyBtn>
               )}

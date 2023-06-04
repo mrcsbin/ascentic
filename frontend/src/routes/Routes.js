@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setIsLogin } from "../store/modules/login";
-import { getCookie } from "../utils/Cookies";
-import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
-import * as Pages from "../pages/Pages";
-import * as AdminPages from "../admin/pages/AdminPages";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsLogin } from '../store/modules/login';
+import { getCookie } from '../utils/Cookies';
+import { Routes as BrowserRoutes, Route, Navigate } from 'react-router-dom';
+import * as Pages from '../pages/Pages';
+import * as AdminPages from '../admin/pages/AdminPages';
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
@@ -13,11 +13,11 @@ function Routes() {
 
   useEffect(() => {
     const checkTokenExpiration = () => {
-      const token = getCookie("accessToken");
+      const token = getCookie('accessToken');
       if (!token && isLoggedIn) {
         dispatch(setIsLogin(false));
-        alert("세션이 만료되었습니다. 다시 로그인해주세요");
-        window.location.replace("/");
+        alert('세션이 만료되었습니다. 다시 로그인해주세요');
+        window.location.replace('/');
       }
     };
     checkTokenExpiration();
@@ -37,25 +37,16 @@ function Routes() {
       <Route path="/test" element={<Pages.MainTest />}></Route>
       <Route path="/test2" element={<Pages.MainTest2 />}></Route>
       <Route path="/test3" element={<Pages.MainTest3 />}></Route>
-      <Route
-        path="/login"
-        element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
-      />
+      <Route path="/login" element={<Pages.Login />} />
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
-      <Route
-        path="/mypage"
+      {/* <Route
+        path="/mypage/*"
         element={
-          isLoggedIn ? (
-            role === "ADMIN" ? (
-              <Navigate to="/admin" />
-            ) : (
-              <Pages.MyPage />
-            )
-          ) : (
-            <Navigate to="/login" />
-          )
+          isLoggedIn &&
+          (role === "ADMIN" ? <Navigate to="/admin" /> : <Pages.MyPage />)
         }
-      />
+      /> */}
+      <Route path="/mypage/:category" element={<Pages.MyPage />} />
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
@@ -79,6 +70,7 @@ function Routes() {
       <Route path="/exp/subsmanage" element={<Pages.ExpSubsManage />} />
       <Route path="/community/event" element={<Pages.Event />} />
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />
+      <Route path="/community/notice" element={<Pages.Notice />} />
 
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
       <Route path="/admin" element={<AdminPages.AdminMainPage />} />

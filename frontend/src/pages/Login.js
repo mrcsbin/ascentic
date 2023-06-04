@@ -44,11 +44,14 @@ function Login() {
     await dispatch(fetchTokenByLogin({ id, password }));
     if (getCookie("accessToken")) {
       await dispatch(fetchMemberByToken()).then(() => {
-        location.state
-          ? navigate(location.state.pathname, {
-              state: { taste: location.state.taste, option: 7 },
-            })
-          : navigate("/", { replace: true });
+        if (location.state) {
+          navigate(location.state.pathname, {
+            state: { taste: location.state.taste, option: 7 },
+          });
+        } else {
+          navigate("/", { replace: true });
+          window.location.reload();
+        }
       });
     } else {
       setId("");

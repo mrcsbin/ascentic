@@ -4,10 +4,7 @@ import com.backend.subscribemember.dto.LastSbMemberDTO;
 import com.backend.subscribemember.dto.SubscribeMemberDto;
 import com.backend.subscribemember.service.SbMemberServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -16,12 +13,12 @@ public class SbMemberController {
     private final SbMemberServiceImpl sbMemberService;
 
     @PostMapping("/startSubscribe")
-    public void startSubscribe(@RequestBody SubscribeMemberDto subscribeMemberDto){
+    public void startSubscribe(@RequestBody SubscribeMemberDto subscribeMemberDto) {
         sbMemberService.sbMemberAdd(subscribeMemberDto);
     }
 
     @GetMapping("/lastSbMember")
-    public LastSbMemberDTO lastSubscribeMember(){
+    public LastSbMemberDTO lastSubscribeMember() {
         return sbMemberService.getLastSbMemberByMemberId();
     }
 
@@ -30,4 +27,8 @@ public class SbMemberController {
         sbMemberService.endSubscription();
     }
 
+    @GetMapping("/subscribe/member")
+    public boolean isSubscribeMember() {
+        return sbMemberService.isSubscribeMember();
+    }
 }

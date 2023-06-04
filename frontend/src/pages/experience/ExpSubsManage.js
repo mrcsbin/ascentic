@@ -4,7 +4,12 @@ import Loading from "../../components/common/Loading";
 import ExpSubsManageView from "../../components/experience/ExpSubMangeView";
 import { getCookie } from "../../utils/Cookies";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { requestTasteRes } from "../../api/SubsMemberApi";
 const ExpSubsManage = () => {
+  const accessToken = getCookie("accessToken");
+  const [loading, setLoading] = useState(false);
+  const [TasteRes, setTasteRes] = useState([]);
   const [sbMember, setSbmember] = useState({ initial: "setting" });
   const [subscribe, setSubscribe] = useState([]);
   const navigate = useNavigate();
@@ -15,8 +20,20 @@ const ExpSubsManage = () => {
   // const success = searchParams.get("success") ? searchParams.get("success") : false;
   const success = searchParams.get("success");
   console.log(success);
-
   console.log(sbMember);
+
+  const success = searchParams.get("success");
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const result = await requestTasteRes(accessToken); // api 함수 호출
+      console.log(result);
+      setTasteRes(result); // 결과를 state에 저장
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
   const token = {
     headers: {
       Authorization: "Bearer " + getCookie("accessToken"),
@@ -55,11 +72,16 @@ const ExpSubsManage = () => {
     //     axiosEnd - startTime
     //   }ms `
     // );
+    // console.log('설정제대로 됐나?', subscribe);
+    if (loading) {
+      return <Loading />;
+    }
     return (
       <ExpSubsManageView
         sbMember={sbMember}
         subscribe={subscribe}
         success={success}
+        TasteRes={TasteRes}
       />
     );
   }

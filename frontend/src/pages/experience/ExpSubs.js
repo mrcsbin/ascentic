@@ -7,7 +7,7 @@ import ExpSubDeliveryInfo from "../../components/ExpSubs/ExpSubDeliveryInfo";
 import expSubsBackground from "../../assets/expMain/expmain_content3.webp";
 import { getCookie } from "../../utils/Cookies";
 import { useEffect } from "react";
-import { requestTasteRes } from "../../api/SubsMemberApi";
+import { isSubscribeMember, requestTasteRes } from "../../api/SubsMemberApi";
 import Loading from "../../components/common/Loading";
 import logow from "../../assets/ascentic_logo_w.svg";
 import { useLocation } from "react-router-dom";
@@ -15,6 +15,7 @@ const ExpSubs = () => {
   const accessToken = getCookie("accessToken");
   const [loading, setLoading] = useState(false);
   const [tasteResList, setTasteResList] = useState("");
+  const [isSubsCribeMember, setIsSubscribeMember] = useState();
   const [userTasteRes, setTasteRes] = useState("");
 
   const location = useLocation();
@@ -51,6 +52,7 @@ const ExpSubs = () => {
     const fetchData = async () => {
       setLoading(true);
       const result = await requestTasteRes(accessToken); // api 함수 호출
+      setIsSubscribeMember(await isSubscribeMember(accessToken));
       console.log(result);
       setTasteRes(result.firstPlace); // 결과 1순위를 state에 저장
       setTasteResList(result); // 전체 결과를 저장
@@ -149,6 +151,7 @@ const ExpSubs = () => {
       </ExpSubsIntro>
       <GuideLocation>
         <ExpGuide
+          isSubsCribeMember={isSubsCribeMember}
           showModal={() => openModal()}
           userTasteRes={userTasteRes}
         ></ExpGuide>

@@ -1,23 +1,27 @@
 import styled from "styled-components";
-import { ReviewItem } from "./ReviewItem";
+import { 주문모달 } from "./주문모달";
 import { useEffect, useState } from "react";
 import { getCookie } from "../../../utils/Cookies";
-import { getOrderReviewList } from "../../../api/OrderProduct";
+import { getOrderProductList } from "../../../api/OrderProduct";
 import { useDispatch } from "react-redux";
 import { setActiveTab } from "../../../store/modules/mypage";
+import { getOrderList } from "../../../api/OrderApi";
 
-export const ReviewList = () => {
-  const [reviewList, setReviewList] = useState([]);
+export const OrderList = () => {
+  const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+  const [test, setTest] = useState();
+  console.log(test);
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const response = await getOrderReviewList(getCookie("accessToken"));
-      setReviewList(
+      const response = await getOrderProductList(getCookie("accessToken"));
+      setTest(await getOrderList(getCookie("accessToken")));
+      setOrderList(
         response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
       );
-      await dispatch(setActiveTab("리뷰 관리"));
+      await dispatch(setActiveTab("주문 내역"));
       setIsLoading(false);
     };
     fetchProductData();
@@ -28,8 +32,8 @@ export const ReviewList = () => {
   }
 
   return (
-    <ReviewListWrap>
-      <ContentHeader>리뷰 관리</ContentHeader>
+    <OrderListWrap>
+      <ContentHeader>주문 내역</ContentHeader>
       <ItemInfoBox>
         <ItemBigBox>
           <ItemName>상품 정보</ItemName>
@@ -41,19 +45,22 @@ export const ReviewList = () => {
           <OrderAmount>주문금액 (수량)</OrderAmount>
         </ItemSmallBox>
         <ItemSmallBox>
-          <OrderState>후기</OrderState>
+          <OrderState>주문상태</OrderState>
         </ItemSmallBox>
       </ItemInfoBox>
-      {reviewList.length === 0 ? (
+      {/* {orderList.length === 0 ? (
         <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
       ) : (
-        reviewList.map((item, index) => <ReviewItem item={item} key={index} />)
-      )}
-    </ReviewListWrap>
+        orderList.map((item, index) => <주문상품모달 item={item} key={index} />)
+      )} */}
+      {test.map((item, index) => (
+        <주문모달 item={item} key={index}></주문모달>
+      ))}
+    </OrderListWrap>
   );
 };
 
-const ReviewListWrap = styled.div`
+const OrderListWrap = styled.div`
   border-bottom: 2px solid black;
 `;
 

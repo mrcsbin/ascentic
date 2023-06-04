@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Subscribe = () => {
   return (
     <Wrap>
-      <ContentHeader>구독관리</ContentHeader>
+      <ContentHeader>구독내역</ContentHeader>
     </Wrap>
   );
 };

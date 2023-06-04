@@ -57,9 +57,9 @@ export const requestOrder = async (accessToken, requestData, products) => {
         );
       });
   } catch (e) {
-    if (e.code === "USER_CANCEL") {
-      alert("사용자가 결제를 취소하였습니다!");
-    }
+    if (e.code != null) {
+      alert(e.message);
+    } //카트에 다시 담아두기
   }
 };
 
@@ -92,3 +92,12 @@ export const getProductInfo = async (cartNum) => {
 
   return response.data;
 };
+
+export const getOrderList = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/getlist`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+}

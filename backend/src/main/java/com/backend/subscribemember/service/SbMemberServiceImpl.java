@@ -66,12 +66,12 @@ public class SbMemberServiceImpl implements SbMemberService {
     }
 
 
-    public SubscribeMember findSbMember(Integer id){
+    public SubscribeMember findSbMember(Integer id) {
         SubscribeMember byId = sbMemberRepository.findById(id).orElse(null);
         return byId;
     }
 
-    public void endSubscription(){
+    public void endSubscription() {
         // 토큰으로 멤버아이디 가져옴
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
@@ -83,5 +83,10 @@ public class SbMemberServiceImpl implements SbMemberService {
         lastSbMemberByMemberId.setSbEndDate(today);
         sbMemberRepository.save(lastSbMemberByMemberId);
 
+    }
+
+    public boolean isSubscribeMember() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        return sbMemberRepository.existsByMemberIdAndSbEndDateIsNull(currentMemberId);
     }
 }

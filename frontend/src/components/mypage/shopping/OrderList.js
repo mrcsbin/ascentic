@@ -1,20 +1,27 @@
 import styled from "styled-components";
-import { OrderItem } from "./OrderItem";
+import { 주문모달 } from "./주문모달";
 import { useEffect, useState } from "react";
 import { getCookie } from "../../../utils/Cookies";
 import { getOrderProductList } from "../../../api/OrderProduct";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
+import { getOrderList } from "../../../api/OrderApi";
 
 export const OrderList = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(orderList)
+  const dispatch = useDispatch();
+  const [test, setTest] = useState();
+  console.log(test);
 
   useEffect(() => {
     const fetchProductData = async () => {
       const response = await getOrderProductList(getCookie("accessToken"));
+      setTest(await getOrderList(getCookie("accessToken")));
       setOrderList(
         response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
       );
+      await dispatch(setActiveTab("주문 내역"));
       setIsLoading(false);
     };
     fetchProductData();
@@ -26,8 +33,8 @@ export const OrderList = () => {
 
   return (
     <OrderListWrap>
-      <ContentHeader>주문 내역 조회</ContentHeader>
-      <ItemInfoBox>
+      <ContentHeader>주문 내역</ContentHeader>
+      {/* <ItemInfoBox>
         <ItemBigBox>
           <ItemName>상품 정보</ItemName>
         </ItemBigBox>
@@ -40,12 +47,15 @@ export const OrderList = () => {
         <ItemSmallBox>
           <OrderState>주문상태</OrderState>
         </ItemSmallBox>
-      </ItemInfoBox>
-      {orderList.length === 0 ? (
+      </ItemInfoBox> */}
+      {/* {orderList.length === 0 ? (
         <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
       ) : (
-        orderList.map((item, index) => <OrderItem item={item} key={index} />)
-      )}
+        orderList.map((item, index) => <주문상품모달 item={item} key={index} />)
+      )} */}
+      {test.map((item, index) => (
+        <주문모달 item={item} key={index}></주문모달>
+      ))}
     </OrderListWrap>
   );
 };
@@ -59,6 +69,7 @@ const ContentHeader = styled.div`
   font-size: 30px;
   font-weight: 700;
   border-bottom: 2px solid black;
+  margin-bottom: 2rem;
 `;
 
 const ItemInfoBox = styled.div`

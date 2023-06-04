@@ -24,7 +24,6 @@ public class OrderProductServiceImpl implements OrderProductService {
     private final OrderProductRepository orderProductRepository;
     private final OrderRepository orderRepository;
     private final ProductOptionRepository productOptionRepository;
-    private final CartRepository cartRepository;
 
     @Override
     public void insertOrderProduct(OrderProductRequest.OrderProductDto orderProductDto) {
@@ -39,7 +38,6 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .memberId(currentMemberId)
                 .orderReviewState("리뷰쓰기")
                 .build();
-        cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
         orderProductRepository.save(orderProduct);
     }
 

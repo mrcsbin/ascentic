@@ -1,5 +1,6 @@
 package com.backend.order.service;
 
+import com.backend.cart.repository.CartRepository;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.order.dto.AddressDTO;
@@ -12,6 +13,7 @@ import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
 import com.backend.order.repository.PaymentFinalResRepository;
+import com.backend.orderproduct.entity.OrderProduct;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -38,6 +40,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final PaymentFinalResRepository paymentFinalResRepository;
+    private final CartRepository cartRepository;
 
     @Override
     @Transactional
@@ -81,6 +84,7 @@ public class OrderServiceImpl implements OrderService {
                 .createDate(OffsetDateTime.now(ZoneOffset.ofHours(9)).toString())
                 .paySuccssYn("Y")
                 .build();
+        System.out.println("res.getPayment() = " + res.getPayment());
 
         return res;
     }
@@ -178,6 +182,10 @@ public class OrderServiceImpl implements OrderService {
     public void updatePaymentState(Order order) {
         order.updatePaymentState(order);
         orderRepository.save(order);
+        List<OrderProduct> orderProductList = order.getOrderProductList(order);
+        for (OrderProduct orderProduct : orderProductList) {
+            cartRepository.delete(cartRepository.findByMemberIdAndProductOption(orderProduct.getMemberId(), orderProduct.getProductOption()).get());
+        }
     }
 
     @Override
@@ -213,5 +221,11 @@ public class OrderServiceImpl implements OrderService {
                     return OrderResponse.OrderListDto.of(order, orderProductList);
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteCancelOrder() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        orderRepository.delete(orderRepository.findByMemberIdAndOrderPaymentStateIsFalse(currentMemberId));
     }
 }

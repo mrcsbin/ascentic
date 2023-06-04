@@ -32,6 +32,13 @@ export const requestOrder = async (accessToken, requestData, products) => {
 
           .then((res) => {
             console.log(res.data);
+          })
+          .catch(() => {
+            axios.get("/order/delete", {
+              headers: {
+                Authorization: "Bearer " + accessToken,
+              },
+            });
           });
 
         // ProdOrder 생성하기
@@ -100,4 +107,4 @@ export const getOrderList = async (accessToken) => {
     },
   });
   return response.data;
-}
+};

@@ -19,4 +19,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findAllByOrderByOrderNumDesc();
 
     List<Order> findByMemberId(String memberId);
+
+    Order findByMemberIdAndOrderPaymentStateIsFalse(String memberId);
 }

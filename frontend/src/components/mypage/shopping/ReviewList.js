@@ -59,7 +59,7 @@ export const ReviewList = () => {
               setFilter("작성한 리뷰");
               setFilteredReviewList(
                 reviewList.filter(
-                  (review) => review.orderProductReviewState === "작성한 리뷰"
+                  (review) => review.orderProductReviewState === "리뷰 작성 완료"
                 )
               );
             }}

@@ -14,7 +14,24 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
     currentDate.getFullYear(),
     currentDate.getMonth(),
   ];
+  console.log("view" + success);
 
+  useEffect(() => {
+    if (success) {
+      console.log("success안이다잇~");
+      setTimeout(alert("성공했다잇@!!!"), 5000);
+    }
+  }, [success]);
+
+  // if (success) {
+  //   console.log("success안이다잇~");
+  // if (success) {
+  //   console.log("success안이다잇~");
+  //   setTimeout(() => {
+  //   alert("성공했다잇@!!!");
+  //   }, 500);
+  // }
+  // }
   //구독중인 기간
   const subsDuration =
     (currnetYear - startYear) * 12 + (currnetMonth - startMonth);
@@ -97,27 +114,39 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
           <span>
             {chosenYear}년 {chosenMonth}월
           </span>
+          <div>구독주문번호: {filterProd[0].sbSendNum}</div>
+
+          <div>결제일: {filterProd[0].sbSendPayDate}</div>
           <div className="on-delivery">
-            <span>{sbMember.sbSendEnd ? '배송 완료' : '배송중'}</span>
+            <span>{filterProd[0].sbSendState}</span>
           </div>
-          <div className="subs-prod-name-intro">
-            <div>
-              <div className="maybe-for-image"></div>
-              <div className="scent-name">
-                <p>
-                  <span>{filterProd[0].spScent.scentName}</span>
-                </p>
-              </div>
-              <div className="intro-price">
-                {filterProd[0].spIntro}
-                <span>{addComma(filterProd[0].spPrice)}원</span>
+          {filterProd[0].spScent.scentName ? (
+            <div className="subs-prod-name-intro">
+              <div>
+                <div className="maybe-for-image">
+                  <img
+                    src={`http://localhost:8080/images/${filterProd[0].sbProdImage}`}
+                    alt="sbProduct_image"
+                  />
+                </div>
+                <div className="scent-name">
+                  <p>
+                    <span>{filterProd[0].spScent.scentName}</span>
+                  </p>
+
+                  <span>{filterProd[0].spScent.scentNoteName}</span>
+                </div>
+                <div className="intro-price">
+                  {filterProd[0].spIntro}
+                  <span>{addComma(filterProd[0].spPrice)}원</span>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div>상품을 매칭중입니다...</div>
+          )}
           <div className="clear-both"></div>
           <div className="rating-component">
-            {/* {console.log("ssss")}
-            {console.log(filterProd[0])} */}
             <RatingComponent
               sbSendNum={filterProd[0].sbSendNum}
               score={filterProd[0].sbSendScore}
@@ -127,11 +156,15 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
 
           <div className="address">
             <span>배송지 주소</span>
-            <p>{sbMember.mainAddress}</p>
-            <p>{sbMember.subAddress}</p>
+            <p>{filterProd[0].sbSendPostcode}</p>
           </div>
           <div>
-            <span>송장번호가 ERD에 없음</span>
+            <span>송장번호</span>
+            <p>{filterProd[0].sbShippingCode}</p>
+          </div>
+          <div>
+            <span>결제정보</span>
+            <p>{filterProd[0].sbSendPayment}</p>
           </div>
           <div className="clear-both"></div>
         </div>
@@ -188,13 +221,14 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
           <div className="duration-payDay">
             <p> ScentNote</p>
             <p>
+              ScentNote <span> {sbMember.tasteResult} </span>
               <span> 첫번째 향 {TasteRes.firstPlace}</span>
               <br />
               <span> 두번째 향 {TasteRes.secondPlace}</span>
               <br />
               <span> 세번째 향 {TasteRes.thirdPlace}</span>
             </p>
-            결제정보 = <span> {sbMember.sbPay}</span>
+            결제정보 <span> {sbMember.sbPay}</span>
           </div>
         </div>
       </div>
@@ -228,8 +262,8 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
         {console.log('filterProd = ', filterProd)}
         {console.log('sbMember = ', sbMember)}
       </div>
+      {}
       <SubsInfo />
-      {/* <button className="end-subscribe" onClick={endSubscribe}>구독 해지하기</button> */}
       {sbMember.sbEndDate === null && (
         <button className="end-subscribe" onClick={endSubscribe}>
           구독 해지하기

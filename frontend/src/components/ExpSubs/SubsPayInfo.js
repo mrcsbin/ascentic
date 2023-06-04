@@ -57,7 +57,7 @@ const SubsPayInfo = (props) => {
     paymentMethod: paymentMethod, // 정기결제정보
     monthPaymentDate: getDay(), // 매달 결제일
     price: 29900, // 가격
-    tasteResult: "하이용", // 취향 결과
+    tasteResult: props.userTasteRes, // 취향 결과
   };
 
   const payStart = async () => {
@@ -125,7 +125,7 @@ const SubsPayInfo = (props) => {
         </div>
       </OrderContent>
       <SubsContent>
-        <div>당신을 위한 Note {props.userTasteRes}</div>
+        <div>당신을 위한 Note "{props.userTasteRes}"</div>
         <div>
           매달 취향에 맞는 다양한 제품들을 받아보실 수 있습니다. <br />
           매달 제품을 사용하시고 후기를 남겨주세요.
@@ -153,43 +153,39 @@ const SubsPayInfo = (props) => {
 export default SubsPayInfo;
 
 const SubsPayForm = styled.div`
-  margin-top: 30px;
-  margin-left: 60px;
-  width: 609px;
-  height: 450px;
-  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.div`
+  width: 80%;
+  text-align: left;
   font-size: 25px;
   font-weight: 700;
-  margin-top: 30px;
-  margin-left: 50px;
+  padding-top: 10px;
 `;
 
 const OrderContent = styled.div`
-  margin-top: 30px;
-  margin-left: 50px;
-  width: 500px;
-  height: 240px;
+  width: 70%;
+  margin-top: 20px;
   background-color: white;
 
   > div {
     clear: both;
     border-bottom: 1px solid #d9d9d9;
-    font-size: 18px;
+    font-size: 1.1rem;
   }
 
   > div > div:nth-child(1) {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 15px 0;
     float: left;
   }
 
   > div > div:nth-child(2) {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 14px;
+    margin: 15px 0;
+    font-size: 1.1rem;
     float: right;
   }
 
@@ -200,36 +196,41 @@ const OrderContent = styled.div`
 `;
 
 const SubsContent = styled.div`
-  margin-top: 5px;
-  margin-left: 50px;
-  width: 600px;
-  height: 150px;
+  width: 70%;
+  margin-top: 20px;
+  text-align: center;
 
   > div:nth-child(1) {
-    font-size: 22px;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
     font-weight: 700;
-    color: blue;
+    color: black;
   }
   > div:nth-child(2) {
-    margin-top: 8px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
     color: #557fb0;
+    line-height: 1.2;
   }
 
   > input[type="checkbox"] + label {
-    margin-top: 15px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: #e6e6e6;
     cursor: pointer;
   }
 
   > button {
     position: absolute;
-    bottom: 10%;
-    right: 13%;
-    padding: 0.7rem 9rem;
-    font-size: 1rem;
+    bottom: 9%;
+    right: 15%;
+    padding: 0.7rem 8rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: white;
     background-color: black;
-    border: 1px solid black;
+    border: 1.5px solid black;
     cursor: pointer;
     &:hover {
       background-color: rgba(0, 0, 0, 0.8);
@@ -238,13 +239,13 @@ const SubsContent = styled.div`
 
   > button:disabled {
     position: absolute;
-    bottom: 10%;
-    right: 13%;
-    padding: 0.7rem 9rem;
-    font-size: 1rem;
+    bottom: 9%;
+    right: 15%;
+    padding: 0.7rem 8rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: white;
     background-color: gray;
-    border: 1px solid black;
+    border: 1.5px solid gray;
   }
 `;

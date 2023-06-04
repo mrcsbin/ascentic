@@ -4,7 +4,6 @@ import Loading from "../../components/common/Loading";
 import ExpSubsManageView from "../../components/experience/ExpSubMangeView";
 import { getCookie } from "../../utils/Cookies";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { requestTasteRes } from "../../api/SubsMemberApi";
 const ExpSubsManage = () => {
   const accessToken = getCookie("accessToken");
@@ -19,10 +18,7 @@ const ExpSubsManage = () => {
   // console.log(`startTime = ${startTime}`);
   // const success = searchParams.get("success") ? searchParams.get("success") : false;
   const success = searchParams.get("success");
-  console.log(success);
-  console.log(sbMember);
 
-  const success = searchParams.get("success");
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -34,12 +30,12 @@ const ExpSubsManage = () => {
 
     fetchData();
   }, []);
+
   const token = {
     headers: {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-
   useEffect(() => {
     getCookie("accessToken") === undefined
       ? navigate("/login")

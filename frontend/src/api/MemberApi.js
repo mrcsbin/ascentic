@@ -145,3 +145,12 @@ export const getOrderInfo = async (accessToken) => {
     console.error(error);
   }
 };
+
+export const getMyPageProfile = async (accessToken) => {
+  const response = await axios.get(`${MEMBER_API_URL}/mypage/profile`, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  return response.data;
+};

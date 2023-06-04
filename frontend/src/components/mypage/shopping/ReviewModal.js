@@ -26,7 +26,9 @@ const ReviewModal = ({ item, clickModalHandle, isComplete }) => {
               <ExitButton src={EXIT_IMAGE} onClick={() => clickModalHandle()} />
             </ButtonBox>
             <ModalContents>
-              <ContentTitle>리뷰 쓰기</ContentTitle>
+              <ContentTitle>
+                {isComplete ? "작성한 리뷰" : "리뷰 작성"}
+              </ContentTitle>
               <ItemCard>
                 <ItemImageBox>
                   <ItemImage
@@ -90,8 +92,8 @@ const ExitButton = styled.img`
 
 const ModalView = styled.div`
   border-radius: 5px;
-  width: 50%;
-  height: 100%;
+  width: 40%;
+  height: 90%;
   background-color: white;
 `;
 
@@ -104,7 +106,7 @@ const ModalContents = styled.div`
 
 const ContentTitle = styled.div`
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   padding-bottom: 2rem;
   border-bottom: 1px solid grey;
@@ -123,8 +125,9 @@ const ItemImageBox = styled.div`
 `;
 
 const ItemImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
+  object-fit: fill;
 `;
 
 const ItemInfoBox = styled.div`
@@ -132,24 +135,26 @@ const ItemInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  padding: 0 3rem;
+  padding: 0 2rem;
   box-sizing: border-box;
 `;
 
 const ItemName = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 `;
 
 const ItemOption = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: grey;
 `;
 
 const ItemPrice = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: grey;
 `;
 
-const RatingBox = styled.div``;
+const RatingBox = styled.div`
+  margin-top: 2rem;
+`;
 
 const SubmitBox = styled.div``;

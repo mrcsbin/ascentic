@@ -8,10 +8,9 @@ function addComma(num) {
   return num.toString().replace(regexp, ",");
 }
 
-export const ReviewItem = ({ item }) => {
+export const ReviewItem = ({ item, isComplete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log(item);
   const clickModalHandle = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -40,16 +39,22 @@ export const ReviewItem = ({ item }) => {
           <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
           <ItemCount>{item.orderProductCount} 개</ItemCount>
         </ItemAmountBox>
-        {item.orderProductReviewState === "리뷰쓰기" ? (
+        {item.orderProductReviewState === "리뷰 작성" ? (
           <ItemOrderState onClick={clickModalHandle}>
             {item.orderProductReviewState}
           </ItemOrderState>
         ) : (
-          <ItemOrderState>{item.orderProductReviewState}</ItemOrderState>
+          <ItemOrderState onClick={clickModalHandle}>
+            {item.orderProductReviewState}
+          </ItemOrderState>
         )}
       </ItemCard>
       {isModalOpen && (
-        <ReviewModal item={item} clickModalHandle={clickModalHandle} />
+        <ReviewModal
+          item={item}
+          clickModalHandle={clickModalHandle}
+          isComplete={isComplete}
+        />
       )}
     </>
   );

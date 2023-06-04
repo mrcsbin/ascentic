@@ -17,7 +17,13 @@ const ExpSubsManage = () => {
   // const startTime = performance.now();
   // console.log(`startTime = ${startTime}`);
 
-  const success = searchParams.get("success");
+  useEffect(() => {
+    const success = searchParams.get("success");
+    if (success == null) return;
+    alert(success);
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -71,7 +77,6 @@ const ExpSubsManage = () => {
       <ExpSubsManageView
         sbMember={sbMember}
         subscribe={subscribe}
-        success={success}
         TasteRes={TasteRes}
       />
     );

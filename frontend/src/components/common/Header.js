@@ -174,8 +174,8 @@ const HeaderV2 = () => {
             >
               <CategoryBox>
                 <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>뉴스 및 공지사항</SubMenu>
+                  <StyledLink to="community/notice" isDarkMode={isDarkMode}>
+                    <SubMenu>공지사항</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>

@@ -38,6 +38,11 @@ public class AdminPostController {
         return adminPostService.getAdminPostsByCategory(category);
     }
 
+    @GetMapping("/allposts")
+    public List<AdminPost> getAllPosts() {
+        return adminPostService.getAllAdminPosts();
+    }
+
     @GetMapping("/post/{id}")
     public AdminPost getPost(@PathVariable Long id) {
         return adminPostService.getAdminPost(id);

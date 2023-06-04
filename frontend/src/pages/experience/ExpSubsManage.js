@@ -3,20 +3,20 @@ import { useEffect, useState } from "react";
 import Loading from "../../components/common/Loading";
 import ExpSubsManageView from "../../components/experience/ExpSubMangeView";
 import { getCookie } from "../../utils/Cookies";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 const ExpSubsManage = () => {
   const [sbMember, setSbmember] = useState({ initial: "setting" });
   const [subscribe, setSubscribe] = useState([]);
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   // const startTime = performance.now();
   // console.log(`startTime = ${startTime}`);
   // const success = searchParams.get("success") ? searchParams.get("success") : false;
   const success = searchParams.get("success");
-
-  console.log("15번째 줄이다잇~~~~");
   console.log(success);
 
+  console.log(sbMember);
   const token = {
     headers: {
       Authorization: "Bearer " + getCookie("accessToken"),
@@ -24,20 +24,24 @@ const ExpSubsManage = () => {
   };
 
   useEffect(() => {
-    axios
-      .all([
-        axios.get("/lastSbMember", token),
-        axios.get("/getSubscribe", token),
-      ])
-      .then(
-        axios.spread((res1, res2) => {
-          setSbmember(res1.data);
-          setSubscribe(res2.data);
-        })
-      )
-      .catch((e) => {
-        console.log("ExpSubsManage에서 문제생김", e);
-      });
+    getCookie("accessToken") === undefined
+      ? navigate("/login")
+      : axios
+          .all([
+            axios.get("/lastSbMember", token),
+            axios.get("/getSubscribe", token),
+          ])
+          .then(
+            axios.spread((res1, res2) => {
+              setSbmember(res1.data);
+              setSubscribe(res2.data);
+            })
+          )
+          .catch((e) => {
+            console.log("ExpSubsManage에서 문제생김", e);
+            alert("구독서비스 이용내역이 존재하지 않습니다.");
+            navigate("/exp/subs");
+          });
   }, []);
 
   // const axiosEnd = performance.now();
@@ -51,8 +55,6 @@ const ExpSubsManage = () => {
     //     axiosEnd - startTime
     //   }ms `
     // );
-    // console.log('설정제대로 됐나?', subscribe);
-
     return (
       <ExpSubsManageView
         sbMember={sbMember}

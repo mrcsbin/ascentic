@@ -128,4 +128,9 @@ public class MemberController {
         System.out.println("모르곘다");
         return memberInfo;
     }
+
+    @GetMapping("/mypage/profile")
+    public MemberResponse.MyPageDto getMyPageProfile() {
+        return memberService.getMyPageProfile();
+    }
 }

@@ -7,6 +7,8 @@ import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
+import com.backend.wish.entity.Wish;
+import com.backend.wish.repository.WishRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final WishRepository wishRepository;
 
     @Override
     @Transactional
@@ -158,6 +162,13 @@ public class MemberServiceImpl implements MemberService {
         log.debug("currentMemberId = {}", currentMemberId);
         return memberRepository.findById(currentMemberId)
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
+    }
+
+    public MemberResponse.MyPageDto getMyPageProfile() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).get();
+        List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
+        return MemberResponse.MyPageDto.of(member, wishList.size());
     }
 
     @PostConstruct

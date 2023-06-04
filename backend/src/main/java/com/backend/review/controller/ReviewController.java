@@ -25,14 +25,14 @@ public class ReviewController {
         return reviewService.getReviewList();
     }
 
-    @GetMapping("/get/{orderProductNum}")
-    public ReviewResponse.ReviewDto getReview(@PathVariable String orderProductNum) {
-        return reviewService.getReview(orderProductNum);
+    @GetMapping("/get/{orderId}")
+    public ReviewResponse.ReviewDto getReview(@PathVariable String orderId, Integer orderProductNum) {
+        return reviewService.getReview(orderId, orderProductNum);
     }
 
-    @GetMapping("/delete")
-    public void deleteReview(Integer prodNum) {
-        reviewService.deleteReview(prodNum);
+    @DeleteMapping("/get/{orderId}")
+    public void deleteReview(@PathVariable String orderId, Integer orderProductNum) {
+        reviewService.deleteReview(orderId, orderProductNum);
     }
 
     @PostMapping("/count/set")

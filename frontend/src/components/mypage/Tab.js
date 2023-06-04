@@ -14,6 +14,9 @@ export const Tab = () => {
   return (
     <TabArea>
       <TabBox>
+        <StyledLink to="/mypage">
+          <MyPage>마이 페이지</MyPage>
+        </StyledLink>
         <TabHeader>나의 쇼핑</TabHeader>
         <TabList>
           <StyledLink to="/mypage/orderlist">
@@ -114,7 +117,8 @@ export const Tab = () => {
 const TabArea = styled.div`
   box-sizing: border-box;
   width: 15%;
-  padding: 0 0 50px 70px;
+  height: 100%;
+  position: fixed;
 `;
 
 const TabBox = styled.div`
@@ -123,26 +127,34 @@ const TabBox = styled.div`
 `;
 
 const TabHeader = styled.div`
-  margin-top: 30px;
+  margin-top: 4rem;
   font-size: 1.5rem;
+  font-weight: 700;
 `;
 
 const TabList = styled.div`
-  margin-top: 17px;
-  font-size: 1rem;
-  padding: 0 0 0 20px;
+  margin-top: 1.3rem;
+  font-size: 1.2rem;
+  /* padding: 0 0 0 20px; */
 `;
 
 const TabBody = styled.div`
   display: inline;
   font-weight: ${(props) => (props.clicked ? "900" : "400")};
+  color: ${(props) => (props.clicked ? "black" : "grey")};
   :hover {
     cursor: pointer;
-    font-weight: 900;
   }
 `;
 
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: black;
+`;
+
+const MyPage = styled.div`
+  display: inline-block;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
 `;

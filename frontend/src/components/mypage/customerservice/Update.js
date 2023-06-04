@@ -6,6 +6,8 @@ import {
 } from "../../../api/MemberApi";
 import { useState, useEffect, useRef } from "react";
 import { getCookie, removeCookie } from "../../../utils/Cookies";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 export const Update = () => {
   const fileInput = useRef(null);
@@ -17,6 +19,7 @@ export const Update = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
+  const dispatch = useDispatch();
 
   const DefaultProfileImageURL =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -35,6 +38,7 @@ export const Update = () => {
       setId(id);
       setEmail(email);
       setNickname(nickname);
+      await dispatch(setActiveTab("회원정보수정"));
     };
     fetchMemberInfo();
   }, []);

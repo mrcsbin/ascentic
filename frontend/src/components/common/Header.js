@@ -211,7 +211,7 @@ const HeaderV2 = () => {
                   isLoggedIn
                     ? role === "ADMIN"
                       ? "/admin"
-                      : "/mypage/orderlist/"
+                      : "/mypage"
                     : "/login"
                 }
                 isDarkMode={isDarkMode}

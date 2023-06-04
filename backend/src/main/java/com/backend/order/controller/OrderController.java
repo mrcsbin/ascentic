@@ -159,4 +159,9 @@ public class OrderController {
     public void deleteCancelOrder() {
         orderService.deleteCancelOrder();
     }
+
+    @GetMapping("/order/get/mypage-profile")
+    public List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile() {
+        return orderService.getRecentOrdersInMyPageProfile();
+    }
 }

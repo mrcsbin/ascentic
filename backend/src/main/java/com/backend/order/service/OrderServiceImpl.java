@@ -28,10 +28,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -227,5 +224,16 @@ public class OrderServiceImpl implements OrderService {
     public void deleteCancelOrder() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         orderRepository.delete(orderRepository.findByMemberIdAndOrderPaymentStateIsFalse(currentMemberId));
+    }
+
+    @Override
+    public List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        List<Order> orders = orderRepository.findTop3ByMemberIdOrderByOrderDateDesc(currentMemberId);
+
+        return orders.stream()
+                .map(order -> OrderResponse.MyPageProfileOrderListDto.of(order, order.getOrderProducts()))
+                .collect(Collectors.toList());
     }
 }

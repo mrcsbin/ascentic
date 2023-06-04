@@ -11,9 +11,9 @@ public interface ReviewService {
 
     List<ReviewResponse.ReviewListDto> getReviewList();
 
-    ReviewResponse.ReviewDto getReview(String orderProductNum);
+    ReviewResponse.ReviewDto getReview(String orderId, Integer orderProductNum);
 
-    void deleteReview(Integer prodNum);
+    void deleteReview(String orderId, Integer orderProductNum);
 
     void setReviewCount(Integer reviewNum);
 }

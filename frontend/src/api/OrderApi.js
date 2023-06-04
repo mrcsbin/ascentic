@@ -108,3 +108,12 @@ export const getOrderList = async (accessToken) => {
   });
   return response.data;
 };
+
+export const getOrderListInMyPageProfile = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/get/mypage-profile`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};

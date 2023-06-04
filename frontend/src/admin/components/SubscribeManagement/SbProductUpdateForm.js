@@ -189,6 +189,7 @@ const SbProdBox = styled.div`
   padding: 10px;
   width: 500px;
   border-bottom: 1px solid black;
+  font-size: 1rem;
 `;
 const InlineContent = styled.div`
   div {
@@ -200,6 +201,7 @@ const InlineContent = styled.div`
     padding: 2px 2px;
     width: 80px;
     text-align: right;
+    font-size: 1rem;
   }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -207,12 +209,16 @@ const InlineContent = styled.div`
     -moz-appearance: none;
     appearance: none;
   }
+  select {
+    font-size: 1rem;
+  }
 `;
 const InputImg = styled.input`
   display: block;
   float: left;
   margin-bottom: 10px;
   width: 100%;
+  font-size: 1rem;
 `;
 const ImgBox = styled.div`
   display: block;
@@ -231,15 +237,19 @@ const ImgBox = styled.div`
 const BlockContent = styled.div`
   margin-bottom: 10px;
   font-weight: 500;
+  select {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 `;
 const BlockContentS = styled.div`
-  margin-bottom: 5px;
   font-size: 0.9rem;
   line-height: 1.2;
   word-break: keep-all;
   textarea {
     width: 385px;
     height: fit-content;
+    font-size: 1rem;
   }
 `;
 const Buttonbox = styled.div`
@@ -251,6 +261,8 @@ const Buttonbox = styled.div`
     margin-right: 10px;
     padding: 5px 15px;
     background-color: black;
+    font-size: 1rem;
+    font-weight: 500;
     color: white;
     border: 0;
     cursor: pointer;

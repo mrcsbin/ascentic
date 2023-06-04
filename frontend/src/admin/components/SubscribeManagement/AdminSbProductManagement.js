@@ -111,76 +111,83 @@ const SbProductManagement = () => {
   }
   return (
     <>
-      <CategoriesBox>
-        {Categories.map((c) => (
-          <button
-            key={c.text}
-            className={
-              escape(c.text) === category ? "activeCateBtn" : "cateBtn"
-            }
-            onClick={() => setCategory(escape(c.text))}
-          >
-            {c.name}
+      <HeaderWrap>
+        <HeaderLeft>구독 상품 관리</HeaderLeft>
+      </HeaderWrap>
+      <InputContainer>
+        <CategoriesBox>
+          {Categories.map((c) => (
+            <button
+              key={c.text}
+              className={
+                escape(c.text) === category ? "activeCateBtn" : "cateBtn"
+              }
+              onClick={() => setCategory(escape(c.text))}
+            >
+              {c.name}
+            </button>
+          ))}
+        </CategoriesBox>
+        <AddSortBox>
+          <button className="addbtn" onClick={() => openModal()}>
+            + 구독 상품 추가
           </button>
-        ))}
-      </CategoriesBox>
-      <AddSortBox>
-        <button className="addbtn" onClick={() => openModal()}>
-          + 구독 상품 추가
-        </button>
-        <SortBox>
-          <button
-            className={sortOption === "latest" ? "activeSortbtn" : "sortbtn"}
-            onClick={() => {
-              setSortOption("latest");
-            }}
-          >
-            최신순
-          </button>
-          <button
-            className={sortOption === "oldest" ? "activeSortbtn" : "sortbtn"}
-            onClick={() => {
-              setSortOption("oldest");
-            }}
-          >
-            번호순
-          </button>
-          <button
-            className={sortOption === "moststock" ? "activeSortbtn" : "sortbtn"}
-            onClick={() => {
-              setSortOption("moststock");
-            }}
-          >
-            재고순
-          </button>
-          <button
-            className={
-              sortOption === "leaststock" ? "activeSortbtn" : "sortbtn"
-            }
-            onClick={() => {
-              setSortOption("leaststock");
-            }}
-          >
-            재고적은순
-          </button>
-        </SortBox>
-      </AddSortBox>
-      {sbProducts.length === 0 ? (
-        <div>로딩중입니다.</div>
-      ) : (
-        <>
-          {sortByOption(sbProducts, sortOption)}
-          <SbProductList
-            sbProducts={sbProducts}
-            setSbProducts={setSbProducts}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            updateMode={updateMode}
-            setUpdateMode={setUpdateMode}
-            Categories={Categories}
-          />
-        </>
-      )}
+          <SortBox>
+            <button
+              className={sortOption === "latest" ? "activeSortbtn" : "sortbtn"}
+              onClick={() => {
+                setSortOption("latest");
+              }}
+            >
+              최신순
+            </button>
+            <button
+              className={sortOption === "oldest" ? "activeSortbtn" : "sortbtn"}
+              onClick={() => {
+                setSortOption("oldest");
+              }}
+            >
+              번호순
+            </button>
+            <button
+              className={
+                sortOption === "moststock" ? "activeSortbtn" : "sortbtn"
+              }
+              onClick={() => {
+                setSortOption("moststock");
+              }}
+            >
+              재고순
+            </button>
+            <button
+              className={
+                sortOption === "leaststock" ? "activeSortbtn" : "sortbtn"
+              }
+              onClick={() => {
+                setSortOption("leaststock");
+              }}
+            >
+              재고적은순
+            </button>
+          </SortBox>
+        </AddSortBox>
+        {sbProducts.length === 0 ? (
+          <div>로딩중입니다.</div>
+        ) : (
+          <>
+            {sortByOption(sbProducts, sortOption)}
+            <SbProductList
+              sbProducts={sbProducts}
+              setSbProducts={setSbProducts}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              updateMode={updateMode}
+              setUpdateMode={setUpdateMode}
+              Categories={Categories}
+            />
+          </>
+        )}
+      </InputContainer>
       <SbProductAddModal
         open={showModal}
         close={closeModal}
@@ -190,39 +197,58 @@ const SbProductManagement = () => {
     </>
   );
 };
-
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-bottom: 2px solid black;
+`;
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 600;
+`;
+const InputContainer = styled.div`
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
+`;
 const CategoriesBox = styled.div`
-  padding: 10px auto;
+  padding: 0 auto;
+  margin-top: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid black;
   button {
     margin: 10px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     background-color: white;
     border: 0;
     cursor: pointer;
   }
   .activeCateBtn,
   .cateBtn:hover {
-    font-weight: 700;
+    font-weight: 600;
+    border-bottom: 2px solid black;
   }
 `;
 
 const AddSortBox = styled.div`
   display: flex;
-  width: 75%;
+  width: 80%;
   justify-content: space-between;
   align-items: flex-end;
   margin: 25px auto 10px auto;
   .addbtn {
     margin: 0 10px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
     background-color: white;
-    border: 1px solid black;
+    border: 1.5px solid black;
     cursor: pointer;
   }
   .addbtn:hover {
@@ -237,13 +263,14 @@ const SortBox = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   button {
+    font-size: 1rem;
     margin-left: 15px;
     background-color: white;
     border: 0;
     cursor: pointer;
   }
   .activeSortbtn {
-    color: red;
+    font-weight: 700;
   }
 `;
 

@@ -23,5 +23,6 @@ public class LastSbMemberDTO {
     private String mainAddress;
 
     private String subAddress;
+    private String tasteResult;
 }
 

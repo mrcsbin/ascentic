@@ -65,18 +65,21 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
                     .sbSendNum(subssend.getSbSendNum())
                     .sbStartDate(subssend.getSubscribeMember().getSbStartDate())
                     .sbEndDate(subssend.getSubscribeMember().getSbEndDate())
-                    .sbPay(subssend.getSubscribeMember().getSbPay())
                     .sbPaymentDay(subssend.getSubscribeMember().getSbPaymentDay())
                     .tasteResult(subssend.getSubscribeMember().getTasteResult())
                     .spScent(subssend.getSubscribeProduct().getScentName())
                     .spPrice(subssend.getSubscribeProduct().getSbProdPrice())
                     .spIntro(subssend.getSubscribeProduct().getSbProdIntro())
+                    .sbProdImage(subssend.getSubscribeProduct().getSbProdImage())
 //                    .sbSendStart(subssend.getSbSendStart())
 //                    .sbSendEnd(subssend.getSbSendEnd())
                     .sbSendPostcode(subssend.getSbSendPostcode())
                     .sbSendScore(subssend.getSbSendScore())
                     .sbSendReview(subssend.getSbSendReview())
                     .sbSendPayDate(subssend.getSbSendPayDate())
+                    .sbSendPayment(subssend.getSbSendPayment())
+                    .sbShippingCode(subssend.getSbShippingCode())
+                    .sbSendState(subssend.getSbSendState())
                     .build();
             subsDTOlist.add(subsSendDTO);
         }

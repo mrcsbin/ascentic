@@ -176,7 +176,7 @@ const Pagination = styled.div`
   display: inline-block;
   width: 100%;
   height: 30px;
-  margin: 20px auto;
+  margin: 30px auto;
   text-align: center;
   align-items: center;
 `;
@@ -186,7 +186,7 @@ const PageBtn = styled.div`
   margin: 5px;
   padding: 2px;
   font-family: "Pretendard";
-  font-size: 0.85rem;
+  font-size: 1rem;
   border: 1px solid;
   width: 2rem;
   &:hover {
@@ -199,7 +199,7 @@ const PageNumBtn = styled.div`
   margin: 5px;
   padding: 2px;
   font-family: "Pretendard";
-  font-size: 0.85rem;
+  font-size: 1rem;
   border: 1px solid;
   width: 1rem;
   &:hover {

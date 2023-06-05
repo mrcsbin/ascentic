@@ -11,23 +11,43 @@ export const 회원가입 = async (e) => {
 };
 
 // 회원 수정
-export const updateMember = async (
-  id,
-  name,
-  email,
-  image,
-  nickname,
-  password,
-  newPassword
-) => {
-  const response = await axios.patch(`${MEMBER_API_URL}/${id}`, {
-    id,
-    name,
-    email,
-    image,
-    nickname,
-    password,
-    newPassword,
+export const updateMember = async (accessToken, password, newPassword) => {
+  const response = await axios.patch(
+    `${MEMBER_API_URL}/userUpdate`,
+    {
+      password,
+      newPassword,
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
+  console.log(response.data);
+  return response.data;
+};
+
+// 회원 프로필이미지 수정
+export const updateProfileImg = async (accessToken, profileImg) => {
+  const response = await axios.post(
+    `${MEMBER_API_URL}/updateProfile`,
+    profileImg,
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
+  return response.data;
+};
+
+// 회원 프로필이미지 삭제 API
+export const delProfileImg = async (accessToken) => {
+  const response = await axios.get(`${MEMBER_API_URL}/delProfile`, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
   });
   return response.data;
 };

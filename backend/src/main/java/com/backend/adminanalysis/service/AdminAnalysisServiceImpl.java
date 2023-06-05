@@ -140,6 +140,7 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
         List<SubscribeSend> allSubscribeSends = subscribeSendRepository.findAll();
 
         Map<SubscribeProduct, List<Integer>> scoresByProduct = allSubscribeSends.stream()
+                .filter(subscribeSend -> subscribeSend.getSbSendScore() != null) // Null 값을 필터링하여 예외 방지
                 .collect(Collectors.groupingBy(SubscribeSend::getSubscribeProduct,
                         LinkedHashMap::new,
                         Collectors.mapping(SubscribeSend::getSbSendScore, Collectors.toList())));

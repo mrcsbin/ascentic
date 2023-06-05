@@ -165,3 +165,16 @@ export const getOrderInfo = async (accessToken) => {
     console.error(error);
   }
 };
+
+export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
+  const response = await axios.post(
+    `${MEMBER_API_URL}/updatePushYn`,
+    { snsPushYn, emailPushYn },
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
+  return response.data;
+};

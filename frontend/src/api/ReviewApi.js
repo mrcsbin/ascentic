@@ -11,12 +11,15 @@ export const setReviewCount = async (accessToken, reviewNum) => {
   });
 };
 
-export const getReview = async (accessToken, orderProductNum) => {
-  const response = await axios.get(`${REVIEW_API_URL}/get/${orderProductNum}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+export const getReview = async (accessToken, orderId, orderProductNum) => {
+  const response = await axios.get(
+    `${REVIEW_API_URL}/get/${orderId}?orderProductNum=${orderProductNum}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
   return response.data;
 };
 
@@ -26,4 +29,15 @@ export const addReview = async (accessToken, data) => {
       Authorization: `Bearer ${accessToken}`,
     },
   });
+};
+
+export const deleteReview = async (accessToken, orderId, orderProductNum) => {
+  await axios.delete(
+    `${REVIEW_API_URL}/get/${orderId}?orderProductNum=${orderProductNum}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 };

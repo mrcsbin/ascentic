@@ -1,106 +1,67 @@
 import styled from "styled-components";
-import { 주문모달 } from "./주문모달";
-import { useEffect, useState } from "react";
-import { getCookie } from "../../../utils/Cookies";
-import { getOrderProductList } from "../../../api/OrderProduct";
-import { useDispatch } from "react-redux";
-import { setActiveTab } from "../../../store/modules/mypage";
-import { getOrderList } from "../../../api/OrderApi";
+import { OrderItem } from "./OrderItem";
+import { Link } from "react-router-dom";
 
-export const OrderList = () => {
-  const [orderList, setOrderList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
-  const [test, setTest] = useState();
-  console.log(test);
-
-  useEffect(() => {
-    const fetchProductData = async () => {
-      const response = await getOrderProductList(getCookie("accessToken"));
-      setTest(await getOrderList(getCookie("accessToken")));
-      setOrderList(
-        response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
-      );
-      await dispatch(setActiveTab("주문 내역"));
-      setIsLoading(false);
-    };
-    fetchProductData();
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+export const OrderList = ({ item }) => {
   return (
-    <OrderListWrap>
-      <ContentHeader>주문 내역</ContentHeader>
-      {/* <ItemInfoBox>
-        <ItemBigBox>
-          <ItemName>상품 정보</ItemName>
-        </ItemBigBox>
-        <ItemSmallBox>
-          <OrderDate>주문 일자</OrderDate>
-        </ItemSmallBox>
-        <ItemSmallBox>
-          <OrderAmount>주문금액 (수량)</OrderAmount>
-        </ItemSmallBox>
-        <ItemSmallBox>
-          <OrderState>주문상태</OrderState>
-        </ItemSmallBox>
-      </ItemInfoBox> */}
-      {/* {orderList.length === 0 ? (
-        <IsNotItem>주문하신 상품이 없습니다.</IsNotItem>
-      ) : (
-        orderList.map((item, index) => <주문상품모달 item={item} key={index} />)
-      )} */}
-      {test.map((item, index) => (
-        <주문모달 item={item} key={index}></주문모달>
-      ))}
-    </OrderListWrap>
+    <>
+      <Wrap>
+        <InfoBar>
+          <InfoBox>
+            <OrderDate>주문 날짜 : {item.orderDate} </OrderDate>
+            <OrderId>주문 번호 : {item.orderId}</OrderId>
+          </InfoBox>
+          <StyledLink to={`/ordercomplete?orderId=${item.orderId}`}>
+            <OrderDetail>주문 상세 보기</OrderDetail>
+          </StyledLink>
+        </InfoBar>
+        {item.orderProductList.map((item, index) => (
+          <OrderItem item={item} key={index} />
+        ))}
+      </Wrap>
+    </>
   );
 };
 
-const OrderListWrap = styled.div`
-  border-bottom: 2px solid black;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
 `;
 
-const ContentHeader = styled.div`
-  padding: 20px 0;
-  font-size: 30px;
-  font-weight: 700;
-  border-bottom: 2px solid black;
-  margin-bottom: 2rem;
+const Wrap = styled.div`
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+  padding: 24px 24px 16px;
+  box-sizing: border-box;
 `;
 
-const ItemInfoBox = styled.div`
-  padding: 20px 0;
+const InfoBar = styled.div`
   display: flex;
-  justify-content: space-around;
-  border-bottom: 2px solid black;
+  justify-content: space-between;
 `;
 
-const ItemBigBox = styled.div`
-  width: 40%;
-`;
-
-const ItemName = styled.div`
-  text-align: center;
-`;
-
-const ItemSmallBox = styled.div`
-  width: 20%;
+const InfoBox = styled.div`
+  margin-bottom: 1rem;
 `;
 
 const OrderDate = styled.div`
-  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 `;
 
-const OrderAmount = styled.div`
-  text-align: center;
+const OrderId = styled.div`
+  color: grey;
+  font-size: 1.1rem;
 `;
 
-const OrderState = styled.div`
-  text-align: center;
+const OrderDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
 `;
-
-const IsNotItem = styled.div``;

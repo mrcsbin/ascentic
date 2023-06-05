@@ -1,9 +1,30 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
+import { getCookie } from "../../../utils/Cookies";
+import { useEffect } from "react";
+import { getMemberInfo, updatePushYn } from "../../../api/MemberApi";
 
 export const Notification = () => {
   const [emailPushYn, setEmailPushYn] = useState(false);
   const [snsPushYn, setSnsPushYn] = useState(false);
+
+  useEffect(() => {
+    const fetchMemberInfo = async () => {
+      const accessToken = getCookie("accessToken");
+      const getInfo = await getMemberInfo(accessToken);
+      setEmailPushYn(getInfo.emailPushYn);
+      setSnsPushYn(getInfo.snsPushYn);
+      console.log(getInfo);
+    };
+    fetchMemberInfo();
+  }, []);
+
+  const handleUpdate = async () => {
+    const accessToken = getCookie("accessToken");
+    const res = await updatePushYn(accessToken, snsPushYn, emailPushYn).then(
+      alert("수정되었습니다.")
+    );
+  };
 
   return (
     <Wrap>
@@ -37,6 +58,7 @@ export const Notification = () => {
               <OnOff isChecked={snsPushYn} />
             </OnOffButtonBox>
           </SettingBox>
+          <UpdateBtn onClick={() => handleUpdate()}>수정</UpdateBtn>
         </Container>
       </ContentBody>
     </Wrap>
@@ -160,4 +182,12 @@ const OnOff = styled.div`
         transition: transform 0.2s ease 0s;
       }
     `}
+`;
+
+const UpdateBtn = styled.button`
+  margin-left: 33%;
+  width: 30%;
+  height: 30px;
+  background-color: black;
+  color: white;
 `;

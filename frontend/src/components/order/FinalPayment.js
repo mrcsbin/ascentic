@@ -105,6 +105,7 @@ const FinalPayment = ({
         console.log(products);
         const res = await requestOrder(accessToken, requestData, products);
       } catch (e) {
+        console.log(e)
         console.error(e);
       }
     } else {

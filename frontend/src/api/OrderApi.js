@@ -32,6 +32,13 @@ export const requestOrder = async (accessToken, requestData, products) => {
 
           .then((res) => {
             console.log(res.data);
+          })
+          .catch(() => {
+            axios.get("/order/delete", {
+              headers: {
+                Authorization: "Bearer " + accessToken,
+              },
+            });
           });
 
         // ProdOrder 생성하기
@@ -100,4 +107,13 @@ export const getOrderList = async (accessToken) => {
     },
   });
   return response.data;
-}
+};
+
+export const getOrderListInMyPageProfile = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/get/mypage-profile`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};

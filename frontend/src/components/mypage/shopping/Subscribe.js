@@ -1,6 +1,15 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 export const Subscribe = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setActiveTab("구독 내역"));
+  }, []);
+
   return (
     <Wrap>
       <ContentHeader>구독내역</ContentHeader>

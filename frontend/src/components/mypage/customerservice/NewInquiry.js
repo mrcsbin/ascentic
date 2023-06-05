@@ -101,8 +101,10 @@ const NewInquiry = ({ showInquiry, handleNewInquiryButtonClick }) => {
               />
             </InputContainer>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <SubmitButton type="submit">문의하기</SubmitButton>
-            <CloseButton onClick={closeModal}>닫기</CloseButton>
+            <Buttons>
+              <SubmitButton type="submit">문의하기</SubmitButton>
+              <CloseButton onClick={closeModal}>닫기</CloseButton>
+            </Buttons>
           </form>
         </ModalContent>
       </ModalContainer>
@@ -132,6 +134,7 @@ const ModalContent = styled.div`
   background-color: #fff;
   padding: 20px;
   border-radius: 4px;
+  width: 50%;
 `;
 
 const InputContainer = styled.div`
@@ -182,13 +185,13 @@ const ErrorMessage = styled.p`
 
 const SubmitButton = styled.button`
   padding: 0.625rem 1.25rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   background-color: black;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin: 15px;
+  margin: 10px;
 
   transition: background-color 0.3s ease;
 
@@ -203,13 +206,13 @@ const SubmitButton = styled.button`
 
 const CloseButton = styled.button`
   padding: 0.625rem 1.25rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   background-color: #ccc;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin: 15px;
+  margin: 10px;
   transition: background-color 0.3s ease;
 
   &:hover {
@@ -219,5 +222,9 @@ const CloseButton = styled.button`
   &:focus {
     outline: none;
   }
+`;
+const Buttons = styled.div`
+  align-items: center;
+  display: grid;
 `;
 export default NewInquiry;

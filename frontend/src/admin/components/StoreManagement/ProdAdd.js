@@ -16,7 +16,7 @@ const ProdAdd = () => {
 
   // 옵션 추가 버튼 클릭 시 실행
   const handleAddOption = () => {
-    if (productInfo.options.length > 3) {
+    if (productInfo.options.length > 2) {
       alert("옵션이 너무 많습니다.");
       return;
     }
@@ -163,7 +163,6 @@ const ProdAdd = () => {
     <>
       <HeaderWrap>
         <HeaderLeft>상품 추가</HeaderLeft>
-        <HeaderRight></HeaderRight>
       </HeaderWrap>
       <InputContainer>
         <ProdInputContainer>
@@ -208,19 +207,6 @@ const ProdAdd = () => {
               onChange={(e) => handleChange(e, "prodInfo")}
             ></ProdInfoInput>
           </BigOneInputContainer>
-          <OneInputContainer>
-            <Label>상태</Label>
-            <SelectInput
-              value={productInfo.prodState}
-              onChange={(e) => handleChange(e, "prodState")}
-            >
-              {prodState.map((state, index) => (
-                <option key={index} value={state}>
-                  {state}
-                </option>
-              ))}
-            </SelectInput>
-          </OneInputContainer>
           <ThumbnailContainer>
             <Label>대표사진</Label>
             <ThumInput
@@ -310,27 +296,25 @@ const HeaderWrap = styled.div`
   justify-content: space-between;
   width: 90%;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 30px;
   border-bottom: 2px solid black;
 `;
-
 const HeaderLeft = styled.div`
   padding: 20px 0;
   font-size: 30px;
-  font-weight: 700;
+  font-weight: 600;
 `;
-
-const HeaderRight = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: end;
-`;
-
 const InputContainer = styled.div`
-  width: 80%;
+  width: 60%;
   height: 90%;
-  margin: 2% auto;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 1rem;
+  input,
+  select {
+    font-size: 1rem;
+    padding-left: 10px;
+  }
 `;
 
 const ProdInputContainer = styled.div`
@@ -342,11 +326,6 @@ const OptionContainer = styled.div`
   margin: 3% auto;
   width: 100%;
   height: 45%;
-`;
-
-const EditBtnContainer = styled.div`
-  width: 100%;
-  height: 5%;
 `;
 
 const OneInputContainer = styled.div`
@@ -376,6 +355,8 @@ const SelectInput = styled.select`
 
 const BigOneInputContainer = styled.div`
   display: flex;
+  align-items: center;
+  margin: 10px 0;
 `;
 
 const ProdInfoInput = styled.textarea`
@@ -395,10 +376,20 @@ const OptionOneInputContainer = styled.div`
 
 const OptionInfoLabel = styled.div`
   width: 20%;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: rgba(250, 250, 250, 1);
 `;
 
 const DelLabel = styled.div`
-  width: 8%;
+  width: 12%;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: rgba(250, 250, 250, 1);
 `;
 
 const OneOptionInput = styled.div`
@@ -422,7 +413,7 @@ const OptionDelBtn = styled.button`
   font-size: 20px;
   background-color: white;
   color: red;
-  border: 1px solid red;
+  border: 1.5px solid red;
   border-radius: 50%;
   cursor: pointer;
   text-align: center;
@@ -432,7 +423,7 @@ const OptionAddBtn = styled.button`
   cursor: pointer;
   font-size: 25px;
   margin-left: 45%;
-  border: 1px solid gray;
+  border: 1.5px solid gray;
   border-radius: 50%;
   background-color: white;
   text-align: center;
@@ -453,11 +444,24 @@ const Imagesontainer = styled.div`
 `;
 const ImageInput = styled.input``;
 
+const EditBtnContainer = styled.div`
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 50px;
+  button {
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 1.5px solid black;
+    background-color: black;
+    cursor: pointer;
+  }
+`;
 const AddBtn = styled.button`
   width: 600px;
   height: 50px;
-  margin: 2% 25%;
-  background-color: black;
   color: white;
-  cursor: pointer;
 `;

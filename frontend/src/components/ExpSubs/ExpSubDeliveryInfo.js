@@ -8,7 +8,7 @@ import { getCookie } from "../../utils/Cookies";
 import styled from "styled-components";
 
 // 배송 정보
-const DeliveryInfo = () => {
+const DeliveryInfo = ({ setDisable }) => {
   const dispatch = useDispatch(); // action 객체를 보내는 훅
   const shipInfo = useSelector((state) => state.order.shipInfo);
 
@@ -63,14 +63,18 @@ const DeliveryInfo = () => {
         isShipNameFilled &&
         isShipTelFilled &&
         isMainAddressFilled &&
-        isSubAddressFilled &&
-        isShipMessageFilled;
+        isSubAddressFilled;
+      // &&isShipMessageFilled;
+      if (isComplete) {
+        setDisable(false);
+      }
     };
 
     checkFormCompletion();
   }, [shipInfo]);
   return (
     <DeliveryForm>
+      <Title>구독 배송 정보</Title>
       <RecipientContent>
         <div>
           <div>수령인</div>
@@ -144,78 +148,81 @@ const DeliveryInfo = () => {
 export default DeliveryInfo;
 
 const DeliveryForm = styled.div`
-  margin-top: 30px;
-  margin-left: 60px;
-  width: 609px;
-  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const Title = styled.div`
+  width: 80%;
+  text-align: left;
+  font-size: 25px;
+  font-weight: 700;
+  padding-top: 10px;
 `;
 
 const RecipientContent = styled.div`
-  margin-top: 30px;
-  margin-left: 50px;
+  margin-top: 25px;
+  width: 70%;
 
   > div {
-    margin-left: 5px;
-    width: 510px;
+    width: 100%;
   }
 
   > div > div {
     float: left;
+    font-size: 1.1rem;
   }
 
   > div > button {
     border: none;
     color: black;
     float: right;
+    text-align: right;
     background-color: white;
-    font-size: 10px;
+    font-size: 0.8rem;
     text-decoration: underline;
     cursor: pointer;
   }
 
   > input {
-    width: 490px;
+    width: 93%;
     height: 30px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 4px;
-    margin-right: 4px;
-    padding-left: 15px;
+    font-size: 1.1rem;
+    margin: 10px 0;
+    padding: 3px 15px;
   }
 `;
 
 const TelContent = styled.div`
-  margin-top: 30px;
-  margin-left: 50px;
-
+  margin-top: 10px;
+  width: 70%;
   > div {
-    margin-left: 5px;
+    font-size: 1.1rem;
   }
 
   > input {
-    width: 490px;
+    width: 93%;
     height: 30px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 4px;
-    margin-right: 4px;
-    padding-left: 15px;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    padding: 3px 15px;
   }
 `;
 
 const DeliveryAddr = styled.div`
-  margin-top: 30px;
-  margin-left: 50px;
+  margin-top: 10px;
+  width: 70%;
   clear: both;
 
   > div {
-    margin-left: 5px;
-    width: 510px;
+    width: 100%;
     clear: both;
   }
 
   > div:nth-child(1) > div {
     float: left;
+    font-size: 1.1rem;
   }
 
   > div:nth-child(1) > button {
@@ -223,55 +230,53 @@ const DeliveryAddr = styled.div`
     color: black;
     float: right;
     background-color: white;
-    font-size: 10px;
+    font-size: 0.8rem;
     text-decoration: underline;
     cursor: pointer;
   }
 
   > div:nth-child(2) > input {
-    width: 350px;
+    width: 65%;
     height: 30px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-right: 4px;
-    padding-left: 15px;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    padding: 3px 0 3px 15px;
   }
 
   > div:nth-child(2) > button {
-    width: 135px;
+    width: 28%;
     height: 36px;
-    font-size: 14px;
+    font-size: 1.1rem;
     margin-top: 5px;
-    border: 1px solid;
+    margin-left: 10px;
+    border: 1.5px solid;
     background-color: white;
+    cursor: pointer;
   }
 
   > div:nth-child(3) > input {
-    width: 490px;
+    width: 93%;
     height: 30px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-right: 4px;
-    padding-left: 15px;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    padding: 3px 15px;
   }
 `;
 
 const DeliveryMessage = styled.div`
-  margin-top: 30px;
-  margin-left: 50px;
-
+  margin-top: 10px;
+  width: 70%;
   > div {
-    margin-left: 5px;
+    width: 100%;
+    font-size: 1.1rem;
   }
 
   > input {
-    width: 490px;
+    width: 93%;
     height: 30px;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-left: 4px;
-    margin-right: 4px;
-    padding-left: 15px;
+    margin: 10px 0;
+    font-size: 1.1rem;
+    padding: 3px 15px;
   }
 `;
 

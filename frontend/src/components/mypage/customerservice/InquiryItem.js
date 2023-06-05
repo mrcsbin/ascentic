@@ -8,7 +8,9 @@ export const InquiryItem = ({ item }) => {
         <InquiryNumber>{item.inquiryNum}</InquiryNumber>
         <InquiryCategory>{item.inquiryCategory}</InquiryCategory>
         <InquiryTitle>{item.inquiryTitle}</InquiryTitle>
-        <InquiryState>{item.inquiryState === true ? "답변 완료" : "답변 대기중"}</InquiryState>
+        <InquiryState>
+          {item.inquiryState === true ? "답변 완료" : "답변 대기중"}
+        </InquiryState>
       </InquiryCard>
     </>
   );

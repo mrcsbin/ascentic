@@ -186,7 +186,7 @@ public class SubscribePaymentController {
                 .build()
                 .toUri();
 
-        redirectHeaders.add("alertMessage", "구독신청에 성공하였습니다잇!");
+        redirectHeaders.add("success", "구독신청에 성공하였습니다잇!");
         redirectHeaders.setLocation(location);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
                 .headers(redirectHeaders)

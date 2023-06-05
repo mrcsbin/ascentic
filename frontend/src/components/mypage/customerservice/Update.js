@@ -3,6 +3,8 @@ import {
   updateMember,
   deleteMember,
   getMemberInfo,
+  updateProfileImg,
+  delProfileImg,
 } from "../../../api/MemberApi";
 import { useState, useEffect, useRef } from "react";
 import { getCookie, removeCookie } from "../../../utils/Cookies";
@@ -17,6 +19,8 @@ export const Update = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
+  const [profileImg, setProfileImg] = useState();
+  const [isImgDel, setIsImgDel] = useState(false);
 
   const DefaultProfileImageURL =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -26,11 +30,17 @@ export const Update = () => {
       const accessToken = getCookie("accessToken");
       const getInfo = await getMemberInfo(accessToken);
       const { name, id, email, nickname, image } = getInfo;
-      if (getInfo.image) {
-        setImage(image);
-      } else {
+      // if (getInfo.image) {
+      //   setImage(image);
+      // } else {
+      //   setImage(DefaultProfileImageURL);
+      // }
+      if (getInfo.image === null) {
         setImage(DefaultProfileImageURL);
+      } else {
+        setImage(`http://localhost:8080/images/${image}`);
       }
+
       setName(name);
       setId(id);
       setEmail(email);
@@ -40,7 +50,9 @@ export const Update = () => {
   }, []);
 
   const changeHandle = (event) => {
+    setIsImgDel(false);
     const imageFile = event.target.files[0];
+    setProfileImg(imageFile);
     const imageUrl = URL.createObjectURL(imageFile);
     setImage(imageUrl);
   };
@@ -55,21 +67,37 @@ export const Update = () => {
   };
 
   const updateHandle = async () => {
-    // 예외 아직 XX
-    await updateMember(
-      id,
-      name,
-      email,
-      image,
-      nickname,
-      password,
-      newPassword
-    ).then(
-      alert("회원정보가 수정되었습니다."),
-      (window.location.href = "/mypage")
-    );
+    const accessToken = getCookie("accessToken");
+
+    if (profileImg !== undefined) {
+      const imageFormData = new FormData();
+      imageFormData.append("profileImg", profileImg);
+      await updateProfileImg(accessToken, imageFormData).then(
+        alert("프로필 이미지 변경되었습니다.")
+      );
+    }
+
+    if (isImgDel) {
+      await delProfileImg(accessToken).then(alert("프로필 이미지 삭제"));
+    }
+
+    if (password !== "" || newPassword !== "") {
+      // 예외 아직 XX
+      const res = await updateMember(accessToken, password, newPassword);
+
+      if (res === "success") {
+        alert("회원정보가 수정되었습니다.");
+        window.location.href = "/mypage";
+      } else {
+        alert("현재 비밀번호가 틀립니다.");
+      }
+    }
   };
 
+  const imgdelHandle = () => {
+    setImage(DefaultProfileImageURL);
+    setIsImgDel(true);
+  };
   return (
     <Wrap>
       <ContentHeader>회원 정보 수정</ContentHeader>
@@ -79,7 +107,7 @@ export const Update = () => {
             <ImageBox>
               <ProfileImage src={image} alt="프로필 이미지" />
               {image === DefaultProfileImageURL ? null : (
-                <DeleteButton onClick={() => setImage(DefaultProfileImageURL)}>
+                <DeleteButton onClick={() => imgdelHandle()}>
                   삭제하기
                 </DeleteButton>
               )}
@@ -272,8 +300,10 @@ const ImageUpload = styled.input`
 
 const ProfileImage = styled.img`
   overflow: hidden;
-  max-width: 100%;
-  max-height: 100%;
+  /* max-width: 100%;
+  max-height: 100%; */
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
 `;
 

@@ -2,7 +2,6 @@ import ProductInfo from "../../components/order/ProductInfo";
 import OrderInfo from "../../components/order/OrderInfo";
 import DiscountBenefit from "../../components/order/DiscountBenefit";
 import DeliveryInfo from "../../components/order/DeliveryInfo";
-import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import { useLocation } from "react-router-dom";
 import ExtendAble from "../../components/order/ExtendAble";

@@ -25,7 +25,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
 
   // 옵션 추가 버튼 클릭 시 실행
   const handleAddOption = () => {
-    if (productInfo.options.length > 3) {
+    if (productInfo.options.length > 2) {
       alert("옵션이 너무 많습니다.");
       return;
     }
@@ -153,6 +153,9 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
     <>
       <ModalBackground />
       <ModalContainer>
+        <button className="close" onClick={() => hadleCloseEditModal()}>
+          &times;
+        </button>
         <InputContainer>
           <ProdInputContainer>
             <OneInputContainer>
@@ -189,19 +192,6 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
                 ))}
               </SelectInput>
             </OneInputContainer>
-            <OneInputContainer>
-              <Label>상태</Label>
-              <SelectInput
-                value={productInfo.prodState}
-                onChange={(e) => handleChange(e, "prodState")}
-              >
-                {prodState.map((state, index) => (
-                  <option key={index} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </SelectInput>
-            </OneInputContainer>
             <BigOneInputContainer>
               <Label>제품 설명</Label>
               <ProdInfoInput
@@ -212,7 +202,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
           </ProdInputContainer>
           <OptionContainer>
             <OneInputContainer>
-              <Label></Label>
+              <Label>옵션 추가</Label>
               <OptionInfoLabel>옵션명</OptionInfoLabel>
               <OptionInfoLabel>가격</OptionInfoLabel>
               <OptionInfoLabel>재고</OptionInfoLabel>
@@ -271,7 +261,7 @@ const ProdEditModal = ({ prodNum, hadleCloseEditModal }) => {
                       -
                     </OptionDelBtn>
                   ) : (
-                    <div>삭제x</div>
+                    <div>삭제불가</div>
                   )}
                 </OptionOneInputContainer>
               </div>
@@ -306,18 +296,36 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 800px;
-  height: 850px;
+  height: 830px;
   background-color: white;
   z-index: 1000;
-  border: 5px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px 30px;
+  .close {
+    position: absolute;
+    top: 3%;
+    right: 5%;
+    padding: 0;
+    font-size: 2rem;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+  }
+  input,
+  select,
+  textarea {
+    font-size: 1rem;
+    padding-left: 10px;
+    line-height: 1.5;
+  }
 `;
 
 const InputContainer = styled.div`
   width: 80%;
   height: 90%;
+  font-size: 1rem;
 `;
 
 const ProdInputContainer = styled.div`
@@ -327,25 +335,21 @@ const ProdInputContainer = styled.div`
 
 const OptionContainer = styled.div`
   width: 100%;
-  height: 55%;
-`;
-
-const EditBtnContainer = styled.div`
-  width: 100%;
-  height: 5%;
+  height: 50%;
 `;
 
 const OneInputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 50px;
-  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 
 const Label = styled.div`
   width: 12%;
   font-size: 16px;
   font-weight: 600;
+  margin-right: 10px;
 `;
 
 const NameInput = styled.input`
@@ -362,6 +366,8 @@ const SelectInput = styled.select`
 
 const BigOneInputContainer = styled.div`
   display: flex;
+  align-items: center;
+  margin: 10px 0;
 `;
 
 const ProdInfoInput = styled.textarea`
@@ -375,16 +381,26 @@ const OptionOneInputContainer = styled.div`
   display: flex;
   align-items: center;
   height: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   align-items: center;
 `;
 
 const OptionInfoLabel = styled.div`
   width: 20%;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: rgba(250, 250, 250, 1);
 `;
 
 const DelLabel = styled.div`
   width: 8%;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: rgba(250, 250, 250, 1);
 `;
 
 const OneOptionInput = styled.div`
@@ -410,7 +426,7 @@ const OptionDelBtn = styled.button`
   font-size: 20px;
   background-color: white;
   color: red;
-  border: 1px solid red;
+  border: 1.5px solid red;
   border-radius: 50%;
   cursor: pointer;
   text-align: center;
@@ -420,25 +436,35 @@ const OptionAddBtn = styled.button`
   cursor: pointer;
   font-size: 25px;
   margin-left: 45%;
-  border: 1px solid gray;
+  border: 1.5px solid gray;
   border-radius: 50%;
   background-color: white;
   text-align: center;
 `;
 
-const EditBtn = styled.button`
-  width: 150px;
-  height: 30px;
-  margin-left: 50%;
-  background-color: black;
-  color: white;
-  cursor: pointer;
+const EditBtnContainer = styled.div`
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  button {
+    width: 150px;
+    height: 40px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 1.5px solid black;
+    cursor: pointer;
+  }
 `;
-
 const CloseBtn = styled.button`
   margin-left: 20px;
-  width: 150px;
-  height: 30px;
   background-color: white;
-  cursor: pointer;
+  color: black;
+`;
+const EditBtn = styled.button`
+  margin-left: 20px;
+  background-color: black;
+  color: white;
 `;

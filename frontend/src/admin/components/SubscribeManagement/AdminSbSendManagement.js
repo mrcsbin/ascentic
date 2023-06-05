@@ -4,38 +4,7 @@ import axios from "axios";
 import SbSendList from "./SbSendList";
 
 const SbSendManagement = () => {
-  const [sbSends, setSbSends] = useState([
-    {
-      sbSendNum: 1,
-      sbMember: {
-        sbMemberNum: 1,
-        memberId: "sungbin",
-        sbStartDate: "2023-05-01",
-        sbEndDate: null,
-        sbMemberName: "조성빈",
-        sbMemberTel: "01000000000",
-        sbShipMessage: "문 앞에 두어주세요",
-        sbPrice: 10000,
-        tasteResult: "Woody",
-      },
-      subscribeProduct: {
-        sbProdNum: 2,
-        scentName: "Castoreum",
-        scentNoteName: "Animal",
-        sbProdPrice: 22900,
-        sbProdIntro:
-          "향초, 섬유향수, 샴푸 세가지 상품으로 구성된 캐스토리움향의 패키지입니다. 에이센틱과 함께 일상을 향기로 채워보세요.",
-        sbProdImage: "expProduct2.webp",
-      },
-      sbSendPostcode: "경기 성남시 분당구 판교역로10번길 3",
-      sbSendScore: 4,
-      sbSendReview: "향이 너무 좋습니다!!!",
-      sbSendPayDate: "2023-05-05",
-      sbSendPayment: "naver",
-      sbShippingCode: null,
-      sbSendState: "결제완료",
-    },
-  ]);
+  const [sbSends, setSbSends] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("all");

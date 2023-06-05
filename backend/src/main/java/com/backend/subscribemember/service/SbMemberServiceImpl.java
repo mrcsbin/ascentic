@@ -2,6 +2,8 @@ package com.backend.subscribemember.service;
 
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
+import com.backend.payment.entity.SubscribePayment;
+import com.backend.payment.repository.SubscribePaymentRepository;
 import com.backend.subscribemember.dto.LastSbMemberDTO;
 import com.backend.subscribemember.dto.SubscribeMemberDto;
 import com.backend.subscribemember.entity.SubscribeMember;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 public class SbMemberServiceImpl implements SbMemberService {
 
     private final SbMemberRepository sbMemberRepository;
+    private final SubscribePaymentRepository subscribePaymentRepository;
 
     @Override
     public void sbMemberAdd(SubscribeMemberDto subscribeMemberDto) {
@@ -52,10 +55,13 @@ public class SbMemberServiceImpl implements SbMemberService {
 
         // 멤버 아이디로 마지막 구독정보 가져옴
         SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getFirstByMemberIdOrderBySbStartDateDesc(currentMemberId);
+        SubscribePayment lastSubscribePayment = subscribePaymentRepository.findFirstByMemberIdOrderBySubscribePaymentNumDesc(currentMemberId);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(lastSubscribePayment);
         LastSbMemberDTO lastSbMemberDTO = LastSbMemberDTO.builder()
                 .sbStartDate(lastSbMemberByMemberId.getSbStartDate())
                 .sbEndDate(lastSbMemberByMemberId.getSbEndDate())
-                .sbPay(lastSbMemberByMemberId.getSbPay())
+                .sbPay(lastSubscribePayment.getSubscribeCard())
                 .sbPaymentDay(lastSbMemberByMemberId.getSbPaymentDay())
                 .memberName(lastSbMemberByMemberId.getSbMemberName())
                 .mainAddress(lastSbMemberByMemberId.getSbMainAddr())

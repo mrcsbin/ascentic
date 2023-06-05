@@ -48,8 +48,8 @@ public class OrderController {
 
         PaymentFinalRes finalRes = new PaymentFinalRes();
         try {
-            orderService.verifyRequest(paymentKey, orderId, amount);
-            PaymentFinalRes result = orderService.requestFinalPayment(paymentKey, orderId, amount);
+            orderService.verifyRequest(paymentKey, orderId, amount); //토스측 결제금액과 DB데이터 일치하는 지 봄
+            PaymentFinalRes result = orderService.requestFinalPayment(paymentKey, orderId, amount); //이제 진짜 결제요청 보냄
             finalRes.setOrderName(result.getOrderName());
             System.out.println("========================================================");
             System.out.println(result);

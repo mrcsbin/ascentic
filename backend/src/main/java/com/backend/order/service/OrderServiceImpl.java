@@ -113,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
         return purchaseName;
     }
 
-    @Transactional
+    @Transactional //토스측 결제금액과 DB데이터 일치하는 지 봄
     public void verifyRequest(String tossPaymentKey, String orderId, Integer amount) {
 
         Order result = orderRepository.findByOrderId(orderId);

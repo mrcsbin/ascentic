@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import "../../styles/ExpSubManageView.css";
-import RatingComponent from "./RatingComponent";
-import { getCookie } from "../../utils/Cookies";
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import '../../styles/ExpSubManageView.css';
+import RatingComponent from './RatingComponent';
+import { getCookie } from '../../utils/Cookies';
 
 const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // ------------------------------------ 구독기간 관련 ---------------------------------------
@@ -14,12 +14,12 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
     currentDate.getFullYear(),
     currentDate.getMonth(),
   ];
-  console.log("view" + success);
+  console.log('view' + success);
 
   useEffect(() => {
     if (success) {
-      console.log("success안이다잇~");
-      setTimeout(alert("성공했다잇@!!!"), 5000);
+      console.log('success안이다잇~');
+      setTimeout(alert('성공했다잇@!!!'), 5000);
     }
   }, [success]);
 
@@ -33,8 +33,9 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // }
   // }
   //구독중인 기간
-  const subsDuration =
+  let subsDuration =
     (currnetYear - startYear) * 12 + (currnetMonth - startMonth);
+  if (subsDuration === 0) subsDuration = 1;
 
   // ------------------------------ 과거 배송상품 관련 -------------------------------------------
 
@@ -83,9 +84,9 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
 
   useEffect(() => {
     const filterByMonth = (chosenYear, chosenMonth) => {
-      if (chosenMonth < 10) chosenMonth = "0" + chosenMonth;
+      if (chosenMonth < 10) chosenMonth = '0' + chosenMonth;
       const chosenDate = chosenYear + chosenMonth;
-      console.log(chosenDate, "chosenDate", typeof chosenDate);
+      console.log(chosenDate, 'chosenDate', typeof chosenDate);
 
       let filtered = subscribe.filter(
         (data) =>
@@ -104,7 +105,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // }
   function addComma(num) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return num.toString().replace(regexp, ",");
+    return num.toString().replace(regexp, ',');
   }
 
   const SubsInfo = () => {
@@ -165,8 +166,8 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
             </div>
           </div>
           <div className="clear-both"></div>
-          {(filterProd[0].sbSendState === "배송중") |
-            (filterProd[0].sbSendState === "배송완료") && (
+          {(filterProd[0].sbSendState === '배송중') |
+            (filterProd[0].sbSendState === '배송완료') && (
             <div className="rating-component">
               <RatingComponent
                 sbSendNum={filterProd[0].sbSendNum}
@@ -189,16 +190,16 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // ------------------------------------ 구독해지하기---------------------------------------
 
   const endSubscribe = async () => {
-    const confirmation = window.confirm("정말로 해지하시겠습니까?");
+    const confirmation = window.confirm('정말로 해지하시겠습니까?');
 
     if (!confirmation) {
       return;
     }
 
     try {
-      await axios.get("/endSubscribe", {
+      await axios.get('/endSubscribe', {
         headers: {
-          Authorization: "Bearer " + getCookie("accessToken"),
+          Authorization: 'Bearer ' + getCookie('accessToken'),
         },
       });
       window.location.reload();
@@ -219,7 +220,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
           <p>오늘도 향기로운 하루 되세요!</p>
         </div>
         <div className="duration-payDay">
-          <p>{sbMember.sbEndDate ? "구독하지 않는 중" : "구독중"}</p>
+          <p>{sbMember.sbEndDate ? '구독하지 않는 중' : '구독중'}</p>
           <p>
             구독기간 :<span>{subsDuration} 개월</span>
           </p>
@@ -276,8 +277,8 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
             );
           })}
         </select>
-        {console.log("filterProd = ", filterProd)}
-        {console.log("sbMember = ", sbMember)}
+        {console.log('filterProd = ', filterProd)}
+        {console.log('sbMember = ', sbMember)}
       </div>
       <hr />
       <SubsInfo />

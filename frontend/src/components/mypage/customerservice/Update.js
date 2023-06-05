@@ -87,7 +87,7 @@ export const Update = () => {
 
       if (res === "success") {
         alert("회원정보가 수정되었습니다.");
-        window.location.href = "/mypage";
+        window.location.href = "/mypage/update";
       } else {
         alert("현재 비밀번호가 틀립니다.");
       }

@@ -11,16 +11,19 @@ function addComma(num) {
 }
 
 export const MyPageProfileOrder = () => {
-  const [orderList, setOrderList] = useState();
+  const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const orderList = await getOrderListInMyPageProfile(
-        getCookie("accessToken")
-      );
-      setOrderList(orderList);
-      setIsLoading(false);
+      await getOrderListInMyPageProfile(getCookie("accessToken"))
+        .then((response) => {
+          setOrderList(response);
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setIsLoading(false);
+        });
     };
     fetchProductData();
   }, []);

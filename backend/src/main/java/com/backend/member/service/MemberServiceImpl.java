@@ -98,12 +98,12 @@ public class MemberServiceImpl implements MemberService {
     public String updateMember(UpdateMemberDto updateMemberDto) {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("해당회원이 존재하지 않음"));
-        if(passwordEncoder.matches(updateMemberDto.getPassword(), member.getPassword())) {
+        if (passwordEncoder.matches(updateMemberDto.getPassword(), member.getPassword())) {
             member.changeEncodedPassword(passwordEncoder.encode(updateMemberDto.getNewPassword()));
             memberRepository.save(member);
             return "success";
         }
-            return "fail";
+        return "fail";
 
     }
 
@@ -278,7 +278,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateProfileImg(MultipartFile profileImg) throws IOException {
-        if(profileImg.isEmpty()) return;
+        if (profileImg.isEmpty()) return;
 
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
@@ -286,6 +286,15 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(currentMemberId).orElse(null);
         member.setImage(storedFilename.toString());
         profileImg.transferTo(storedFilename);
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void delProfileImg() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("화원 정보 없음"));
+        member.setImage(null);
+
         memberRepository.save(member);
     }
 }

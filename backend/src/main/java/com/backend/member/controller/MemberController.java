@@ -140,4 +140,9 @@ public class MemberController {
     public void updateProfileImg(MultipartFile profileImg) throws IOException {
         memberService.updateProfileImg(profileImg);
     }
+
+    @GetMapping("/delProfile")
+    public void delProfileImg() {
+        memberService.delProfileImg();
+    }
 }

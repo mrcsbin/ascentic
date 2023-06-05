@@ -35,4 +35,6 @@ public interface MemberService {
     boolean existPhone(String phone);
 
     void updateProfileImg(MultipartFile profileImg) throws IOException;
+
+    void delProfileImg();
 }

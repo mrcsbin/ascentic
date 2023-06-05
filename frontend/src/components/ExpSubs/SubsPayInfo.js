@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { requestApplySubs } from "../../api/SubsMemberApi";
-import { getCookie } from "../../utils/Cookies";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { requestApplySubs } from '../../api/SubsMemberApi';
+import { getCookie } from '../../utils/Cookies';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SubsPayInfo = (props) => {
   const [agree, setAgree] = useState(false);
 
   const now = new Date();
-  const accessToken = getCookie("accessToken");
+  const accessToken = getCookie('accessToken');
 
   const getDay = () => {
     return now.getDate();
@@ -63,35 +63,35 @@ const SubsPayInfo = (props) => {
   const payStart = async () => {
     if (agree) {
       try {
-        await axios.post("/startSubscribe", requestData, {
+        await axios.post('/startSubscribe', requestData, {
           headers: {
-            Authorization: "Bearer " + accessToken,
+            Authorization: 'Bearer ' + accessToken,
           },
         });
 
         await axios
-          .get("http://localhost:8080/subscribePayment/getCustomerKey", {
+          .get('http://localhost:8080/subscribePayment/getCustomerKey', {
             headers: {
-              Authorization: "Bearer " + getCookie("accessToken"),
+              Authorization: 'Bearer ' + getCookie('accessToken'),
             },
           })
           .then((res) => {
             //customerKey 받아와서 billingKey 발급요청 하는거임~
             const data = res.data;
-            const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+            const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
             const tossPayments = window.TossPayments(clientKey);
 
-            tossPayments.requestBillingAuth("카드", {
+            tossPayments.requestBillingAuth('카드', {
               customerKey: data.customerKey,
-              successUrl: "http://localhost:8080/billingAuthSuccess",
-              failUrl: "http://localhost:3000/exp/subs/",
+              successUrl: 'http://localhost:8080/billingAuthSuccess',
+              failUrl: 'http://localhost:3000/exp/subs/',
             });
           });
       } catch (error) {
         console.log(error);
       }
     } else {
-      alert("서비스 가입에 동의해주세요.");
+      alert('서비스 가입에 동의해주세요.');
     }
   };
 
@@ -109,11 +109,12 @@ const SubsPayInfo = (props) => {
         </div>
         <div>
           <div>배송지</div>
-          <div>{requestData.mainAddress + " " + requestData.subAddress}</div>
+          <div>{requestData.mainAddress + ' ' + requestData.subAddress}</div>
         </div>
         <div>
           <div>결제 수단</div>
-          <div>{requestData.paymentMethod}</div>
+          {/* <div>{requestData.paymentMethod}</div> */}
+          <div>카드</div>
         </div>
         <div>
           <div>매달 결제일</div>
@@ -214,7 +215,7 @@ const SubsContent = styled.div`
     line-height: 1.2;
   }
 
-  > input[type="checkbox"] + label {
+  > input[type='checkbox'] + label {
     font-size: 1.1rem;
     font-weight: 500;
     background-color: #e6e6e6;

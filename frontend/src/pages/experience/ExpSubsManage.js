@@ -1,29 +1,26 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Loading from "../../components/common/Loading";
-import ExpSubsManageView from "../../components/experience/ExpSubMangeView";
-import { getCookie } from "../../utils/Cookies";
-import { useNavigate, useLocation } from "react-router-dom";
-import { requestTasteRes } from "../../api/SubsMemberApi";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Loading from '../../components/common/Loading';
+import ExpSubsManageView from '../../components/experience/ExpSubMangeView';
+import { getCookie } from '../../utils/Cookies';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { requestTasteRes } from '../../api/SubsMemberApi';
 const ExpSubsManage = () => {
-  const accessToken = getCookie("accessToken");
+  const accessToken = getCookie('accessToken');
   const [loading, setLoading] = useState(false);
   const [TasteRes, setTasteRes] = useState([]);
-  const [sbMember, setSbmember] = useState({ initial: "setting" });
+  const [sbMember, setSbmember] = useState({ initial: 'setting' });
   const [subscribe, setSubscribe] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
-
-
   useEffect(() => {
-    const success = searchParams.get("success");
+    const success = searchParams.get('success');
     if (success == null) return;
     alert(success);
     window.history.replaceState({}, document.title, window.location.pathname);
   }, []);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,16 +36,17 @@ const ExpSubsManage = () => {
 
   const token = {
     headers: {
-      Authorization: "Bearer " + getCookie("accessToken"),
+      Authorization: 'Bearer ' + getCookie('accessToken'),
     },
   };
+
   useEffect(() => {
-    getCookie("accessToken") === undefined
-      ? navigate("/login")
+    getCookie('accessToken') === undefined
+      ? navigate('/login')
       : axios
           .all([
-            axios.get("/lastSbMember", token),
-            axios.get("/getSubscribe", token),
+            axios.get('/lastSbMember', token),
+            axios.get('/getSubscribe', token),
           ])
           .then(
             axios.spread((res1, res2) => {
@@ -57,15 +55,15 @@ const ExpSubsManage = () => {
             })
           )
           .catch((e) => {
-            console.log("ExpSubsManage에서 문제생김", e);
-            alert("구독서비스 이용내역이 존재하지 않습니다.");
-            navigate("/exp/subs");
+            console.log('ExpSubsManage에서 문제생김', e);
+            alert('구독서비스 이용내역이 존재하지 않습니다.');
+            navigate('/exp/subs');
           });
   }, []);
 
   // const axiosEnd = performance.now();
 
-  if (sbMember.initial === "setting") {
+  if (sbMember.initial === 'setting') {
     return <Loading />;
   } else {
     // const endTime = performance.now();

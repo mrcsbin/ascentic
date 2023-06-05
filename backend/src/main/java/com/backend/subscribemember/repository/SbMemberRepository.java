@@ -12,7 +12,6 @@ public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integ
 
     SubscribeMember findTopByMemberId(String memberId);
 
-
     @Query(value = "select * from tb_subscribe_member where member_id = :memberId order by sb_start_date desc limit 1", nativeQuery = true)
     SubscribeMember getLastSbMemberByMemberId(String memberId);
 

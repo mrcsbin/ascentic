@@ -8,7 +8,6 @@ import * as AdminPages from '../admin/pages/AdminPages';
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
-  const role = useSelector((state) => state.login.role);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,9 +33,6 @@ function Routes() {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Pages.Main />}></Route>
-      <Route path="/test" element={<Pages.MainTest />}></Route>
-      <Route path="/test2" element={<Pages.MainTest2 />}></Route>
-      <Route path="/test3" element={<Pages.MainTest3 />}></Route>
       <Route path="/login" element={<Pages.Login />} />
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
       {/* <Route
@@ -46,6 +42,7 @@ function Routes() {
           (role === "ADMIN" ? <Navigate to="/admin" /> : <Pages.MyPage />)
         }
       /> */}
+      <Route path="/mypage" element={<Pages.MyPage />} />
       <Route path="/mypage/:category" element={<Pages.MyPage />} />
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />

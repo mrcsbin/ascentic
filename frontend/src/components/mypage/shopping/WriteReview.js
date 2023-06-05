@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EMPTY_STAR from "../../../assets/productdetail/empty-star-image.png";
 import FULL_STAR from "../../../assets/productdetail/full-star-image.png";
 import styled from "styled-components";
-import { addReview, getReview } from "../../../api/ReviewApi";
+import { addReview, deleteReview, getReview } from "../../../api/ReviewApi";
 import { getCookie } from "../../../utils/Cookies";
 import { useEffect } from "react";
 
@@ -13,11 +13,13 @@ const WriteReview = ({ item, isComplete }) => {
   const [hovered, setHovered] = useState(-1);
   const [reviewText, setReviewText] = useState("");
   const [review, setReview] = useState();
+  console.log(item);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await getReview(
         getCookie("accessToken"),
+        item.orderId,
         item.orderProductNum
       );
       setReview(response);
@@ -66,7 +68,19 @@ const WriteReview = ({ item, isComplete }) => {
     );
   };
 
-  const clickDeleteHandle = async () => {};
+  const clickDeleteHandle = async () => {
+    if (
+      window.confirm(
+        "삭제하면 다시 작성할 수 없습니다.\n정말 삭제하시곘습니까?"
+      )
+    ) {
+      await deleteReview(
+        getCookie("accessToken"),
+        item.orderId,
+        item.orderProductNum
+      ).then(window.location.reload());
+    }
+  };
 
   return (
     <Wrap>
@@ -157,7 +171,7 @@ const Wrap = styled.div`
 
 const RatingText = styled.div`
   color: color;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   text-align: center;
 `;
@@ -176,17 +190,18 @@ const StarImage = styled.img`
 
 const ReviewText = styled.textarea`
   width: 100%;
-  height: 200px;
-  padding: 20px 10px;
+  height: 150px;
+  padding: 20px;
   box-sizing: border-box;
   border: solid 1px black;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   resize: none;
   ::placeholder {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 500;
     color: grey;
+    text-align: center;
   }
 `;
 

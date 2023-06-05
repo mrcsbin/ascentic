@@ -1,5 +1,6 @@
 package com.backend.order.dto;
 
+
 import com.backend.order.entity.Order;
 import com.backend.orderproduct.entity.OrderProduct;
 import lombok.Builder;
@@ -17,7 +18,7 @@ public class OrderResponse {
         private String orderId; // 주문 번호
         private List<OrderResponse.OrderProductDto> orderProductList; // 주문 상품 리스트
 
-        public static OrderResponse.OrderListDto of(Order order,  List<OrderResponse.OrderProductDto> orderProductList) {
+        public static OrderResponse.OrderListDto of(Order order, List<OrderResponse.OrderProductDto> orderProductList) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy . MM . dd");
             String formattedDate = order.getOrderDate().format(formatter);
 
@@ -52,4 +53,26 @@ public class OrderResponse {
                     orderProduct.getOrderState());
         }
     }
+
+    @Getter
+    @Builder
+    public static class MyPageProfileOrderListDto {
+        private Integer orderProductCount; // 주문 상품 개수
+        private Integer orderAmount; // 주문 금액
+        private String orderId; // 주문 번호
+        private String productImage; // 주문 상품 이미지
+        private String productName; // 주문 상품 이름
+        private String orderState; // 주문 상태
+
+        public static OrderResponse.MyPageProfileOrderListDto of(Order order, List<OrderProduct> orderProductList) {
+            return new MyPageProfileOrderListDto(
+                    orderProductList.size(),
+                    order.getOrderPriceSum(),
+                    order.getOrderId(),
+                    order.getOrderProducts().get(0).getProductOption().getProduct().getProductImages().get(0).getProdSaveName(),
+                    order.getOrderProducts().get(0).getProductOption().getProduct().getProdName(),
+                    order.getOrderState());
+        }
+    }
+
 }

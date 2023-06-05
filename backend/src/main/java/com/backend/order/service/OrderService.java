@@ -30,4 +30,6 @@ public interface OrderService {
     void updateOrder(AdminOrderUpdateDto adminOrderUpdateDto);
 
     List<OrderResponse.OrderListDto> getOrderList();
+
+    List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile();
 }

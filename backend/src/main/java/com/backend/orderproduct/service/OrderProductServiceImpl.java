@@ -24,7 +24,6 @@ public class OrderProductServiceImpl implements OrderProductService {
     private final OrderProductRepository orderProductRepository;
     private final OrderRepository orderRepository;
     private final ProductOptionRepository productOptionRepository;
-    private final CartRepository cartRepository;
 
     @Override
     public void insertOrderProduct(OrderProductRequest.OrderProductDto orderProductDto) {
@@ -37,9 +36,8 @@ public class OrderProductServiceImpl implements OrderProductService {
                 .prodCount(orderProductDto.getProdCount())
                 .orderState(orderProductDto.getOrderState())
                 .memberId(currentMemberId)
-                .orderReviewState("리뷰쓰기")
+                .orderReviewState("리뷰 작성")
                 .build();
-        cartRepository.delete(cartRepository.findByMemberIdAndProductOption(currentMemberId, productOption).get());
         orderProductRepository.save(orderProduct);
     }
 
@@ -68,10 +66,10 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     private void updateOrderReviewState(List<OrderProduct> orderProducts) {
         LocalDateTime currentDate = LocalDateTime.now();
-        LocalDateTime fifteenDaysAgo = currentDate.minusDays(15);
+        LocalDateTime setDays = currentDate.minusDays(30);
 
         for (OrderProduct orderProduct : orderProducts) {
-            if (orderProduct.getOrder().getOrderDate().isBefore(fifteenDaysAgo) && orderProduct.getOrderReviewState().equals("리뷰 쓰기")) {
+            if (orderProduct.getOrder().getOrderDate().isBefore(setDays) && orderProduct.getOrderReviewState().equals("리뷰 작성")) {
                 orderProduct.setOrderReviewState("작성 기간 만료");
                 orderProductRepository.save(orderProduct);
             }

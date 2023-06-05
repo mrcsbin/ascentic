@@ -190,10 +190,4 @@ values  (1, 0, 'expCard2.webp', '2023-06-02 23:54:30', 'expCard2.webp', 1),
         (189, 1, 'body_wash2.jpg', '2023-05-04 00:00:00', 'body_wash2', 63),
         (190, 0, 'fabric_perfume0.jpg', '2023-05-04 00:00:00', 'fabric_perfume0', 64),
         (191, 1, 'fabric_perfume1.jpg', '2023-05-04 00:00:00', 'fabric_perfume1', 64),
-        (192, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 64),
-        (193, 0, 'fabric_perfume0.jpg', '2023-05-04 00:00:00', 'fabric_perfume0', 65),
-        (194, 1, 'fabric_perfume1.jpg', '2023-05-04 00:00:00', 'fabric_perfume1', 65),
-        (195, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 65),
-        (196, 0, 'fabric_perfume0.jpg', '2023-05-04 00:00:00', 'fabric_perfume0', 66),
-        (197, 1, 'fabric_perfume1.jpg', '2023-05-04 00:00:00', 'fabric_perfume1', 66),
-        (198, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 66);
+        (192, 1, 'fabric_perfume2.jpg', '2023-05-04 00:00:00', 'fabric_perfume2', 64);

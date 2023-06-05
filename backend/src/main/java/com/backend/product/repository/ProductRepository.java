@@ -19,5 +19,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByProdNameContaining(String searchData);
 
-    Page<Product> findByProdCategoryAndProdNumNot(String prodCategory, Integer prodNum, Pageable pageable);
+    Page<Product> findByScentScentNoteNameAndProdStateNotInAndProdNumNot(String scentNoteName, List<String> prodState, Integer prodNum, Pageable pageable);
 }

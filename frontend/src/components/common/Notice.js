@@ -79,7 +79,7 @@ function Notice() {
                 <span style={{ fontWeight: "bold" }}>{postData.postTitle}</span>
               </p>
               <div className="postCoreMessages">
-                <p>{postData.postCoreMessage.split(".").slice(0, 1) + "."}</p>
+                <p>{postData.postCoreMessage.split(".").slice(0, 1)}</p>
                 <p>{postData.postCoreMessage.split(".").slice(1, 2)}</p>
               </div>
             </div>

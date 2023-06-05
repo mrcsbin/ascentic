@@ -14,10 +14,16 @@ const ExpSubsManage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  // const startTime = performance.now();
-  // console.log(`startTime = ${startTime}`);
-  // const success = searchParams.get("success") ? searchParams.get("success") : false;
-  const success = searchParams.get("success");
+
+
+
+  useEffect(() => {
+    const success = searchParams.get("success");
+    if (success == null) return;
+    alert(success);
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +82,6 @@ const ExpSubsManage = () => {
       <ExpSubsManageView
         sbMember={sbMember}
         subscribe={subscribe}
-        success={success}
         TasteRes={TasteRes}
       />
     );

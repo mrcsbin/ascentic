@@ -42,27 +42,16 @@ function Event() {
     setSelectedStatus(event.target.value);
   };
 
-  const getStatusText = (status) => {
-    switch (status) {
-      case 0:
-        return "저장";
-      case 1:
-        return "임시 저장";
-      case 2:
-        return "삭제";
-      default:
-        return "";
-    }
-  };
-
   const filterPostsByStatus = (postStatus) => {
     if (postStatus === "all") {
-      return posts;
+      return posts.filter((post) => post.postStatus === 0);
     } else {
-      return posts.filter((post) => post.postStatus === Number(postStatus));
+      return posts.filter(
+        (post) =>
+          post.postStatus === Number(postStatus) && post.postStatus === 0
+      );
     }
   };
-
   // 페이지 수 계산
   const totalPages = Math.ceil(posts.length / productsPerPage);
 
@@ -134,7 +123,6 @@ function Event() {
                         to={`/community/event/${post.postId}`}
                         className="postLink"
                       >
-                        {" "}
                         <div className="post">
                           <div className="post-img">
                             {post.postImage && (

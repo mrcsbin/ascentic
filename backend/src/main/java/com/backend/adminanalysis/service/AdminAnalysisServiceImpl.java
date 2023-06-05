@@ -135,6 +135,7 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
         return Map.of("id", id, "label", label, "value", count);
     }
 
+
     @Override
     public List<Map<String, Object>> getSubscribeProductScores() {
         List<SubscribeSend> allSubscribeSends = subscribeSendRepository.findAll();
@@ -144,6 +145,7 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
                 .collect(Collectors.groupingBy(SubscribeSend::getSubscribeProduct,
                         LinkedHashMap::new,
                         Collectors.mapping(SubscribeSend::getSbSendScore, Collectors.toList())));
+
 
         List<Map<String, Object>> result = scoresByProduct.entrySet().stream()
                 .map(entry -> {

@@ -226,7 +226,7 @@ const ModalBG = styled.div`
 
 const SbProdBox = styled.div`
   margin: auto;
-  padding: 10px 20px 20px 20px;
+  padding: 30px 60px 40px 60px;
   width: 500px;
   border: 5px solid black;
   background-color: white;
@@ -237,6 +237,8 @@ const Header = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  font-size: 1.2rem;
+  font-weight: 500;
   padding-bottom: 5px;
   margin-bottom: 20px;
   border-bottom: 1px solid gray;
@@ -252,12 +254,14 @@ const InlineContent = styled.div`
   div {
     display: inline-block;
     margin: 5px 15px 10px 0;
+    font-size: 1rem;
   }
   div > input[type="number"] {
     margin: 0 5px;
     padding: 2px 2px;
     width: 80px;
     text-align: right;
+    font-size: 1rem;
   }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
@@ -265,12 +269,16 @@ const InlineContent = styled.div`
     -moz-appearance: none;
     appearance: none;
   }
+  select {
+    font-size: 1rem;
+  }
 `;
 const InputImg = styled.input`
   display: block;
   float: left;
   margin-bottom: 10px;
   width: 100%;
+  font-size: 1rem;
 `;
 const ImgBox = styled.div`
   display: block;
@@ -290,15 +298,20 @@ const ImgBox = styled.div`
 const BlockContent = styled.div`
   margin-bottom: 10px;
   font-weight: 500;
+  select {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 `;
 const BlockContentS = styled.div`
   margin-bottom: 5px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 1.2;
   word-break: keep-all;
   textarea {
     width: 385px;
     height: fit-content;
+    font-size: 1rem;
   }
 `;
 const Buttonbox = styled.div`
@@ -312,7 +325,7 @@ const Buttonbox = styled.div`
     font-size: 1.1rem;
     background-color: white;
     color: black;
-    border: 1px solid black;
+    border: 1.5px solid black;
     cursor: pointer;
   }
   button:nth-child(2) {

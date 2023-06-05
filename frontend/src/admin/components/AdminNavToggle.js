@@ -128,7 +128,7 @@ export const AdminNavToggle = () => {
                   className={activeSubTab === "이벤트" ? "active" : ""}
                   onClick={() => setActiveSubTab("이벤트")}
                 >
-                  이벤트
+                  이벤트 관리
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>
@@ -138,7 +138,7 @@ export const AdminNavToggle = () => {
                   className={activeSubTab === "뉴스" ? "active" : ""}
                   onClick={() => setActiveSubTab("뉴스")}
                 >
-                  뉴스
+                  뉴스 관리
                 </SubMenu>
               </LinkToMenu>
             </SubMenuBox>
@@ -155,7 +155,7 @@ export const AdminNavToggle = () => {
           </MenuBox>
         )}
       </ToggleMenuBox>
-      <ToggleMenuBox className={activeTab === "회원 관리" ? "active" : ""}>
+      {/* <ToggleMenuBox className={activeTab === "회원 관리" ? "active" : ""}>
         <ToggleMenuHeader onClick={() => handleTabClick("회원 관리")}>
           <ToggleMenu>회원 관리</ToggleMenu>
           <ToggleMenuIcon
@@ -187,7 +187,7 @@ export const AdminNavToggle = () => {
             </SubMenuBox>
           </MenuBox>
         )}
-      </ToggleMenuBox>
+      </ToggleMenuBox> */}
       <ToggleMenuBox className={activeTab === "스토어 관리" ? "active" : ""}>
         <ToggleMenuHeader onClick={() => handleTabClick("스토어 관리")}>
           <ToggleMenu>스토어 관리</ToggleMenu>
@@ -241,7 +241,7 @@ export const AdminNavToggle = () => {
         </ToggleMenuHeader>
         {activeTab === "구독 관리" && (
           <MenuBox>
-            <SubMenuBox>
+            {/* <SubMenuBox>
               <LinkToMenu to="/admin/subscribemanagement/member">
                 <SubMenu
                   className={activeSubTab === "구독 회원 관리" ? "active" : ""}
@@ -250,7 +250,7 @@ export const AdminNavToggle = () => {
                   구독 회원 관리
                 </SubMenu>
               </LinkToMenu>
-            </SubMenuBox>
+            </SubMenuBox> */}
             <SubMenuBox>
               <LinkToMenu to="/admin/subscribemanagement/send">
                 <SubMenu

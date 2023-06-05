@@ -3,6 +3,7 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "@looop/quill-image-resize-module-react";
 import axios from "axios";
+import styled from "styled-components";
 import { ko } from "date-fns/esm/locale";
 import { storage } from "../../../utils/firebaseConfig";
 import "../../styles/QuillEditor.css";
@@ -284,98 +285,122 @@ const WritePost = ({ postEdit }) => {
 
   return (
     <div className="QuillContainer">
-      <div className="NameCategory">
-        <h1>[이벤트 및 뉴스 작성]</h1>
-        <div className="post-status">
-          <button onClick={() => setPostStatus(0)}>저장하기</button>
-          <button onClick={() => setPostStatus(1)}>임시저장하기</button>
-          <button onClick={() => setPostStatus(2)}>삭제하기</button>
-        </div>
-        {postCategory === "event" && (
-          <div className="image-selection">
-            <h4>대표 이미지 선택</h4>
-            {selectedImage && (
-              <div className="image-container">
-                {/* <img
-                  src={`http://localhost:8080/admin/download?img=${selectedImage}`}
-                  alt="대표 이미지"
-                  className="selected-image"
-                /> */}
-                ${selectedImage}
-                <div className="image-buttons">
-                  <button onClick={mainImageReplace}>이미지 교체</button>
-                  <button onClick={mainDeleteImage}>이미지 삭제</button>
+      <HeaderWrap>
+        <HeaderLeft>뉴스 및 이벤트 작성</HeaderLeft>
+      </HeaderWrap>
+      <InputContainer>
+        <div className="NameCategory">
+          {postCategory === "event" && (
+            <div className="image-selection">
+              <h4>대표 이미지 선택</h4>
+              {selectedImage && (
+                <div className="image-container">
+                  <img
+                    src={`http://localhost:8080/admin/download?img=${selectedImage}`}
+                    alt="대표 이미지"
+                    className="selected-image"
+                  />
+                  ${selectedImage}
+                  <div className="image-buttons">
+                    <button onClick={mainImageReplace}>이미지 교체</button>
+                    <button onClick={mainDeleteImage}>이미지 삭제</button>
+                  </div>
                 </div>
-              </div>
-            )}
-            {!selectedImage && (
-              <div className="upload-container">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={mainImageUpload}
-                />
-              </div>
-            )}
+              )}
+              {!selectedImage && (
+                <div className="upload-container">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={mainImageUpload}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          <div className="post-category-input">
+            <select
+              value={postCategory}
+              onChange={(e) => {
+                setPostCategory(e.target.value);
+                setEventDateRange([
+                  {
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    key: "selection",
+                  },
+                ]);
+              }}
+            >
+              <option value="">게시판을 선택해 주세요.</option>
+              <option value="event">이벤트</option>
+              <option value="news">뉴스</option>
+            </select>
+            <input
+              type="text"
+              placeholder="제목"
+              value={postTitle}
+              onChange={(e) => setPostTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="한줄 메시지"
+              value={postCoreMessage}
+              onChange={(e) => setPostCoreMessage(e.target.value)}
+            />
           </div>
-        )}
-        <div className="post-category-input">
-          <select
-            value={postCategory}
-            onChange={(e) => {
-              setPostCategory(e.target.value);
-              setEventDateRange([
-                {
-                  startDate: new Date(),
-                  endDate: new Date(),
-                  key: "selection",
-                },
-              ]);
-            }}
-          >
-            <option value="">게시판을 선택해 주세요.</option>
-            <option value="event">이벤트</option>
-            <option value="news">뉴스</option>
-          </select>
-          <input
-            type="text"
-            placeholder="제목"
-            value={postTitle}
-            onChange={(e) => setPostTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="한줄 메시지"
-            value={postCoreMessage}
-            onChange={(e) => setPostCoreMessage(e.target.value)}
-          />
         </div>
-      </div>
 
-      <div className="event-date">
-        <h4>[이벤트 날짜 선택]</h4>
-        <div className="CalendarContainer">
-          <DateRangePicker
-            onChange={handleDateRangeChange}
-            moveRangeOnFirstSelection={false}
-            showSelectionPreview={true}
-            months={2}
-            ranges={eventDateRange}
-            direction="horizontal"
-            locale={ko}
-          />
+        <div className="event-date">
+          <h4>이벤트 날짜 선택</h4>
+          <div className="CalendarContainer">
+            <DateRangePicker
+              onChange={handleDateRangeChange}
+              moveRangeOnFirstSelection={false}
+              showSelectionPreview={true}
+              months={2}
+              ranges={eventDateRange}
+              direction="horizontal"
+              locale={ko}
+            />
+          </div>
         </div>
-      </div>
 
-      <ReactQuill
-        ref={quillRef}
-        value={content}
-        formats={formats}
-        onChange={setContent}
-        modules={modules}
-      />
+        <ReactQuill
+          ref={quillRef}
+          value={content}
+          formats={formats}
+          onChange={setContent}
+          modules={modules}
+        />
+      </InputContainer>
+
+      <div className="post-status">
+        <button onClick={() => setPostStatus(0)}>저장하기</button>
+        <button onClick={() => setPostStatus(1)}>임시저장하기</button>
+        <button onClick={() => setPostStatus(2)}>삭제하기</button>
+      </div>
     </div>
   );
 };
+
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-bottom: 2px solid black;
+`;
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 600;
+`;
+const InputContainer = styled.div`
+  width: 80%;
+  height: fit-content;
+  margin: 0 auto;
+`;
 
 export default WritePost;

@@ -97,7 +97,6 @@ export const CartItemCard = ({ item }) => {
   );
 };
 
-// countButton
 const SoldOutText = styled.div`
   position: absolute;
   width: 100%;

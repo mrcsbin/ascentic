@@ -2,7 +2,7 @@ import styled from "styled-components";
 import ExpGuide from "../../components/ExpSubs/ExpGuide";
 import { useState } from "react";
 import SubsPayInfo from "../../components/ExpSubs/SubsPayInfo";
-import Payment from "../../components/order/Payment";
+import SelectScent from "../../components/order/SelectScent";
 import ExpSubDeliveryInfo from "../../components/ExpSubs/ExpSubDeliveryInfo";
 import expSubsBackground from "../../assets/expMain/expmain_content3.webp";
 import { getCookie } from "../../utils/Cookies";
@@ -10,18 +10,18 @@ import { useEffect } from "react";
 import { isSubscribeMember, requestTasteRes } from "../../api/SubsMemberApi";
 import Loading from "../../components/common/Loading";
 import logow from "../../assets/ascentic_logo_w.svg";
-
 import { useLocation } from "react-router-dom";
 const ExpSubs = () => {
   const accessToken = getCookie("accessToken");
   const [loading, setLoading] = useState(false);
+  const [tasteResList, setTasteResList] = useState("");
   const [isSubsCribeMember, setIsSubscribeMember] = useState();
-
   const [userTasteRes, setTasteRes] = useState("");
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
+  const [disable, setDisable] = useState(true);
 
   // 파라미터가 존재하는 경우 params.message를 alert로 표시
   useEffect(() => {
@@ -54,7 +54,8 @@ const ExpSubs = () => {
       const result = await requestTasteRes(accessToken); // api 함수 호출
       setIsSubscribeMember(await isSubscribeMember(accessToken));
       console.log(result);
-      setTasteRes(result.firstPlace); // 결과를 state에 저장
+      setTasteRes(result.firstPlace); // 결과 1순위를 state에 저장
+      setTasteResList(result); // 전체 결과를 저장
       setLoading(false);
     };
 
@@ -93,7 +94,14 @@ const ExpSubs = () => {
     if (modalPage === 1) {
       return (
         <>
-          <ExpSubDeliveryInfo />
+          <SelectScent
+            tasteResList={tasteResList}
+            userTasteRes={userTasteRes}
+            setTasteRes={setTasteRes}
+          />
+          <button className="before_page_btn" onClick={closeModal}>
+            취소
+          </button>
           <button className="next_page_btn" onClick={() => nextPage()}>
             다음
           </button>
@@ -102,11 +110,15 @@ const ExpSubs = () => {
     } else if (modalPage === 2) {
       return (
         <>
-          <Payment></Payment>
+          <ExpSubDeliveryInfo setDisable={setDisable} />
           <button className="before_page_btn" onClick={() => beforePage()}>
             이전
           </button>
-          <button className="next_page_btn" onClick={() => nextPage()}>
+          <button
+            className={disable ? "next_disabled_btn" : "next_page_btn"}
+            disabled={disable}
+            onClick={() => nextPage()}
+          >
             다음
           </button>
         </>
@@ -149,7 +161,7 @@ const ExpSubs = () => {
           <ModalBackground onClick={closeModal} />
           <ModalContainer>
             <button className="modal_close_btn" onClick={closeModal}>
-              X
+              &times;
             </button>
             {currentPage()}
           </ModalContainer>
@@ -218,7 +230,7 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 720px;
-  height: 500px;
+  height: 550px;
   background-color: white;
   padding: 50px 0;
   z-index: 1000;
@@ -226,38 +238,48 @@ const ModalContainer = styled.div`
 
   .modal_close_btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 25px;
+    top: 20px;
+    right: 30px;
+    font-size: 2.5rem;
     background-color: transparent;
     border: none;
     cursor: pointer;
   }
-
   .next_page_btn {
     position: absolute;
-    bottom: 10%;
-    right: 13%;
+    bottom: 9%;
+    right: 15%;
     padding: 0.7rem 9rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: white;
     background-color: black;
-    border: 1px solid black;
+    border: 1.5px solid black;
     cursor: pointer;
     &:hover {
       background-color: rgba(0, 0, 0, 0.8);
     }
   }
-
+  .next_disabled_btn {
+    position: absolute;
+    bottom: 9%;
+    right: 15%;
+    padding: 0.7rem 9rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background-color: gray;
+    border: 1.5px solid gray;
+    cursor: default;
+  }
   .before_page_btn {
     position: absolute;
-    bottom: 10%;
-    left: 16%;
+    bottom: 9%;
+    left: 15%;
     padding: 0.7rem 4rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     background-color: transparent;
-    border: 1px solid black;
+    border: 1.5px solid black;
     cursor: pointer;
   }
 `;

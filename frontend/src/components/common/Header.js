@@ -174,8 +174,8 @@ const HeaderV2 = () => {
             >
               <CategoryBox>
                 <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>뉴스 및 공지사항</SubMenu>
+                  <StyledLink to="community/notice" isDarkMode={isDarkMode}>
+                    <SubMenu>공지사항</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
@@ -274,7 +274,7 @@ const Wrap = styled.div`
 
   &.header-wrap-change-header {
     background-color: ${({ isDarkMode }) =>
-      isDarkMode ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)'};
+      isDarkMode ? "rgba(0, 0, 0, 0.8)" : "rgba(255, 255, 255, 0.9)"};
   }
 `;
 

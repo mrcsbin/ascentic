@@ -152,30 +152,32 @@ const InlineContent = styled.div`
   div {
     display: inline-block;
     margin: 5px 15px 10px 0;
+    font-size: 1.1rem;
   }
 `;
 const ImgBox = styled.div`
   display: block;
   float: left;
   margin-right: 15px;
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   overflow: hidden;
   img {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     object-position: center;
   }
 `;
 const BlockContent = styled.div`
   margin-bottom: 10px;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
 `;
 const BlockContentS = styled.div`
   margin-bottom: 5px;
-  font-size: 0.9rem;
-  line-height: 1.2;
+  font-size: 1rem;
+  line-height: 1.3;
   word-break: keep-all;
 `;
 const Buttonbox = styled.div`
@@ -186,6 +188,8 @@ const Buttonbox = styled.div`
     margin-right: 10px;
     padding: 5px 15px;
     background-color: black;
+    font-size: 1rem;
+    font-weight: 500;
     color: white;
     border: 0;
     cursor: pointer;
@@ -195,7 +199,7 @@ const Pagination = styled.div`
   display: inline-block;
   width: 100%;
   height: 30px;
-  margin: 10px auto;
+  margin: 20px auto;
   text-align: center;
   align-items: center;
 `;
@@ -205,7 +209,7 @@ const PageBtn = styled.div`
   margin: 5px;
   padding: 2px;
   font-family: "Pretendard";
-  font-size: 0.85rem;
+  font-size: 1rem;
   border: 1px solid;
   width: 2rem;
   &:hover {
@@ -218,7 +222,7 @@ const PageNumBtn = styled.div`
   margin: 5px;
   padding: 2px;
   font-family: "Pretendard";
-  font-size: 0.85rem;
+  font-size: 1rem;
   border: 1px solid;
   width: 1rem;
   &:hover {

@@ -15,9 +15,16 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
     currentDate.getMonth(),
   ];
 
+  useEffect(() => {
+    if (success) {
+      alert('구독신청에 성공하였습니다!');
+    }
+  }, [success]);
+
   //구독중인 기간
-  const subsDuration =
+  let subsDuration =
     (currnetYear - startYear) * 12 + (currnetMonth - startMonth);
+  if (subsDuration === 0) subsDuration = 1;
 
   // ------------------------------ 과거 배송상품 관련 -------------------------------------------
 
@@ -116,8 +123,6 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
           </div>
           <div className="clear-both"></div>
           <div className="rating-component">
-            {/* {console.log("ssss")}
-            {console.log(filterProd[0])} */}
             <RatingComponent
               sbSendNum={filterProd[0].sbSendNum}
               score={filterProd[0].sbSendScore}

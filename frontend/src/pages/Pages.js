@@ -22,7 +22,6 @@ const Withdrawal = lazy(() => import('./Withdrawal'));
 const Event = lazy(() => import('./community/Event'));
 const EventDetail = lazy(() => import('./community/EventDetail'));
 const Notice = lazy(() => import('./community/Notice'));
-const MainTest = lazy(() => import('./MainTest'));
 
 export {
   Order,
@@ -47,5 +46,4 @@ export {
   Event,
   EventDetail,
   Notice,
-  MainTest,
 };

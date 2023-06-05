@@ -2,6 +2,7 @@ package com.backend.member.service;
 
 import com.backend.member.dto.*;
 import com.backend.member.entity.Member;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -37,4 +38,6 @@ public interface MemberService {
     void updateProfileImg(MultipartFile profileImg) throws IOException;
 
     void delProfileImg();
+
+    void updatePushYn(PushYnDto pushYnDto);
 }

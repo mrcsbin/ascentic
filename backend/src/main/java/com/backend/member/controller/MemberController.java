@@ -60,7 +60,7 @@ public class MemberController {
     }
 
     @GetMapping("/idDuplicate/{memberId}")
-    public boolean existsMemberId(@PathVariable String memberId){
+    public boolean existsMemberId(@PathVariable String memberId) {
         return memberService.existMemberId(memberId);
     }
 
@@ -144,5 +144,10 @@ public class MemberController {
     @GetMapping("/delProfile")
     public void delProfileImg() {
         memberService.delProfileImg();
+    }
+
+    @PostMapping("/updatePushYn")
+    public void updatePushYn(@RequestBody PushYnDto pushYnDto) {
+         memberService.updatePushYn(pushYnDto);
     }
 }

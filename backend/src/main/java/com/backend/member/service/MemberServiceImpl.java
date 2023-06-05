@@ -7,7 +7,6 @@ import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
-import com.backend.productimage.entity.ProductImage;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.DocFlavor;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -294,6 +292,16 @@ public class MemberServiceImpl implements MemberService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("화원 정보 없음"));
         member.setImage(null);
+
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void updatePushYn(PushYnDto pushYnDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("화원 정보 없음"));
+        member.setSnsPushYn(pushYnDto.getSnsPushYn());
+        member.setEmailPushYn(pushYnDto.getEmailPushYn());
 
         memberRepository.save(member);
     }

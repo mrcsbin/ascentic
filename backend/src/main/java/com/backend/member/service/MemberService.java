@@ -1,19 +1,18 @@
 package com.backend.member.service;
 
-import com.backend.member.dto.SignupDto;
-import com.backend.member.dto.FindDataDto;
-import com.backend.member.dto.JwtTokenDto;
-import com.backend.member.dto.LoginDto;
+import com.backend.member.dto.*;
 import com.backend.member.entity.Member;
-import com.backend.member.dto.MemberInfoDto;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public interface MemberService {
 
     String join(SignupDto signupDto);
 
-    void updateMember(Member member);
+    //    void updateMember(Member member);
+    String updateMember(UpdateMemberDto updateMemberDto);
 
     void deleteMemberV1(Member member);
 
@@ -34,4 +33,6 @@ public interface MemberService {
     MemberInfoDto getMemberInfo();
 
     boolean existPhone(String phone);
+
+    void updateProfileImg(MultipartFile profileImg) throws IOException;
 }

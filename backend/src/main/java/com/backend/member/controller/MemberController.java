@@ -7,7 +7,9 @@ import com.backend.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -68,10 +70,15 @@ public class MemberController {
     }
 
     // 회원 수정
-    @PatchMapping("/{id}")
-    public String updateMember(@PathVariable String id, @RequestBody Member member) {
-        memberService.updateMember(member);
-        return id + "님 수정이 완료 되었습니다.";
+//    @PatchMapping("/{id}")
+//    public String updateMember(@PathVariable String id, @RequestBody Member member) {
+//        memberService.updateMember(member);
+//        return id + "님 수정이 완료 되었습니다.";
+//    }
+
+    @PatchMapping("/userUpdate")
+    public String updateMember(@RequestBody UpdateMemberDto updateMemberDto) {
+        return memberService.updateMember(updateMemberDto);
     }
 
     // 회원 탈퇴 V1 - 상태값 바꾸기 => 같은 아이디로 가입과 삭제를 반복했을 때 통계엔 다 회원으로 기록
@@ -127,5 +134,10 @@ public class MemberController {
         MemberInfoDto memberInfo = memberService.getMemberInfo();
         System.out.println("모르곘다");
         return memberInfo;
+    }
+
+    @PostMapping("/updateProfile")
+    public void updateProfileImg(MultipartFile profileImg) throws IOException {
+        memberService.updateProfileImg(profileImg);
     }
 }

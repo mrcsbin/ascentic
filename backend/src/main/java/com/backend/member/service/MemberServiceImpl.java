@@ -7,15 +7,21 @@ import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
+import com.backend.productimage.entity.ProductImage;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.DocFlavor;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -70,12 +76,35 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.existsByPhone(phone);
     }
 
+
+//    @Override
+//    @Transactional
+//    public void updateMember(Member member) {
+//        member.setRole(Collections.singletonList("USER"));
+//        member.changeEncodedPassword(passwordEncoder.encode(member.getPassword()));
+//        memberRepository.save(member);
+//    }
+
+//    @Override
+//    @Transactional
+//    public void updateMember(Member member) {
+//        member.setRole(Collections.singletonList("USER"));
+//        member.changeEncodedPassword(passwordEncoder.encode(member.getPassword()));
+//        memberRepository.save(member);
+//    }
+
     @Override
     @Transactional
-    public void updateMember(Member member) {
-        member.setRole(Collections.singletonList("USER"));
-        member.changeEncodedPassword(passwordEncoder.encode(member.getPassword()));
-        memberRepository.save(member);
+    public String updateMember(UpdateMemberDto updateMemberDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("해당회원이 존재하지 않음"));
+        if(passwordEncoder.matches(updateMemberDto.getPassword(), member.getPassword())) {
+            member.changeEncodedPassword(passwordEncoder.encode(updateMemberDto.getNewPassword()));
+            memberRepository.save(member);
+            return "success";
+        }
+            return "fail";
+
     }
 
     @Override
@@ -245,5 +274,18 @@ public class MemberServiceImpl implements MemberService {
                 .role(Collections.singletonList("USER"))
                 .build();
         memberRepository.save(member6);
+    }
+
+    @Override
+    public void updateProfileImg(MultipartFile profileImg) throws IOException {
+        if(profileImg.isEmpty()) return;
+
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        File storedFilename = new File(UUID.randomUUID().toString() + "_" + profileImg.getOriginalFilename());
+        Member member = memberRepository.findById(currentMemberId).orElse(null);
+        member.setImage(storedFilename.toString());
+        profileImg.transferTo(storedFilename);
+        memberRepository.save(member);
     }
 }

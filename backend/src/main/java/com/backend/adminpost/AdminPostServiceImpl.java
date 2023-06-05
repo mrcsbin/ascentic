@@ -31,7 +31,7 @@ public class AdminPostServiceImpl implements AdminPostService {
 
     @Override
     public List<AdminPost> getAllAdminPosts() {
-        return adminPostRepository.findAllByOrderByPostIdDesc();
+        return adminPostRepository.findAll();
     }
 
     @Override

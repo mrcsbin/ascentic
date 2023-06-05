@@ -240,8 +240,9 @@ function ProdDetailView({ productData }) {
           <RecommendItemBox>
             <Carousel
               prodNum={productData.prodNum}
-              category={productData.prodCategory}
+              scentNoteName={productData.scent.scentNoteName}
               navigate={navigate}
+              category={productData.productCategory}
             />
           </RecommendItemBox>
         </RecommendBar>
@@ -386,7 +387,9 @@ const ProduceInfo = styled.div`
   font-family: "Pretendard";
   font-size: 1.2rem;
   font-weight: 600;
-  margin: 2rem 0;
+  margin: 1rem 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid grey;
   text-align: right;
   word-break: keep-all;
   line-height: 1.4;
@@ -441,6 +444,7 @@ const OptionBox = styled.div`
 `;
 
 const OptionButton = styled.button`
+  width: 100px;
   display: block;
   margin: 0;
   margin-left: 1rem;

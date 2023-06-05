@@ -53,16 +53,18 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewResponse.ReviewDto getReview(String orderProductNum) {
-        Review review = reviewRepository.findByOrderProductOrderProdNum(orderProductNum);
+    public ReviewResponse.ReviewDto getReview(String orderId, Integer orderProductNum) {
+        Review review = reviewRepository.findByOrderProductOrderOrderIdAndOrderProductOrderProdNum(orderId, orderProductNum);
         return ReviewResponse.ReviewDto.of(review);
     }
 
     @Override
     @Transactional
-    public void deleteReview(Integer prodNum) {
-        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        reviewRepository.deleteByProdNumAndMemberId(prodNum, currentMemberId);
+    public void deleteReview(String orderId, Integer orderProductNum) {
+        reviewRepository.deleteByOrderProductOrderOrderIdAndOrderProductOrderProdNum(orderId, orderProductNum);
+        OrderProduct orderProduct = orderProductRepository.findById(orderProductNum).get();
+        orderProduct.setOrderReviewState("리뷰 삭제");
+        orderProductRepository.save(orderProduct);
     }
 
     @Override

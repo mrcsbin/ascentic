@@ -8,6 +8,8 @@ import {
 } from "../../../api/MemberApi";
 import { useState, useEffect, useRef } from "react";
 import { getCookie, removeCookie } from "../../../utils/Cookies";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 export const Update = () => {
   const fileInput = useRef(null);
@@ -19,6 +21,9 @@ export const Update = () => {
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
+
+  const dispatch = useDispatch();
+
   const [profileImg, setProfileImg] = useState();
   const [isImgDel, setIsImgDel] = useState(false);
 
@@ -45,6 +50,7 @@ export const Update = () => {
       setId(id);
       setEmail(email);
       setNickname(nickname);
+      await dispatch(setActiveTab("회원정보수정"));
     };
     fetchMemberInfo();
   }, []);

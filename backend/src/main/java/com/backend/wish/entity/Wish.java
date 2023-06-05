@@ -29,4 +29,5 @@ public class Wish {
         this.memberId = memberId;
         this.product = product;
     }
+
 }

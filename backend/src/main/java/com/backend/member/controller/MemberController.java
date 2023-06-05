@@ -132,10 +132,14 @@ public class MemberController {
     @GetMapping("/order/getuser")
     public MemberInfoDto getUserInfo() {
         MemberInfoDto memberInfo = memberService.getMemberInfo();
-        System.out.println("모르곘다");
         return memberInfo;
     }
 
+    @GetMapping("/mypage/profile")
+    public MemberResponse.MyPageDto getMyPageProfile() {
+        return memberService.getMyPageProfile();
+    }
+  
     @PostMapping("/updateProfile")
     public void updateProfileImg(MultipartFile profileImg) throws IOException {
         memberService.updateProfileImg(profileImg);

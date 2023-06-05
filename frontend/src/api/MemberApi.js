@@ -166,6 +166,14 @@ export const getOrderInfo = async (accessToken) => {
   }
 };
 
+
+export const getMyPageProfile = async (accessToken) => {
+  const response = await axios.get(`${MEMBER_API_URL}/mypage/profile`, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+
 export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
   const response = await axios.post(
     `${MEMBER_API_URL}/updatePushYn`,
@@ -176,5 +184,6 @@ export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
       },
     }
   );
+
   return response.data;
 };

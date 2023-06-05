@@ -23,8 +23,6 @@ const Event = lazy(() => import('./community/Event'));
 const EventDetail = lazy(() => import('./community/EventDetail'));
 const Notice = lazy(() => import('./community/Notice'));
 const MainTest = lazy(() => import('./MainTest'));
-const MainTest2 = lazy(() => import('./MainTest2'));
-const MainTest3 = lazy(() => import('./MainTest3'));
 
 export {
   Order,
@@ -50,6 +48,4 @@ export {
   EventDetail,
   Notice,
   MainTest,
-  MainTest2,
-  MainTest3,
 };

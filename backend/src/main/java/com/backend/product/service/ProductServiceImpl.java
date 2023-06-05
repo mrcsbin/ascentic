@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,8 +54,8 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(findProduct);
 
         List<ProductResponse.ReviewDto> reviews = reviewRepository.findByProdNum(prodNum).stream()
-                        .map(ProductResponse.ReviewDto::of)
-                        .collect(Collectors.toList());
+                .map(ProductResponse.ReviewDto::of)
+                .collect(Collectors.toList());
 
         return ProductResponse.ProductDetailDto.of(findProduct, currentMemberId, reviews);
     }
@@ -159,13 +160,12 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductResponse.RecommendProductDto> getRecommendList(String category, Integer productNum) {
-        int pageNumber = 0; // 첫 번째 페이지
-        int pageSize = 6; // 페이지 크기는 6
-
-        System.out.println("category = " + category);
+    public List<ProductResponse.RecommendProductDto> getRecommendList(String scentNoteName, Integer productNum) {
+        int pageNumber = 0;
+        int pageSize = 8;
+        List<String> prodState = Arrays.asList("판매종료", "품절");
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Product> productPage = productRepository.findByProdCategoryAndProdNumNot(category, productNum, pageable);
+        Page<Product> productPage = productRepository.findByScentScentNoteNameAndProdStateNotInAndProdNumNot(scentNoteName, prodState, productNum, pageable);
 
         return productPage.getContent()
                 .stream()

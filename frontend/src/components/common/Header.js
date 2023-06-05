@@ -204,10 +204,10 @@ const HeaderV2 = () => {
               <StyledLink
                 to={
                   isLoggedIn
-                    ? role === 'ADMIN'
-                      ? '/admin'
-                      : '/mypage/orderlist/'
-                    : '/login'
+                    ? role === "ADMIN"
+                      ? "/admin"
+                      : "/mypage"
+                    : "/login"
                 }
                 isDarkMode={isDarkMode}
               >

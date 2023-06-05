@@ -96,7 +96,7 @@ public class OrderController {
                 .orderPriceSum(finalRes.getTotalAmount()) //상품가격
                 .prodNames(finalRes.getOrderName()) //구매한 제품명
                 .totalProdCount(orderProductRepository.getProdCountSum(orderRes.getOrderNum())) // 총 구매한 제품 개수
-                .orderState("결제 완료")  //결제 상태
+                .orderState("결제 완료") //결제 상태
                 .card(finalRes.getCard()) //카드 정보
                 .failure(finalRes.getFailure()) //결제실패시
                 .build());
@@ -109,6 +109,7 @@ public class OrderController {
                 .build()
                 .toUri();
         headers.setLocation(location);
+
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
                 .headers(headers)
                 .build();
@@ -190,5 +191,15 @@ public class OrderController {
     @GetMapping("/order/getlist")
     public List<OrderResponse.OrderListDto> getOrderList() {
         return orderService.getOrderList();
+    }
+
+    @GetMapping("/order/delete")
+    public void deleteCancelOrder() {
+        orderService.deleteCancelOrder();
+    }
+
+    @GetMapping("/order/get/mypage-profile")
+    public List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile() {
+        return orderService.getRecentOrdersInMyPageProfile();
     }
 }

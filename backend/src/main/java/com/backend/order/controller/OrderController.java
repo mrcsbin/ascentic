@@ -11,6 +11,7 @@ import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
 import com.backend.order.service.OrderServiceImpl;
+import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -61,9 +62,14 @@ public class OrderController {
             finalRes.setTotalAmount(result.getTotalAmount());
             System.out.println(result);
             orderService.saveRes(result);}
-         Order order= orderRepository.findByOrderId(finalRes.getOrderId());
+         Order order= orderRepository.findByOrderId(orderId);
+            System.out.println(order);
+
+            System.out.println("===========================================================================");
            orderService.changeOrderState(order,"결제완료");
             orderService.changePaymentState(order,true);
+            List<OrderProduct> orderproduct = orderProductRepository.findByOrder(order);
+            orderproduct.forEach(product -> product.setOrderState("결제완료"));
         } catch (Exception e) {
             e.printStackTrace();
         }

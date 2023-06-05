@@ -67,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderState(orderDTO.getOrderState())
                 .orderId(orderIdTemp)
                 .build());
+
         String prodNames = orderDTO.getProdNames();
         String productNames = countProdNames(prodNames);
         PaymentRes res = PaymentRes.builder()
@@ -170,6 +171,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     ;
+
+
+
+    public void changeOrderState(Order order, String state){
+        order.setOrderState(state);
+        orderRepository.save(order);
+    };
+
+    public void changePaymentState(Order order, boolean state){
+        order.setOrderPaymentState(state);
+        orderRepository.save(order);
+    };
+
 
 
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId) {

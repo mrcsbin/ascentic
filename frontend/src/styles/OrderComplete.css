@@ -44,7 +44,6 @@ body {
   font-size: 18px;
   margin: 3% auto;
   width: 70%;
-  
 }
 
 /* 첫번째 tr */
@@ -93,7 +92,7 @@ body {
 
 /* 결제 수단, 총 금액 td */
 .complete_body > table > tr > td:nth-child(3) > div:nth-child(3),
-div:nth-child(5) {
+.complete_body > table > tr > td:nth-child(3) > div:nth-child(5) {
   font-size: 20px;
 }
 

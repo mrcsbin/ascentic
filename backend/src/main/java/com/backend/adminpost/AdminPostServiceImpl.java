@@ -30,6 +30,11 @@ public class AdminPostServiceImpl implements AdminPostService {
     }
 
     @Override
+    public List<AdminPost> getAllAdminPosts() {
+        return adminPostRepository.findAllByOrderByPostIdDesc();
+    }
+
+    @Override
     public AdminPost getAdminPost(Long id) {
         return adminPostRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
     }

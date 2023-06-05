@@ -26,11 +26,11 @@ public class SubscribePayment {
     @Column
     private String billingKey; //실 결제시 필요한 데이터
 
-    @Column
-    private String orderId;
+//    @Column
+//    private String orderId;
 
     @Column
-    private String memberID; // 자동결제용
+    private String memberId; // 자동결제용
 
     @Column
     private String customerEmail;
@@ -51,12 +51,14 @@ public class SubscribePayment {
                 "subscribePaymentNum=" + subscribePaymentNum +
                 ", customerKey='" + customerKey + '\'' +
                 ", billingKey='" + billingKey + '\'' +
-                ", orderId='" + orderId + '\'' +
-                ", memberID='" + memberID + '\'' +
+//                ", orderId='" + orderId + '\'' +
+                ", memberID='" + memberId + '\'' +
                 ", customerEmail='" + customerEmail + '\'' +
                 ", amount=" + amount +
                 ", authenticatedTime='" + authenticatedTime + '\'' +
                 ", subscribeCard=" + subscribeCard +
                 '}';
     }
+
+
 }

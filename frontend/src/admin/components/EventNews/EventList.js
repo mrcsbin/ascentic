@@ -112,109 +112,99 @@ function EventList(props) {
       <div className="event-list">
         <HeaderWrap>
           <HeaderLeft>이벤트 관리</HeaderLeft>
-          <HeaderRight></HeaderRight>
         </HeaderWrap>
-        <div className="selected-status">
-          <p>상태 보기 &nbsp;</p>
-          {/* <OrderCategoryBox>
-          <button
-            className={category === "all" ? "activeCateBtn" : "cateBtn"}
-            onClick={() => setCategory("all")}
-          >
-            전체보기
-          </button>
-          <button
-            className={category === "결제완료" ? "activeCateBtn" : "cateBtn"}
-            onClick={() => setCategory("결제완료")}
-          >
-            결제완료
-          </button>
-          <button
-            className={category === "배송준비중" ? "activeCateBtn" : "cateBtn"}
-            onClick={() => setCategory("배송준비중")}
-          >
-            배송준비중
-          </button>
-          <button
-            className={category === "배송중" ? "activeCateBtn" : "cateBtn"}
-            onClick={() => setCategory("배송중")}
-          >
-            배송중
-          </button>
-          <button
-            className={category === "배송완료" ? "activeCateBtn" : "cateBtn"}
-            onClick={() => setCategory("배송완료")}
-          >
-            배송완료
-          </button>
-        </OrderCategoryBox>
-        <SortOptionBox>
-          <button
+        <InputContainer>
+          <CategoriesBox>
+            <button
+              className={selectedStatus === "all" ? "activeCateBtn" : "cateBtn"}
+              value="all"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              전체보기
+            </button>
+            <button
+              className={selectedStatus === "0" ? "activeCateBtn" : "cateBtn"}
+              value="0"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              저장상태
+            </button>
+            <button
+              className={selectedStatus === "1" ? "activeCateBtn" : "cateBtn"}
+              value="1"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              임시저장상태
+            </button>
+            <button
+              className={selectedStatus === "2" ? "activeCateBtn" : "cateBtn"}
+              value="2"
+              onClick={(e) => handleStatusChange(e)}
+            >
+              삭제상태
+            </button>
+          </CategoriesBox>
+          <SortOptionBox>
+            {/* <button
             className={sortOption === "early" ? "active" : ""}
             onClick={() => setSortOption("early")}
           >
             최근순
-          </button>
-        </SortOptionBox> */}
-          <select value={selectedStatus} onChange={handleStatusChange}>
-            <option value="all">모두 보기</option>
-            <option value="0">저장 상태</option>
-            <option value="1">임시 저장 상태</option>
-            <option value="2">삭제 상태</option>
-          </select>
-        </div>
-        <div className="post-grid">
-          {groupPosts(currentProducts).map((postGroup, index) => (
-            <table key={index}>
-              <tbody>
-                <tr>
-                  {postGroup.map((post) => (
-                    <td key={post.postId}>
-                      <div className="post">
-                        <div className="post-img">
-                          {post.postImage && (
-                            <img
-                              src={`http://localhost:8080/admin/download?img=${post.postImage}`}
-                              alt="대표 이미지"
-                              className="post-image"
-                            />
-                          )}
-                          <p className="post-status">
-                            상태: {getStatusText(post.postStatus)}
-                          </p>
-                        </div>
-                        <div className="post-bottom">
-                          <div className="post-left">
-                            <p className="left-top">
-                              {getEventStatus(
-                                post.eventStartDate,
-                                post.eventEndDate
-                              )}
-                            </p>
-                            <p className="left-center">{post.postTitle}</p>
-                            <p className="left-bottom">
-                              {post.eventStartDate} ~ {post.eventEndDate}
+          </button> */}
+          </SortOptionBox>
+          <div className="post-grid">
+            {groupPosts(currentProducts).map((postGroup, index) => (
+              <table key={index}>
+                <tbody>
+                  <tr>
+                    {postGroup.map((post) => (
+                      <td key={post.postId}>
+                        <div className="post">
+                          <div className="post-img">
+                            {post.postImage && (
+                              <img
+                                src={`http://localhost:8080/admin/download?img=${post.postImage}`}
+                                alt="대표 이미지"
+                                className="post-image"
+                              />
+                            )}
+                            <p className="post-status">
+                              상태: {getStatusText(post.postStatus)}
                             </p>
                           </div>
-                          <div className="post-right">
-                            <button
-                              onClick={() => props.handleEdit(post.postId)}
-                            >
-                              수정
-                            </button>
-                            <button onClick={() => handleDelete(post.postId)}>
-                              삭제
-                            </button>
+                          <div className="post-bottom">
+                            <div className="post-left">
+                              <p className="left-top">
+                                {getEventStatus(
+                                  post.eventStartDate,
+                                  post.eventEndDate
+                                )}
+                              </p>
+                              <p className="left-center">{post.postTitle}</p>
+                              <p className="left-bottom">
+                                {post.eventStartDate} ~ {post.eventEndDate}
+                              </p>
+                            </div>
+                            <div className="post-right">
+                              <button
+                                onClick={() => props.handleEdit(post.postId)}
+                              >
+                                수정
+                              </button>
+                              <button onClick={() => handleDelete(post.postId)}>
+                                삭제
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          ))}
-        </div>
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            ))}
+          </div>
+        </InputContainer>
         <div className="pagination">
           {currentPage - 3 <= 0 ? (
             ""
@@ -280,52 +270,50 @@ const HeaderWrap = styled.div`
   padding-top: 30px;
   border-bottom: 2px solid black;
 `;
-
 const HeaderLeft = styled.div`
   padding: 20px 0;
   font-size: 30px;
   font-weight: 600;
 `;
-
-const HeaderRight = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: end;
+const InputContainer = styled.div`
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
 `;
-// const OrderCategoryBox = styled.div`
-//   padding: 0 auto;
-//   margin-top: 10px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   button {
-//     margin: 10px;
-//     padding: 10px;
-//     font-size: 1.3rem;
-//     background-color: white;
-//     border: 0;
-//     cursor: pointer;
-//   }
-//   .activeCateBtn,
-//   .cateBtn:hover {
-//     font-weight: 600;
-//     border-bottom: 2px solid black;
-//   }
-// `;
-// const SortOptionBox = styled.div`
-//   width: 100%;
-//   display: flex;
-//   justify-content: flex-end;
-//   button {
-//     background-color: white;
-//     border: 0;
-//     font-size: 1rem;
-//     font-weight: 500;
-//     margin: 10px 10px 20px 10px;
-//   }
-//   .active {
-//     color: red;
-//   }
-// `;
+const CategoriesBox = styled.div`
+  padding: 0 auto;
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+  }
+  .activeCateBtn,
+  .cateBtn:hover {
+    font-weight: 600;
+    border-bottom: 2px solid black;
+  }
+`;
+const SortOptionBox = styled.div`
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  justify-content: flex-end;
+  button {
+    font-size: 1rem;
+    margin-left: 15px;
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+  }
+  .activeSortbtn {
+    font-weight: 700;
+  }
+`;
 export default EventList;

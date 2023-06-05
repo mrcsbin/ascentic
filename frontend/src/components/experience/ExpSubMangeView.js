@@ -4,19 +4,17 @@ import "../../styles/ExpSubManageView.css";
 import RatingComponent from "./RatingComponent";
 import { getCookie } from "../../utils/Cookies";
 
-const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
+const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // ------------------------------------ 구독기간 관련 ---------------------------------------
   // const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
-  const start = new Date("2020-11-30"); // 구독시작 날짜
+  const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
   const currentDate = new Date(); // 현재 날짜
   const [startYear, startMonth] = [start.getFullYear(), start.getMonth()];
   const [currnetYear, currnetMonth] = [
     currentDate.getFullYear(),
     currentDate.getMonth(),
   ];
-
-  console.log("view 안이다잇~~~");
-  console.log(success);
+  console.log("view" + success);
 
   useEffect(() => {
     if (success) {
@@ -34,10 +32,6 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
   //   }, 500);
   // }
   // }
-
-  // console.log("gggg");
-  // console.log(subscribe);
-
   //구독중인 기간
   const subsDuration =
     (currnetYear - startYear) * 12 + (currnetMonth - startMonth);
@@ -52,24 +46,29 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
   const [months, setmonths] = useState([]);
 
   const monthOptions = (value) => {
-    // let months = [];
-    // if (value == currnetYear) {
-    //   /// {todo : 시작달 10월, 현재달 5월인 가정 추가}
-    //   // 이번년 선택했으면 이번달까지만 선택가능
-    //   for (let i = startMonth; i <= currnetMonth; i++) {
-    //     months = [...months, i];
-    //   }
-    // } else if (value == startYear) {
-    //   // 아니면 시작한 달부터 그 년의 12월까지
-    //   for (let i = startMonth; i <= 12; i++) {
-    //     months = [...months, i];
-    //   }
-    // } else {
-    //   for (let i = 1; i <= 12; i++) {
-    //     months = [...months, i];
-    //   }
-    // }
-    let months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    let months = [];
+
+    if (value == currnetYear) {
+      if (startYear == chosenYear) {
+        for (let i = startMonth; i <= currnetMonth; i++) {
+          months = [...months, i];
+        }
+      } else {
+        for (let i = 1; i <= currnetMonth; i++) {
+          months = [...months, i];
+        }
+      }
+    } else if (value == startYear) {
+      // 아니면 시작한 달부터 그 년의 12월까지
+      for (let i = startMonth; i <= 12; i++) {
+        months = [...months, i];
+      }
+    } else {
+      for (let i = 1; i <= 12; i++) {
+        months = [...months, i];
+      }
+    }
+
     setmonths(months);
   };
   useEffect(() => {
@@ -81,7 +80,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
   const [filterProd, setFilterProd] = useState([]);
   const [chosenYear, setChosenYear] = useState(currnetYear);
   const [chosenMonth, setChoenMonth] = useState(currnetMonth);
-  console.log(currnetMonth);
+
   useEffect(() => {
     const filterByMonth = (chosenYear, chosenMonth) => {
       if (chosenMonth < 10) chosenMonth = "0" + chosenMonth;
@@ -112,50 +111,78 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
     if (filterProd.length >= 1) {
       return (
         <div className="subs-info">
-          <span>
-            {chosenYear}년 {chosenMonth}월
-          </span>
-          <div className="on-delivery">
-            {/* <span>{sbMember.sbPaymentDay ? "배송 완료" : "배송중"}</span> */}
+          <div>
+            <div className="subs-num">
+              구독주문번호 : <span> {filterProd[0].sbSendNum}</span>
+            </div>
+            <div className="subs-state">
+              <span>{filterProd[0].sbSendState}</span>
+            </div>
           </div>
-          <div className="subs-prod-name-intro">
+          <div className="subs-pay">
             <div>
-              <div className="maybe-for-image"></div>
-              <div className="scent-name">
-                <p>
-                  <span>{filterProd[0].spScent.scentName}</span>
-                </p>
+              결제일 : <span> {filterProd[0].sbSendPayDate}</span>
+            </div>
+
+            <div>
+              결제정보 :<span> {filterProd[0].sbSendPayment}</span>
+            </div>
+          </div>
+          {filterProd[0].spScent.scentName ? (
+            <div className="subs-prod">
+              <div className="header">이번달의 패키지</div>
+              <div>
+                <div className="subs-prod-image">
+                  <img
+                    src={`http://localhost:8080/images/${filterProd[0].sbProdImage}`}
+                    alt="sbProduct_image"
+                  />
+                </div>
+                <div className="subs-prod-info">
+                  <div>
+                    <span>{filterProd[0].spScent.scentName} 향 패키지</span>
+                    <span>: {filterProd[0].spScent.scentNoteName}</span>
+                  </div>
+                  <div className="intro">{filterProd[0].spIntro}</div>
+                  <div className="price">
+                    {addComma(filterProd[0].spPrice)}원
+                  </div>
+                </div>
               </div>
-              <div className="intro-price">
-                {filterProd[0].spIntro}
-                <span>{addComma(filterProd[0].spPrice)}원</span>
-              </div>
+            </div>
+          ) : (
+            <div className="subs-prod">상품을 매칭중입니다...</div>
+          )}
+          <div className="clear-both"></div>
+          <div className="address">
+            <div>
+              <span>배송지 주소</span>
+              <p>{filterProd[0].sbSendPostcode}</p>
+            </div>
+            <div>
+              <span>송장번호</span>
+              <p>{filterProd[0].sbShippingCode}</p>
             </div>
           </div>
           <div className="clear-both"></div>
-          <div className="rating-component">
-            {/* {console.log("ssss")}
-            {console.log(filterProd[0])} */}
-            <RatingComponent
-              sbSendNum={filterProd[0].sbSendNum}
-              score={filterProd[0].sbSendScore}
-              review={filterProd[0].sbSendReview}
-            ></RatingComponent>
-          </div>
-
-          <div className="address">
-            <span>배송지 주소</span>
-            <p>{sbMember.mainAddress}</p>
-            <p>{sbMember.subAddress}</p>
-          </div>
-          <div>
-            <span>송장번호가 ERD에 없음</span>
-          </div>
-          <div className="clear-both"></div>
+          {(filterProd[0].sbSendState === "배송중") |
+            (filterProd[0].sbSendState === "배송완료") && (
+            <div className="rating-component">
+              <RatingComponent
+                sbSendNum={filterProd[0].sbSendNum}
+                score={filterProd[0].sbSendScore}
+                review={filterProd[0].sbSendReview}
+              ></RatingComponent>
+            </div>
+          )}
         </div>
       );
     } else {
-      return <div className="no-info">요청하신 자료가 존재하지 않습니다</div>;
+      return (
+        <>
+          <div className="no-info">요청하신 자료가 존재하지 않습니다.</div>
+        </>
+      );
     }
   };
 
@@ -187,31 +214,37 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
       <div className="sbMember">
         <div className="hello-member">
           <p>
-            안녕하세요. <span> {sbMember.memberName}</span>님
+            안녕하세요. <span> {sbMember.memberName} </span>님!
           </p>
           <p>오늘도 향기로운 하루 되세요!</p>
         </div>
-        <div className="sbMember-info">
-          <div className="subscribe-or-not">
-            {sbMember.sbEndDate ? "구독하지 않는 중" : "구독중"}
-          </div>
-          <div className="duration-payDay">
-            <p>
-              구독기간 <span> {subsDuration}개월</span>
-            </p>
-            결제일
-            <span> 매월 {sbMember.sbPaymentDay}일</span>
-          </div>
-          {/* <div className="scentNote-payInfo"> */}
-          <div className="duration-payDay">
-            <p>
-              ScentNote <span> 여기채워야 됨 // </span>
-            </p>
-            결제정보 = <span> {sbMember.sbPay}</span>
-          </div>
+        <div className="duration-payDay">
+          <p>{sbMember.sbEndDate ? "구독하지 않는 중" : "구독중"}</p>
+          <p>
+            구독기간 :<span>{subsDuration} 개월</span>
+          </p>
+          <p>
+            결제일 :<span> 매월 {sbMember.sbPaymentDay} 일</span>
+          </p>
+          <p>
+            결제정보 :<span>{sbMember.sbPay}</span>
+          </p>
+        </div>
+        <div className="sbMember-taste">
+          <p>
+            선택한 구독취향 : <span>{sbMember.tasteResult} </span>
+          </p>
+          <p>
+            취향 1순위 :<span>{TasteRes.firstPlace}</span>
+          </p>
+          <p>
+            취향 2순위 :<span>{TasteRes.secondPlace}</span>
+          </p>
+          <p>
+            취향 3순위 :<span>{TasteRes.thirdPlace}</span>
+          </p>
         </div>
       </div>
-
       <div className="clear-both"></div>
       <div className="select-year-month">
         <select
@@ -222,7 +255,11 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
           }}
         >
           {years.map((year, index) => {
-            return <option key={index}>{year}</option>;
+            return (
+              <option key={index} value={year}>
+                {year}년
+              </option>
+            );
           })}
         </select>
         <select
@@ -232,17 +269,19 @@ const ExpSubsManageView = ({ sbMember, subscribe, success }) => {
           }}
         >
           {months.map((month, index) => {
-            return <option key={index}> {month}</option>;
+            return (
+              <option key={index} value={month}>
+                {month}월
+              </option>
+            );
           })}
         </select>
-        <br />
-        <br />
-        <hr />
         {console.log("filterProd = ", filterProd)}
         {console.log("sbMember = ", sbMember)}
       </div>
+      <hr />
       <SubsInfo />
-      {/* <button className="end-subscribe" onClick={endSubscribe}>구독 해지하기</button> */}
+      <hr />
       {sbMember.sbEndDate === null && (
         <button className="end-subscribe" onClick={endSubscribe}>
           구독 해지하기

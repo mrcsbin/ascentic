@@ -60,6 +60,7 @@ public class SbMemberServiceImpl implements SbMemberService {
                 .memberName(lastSbMemberByMemberId.getSbMemberName())
                 .mainAddress(lastSbMemberByMemberId.getSbMainAddr())
                 .subAddress(lastSbMemberByMemberId.getSbSubAddr())
+                .tasteResult(lastSbMemberByMemberId.getTasteResult())
                 .build();
         return lastSbMemberDTO;
     }

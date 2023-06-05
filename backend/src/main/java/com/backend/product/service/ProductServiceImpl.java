@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -98,13 +99,36 @@ public class ProductServiceImpl implements ProductService {
         product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
-        product.setProdState(adminProdUpdateInfoDto.getProdState());
+        product.setProdState(optionStateCheckResult(adminProdUpdateInfoDto.getOptions()));
         product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());
         Product resProduct = productRepository.save(product);
 
         updateOptions(adminProdUpdateInfoDto, product); // 옵션 업데이트
 
         return resProduct.getProdNum();
+    }
+
+    private String optionStateCheckResult(List<OptionDto> optionDtos) {
+        boolean isSellOption = false;
+        boolean isSoldOutOption = false;
+
+        for (OptionDto optionDto : optionDtos) {
+            String optionState = optionDto.getOptionState();
+
+            if (optionState.equals("판매중")) {
+                isSellOption = true;
+            } else if (optionState.equals("품절")) {
+                isSoldOutOption = true;
+            }
+        }
+
+        if (isSellOption) {
+            return "판매중";
+        } else if (isSoldOutOption) {
+            return "품절";
+        } else {
+            return "판매종료";
+        }
     }
 
     // 옵션 업데이트

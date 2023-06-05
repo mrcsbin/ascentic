@@ -64,9 +64,9 @@ export const requestOrder = async (accessToken, requestData, products) => {
         );
       });
   } catch (e) {
-    if (e.code === "USER_CANCEL") {
-      alert("사용자가 결제를 취소하였습니다!");
-    }
+    if (e.code != null) {
+      alert(e.message);
+    } //카트에 다시 담아두기
   }
 };
 

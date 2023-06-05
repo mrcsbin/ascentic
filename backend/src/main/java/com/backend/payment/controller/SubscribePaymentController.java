@@ -4,6 +4,7 @@ import com.backend.member.dto.CustomerKeyDto;
 import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
+import com.backend.payment.automation.AutomaticPayments;
 import com.backend.payment.dto.BillingKeyResponseDto;
 import com.backend.payment.dto.SubscribeCard;
 import com.backend.payment.entity.SubscribePayment;
@@ -41,27 +42,8 @@ public class SubscribePaymentController {
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
     private RestTemplate restTemplate = new RestTemplate();
 
-//    @GetMapping("/billingAuthSuccess2")
-//    public void handleSuccess2(@RequestParam("customerKey") String customerKey,
-//                                @RequestParam("authKey") String authKey) {
-//
-//        String url = "https://api.tosspayments.com/v1/billing/authorizations/issue";
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.set("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==");
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("customerKey", customerKey);
-//        data.put("authKey", authKey);
-//
-//        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(data, headers);
-//
-//        ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, JsonNode.class);
-//
-//        JsonNode responseBody = response.getBody();
-//        System.out.println("---------------------------------------------------------");
-//        System.out.println(responseBody);
-//    };
+    private final AutomaticPayments automaticPayments;
+
 
 
     @GetMapping("/subscribePayment/getCustomerKey")
@@ -72,7 +54,7 @@ public class SubscribePaymentController {
 
         SubscribePayment subscribePayment = SubscribePayment.builder()
                 .customerKey(customerKey)
-                .memberID(currentMemberId)
+                .memberId(currentMemberId)
                 .build();
 
         System.out.println("76번째 줄++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -88,7 +70,7 @@ public class SubscribePaymentController {
 //    public CustomerKeyDto ge
 
     @GetMapping("/billingAuthSuccess")
-    public ResponseEntity<?> handleSuccess(@RequestParam("customerKey") String customerKey,
+    public ResponseEntity<Object> handleSuccess(@RequestParam("customerKey") String customerKey,
                                                 @RequestParam("authKey") String authKey) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -122,13 +104,13 @@ public class SubscribePaymentController {
 
         //subscribePayment 엔티티에 billingkey 저장
         SubscribePayment subscribePayment = subscribePaymentRepository.findByCustomerKey(customerKey);
-        String memberId =subscribePayment.getMemberID();
+        String memberId =subscribePayment.getMemberId();
         SubscribeMember subscribeMember = sbMemberRepository.getLastSbMemberByMemberId(memberId);
 
         Member member = memberRepository.findEmailById(memberId).get();
 
         subscribePayment.setBillingKey(response.getBody().getBillingKey());
-        subscribePayment.setOrderId(UUID.randomUUID().toString());
+//        subscribePayment.setOrderId(UUID.randomUUID().toString());
         subscribePayment.setCustomerEmail(member.getEmail());
         subscribePayment.setSubscribeCard(subscribeCard);
         subscribePayment.setAmount(subscribeMember.getSbPrice());
@@ -149,8 +131,8 @@ public class SubscribePaymentController {
         //바디에 넣을 토스 포맷 json 데이터임~~~
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("customerKey", subscribePayment.getCustomerKey());
-        jsonObject.put("orderId", subscribePayment.getOrderId());
-        jsonObject.put("memberID", subscribePayment.getMemberID());
+        jsonObject.put("orderId", UUID.randomUUID().toString());
+        jsonObject.put("memberID", subscribePayment.getMemberId());
         jsonObject.put("customerEmail", subscribePayment.getCustomerEmail());
         jsonObject.put("subscribeCard", subscribePayment.getSubscribeCard());
         jsonObject.put("amount", subscribePayment.getAmount());
@@ -203,13 +185,19 @@ public class SubscribePaymentController {
                 .queryParam("success", true)
                 .build()
                 .toUri();
-//
-//        redirectHeaders.add("alertMessage", "구독신청에 성공하였습니다잇!");
+
+        redirectHeaders.add("success", "구독신청에 성공하였습니다잇!");
         redirectHeaders.setLocation(location);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
                 .headers(redirectHeaders)
                 .build();
     }
+
+    //일단 개발용
+//    @GetMapping("/automation")
+//    public void automation() {
+//    automaticPayments.processAutoPayment();
+//    }
 }
 
 

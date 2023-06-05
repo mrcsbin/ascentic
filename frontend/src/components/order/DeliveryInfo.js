@@ -58,13 +58,12 @@ const DeliveryInfo = ({ isDeliveryFormComplete, onChange }) => {
       const isShipTelFilled = shipInfo.shipTel.trim() !== "";
       const isMainAddressFilled = shipInfo.mainAddress.trim() !== "";
       const isSubAddressFilled = shipInfo.subAddress.trim() !== "";
-      const isShipMessageFilled = shipInfo.shipMessage.trim() !== "";
+
       const isComplete =
         isShipNameFilled &&
         isShipTelFilled &&
         isMainAddressFilled &&
-        isSubAddressFilled &&
-        isShipMessageFilled;
+        isSubAddressFilled;
 
       onChange(isComplete);
     };

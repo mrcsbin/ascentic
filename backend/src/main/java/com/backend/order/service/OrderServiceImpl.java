@@ -173,17 +173,19 @@ public class OrderServiceImpl implements OrderService {
     ;
 
 
-
-    public void changeOrderState(Order order, String state){
+    public void changeOrderState(Order order, String state) {
         order.setOrderState(state);
         orderRepository.save(order);
-    };
+    }
 
-    public void changePaymentState(Order order, boolean state){
+    ;
+
+    public void changePaymentState(Order order, boolean state) {
         order.setOrderPaymentState(state);
         orderRepository.save(order);
-    };
+    }
 
+    ;
 
 
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId) {
@@ -241,13 +243,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile() {
+    public Optional<List<OrderResponse.MyPageProfileOrderListDto>> getRecentOrdersInMyPageProfile() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
-        List<Order> orders = orderRepository.findTop3ByMemberIdOrderByOrderDateDesc(currentMemberId);
+        Optional<List<Order>> orders = orderRepository.findTop3ByMemberIdOrderByOrderDateDesc(currentMemberId);
 
-        return orders.stream()
-                .map(order -> OrderResponse.MyPageProfileOrderListDto.of(order, order.getOrderProducts()))
-                .collect(Collectors.toList());
+        if (orders.isEmpty()) {
+            return Optional.empty();
+        } else {
+            List<OrderResponse.MyPageProfileOrderListDto> orderList = orders.get().stream()
+                    .map(order -> OrderResponse.MyPageProfileOrderListDto.of(order, order.getOrderProducts().size()))
+                    .collect(Collectors.toList());
+            return Optional.of(orderList);
+        }
     }
 }

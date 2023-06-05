@@ -5,6 +5,7 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     Order findFirstByMemberIdOrderByOrderNumDesc(String memberId);
@@ -22,5 +23,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     Order findByMemberIdAndOrderPaymentStateIsFalse(String memberId);
 
-    List<Order> findTop3ByMemberIdOrderByOrderDateDesc(String memberId);
+    Optional<List<Order>> findTop3ByMemberIdOrderByOrderDateDesc(String memberId);
 }

@@ -12,7 +12,6 @@ import { getCookie } from "../../utils/Cookies";
 export const MyPageProfile = () => {
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  console.log(profileData);
 
   const dispatch = useDispatch();
   const DefaultProfileImageURL =

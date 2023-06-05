@@ -23,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -205,7 +206,7 @@ public class OrderController {
     }
 
     @GetMapping("/order/get/mypage-profile")
-    public List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile() {
+    public Optional<List<OrderResponse.MyPageProfileOrderListDto>> getRecentOrdersInMyPageProfile() {
         return orderService.getRecentOrdersInMyPageProfile();
     }
 }

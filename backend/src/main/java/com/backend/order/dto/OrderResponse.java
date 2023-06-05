@@ -64,9 +64,9 @@ public class OrderResponse {
         private String productName; // 주문 상품 이름
         private String orderState; // 주문 상태
 
-        public static OrderResponse.MyPageProfileOrderListDto of(Order order, List<OrderProduct> orderProductList) {
+        public static OrderResponse.MyPageProfileOrderListDto of(Order order, Integer orderProductCount) {
             return new MyPageProfileOrderListDto(
-                    orderProductList.size(),
+                    orderProductCount,
                     order.getOrderPriceSum(),
                     order.getOrderId(),
                     order.getOrderProducts().get(0).getProductOption().getProduct().getProductImages().get(0).getProdSaveName(),

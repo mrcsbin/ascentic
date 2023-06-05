@@ -7,6 +7,7 @@ import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderService {
     PaymentRes insertOrder(OrderDTO orderDTO);
@@ -31,5 +32,5 @@ public interface OrderService {
 
     List<OrderResponse.OrderListDto> getOrderList();
 
-    List<OrderResponse.MyPageProfileOrderListDto> getRecentOrdersInMyPageProfile();
+    Optional<List<OrderResponse.MyPageProfileOrderListDto>> getRecentOrdersInMyPageProfile();
 }

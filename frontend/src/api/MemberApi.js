@@ -173,6 +173,7 @@ export const getMyPageProfile = async (accessToken) => {
       Authorization: "Bearer " + accessToken,
     },
   });
+  return response.data;
 }
 
 export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {

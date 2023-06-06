@@ -1,6 +1,7 @@
 package com.backend.order.service;
 
 import com.backend.cart.repository.CartRepository;
+import com.backend.member.entity.Member;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.repository.MemberRepository;
 import com.backend.order.dto.*;
@@ -62,8 +63,12 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // 결제 완료로 업데이트
         Order order = orderRepository.findByOrderId(orderId);
         updatePaymentState(order);
+
+        // 사용 포인트 차감 + 적립 = 적립포인트 + 보유포인트 - 사용포인트
+        pointProcess(order);
 
         HttpHeaders headers = new HttpHeaders();
         URI location = UriComponentsBuilder.fromUriString("http://localhost:3000/ordercomplete")
@@ -73,6 +78,16 @@ public class OrderServiceImpl implements OrderService {
         headers.setLocation(location);
 
         return headers;
+    }
+
+    // 사용 포인트 차감 + 적립 = 적립포인트 + 보유포인트 - 사용포인트
+    private void pointProcess (Order order) {
+        Member member = memberRepository.findById(
+                order.getMemberId()).orElseThrow(() -> new IllegalArgumentException("일치하는 회원정보 없음"));
+        order.getUsePoint();
+        int resultPoint = (int) (order.getOrderPriceSum() * 0.05) + member.getMemberPoint() - order.getUsePoint();
+        member.setMemberPoint(resultPoint);
+        memberRepository.save(member);
     }
 
     @Override
@@ -150,23 +165,23 @@ public class OrderServiceImpl implements OrderService {
                 .shipCharge(orderDTO.getShipCharge())
                 .orderState(orderDTO.getOrderState())
                 .orderId(orderIdTemp)
+                .usePoint(orderDTO.getUsePoint())
                 .build());
 
         String prodNames = orderDTO.getProdNames();
         String productNames = countProdNames(prodNames);
         PaymentRes res = PaymentRes.builder()
                 .payment(orderDTO.getOrderPayment())
-                .amount(orderDTO.getOrderPriceSum())
+                .amount(orderDTO.getOrderPriceSum() - order.getUsePoint())
                 .orderName(productNames)
-                .customerName(memberRepository.findById(currentMemberId).orElseThrow().getName())
-                .orderNum(orderRepository.findByOrderId(orderIdTemp).getOrderNum())
+                .customerName(order.getOrderName())
+                .orderNum(order.getOrderNum())
                 .orderId(orderIdTemp)
                 .successUrl("http://localhost:8080/successpayment")
                 .failUrl("http://localhost:3000/mypage")
                 .createDate(OffsetDateTime.now(ZoneOffset.ofHours(9)).toString())
                 .paySuccssYn("Y")
                 .build();
-        System.out.println("res.getPayment() = " + res.getPayment());
 
         return res;
     }
@@ -202,7 +217,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order result = orderRepository.findByOrderId(orderId);
 
-        if (result.getOrderPriceSum().equals(amount)) {
+        if (result.getOrderPriceSum() - result.getUsePoint() == (amount)) {
             result.setTossPaymentKey(tossPaymentKey);
         } else {
             result.setOrderState("결제 실패");

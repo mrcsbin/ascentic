@@ -9,6 +9,11 @@ import { useState } from "react";
 import { getMyPageProfile } from "../../api/MemberApi";
 import { getCookie } from "../../utils/Cookies";
 
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
+}
+
 export const MyPageProfile = () => {
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +65,9 @@ export const MyPageProfile = () => {
             <RightButtonContentName>관심 상품</RightButtonContentName>
           </WishButton>
           <PointButton>
-            <RightButtonContentValue>3,000</RightButtonContentValue>
+            <RightButtonContentValue>
+              {addComma(profileData.point)}
+            </RightButtonContentValue>
             <RightButtonContentName>포인트</RightButtonContentName>
           </PointButton>
         </RightBox>

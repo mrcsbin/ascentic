@@ -60,6 +60,7 @@ const ExpTaste = () => {
         setResultData(res.data);
       } catch (e) {
         console.log(e);
+        setResultData({ firstPlace: "null" });
       }
       setLoading(false);
     };

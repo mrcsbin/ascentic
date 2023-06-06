@@ -100,6 +100,7 @@ public class OrderResponse {
         private Failure failure; //결제 실패시
         private Card card; //결제수단
         private EasyPay easyPay; //토스 or 카카오페이 등
+        private Integer usePoint; // 사용 포인트
         public static SuccessOrderDto of(Order order, Failure failure, Card card, EasyPay easyPay) {
             return new SuccessOrderDto(
                     order.getOrderName(),
@@ -117,7 +118,8 @@ public class OrderResponse {
                     order.getOrderState(),
                     failure,
                     card,
-                    easyPay
+                    easyPay,
+                    order.getUsePoint()
             );
         }
     }

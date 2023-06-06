@@ -166,7 +166,6 @@ export const getOrderInfo = async (accessToken) => {
   }
 };
 
-
 export const getMyPageProfile = async (accessToken) => {
   const response = await axios.get(`${MEMBER_API_URL}/mypage/profile`, {
     headers: {
@@ -174,7 +173,7 @@ export const getMyPageProfile = async (accessToken) => {
     },
   });
   return response.data;
-}
+};
 
 export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
   const response = await axios.post(
@@ -188,4 +187,20 @@ export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
   );
 
   return response.data;
+};
+
+// 보유 포인트 조회
+export const getMemberPoint = async (accessToken) => {
+  try {
+    const response = await axios.get(`${MEMBER_API_URL}/getPoint`, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };

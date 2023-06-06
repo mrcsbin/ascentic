@@ -41,6 +41,7 @@ const FinalPayment = ({
   const orderInformation = useSelector((state) => state.order.orderInformation);
   const shipInfo = useSelector((state) => state.order.shipInfo);
   const paymentMethod = useSelector((state) => state.order.paymentMethod);
+  const pointInfo = useSelector((state) => state.order.pointInfo);
 
   // 상품정보
   // const prods = props.prods;
@@ -78,6 +79,7 @@ const FinalPayment = ({
     shipCharge: shippingFee, // 배송비
     discount: 0, //할인 금액
     prodNames: prodNamesString,
+    usePoint: pointInfo.usePoint,
   };
 
   // requestData.orderPriceSum
@@ -105,7 +107,7 @@ const FinalPayment = ({
         console.log(products);
         const res = await requestOrder(accessToken, requestData, products);
       } catch (e) {
-        console.log(e)
+        console.log(e);
         console.error(e);
       }
     } else {

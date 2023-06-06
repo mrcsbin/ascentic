@@ -10,10 +10,10 @@ const initialState = {
   },
 
   orderInformation: {
-    email: "example",
-    domain: "naver.com",
-    name: "김기자",
-    tel: "01012341234",
+    email: "",
+    domain: "",
+    name: "",
+    tel: "",
   },
 
   shipInfo: {
@@ -26,7 +26,7 @@ const initialState = {
 
   pointInfo: {
     holdPoint: 0, // 보유 포인트
-    usePoint: 0, // 사용 포인트
+    usePoint: undefined, // 사용 포인트
   },
 
   payMethod: {

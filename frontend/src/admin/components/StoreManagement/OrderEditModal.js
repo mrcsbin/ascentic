@@ -246,8 +246,8 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
               주문취소
             </CancelBtn>
           )}
-          <CloseBtn onClick={() => hadleCloseEditModal()}>수정 취소</CloseBtn>
           <EditBtn onClick={() => handleEdit()}>수정하기</EditBtn>
+          <CloseBtn onClick={() => hadleCloseEditModal()}>수정 취소</CloseBtn>
         </EditBtnContainer>
       </ModalContainer>
     </>
@@ -270,13 +270,14 @@ const ModalContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 800px;
   height: 830px;
+  overflow: scroll;
   background-color: white;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 80px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 30px 80px;
   .close {
     position: absolute;
     top: 3%;
@@ -287,9 +288,22 @@ const ModalContainer = styled.div`
     border: 0;
     cursor: pointer;
   }
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    outline: none;
+    border-radius: 10px;
+    background-color: #f3f1f1;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: none;
+    background-color: transparent;
+  }
 `;
 const TitleTh = styled.th`
   text-align: left;
+  margin-top: 20px;
   padding-top: 15px;
   padding-left: 10px;
   font-size: 1.3rem;
@@ -401,22 +415,9 @@ const ProductContainer = styled.table`
 const ProductItemList = styled.div`
   width: 100%;
   display: flex;
-  overflow-y: scroll;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  ::-webkit-scrollbar-thumb {
-    outline: none;
-    border-radius: 10px;
-    background-color: #f3f1f1;
-  }
-  ::-webkit-scrollbar-track {
-    box-shadow: none;
-    background-color: transparent;
-  }
 `;
 const ProductItem = styled.div`
   width: 100%;

@@ -45,7 +45,7 @@ export const Order = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div style={{ height: "100vh" }}></div>;
   }
 
   return (
@@ -101,7 +101,9 @@ export const Order = () => {
   );
 };
 
-const OrderListWrap = styled.div``;
+const OrderListWrap = styled.div`
+  min-height: 500px;
+`;
 
 const ContentBar = styled.div`
   border-bottom: 1px solid grey;

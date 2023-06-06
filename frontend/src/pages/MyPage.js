@@ -38,7 +38,7 @@ const MyPageWrap = styled.div`
   width: 100%;
   margin: 0px auto;
   box-sizing: border-box;
-  padding-top: 200px;
+  padding-top: 250px;
 `;
 
 const ContentWrap = styled.div`

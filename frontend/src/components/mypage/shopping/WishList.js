@@ -61,7 +61,7 @@ export const WishList = () => {
   }, []);
 
   if (isLoading) {
-    return <></>;
+    return <div style={{ height: "100vh" }}></div>;
   }
 
   return (

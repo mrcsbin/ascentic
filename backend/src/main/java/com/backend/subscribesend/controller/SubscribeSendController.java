@@ -51,4 +51,7 @@ public class SubscribeSendController {
     }
 
     @GetMapping("/subscribe/mypage")
+    public List<SubscribeSendResponse.MemberSubscribeDto> getMemberSubscribe() {
+        return subscribeSendServiceImpl.getMemberSubscribe();
+    }
 }

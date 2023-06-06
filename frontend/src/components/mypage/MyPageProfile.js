@@ -9,10 +9,14 @@ import { useState } from "react";
 import { getMyPageProfile } from "../../api/MemberApi";
 import { getCookie } from "../../utils/Cookies";
 
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
+}
+
 export const MyPageProfile = () => {
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [taste, setTaste] = useState();
 
   const dispatch = useDispatch();
   const DefaultProfileImageURL =
@@ -26,7 +30,7 @@ export const MyPageProfile = () => {
       setIsLoading(false);
     };
     fetchProfileData();
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -60,13 +64,15 @@ export const MyPageProfile = () => {
             <RightButtonContentName>관심 상품</RightButtonContentName>
           </WishButton>
           <PointButton>
-            <RightButtonContentValue>3,000</RightButtonContentValue>
+            <RightButtonContentValue>
+              {addComma(profileData.point)}
+            </RightButtonContentValue>
             <RightButtonContentName>포인트</RightButtonContentName>
           </PointButton>
         </RightBox>
       </Wrap>
       <MyPageProfileOrder />
-      <MyPageProfileSubscribe setTaste={setTaste} />
+      <MyPageProfileSubscribe />
     </>
   );
 };
@@ -197,25 +203,4 @@ const RightButtonContentValue = styled.strong`
 const RightButtonContentName = styled.p`
   font-size: 1rem;
   color: rgba(34, 34, 34, 0.5);
-`;
-
-const ContentBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 4rem;
-`;
-
-const ContentTitle = styled.div`
-  font-size: 1.4rem;
-  font-weight: 700;
-`;
-
-const ContentPlusButton = styled(Link)`
-  font-size: 1rem;
-  color: rgba(34, 34, 34, 0.5);
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;

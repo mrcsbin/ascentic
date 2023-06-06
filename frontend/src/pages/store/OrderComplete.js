@@ -30,6 +30,7 @@ function OrderComplete() {
       })
       .then((res) => {
         const data = res.data;
+        console.log(data);
         if (data.orderId === "0") {
           navigate("/NotFound");
         } else {
@@ -44,6 +45,7 @@ function OrderComplete() {
             orderMemberPhone: data.shipTel,
             ShippingCharge: data.shipCharge,
             Price: data.orderPriceSum,
+            usePoint: data.usePoint,
             ProdNames: data.prodNames,
             count: data.totalProdCount,
             OrderState: data.card.orderState,
@@ -150,7 +152,10 @@ function OrderComplete() {
                   <br />
                   <div>{orderInfo.paymentMethod}</div>
                   <br />
-                  <div>{orderInfo.Price + orderInfo.ShippingCharge}원</div>
+                  <div>
+                    <div>주문 총 금액</div>
+                    <div>{orderInfo.Price + orderInfo.ShippingCharge}원</div>
+                  </div>
                   <div>
                     <div>
                       <div>주문 금액</div>
@@ -161,9 +166,17 @@ function OrderComplete() {
                       <div>+{orderInfo.ShippingCharge} 원</div>
                     </div>
                     <div>
+                      <div>사용 포인트</div>
+                      <div>-{orderInfo.usePoint} 원</div>
+                    </div>
+                    <div>
                       <div>총 결제 금액</div>
                       <div>
-                        +{orderInfo.Price + orderInfo.ShippingCharge} 원
+                        +
+                        {orderInfo.Price +
+                          orderInfo.ShippingCharge -
+                          orderInfo.usePoint}{" "}
+                        원
                       </div>
                     </div>
                   </div>

@@ -19,8 +19,7 @@ public class PaymentCancelController {
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
     private final PaymentCancelServiceImpl paymentCancelService;
 
-    @PostMapping("" +
-            "")
+    @PostMapping("/cancelOrderPayment")
     public String cancelPayment(@RequestBody PaymentCancelRequestDto request) {
         String cancelResult = paymentCancelService.cancelPayment(request);
         return cancelResult;

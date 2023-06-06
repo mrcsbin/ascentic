@@ -52,6 +52,9 @@ public class Member {
     @Column(name = "member_Email_Push_Yn")
     private boolean emailPushYn;
 
+    @Column(name = "member_point")
+    private Integer memberPoint;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "member_role")
     @CollectionTable(name = "tb_member_role", joinColumns = @JoinColumn(name = "member_id"))
@@ -62,7 +65,7 @@ public class Member {
     private boolean buyWelcomePackageYn;
 
     @Builder
-    public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role) {
+    public Member(String id, String name, String password, Integer memberPoint, String email, String phone, String birthDate, String image, List<String> role) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -71,6 +74,7 @@ public class Member {
         this.birthDate = birthDate;
         this.image = image;
         this.role = role;
+        this.memberPoint = memberPoint;
     }
 
     public void changeEncodedPassword(String password) {

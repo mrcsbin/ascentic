@@ -92,7 +92,7 @@ const Order = () => {
             />
           </ExtendAble>
 
-          {/* <ExtendAble
+          <ExtendAble
             title="할인 혜택"
             isOpen={extend.disCount}
             onClick={() => handleExtendChange("disCount")}
@@ -100,12 +100,12 @@ const Order = () => {
             <DiscountBenefit />
           </ExtendAble>
 
-          <ExtendAble
+          {/* <ExtendAble
             title="결제 수단"
             isOpen={extend.payment}
             onClick={() => handleExtendChange("payment")}
-          > */}
-          {/* <Payment />
+          >
+            <Payment />
           </ExtendAble> */}
 
           <OrderNotice>

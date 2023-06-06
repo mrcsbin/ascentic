@@ -17,5 +17,5 @@ export const getWishList = async (accessToken) => {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  return response;
+  return response.data;
 };

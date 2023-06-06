@@ -71,7 +71,6 @@ const ContentHeaderWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 20px 10px 20px 0;
-  border-bottom: 1.5px solid black;
 `;
 
 const ContentHeader = styled.div`
@@ -103,7 +102,6 @@ const DeleteButton = styled.button`
 
 // CartContents
 const CartContentBody = styled.ul`
-  border-bottom: 1px solid black;
 `;
 
 const CartContentsWrap = styled.div`

@@ -44,9 +44,10 @@ public class SubscribeSendResponse {
         private Integer subscribeProductPrice;
         private String subscribeProductScent;
         private String subscribeProductScentNoteName;
-        private String subscribeStartDate;
+        private String subscribeSendDate;
         private String subscribeSendPostCode;
         private String tasteResult;
+        private String subscribeSendState;
 
         public static MemberSubscribeDto of(SubscribeSend subscribeSend) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy . MM . dd");
@@ -59,7 +60,8 @@ public class SubscribeSendResponse {
                     subscribeSend.getSubscribeProduct().getScentName().getScentNoteName(),
                     formattedDate,
                     subscribeSend.getSbSendPostcode(),
-                    subscribeSend.getSubscribeMember().getTasteResult()
+                    subscribeSend.getSubscribeMember().getTasteResult(),
+                    subscribeSend.getSbSendState()
             );
         }
     }

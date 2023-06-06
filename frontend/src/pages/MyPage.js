@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Tab } from "../components/mypage/Tab";
 import { useParams } from "react-router-dom";
 import { Order } from "../components/mypage/shopping/Order";
-import { ReviewList } from "../components/mypage/shopping/ReviewList";
-import { WishList } from "../components/mypage/shopping/WishList";
+import { Review } from "../components/mypage/shopping/Review";
+import { Wish } from "../components/mypage/shopping/Wish";
 import { Subscribe } from "../components/mypage/shopping/Subscribe";
 import { Update } from "../components/mypage/customerservice/Update";
 import { InquiryList } from "../components/mypage/customerservice/InquiryList";
@@ -20,8 +20,8 @@ function MyPage() {
         <ContentArea>
           {params.category === undefined && <MyPageProfile />}
           {params.category === "orderlist" && <Order />}
-          {params.category === "reviewlist" && <ReviewList />}
-          {params.category === "wishlist" && <WishList />}
+          {params.category === "reviewlist" && <Review />}
+          {params.category === "wishlist" && <Wish />}
           {params.category === "subscribe" && <Subscribe />}
           {params.category === "update" && <Update />}
           {params.category === "alarm" && <Notification />}
@@ -35,10 +35,11 @@ function MyPage() {
 export default MyPage;
 
 const MyPageWrap = styled.div`
+  min-height: 1000px;
   width: 100%;
   margin: 0px auto;
   box-sizing: border-box;
-  padding-top: 250px;
+  padding-top: 200px;
 `;
 
 const ContentWrap = styled.div`

@@ -13,7 +13,6 @@ const WriteReview = ({ item, isComplete }) => {
   const [hovered, setHovered] = useState(-1);
   const [reviewText, setReviewText] = useState("");
   const [review, setReview] = useState();
-  console.log(item);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +32,7 @@ const WriteReview = ({ item, isComplete }) => {
     if (isComplete) {
       fetchData();
     }
-  }, []);
+  }, [item, isComplete]);
 
   const handleReviewTextChange = (event) => {
     const text = event.target.value;
@@ -132,31 +131,6 @@ const WriteReview = ({ item, isComplete }) => {
           </SubmitButtonBox>
         </>
       )}
-      {/* <RatingText>이 상품에 만족하셨나요 ?</RatingText>
-      <Stars>
-        {ARRAY.map((el, idx) => {
-          return (
-            <StarImage
-              src={idx <= hovered || clicked[idx] ? FULL_STAR : EMPTY_STAR}
-              key={idx}
-              onClick={() => handleStarClick(idx)}
-              onMouseEnter={() => handleStarHover(idx)}
-              onMouseLeave={() => handleStarHover(-1)}
-            />
-          );
-        })}
-      </Stars>
-      <ReviewText
-        placeholder="상세한 리뷰는 다른 회원들에게 도움이 됩니다. (최소 20자 이상)"
-        value={reviewText}
-        onChange={handleReviewTextChange}
-      />
-      <CharacterCount isFull={reviewText.length === 50}>
-        {reviewText.length} / 50
-      </CharacterCount>
-      <SubmitButtonBox>
-        <SubmitButton onClick={clickSubmitHandle}>작성완료</SubmitButton>
-      </SubmitButtonBox> */}
     </Wrap>
   );
 };

@@ -41,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
                 .id(signupDto.getId())
                 .name(signupDto.getName())
                 .email(signupDto.getEmail())
+                .memberPoint(0)
                 .phone(signupDto.getPhone())
                 .password(passwordEncoder.encode(signupDto.getPassword()))
                 .role(Collections.singletonList("USER"))
@@ -191,9 +192,10 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
     }
 
+    @Override
     public MemberResponse.MyPageDto getMyPageProfile() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Member member = memberRepository.findById(currentMemberId).get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원정보 없음"));
         List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
         return MemberResponse.MyPageDto.of(member, wishList.size());
     }
@@ -206,6 +208,7 @@ public class MemberServiceImpl implements MemberService {
                 .email("admin@ascentic.com")
                 .name("관리자")
                 .birthDate("0101")
+                .memberPoint(0)
                 .phone("01100000000")
                 .role(Collections.singletonList("ADMIN"))
                 .build();
@@ -215,6 +218,7 @@ public class MemberServiceImpl implements MemberService {
                 .id("sungbin")
                 .password(passwordEncoder.encode("1234"))
                 .email("test1@ascentic.com")
+                .memberPoint(0)
                 .name("조성빈")
                 .birthDate("0101")
                 .phone("01100000001")
@@ -226,6 +230,7 @@ public class MemberServiceImpl implements MemberService {
                 .id("hansic")
                 .password(passwordEncoder.encode("1234"))
                 .email("test2@ascentic.com")
+                .memberPoint(0)
                 .name("조한식")
                 .birthDate("0101")
                 .phone("01100000002")
@@ -237,6 +242,7 @@ public class MemberServiceImpl implements MemberService {
                 .id("kyungmin")
                 .password(passwordEncoder.encode("1234"))
                 .email("test3@ascentic.com")
+                .memberPoint(0)
                 .name("강경민")
                 .birthDate("0101")
                 .phone("01100000003")
@@ -248,6 +254,7 @@ public class MemberServiceImpl implements MemberService {
                 .id("haesung")
                 .password(passwordEncoder.encode("1234"))
                 .email("test4@ascentic.com")
+                .memberPoint(0)
                 .name("나해성")
                 .birthDate("0101")
                 .phone("01100000004")
@@ -259,6 +266,7 @@ public class MemberServiceImpl implements MemberService {
                 .id("chaeeun")
                 .password(passwordEncoder.encode("1234"))
                 .email("test5@ascentic.com")
+                .memberPoint(0)
                 .name("전채은")
                 .birthDate("0101")
                 .phone("01100000005")
@@ -270,6 +278,7 @@ public class MemberServiceImpl implements MemberService {
                 .id("sungmin")
                 .password(passwordEncoder.encode("1234"))
                 .email("test6@ascentic.com")
+                .memberPoint(0)
                 .name("황성민")
                 .birthDate("0101")
                 .phone("01100000006")
@@ -285,7 +294,7 @@ public class MemberServiceImpl implements MemberService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
         File storedFilename = new File(UUID.randomUUID().toString() + "_" + profileImg.getOriginalFilename());
-        Member member = memberRepository.findById(currentMemberId).orElse(null);
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원정보 없음"));
         member.setImage(storedFilename.toString());
         profileImg.transferTo(storedFilename);
         memberRepository.save(member);
@@ -308,5 +317,12 @@ public class MemberServiceImpl implements MemberService {
         member.setEmailPushYn(pushYnDto.getEmailPushYn());
 
         memberRepository.save(member);
+    }
+
+    @Override
+    public Integer getPoint() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원 정보 없음"));
+        return member.getMemberPoint();
     }
 }

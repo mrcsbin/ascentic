@@ -21,4 +21,6 @@ public interface SubscribeSendService {
     void updateSbSend(AdminSbSendUpdateDto adminSbSendUpdateDto);
 
     SubscribeSendResponse.MyPageProfileSubscribeDto getMyPageProfileSubscribe();
+
+    List<SubscribeSendResponse.MemberSubscribeDto> getMemberSubscribe();
 }

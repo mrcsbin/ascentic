@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ReviewModal from "./ReviewModal";
 import axios from "axios";
@@ -18,21 +17,24 @@ export const OrderItem = ({ orderId, item }) => {
 
   const cancelClickHandle = async () => {
     const cancelData = {
-      // cancelAmount: item.orderProductPrice,
+      cancelAmount: item.orderProductPrice,
       cancelReason: "취소 사유",
       orderId: orderId,
-      // orderProductNum: item.orderProductNum,
+      orderProductNum: item.orderProductNum,
     };
 
     if (window.confirm("정말 주문을 취소하시겠습니까?")) {
       try {
-        const response = await axios
-          .post("http://localhost:8080/cancelOrderPayment", cancelData, {
+        const response = await axios.post(
+          "http://localhost:8080/order/cancel/orderproduct",
+          cancelData,
+          {
             headers: {
               "Content-Type": "application/json",
             },
-          })
-          .then(window.location.reload());
+          }
+        );
+        // .then(window.location.reload());
         console.log(response.data);
       } catch (error) {
         console.error(
@@ -85,6 +87,9 @@ export const OrderItem = ({ orderId, item }) => {
                   {item.orderProductReviewState}
                 </WriteReviewButton>
               )}
+            {item.orderProductState === "주문취소" && (
+              <OrderCancelButton>장바구니에 담기</OrderCancelButton>
+            )}
           </ButtonBox>
         </ItemBox>
       </ItemCard>
@@ -144,10 +149,6 @@ const WriteReviewButton = styled.div`
 `;
 
 const ItemCard = styled.div`
-  /* box-sizing: border-box;
-  padding: 25px 0;
-  display: flex;
-  border-bottom: 1px solid grey; */
   width: 100%;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
@@ -156,13 +157,6 @@ const ItemCard = styled.div`
   margin-bottom: 20px;
   padding: 24px 24px 16px;
   box-sizing: border-box;
-`;
-
-const StyledLink = styled(Link)`
-  color: "black";
-  text-align: none;
-  display: flex;
-  width: 40%;
 `;
 
 const ItemInfoBox = styled.div`
@@ -187,36 +181,3 @@ const ItemName = styled.div`
 `;
 
 const ItemOption = styled.div``;
-
-const ItemOrderDate = styled.div`
-  text-align: center;
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const ItemAmountBox = styled.div`
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-`;
-
-const ItemAmount = styled.div`
-  padding: 15px 0;
-  text-align: center;
-`;
-
-const ItemCount = styled.div`
-  text-align: center;
-`;
-
-const ItemOrderState = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 20%;
-`;

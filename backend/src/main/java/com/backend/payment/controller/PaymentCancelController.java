@@ -1,21 +1,15 @@
 package com.backend.payment.controller;
 
-import com.backend.member.jwt.SecurityUtils;
-import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.PaymentFinalResRepository;
+import com.backend.payment.dto.PaymentCancelRequest;
 import com.backend.payment.dto.PaymentCancelRequestDto;
-import com.backend.payment.entity.SubscribePaymentReceipt;
 import com.backend.payment.repository.SubscribePaymentReceiptRepository;
 import com.backend.payment.service.PaymentCancelServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,14 +19,17 @@ public class PaymentCancelController {
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
     private final PaymentCancelServiceImpl paymentCancelService;
 
-    @GetMapping("/cancelOrderPayment")
-    public String cancelPayment(@RequestBody PaymentCancelRequestDto request){
+    @PostMapping("" +
+            "")
+    public String cancelPayment(@RequestBody PaymentCancelRequestDto request) {
+        String cancelResult = paymentCancelService.cancelPayment(request);
+        return cancelResult;
+    }
 
-       String cancelResult = paymentCancelService.cancelPayment(request);
-
-       return cancelResult;
-
-    };
+    @PostMapping("/order/cancel/orderproduct")
+    public String cancelOrderProduct(@RequestBody PaymentCancelRequest.OrderProductCancelDto request) {
+        return paymentCancelService.cancelOrderProduct(request);
+    }
 
 //{"mId":"tvivarepublica","lastTransactionKey":"7CCA169604F323C38420C67AB1435FFB",
 // "paymentKey":"vNA96Bjgq7XZYkKL4Mrjwz9G2w1RBE80zJwlEWR52xydGPnO",

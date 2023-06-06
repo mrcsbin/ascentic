@@ -32,15 +32,17 @@ public class OrderResponse {
     @Getter
     @Builder
     public static class OrderProductDto {
-        private String productName; // 주문 상품 이름
-        private Integer productNum; // 주문 상품 번호(PK)
-        private String productImage;// 주문 상품 이미지
+        private String productName; // 상품 이름
+        private Integer productNum; // 상품 번호(PK)
+        private String productImage;// 상품 이미지
         private String productOptionName; // 주문 상품 옵션 이름
         private Integer orderProductPrice; // 주문 상품 가격
         private Integer orderProductCount; // 주문 상품 수량
         private String orderProductReviewState; // 주문 상품 리뷰 상태
         private String orderProductState; // 주문 상품 발송 상태
+        private Integer orderProductNum; // 주문 상품 번호(PK)
 
+        
         public static OrderResponse.OrderProductDto of(OrderProduct orderProduct) {
             return new OrderResponse.OrderProductDto(
                     orderProduct.getProductOption().getProduct().getProdName(),
@@ -50,7 +52,8 @@ public class OrderResponse {
                     orderProduct.getProductOption().getProdPrice(),
                     orderProduct.getProdCount(),
                     orderProduct.getOrderReviewState(),
-                    orderProduct.getOrderState());
+                    orderProduct.getOrderState(),
+                    orderProduct.getOrderProdNum());
         }
     }
 

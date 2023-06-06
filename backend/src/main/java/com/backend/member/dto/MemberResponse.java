@@ -1,11 +1,8 @@
 package com.backend.member.dto;
 
 import com.backend.member.entity.Member;
-import com.backend.wish.entity.Wish;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.List;
 
 public class MemberResponse {
 
@@ -15,13 +12,14 @@ public class MemberResponse {
         private String profileName;
         private String profileEmail;
         private Integer wishCount;
+        private String profileImage;
 
         public static MyPageDto of(Member member, Integer wishCount) {
-
             return MyPageDto.builder()
                     .profileName(member.getName())
                     .profileEmail(member.getEmail())
                     .wishCount(wishCount)
+                    .profileImage(member.getImage())
                     .build();
         }
     }

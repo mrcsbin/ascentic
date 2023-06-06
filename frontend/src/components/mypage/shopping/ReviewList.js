@@ -11,6 +11,7 @@ export const ReviewList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [filteredReviewList, setFilteredReviewList] = useState([]);
   const [filter, setFilter] = useState("리뷰 작성");
+  console.log(reviewList);
 
   const dispatch = useDispatch();
 
@@ -32,7 +33,7 @@ export const ReviewList = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div style={{ height: "100vh" }}></div>;
   }
 
   return (
@@ -59,7 +60,8 @@ export const ReviewList = () => {
               setFilter("작성한 리뷰");
               setFilteredReviewList(
                 reviewList.filter(
-                  (review) => review.orderProductReviewState === "리뷰 작성 완료"
+                  (review) =>
+                    review.orderProductReviewState === "리뷰 작성 완료"
                 )
               );
             }}

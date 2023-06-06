@@ -55,20 +55,22 @@ public class OrderController {
             System.out.println(result);
 
             //when the payment method is not Card
-           if(result.getCard() ==null) {
-               finalRes.setEasyPay(result.getEasyPay());
-               orderService.saveRes(result);
-           } else //when the payment method is Card
-           { finalRes.setCard(result.getCard());
-            finalRes.setTotalAmount(result.getTotalAmount());
-            System.out.println(result);
-            orderService.saveRes(result);}
-         Order order= orderRepository.findByOrderId(orderId);
+            if (result.getCard() == null) {
+                finalRes.setEasyPay(result.getEasyPay());
+                orderService.saveRes(result);
+            } else //when the payment method is Card
+            {
+                finalRes.setCard(result.getCard());
+                finalRes.setTotalAmount(result.getTotalAmount());
+                System.out.println(result);
+                orderService.saveRes(result);
+            }
+            Order order = orderRepository.findByOrderId(orderId);
             System.out.println(order);
 
             System.out.println("===========================================================================");
-           orderService.changeOrderState(order,"결제완료");
-            orderService.changePaymentState(order,true);
+            orderService.changeOrderState(order, "결제완료");
+            orderService.changePaymentState(order, true);
             List<OrderProduct> orderproduct = orderProductRepository.findByOrder(order);
             orderproduct.forEach(product -> product.setOrderState("결제완료"));
         } catch (Exception e) {
@@ -139,9 +141,9 @@ public class OrderController {
         String failureCode = finalRes.getFailure() != null ? finalRes.getFailure().getCode() : "";
         String failureMessage = finalRes.getFailure() != null ? finalRes.getFailure().getMessage() : "";
 
-        String issuerCode= finalRes.getCard() != null ? finalRes.getCard().getIssuerCode() : "";
-        String number =(finalRes.getCard() != null ? finalRes.getCard().getNumber() : "");
-        Integer installmentPlanMonths= (finalRes.getCard() != null ? finalRes.getCard().getInstallmentPlanMonths() : 0);
+        String issuerCode = finalRes.getCard() != null ? finalRes.getCard().getIssuerCode() : "";
+        String number = (finalRes.getCard() != null ? finalRes.getCard().getNumber() : "");
+        Integer installmentPlanMonths = (finalRes.getCard() != null ? finalRes.getCard().getInstallmentPlanMonths() : 0);
         String cardType = finalRes.getCard() != null ? finalRes.getCard().getCardType() : "";
         String ownerType = finalRes.getCard() != null ? finalRes.getCard().getOwnerType() : "";
         String provider = finalRes.getEasyPay() != null ? finalRes.getEasyPay().getProvider() : "";

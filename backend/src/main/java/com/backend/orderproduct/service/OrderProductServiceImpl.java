@@ -57,7 +57,7 @@ public class OrderProductServiceImpl implements OrderProductService {
         updateOrderReviewState(orderProducts);
 
         List<OrderProductResponse.OrderReviewListDto> orderReviewList = orderProducts.stream()
-                .filter(orderProduct -> orderProduct.getOrderState().equals("배송 완료"))
+                .filter(orderProduct -> orderProduct.getOrderState().equals("배송완료"))
                 .map(OrderProductResponse.OrderReviewListDto::of)
                 .collect(Collectors.toList());
 

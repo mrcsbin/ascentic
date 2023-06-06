@@ -12,6 +12,7 @@ import { getCookie } from "../../utils/Cookies";
 export const MyPageProfile = () => {
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [taste, setTaste] = useState();
 
   const dispatch = useDispatch();
   const DefaultProfileImageURL =
@@ -36,7 +37,13 @@ export const MyPageProfile = () => {
       <Wrap>
         <LeftBox>
           <ImageBox>
-            <Image src={DefaultProfileImageURL} />
+            <Image
+              src={
+                profileData.profileImage === null
+                  ? DefaultProfileImageURL
+                  : `http://localhost:8080/images/${profileData.profileImage}`
+              }
+            />
           </ImageBox>
           <ProfileBox>
             <ProfileName>{profileData.profileName}</ProfileName>
@@ -58,15 +65,8 @@ export const MyPageProfile = () => {
           </PointButton>
         </RightBox>
       </Wrap>
-
       <MyPageProfileOrder />
-      <ContentBox>
-        <ContentTitle>구독중인상품</ContentTitle>
-        <ContentPlusButton to="/mypage/subscribe">
-          더보기 &gt;
-        </ContentPlusButton>
-      </ContentBox>
-      <MyPageProfileSubscribe />
+      <MyPageProfileSubscribe setTaste={setTaste} />
     </>
   );
 };

@@ -40,4 +40,6 @@ public interface MemberService {
     void delProfileImg();
 
     void updatePushYn(PushYnDto pushYnDto);
+
+    MemberResponse.MyPageDto getMyPageProfile();
 }

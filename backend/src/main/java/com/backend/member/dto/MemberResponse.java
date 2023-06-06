@@ -1,6 +1,7 @@
 package com.backend.member.dto;
 
 import com.backend.member.entity.Member;
+import com.backend.order.dto.PaymentRes;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,6 +14,7 @@ public class MemberResponse {
         private String profileEmail;
         private Integer wishCount;
         private String profileImage;
+        private Integer point;
 
         public static MyPageDto of(Member member, Integer wishCount) {
             return MyPageDto.builder()
@@ -20,6 +22,7 @@ public class MemberResponse {
                     .profileEmail(member.getEmail())
                     .wishCount(wishCount)
                     .profileImage(member.getImage())
+                    .point(member.getMemberPoint())
                     .build();
         }
     }

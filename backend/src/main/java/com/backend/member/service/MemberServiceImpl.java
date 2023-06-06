@@ -172,6 +172,7 @@ public class MemberServiceImpl implements MemberService {
         return MemberInfoDto.builder()
                 .email(emailParts[0])
                 .domain(emailParts[1])
+                .point(findMember.getMemberPoint())
                 .name(findMember.getName())
                 .tel(findMember.getPhone())
                 .build();
@@ -192,9 +193,10 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
     }
 
+    @Override
     public MemberResponse.MyPageDto getMyPageProfile() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        Member member = memberRepository.findById(currentMemberId).get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원정보 없음"));
         List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
         return MemberResponse.MyPageDto.of(member, wishList.size());
     }
@@ -293,7 +295,7 @@ public class MemberServiceImpl implements MemberService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
         File storedFilename = new File(UUID.randomUUID().toString() + "_" + profileImg.getOriginalFilename());
-        Member member = memberRepository.findById(currentMemberId).orElse(null);
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원정보 없음"));
         member.setImage(storedFilename.toString());
         profileImg.transferTo(storedFilename);
         memberRepository.save(member);

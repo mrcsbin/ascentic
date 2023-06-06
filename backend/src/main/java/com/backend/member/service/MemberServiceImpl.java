@@ -172,7 +172,6 @@ public class MemberServiceImpl implements MemberService {
         return MemberInfoDto.builder()
                 .email(emailParts[0])
                 .domain(emailParts[1])
-                .point(findMember.getMemberPoint())
                 .name(findMember.getName())
                 .tel(findMember.getPhone())
                 .build();
@@ -318,5 +317,12 @@ public class MemberServiceImpl implements MemberService {
         member.setEmailPushYn(pushYnDto.getEmailPushYn());
 
         memberRepository.save(member);
+    }
+
+    @Override
+    public Integer getPoint() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원 정보 없음"));
+        return member.getMemberPoint();
     }
 }

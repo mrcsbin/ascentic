@@ -42,4 +42,6 @@ public interface MemberService {
     void updatePushYn(PushYnDto pushYnDto);
 
     MemberResponse.MyPageDto getMyPageProfile();
+
+    Integer getPoint();
 }

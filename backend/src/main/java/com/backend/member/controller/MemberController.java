@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -153,5 +154,10 @@ public class MemberController {
     @PostMapping("/updatePushYn")
     public void updatePushYn(@RequestBody PushYnDto pushYnDto) {
          memberService.updatePushYn(pushYnDto);
+    }
+
+    @GetMapping("getPoint")
+    public Integer getPoint() {
+        return memberService.getPoint();
     }
 }

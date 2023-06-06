@@ -11,6 +11,5 @@ public class MemberInfoDto {
     private String domain;
     private String name;
     private String tel;
-    private Integer point;
 
 }

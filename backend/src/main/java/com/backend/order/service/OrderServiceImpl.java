@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
         Member member = memberRepository.findById(
                 order.getMemberId()).orElseThrow(() -> new IllegalArgumentException("일치하는 회원정보 없음"));
         order.getUsePoint();
-        int resultPoint = (int) (order.getOrderPriceSum() * 0.05) + member.getMemberPoint() - order.getUsePoint();
+        int resultPoint = (int) (order.getOrderPriceSum() * 0.02) + member.getMemberPoint() - order.getUsePoint();
         member.setMemberPoint(resultPoint);
         memberRepository.save(member);
     }

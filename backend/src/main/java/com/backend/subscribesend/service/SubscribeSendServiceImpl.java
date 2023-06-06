@@ -120,4 +120,17 @@ public class SubscribeSendServiceImpl implements SubscribeSendService {
         }
     }
 
+    @Override
+    public SubscribeSendResponse.MemberSubscribeDto getMemberSubscribe() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        Optional<SubscribeMember> subscribeMember = sbMemberRepository.findByMemberIdAndSbEndDateIsNull(currentMemberId);
+        if (subscribeMember.isPresent()) {
+            SubscribeSend subscribeSend = subscribeSendRepository.findBySubscribeMember(subscribeMember.get())
+                    .orElseThrow(() -> new RuntimeException("해당 ID는 구독중이지 않음"));
+            return SubscribeSendResponse.MemberSubscribeDto.of(subscribeSend);
+        } else {
+            return null;
+        }
+    }
 }

@@ -59,21 +59,6 @@ export const Tab = () => {
           </StyledLink>
         </TabList>
       </TabBox>
-      {/* <TabBox>
-        <TabHeader>커뮤니티</TabHeader>
-        <TabList>
-          <TabBody>주문 내역조회</TabBody>
-        </TabList>
-        <TabList>
-          <TabBody>구매 후기</TabBody>
-        </TabList>
-        <TabList>
-          <TabBody>찜 목록</TabBody>
-        </TabList>
-        <TabList>
-          <TabBody>구독</TabBody>
-        </TabList>
-      </TabBox> */}
       <TabBox>
         <TabHeader>고객 서비스</TabHeader>
         <TabList>
@@ -135,7 +120,6 @@ const TabHeader = styled.div`
 const TabList = styled.div`
   margin-top: 1.3rem;
   font-size: 1.2rem;
-  /* padding: 0 0 0 20px; */
 `;
 
 const TabBody = styled.div`

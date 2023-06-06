@@ -31,18 +31,19 @@ export const Order = () => {
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const orderList = await getOrderList(getCookie("accessToken"));
-      setOrderList(
-        orderList.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
-      );
-      setFilteredList(
-        orderList.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
-      );
-      await dispatch(setActiveTab("주문 내역"));
+      await getOrderList(getCookie("accessToken")).then((response) => {
+        setOrderList(
+          response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+        );
+        setFilteredList(
+          response.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate))
+        );
+      });
+      dispatch(setActiveTab("주문 내역"));
       setIsLoading(false);
     };
     fetchProductData();
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <div style={{ height: "100vh" }}></div>;
@@ -52,40 +53,42 @@ export const Order = () => {
     <OrderListWrap>
       <ContentBar>
         <ContentHeader>주문 내역</ContentHeader>
-        <FilterBox>
-          <FilterHeader>보기설정</FilterHeader>
-          <Filter
-            isFilter={filter === "전체"}
-            onClick={() => {
-              setFilteredList(
-                orderList.sort(
-                  (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
-                )
-              );
-              setFilter("전체");
-            }}
-          >
-            전체
-          </Filter>
-          <Filter
-            isFilter={filter === "3개월"}
-            onClick={() => filterClickHandle(3)}
-          >
-            3 개월
-          </Filter>
-          <Filter
-            isFilter={filter === "6개월"}
-            onClick={() => filterClickHandle(6)}
-          >
-            6 개월
-          </Filter>
-          <Filter
-            isFilter={filter === "12개월"}
-            onClick={() => filterClickHandle(12)}
-          >
-            1 년
-          </Filter>
-        </FilterBox>
+        {orderList.length !== 0 && (
+          <FilterBox>
+            <FilterHeader>보기설정</FilterHeader>
+            <Filter
+              isFilter={filter === "전체"}
+              onClick={() => {
+                setFilteredList(
+                  orderList.sort(
+                    (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
+                  )
+                );
+                setFilter("전체");
+              }}
+            >
+              전체
+            </Filter>
+            <Filter
+              isFilter={filter === "3개월"}
+              onClick={() => filterClickHandle(3)}
+            >
+              3 개월
+            </Filter>
+            <Filter
+              isFilter={filter === "6개월"}
+              onClick={() => filterClickHandle(6)}
+            >
+              6 개월
+            </Filter>
+            <Filter
+              isFilter={filter === "12개월"}
+              onClick={() => filterClickHandle(12)}
+            >
+              1 년
+            </Filter>
+          </FilterBox>
+        )}
       </ContentBar>
       {orderList.length === 0 ? (
         <Content>
@@ -97,6 +100,15 @@ export const Order = () => {
           <OrderList item={item} key={index}></OrderList>
         ))
       )}
+      {filteredList.length === 0 && filter === "3개월" && (
+        <Content>최근 3개월 내 주문 내역이 없습니다.</Content>
+      )}
+      {filteredList.length === 0 && filter === "6개월" && (
+        <Content>최근 6개월 내 주문 내역이 없습니다.</Content>
+      )}
+      {filteredList.length === 0 && filter === "12개월" && (
+        <Content>최근 1년 내 주문 내역이 없습니다.</Content>
+      )}
     </OrderListWrap>
   );
 };
@@ -107,12 +119,12 @@ const OrderListWrap = styled.div`
 
 const ContentBar = styled.div`
   border-bottom: 1px solid grey;
-  margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
 `;
 
 const ContentHeader = styled.div`
+  cursor: default;
   padding: 0 0 20px 0;
   font-size: 1.8rem;
   font-weight: 700;
@@ -124,6 +136,7 @@ const FilterBox = styled.div`
 `;
 
 const FilterHeader = styled.div`
+  cursor: default;
   display: flex;
   flex-direction: column;
   justify-content: center;

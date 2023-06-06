@@ -22,5 +22,5 @@ public interface SubscribeSendService {
 
     SubscribeSendResponse.MyPageProfileSubscribeDto getMyPageProfileSubscribe();
 
-    SubscribeSendResponse.MemberSubscribeDto getMemberSubscribe();
+    List<SubscribeSendResponse.MemberSubscribeDto> getMemberSubscribe();
 }

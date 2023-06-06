@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import axios from "axios";
 import { getCookie } from "../../../utils/Cookies";
+
 const NewInquiry = ({ showInquiry, handleNewInquiryButtonClick }) => {
   const [inquiryCategory, setInquiryCategory] = React.useState("");
   const [inquiryTitle, setInquiryTitle] = React.useState("");

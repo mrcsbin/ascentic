@@ -26,5 +26,7 @@ public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, In
 
     SubscribeSend findDistinctTopBySubscribeMemberAndSubscribeProduct(SubscribeMember subscribeMember, SubscribeProduct subscribeProduct);
 
-    Optional<SubscribeSend> findBySubscribeMember(SubscribeMember subscribeMember);
+    Optional<List<SubscribeSend>> findBySubscribeMember(SubscribeMember subscribeMember);
+
+    Optional<List<SubscribeSend>> findBySubscribeMemberSbMemberNum(Integer sbMemberNum);
 }

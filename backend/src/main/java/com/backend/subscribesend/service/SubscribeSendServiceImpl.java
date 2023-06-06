@@ -112,8 +112,8 @@ public class SubscribeSendServiceImpl implements SubscribeSendService {
 
         Optional<SubscribeMember> subscribeMember = sbMemberRepository.findByMemberIdAndSbEndDateIsNull(currentMemberId);
         if (subscribeMember.isPresent()) {
-            SubscribeSend subscribeSend = subscribeSendRepository.findBySubscribeMember(subscribeMember.get())
-                    .orElseThrow(() -> new RuntimeException("해당 ID는 구독중이지 않음"));
+            List<SubscribeSend> subscribeSendList = subscribeSendRepository.findBySubscribeMember(subscribeMember.get()).get();
+            SubscribeSend subscribeSend = subscribeSendRepository.findBySubscribeMember(subscribeMember.get()).get().get(subscribeSendList.size()-1);
             return SubscribeSendResponse.MyPageProfileSubscribeDto.of(subscribeSend);
         } else {
             return null;
@@ -121,16 +121,24 @@ public class SubscribeSendServiceImpl implements SubscribeSendService {
     }
 
     @Override
-    public SubscribeSendResponse.MemberSubscribeDto getMemberSubscribe() {
+    public List<SubscribeSendResponse.MemberSubscribeDto> getMemberSubscribe() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
-        Optional<SubscribeMember> subscribeMember = sbMemberRepository.findByMemberIdAndSbEndDateIsNull(currentMemberId);
-        if (subscribeMember.isPresent()) {
-            SubscribeSend subscribeSend = subscribeSendRepository.findBySubscribeMember(subscribeMember.get())
-                    .orElseThrow(() -> new RuntimeException("해당 ID는 구독중이지 않음"));
-            return SubscribeSendResponse.MemberSubscribeDto.of(subscribeSend);
-        } else {
-            return null;
+        List<SubscribeMember> subscribeMemberList = sbMemberRepository.findByMemberId(currentMemberId)
+                .orElse(Collections.emptyList());
+
+        List<SubscribeSendResponse.MemberSubscribeDto> result = new ArrayList<>();
+
+        for (SubscribeMember subscribeMember : subscribeMemberList) {
+            List<SubscribeSend> subscribeSendList = subscribeSendRepository
+                    .findBySubscribeMemberSbMemberNum(subscribeMember.getSbMemberNum())
+                    .orElse(Collections.emptyList());
+
+            result.addAll(subscribeSendList.stream()
+                    .map(SubscribeSendResponse.MemberSubscribeDto::of)
+                    .collect(Collectors.toList()));
         }
+
+        return result;
     }
 }

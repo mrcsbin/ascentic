@@ -183,7 +183,7 @@ public class OrderServiceImpl implements OrderService {
                 .build();
     }
 
-    private static String countProdNames(String prodNames) {
+    private String countProdNames(String prodNames) {
         String[] prodNamesArray = prodNames.split(",");
         int count = prodNamesArray.length - 1;
         String firstProduct = prodNamesArray[0].trim();

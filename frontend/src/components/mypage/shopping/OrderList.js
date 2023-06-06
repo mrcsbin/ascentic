@@ -35,7 +35,7 @@ const Wrap = styled.div`
   box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
     rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 20px;
+  margin: 2rem 0;
   padding: 24px 24px 16px;
   box-sizing: border-box;
 `;

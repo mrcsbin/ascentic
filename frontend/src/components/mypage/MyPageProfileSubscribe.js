@@ -9,7 +9,7 @@ function addComma(num) {
   return num.toString().replace(regexp, ",");
 }
 
-export const MyPageProfileSubscribe = ({ setTaste }) => {
+export const MyPageProfileSubscribe = () => {
   const [subscribe, setSubscribe] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [nextPaymentDate, setNextPaymentDate] = useState();
@@ -24,12 +24,14 @@ export const MyPageProfileSubscribe = ({ setTaste }) => {
           const nextPaymentDate = new Date(
             startDate.setMonth(startDate.getMonth() + 1)
           );
+          const year = nextPaymentDate.getFullYear();
+          const month = (nextPaymentDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0");
+          const date = nextPaymentDate.getDate().toString().padStart(2, "0");
 
-          const formattedDate = `${nextPaymentDate.getFullYear()} . ${
-            nextPaymentDate.getMonth() + 1
-          } . ${nextPaymentDate.getDate()}`;
+          const formattedDate = `${year} . ${month} . ${date}`;
           setNextPaymentDate(formattedDate);
-          setTaste(subscribe.tasteResult);
         })
         .catch((e) => {
           setIsLoading(false);

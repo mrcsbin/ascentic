@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class PaymentCancelRequestDto {
     private String cancelReason;
-
     private String orderId;
 
 //    public PaymentCancelRequestDto() {

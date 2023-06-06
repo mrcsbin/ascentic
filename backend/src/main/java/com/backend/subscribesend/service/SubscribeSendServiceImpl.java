@@ -8,6 +8,7 @@ import com.backend.subscribeproduct.repository.SbProductRepository;
 import com.backend.subscribesend.dto.SubsReviewDTO;
 import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
+import com.backend.subscribesend.dto.SubscribeSendResponse;
 import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
 import com.backend.subscribesend.entity.SubscribeSend;
@@ -20,19 +21,18 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class SubscribeSendServiceImpl implements SubscribeSendService{
+public class SubscribeSendServiceImpl implements SubscribeSendService {
 
     private final SubscribeSendRepository subscribeSendRepository;
     private final SbMemberRepository sbMemberRepository;
     private final SbProductRepository sbProductRepository;
-    private final ScentRepository scentRepository;
 
     @Override
-    public void insertSubsSend(SubsSendInsertDTO subsSendInsertDTO){
+    public void insertSubsSend(SubsSendInsertDTO subsSendInsertDTO) {
         SubscribeSend subscribeSend = SubscribeSend.builder()
-                 .subscribeMember(sbMemberRepository.findById(subsSendInsertDTO.getSbMemberNum()).orElse(null))
+                .subscribeMember(sbMemberRepository.findById(subsSendInsertDTO.getSbMemberNum()).orElse(null))
                 .subscribeProduct(sbProductRepository.findById(subsSendInsertDTO.getSpNum()).orElse(null))
-                        .build();
+                .build();
         subscribeSendRepository.save(subscribeSend);
     }
 
@@ -47,7 +47,7 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
 
 
     @Override
-    public List<SubsSendDTO> getSubs(){
+    public List<SubsSendDTO> getSubs() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         System.out.println(currentMemberId);
         //예전 구독상품에 대해서는 조회 불가. 탭따로만들거나 없는 기능으로
@@ -104,6 +104,20 @@ public class SubscribeSendServiceImpl implements SubscribeSendService{
                 adminSbSendUpdateDto.getSbShippingCode());
 
         subscribeSendRepository.save(subscribeSend);
+    }
+
+    @Override
+    public SubscribeSendResponse.MyPageProfileSubscribeDto getMyPageProfileSubscribe() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        Optional<SubscribeMember> subscribeMember = sbMemberRepository.findByMemberIdAndSbEndDateIsNull(currentMemberId);
+        if (subscribeMember.isPresent()) {
+            SubscribeSend subscribeSend = subscribeSendRepository.findBySubscribeMember(subscribeMember.get())
+                    .orElseThrow(() -> new RuntimeException("해당 ID는 구독중이지 않음"));
+            return SubscribeSendResponse.MyPageProfileSubscribeDto.of(subscribeSend);
+        } else {
+            return null;
+        }
     }
 
 }

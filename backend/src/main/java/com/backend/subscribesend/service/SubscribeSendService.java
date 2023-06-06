@@ -3,6 +3,7 @@ package com.backend.subscribesend.service;
 import com.backend.subscribesend.dto.SubsReviewDTO;
 import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
+import com.backend.subscribesend.dto.SubscribeSendResponse;
 import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
 
@@ -19,4 +20,5 @@ public interface SubscribeSendService {
 
     void updateSbSend(AdminSbSendUpdateDto adminSbSendUpdateDto);
 
+    SubscribeSendResponse.MyPageProfileSubscribeDto getMyPageProfileSubscribe();
 }

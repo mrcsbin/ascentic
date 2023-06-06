@@ -185,8 +185,12 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
-    ;
-
+    public void cancelOrder(Order order, String orderState, boolean paymentState) {
+        order.setOrderState(orderState);
+        order.setOrderPaymentState(false);
+        order.getOrderProducts().forEach(orderProduct -> orderProduct.setOrderState("결제취소"));
+        orderRepository.save(order);
+    }
 
     public PaymentFinalRes paymentFinalResFindByOrderId(String orderId) {
         return paymentFinalResRepository.findByOrderId(orderId);

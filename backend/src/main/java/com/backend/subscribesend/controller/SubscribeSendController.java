@@ -3,6 +3,7 @@ package com.backend.subscribesend.controller;
 import com.backend.subscribesend.dto.SubsReviewDTO;
 import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
+import com.backend.subscribesend.dto.SubscribeSendResponse;
 import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
 import com.backend.subscribesend.dto.admin.AdminSendDto;
 import com.backend.subscribesend.service.SubscribeSendServiceImpl;
@@ -43,4 +44,11 @@ public class SubscribeSendController {
     public void updateSbSend(@RequestBody AdminSbSendUpdateDto adminSbSendUpdateDto) {
         subscribeSendServiceImpl.updateSbSend(adminSbSendUpdateDto);
     }
+
+    @GetMapping("/subscribe/mypage/profile")
+    public SubscribeSendResponse.MyPageProfileSubscribeDto getMyPageProfileSubscribe() {
+        return subscribeSendServiceImpl.getMyPageProfileSubscribe();
+    }
+
+    @GetMapping("/subscribe/mypage")
 }

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integer> {
 
@@ -27,4 +28,6 @@ public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integ
     boolean existsByMemberIdAndSbEndDateIsNull(String memberId);
 
     List<SubscribeMember> findBySbPaymentDayAndSbEndDateIsNull(int currentDay);
+
+    Optional<SubscribeMember> findByMemberIdAndSbEndDateIsNull(String memberId);
 }

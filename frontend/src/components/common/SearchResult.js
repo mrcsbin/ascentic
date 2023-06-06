@@ -169,6 +169,7 @@ const CategoryBox = styled.div`
 `;
 
 const Category = styled.span`
+  font-size: 1.2rem;
   cursor: pointer;
   padding: 20px 0;
   box-sizing: border-box;
@@ -255,9 +256,11 @@ const NameBox = styled.div`
 
 const Name = styled.div`
   text-align: left;
+  font-weight: 400;
 `;
 
 const InfoBox = styled.div`
+  font-weight: 400;
   margin: 10px 0;
 `;
 
@@ -266,6 +269,7 @@ const Info = styled.div`
 `;
 
 const PriceBox = styled.div`
+  font-weight: 400;
   margin: 10px 0;
 `;
 

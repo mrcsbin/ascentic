@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, Integer> {
 //    @Transactional
@@ -24,4 +25,6 @@ public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, In
     List<SubscribeSend> findBySbSendState(String sbSendState);
 
     SubscribeSend findDistinctTopBySubscribeMemberAndSubscribeProduct(SubscribeMember subscribeMember, SubscribeProduct subscribeProduct);
+
+    Optional<SubscribeSend> findBySubscribeMember(SubscribeMember subscribeMember);
 }

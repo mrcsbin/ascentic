@@ -47,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
         List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
 
         return reviewList.stream()
-                .filter(review -> review.getOrderProduct().getOrderState().equals("배송 완료"))
+                .filter(review -> review.getOrderProduct().getOrderState().equals("배송완료"))
                 .map(ReviewResponse.ReviewListDto::of)
                 .collect(Collectors.toList());
     }

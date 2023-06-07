@@ -24,7 +24,7 @@ function Login() {
 
   const IdChangeHandle = (e) => {
     setId(e.target.value);
-    if (id.length >= 5) {
+    if (id.length >= 4) {
       setIsIdCheck(true);
     } else {
       setIsIdCheck(false);
@@ -111,7 +111,7 @@ function Login() {
           />
           {!isIdCheck && (
             <WarningText>
-              영문, 숫자를 조합하여 입력해주세요. (6자 이상)
+              영문, 숫자를 조합하여 입력해주세요. (5자 이상)
             </WarningText>
           )}
         </InputBox>

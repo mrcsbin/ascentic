@@ -134,8 +134,8 @@ const FinalPayment = ({
           <div>+{addComma(requestData.shipCharge)}원</div>
         </div>
         <div>
-          <div>할인 금액</div>
-          <div>{requestData.discount}원</div>
+          <div>포인트</div>
+          <div>-{addComma(requestData.usePoint)}원</div>
         </div>
         <div>
           <div>총 금액</div>
@@ -143,7 +143,7 @@ const FinalPayment = ({
             {addComma(
               requestData.orderPriceSum +
                 requestData.shipCharge -
-                requestData.discount
+                requestData.usePoint
             )}
             원
           </div>

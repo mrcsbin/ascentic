@@ -4,7 +4,6 @@ import "./styles/Reset.css";
 import Routes from "./routes/Routes";
 import Footer from "./components/common/Footer";
 import Loading from "./components/common/Loading";
-import AdminNav from "./admin/components/AdminNav";
 import Header from "./components/common/Header";
 import RouteChangeTracker from "./RouteChangeTracker";
 import { AdminNavToggle } from "./admin/components/AdminNavToggle";

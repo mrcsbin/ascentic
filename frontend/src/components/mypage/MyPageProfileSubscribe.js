@@ -5,8 +5,12 @@ import { getCookie } from "../../utils/Cookies";
 import { getMyPageProfileSubscribe } from "../../api/SubscribeSendApi";
 
 function addComma(num) {
-  var regexp = /\B(?=(\d{3})+(?!\d))/g;
-  return num.toString().replace(regexp, ",");
+  if (num === undefined) {
+    return 0;
+  } else {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
 }
 
 export const MyPageProfileSubscribe = () => {

@@ -62,12 +62,12 @@ export const Tab = () => {
       <TabBox>
         <TabHeader>고객 서비스</TabHeader>
         <TabList>
-          <StyledLink to="/mypage/update">
+          <StyledLink to="/mypage/password">
             <TabBody
-              clicked={clickedTab === "회원정보수정"}
-              onClick={() => tabClickHandle("회원정보수정")}
+              clicked={clickedTab === "비밀번호변경"}
+              onClick={() => tabClickHandle("비밀번호변경")}
             >
-              회원정보수정
+              비밀번호변경
             </TabBody>
           </StyledLink>
         </TabList>
@@ -91,6 +91,16 @@ export const Tab = () => {
               onClick={() => tabClickHandle("1:1 문의 내역")}
             >
               1:1 문의 내역
+            </TabBody>
+          </StyledLink>
+        </TabList>
+        <TabList>
+          <StyledLink to="/mypage/withdrawal">
+            <TabBody
+              clicked={clickedTab === "회원탈퇴"}
+              onClick={() => tabClickHandle("회원탈퇴")}
+            >
+              회원탈퇴
             </TabBody>
           </StyledLink>
         </TabList>

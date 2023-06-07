@@ -2,6 +2,7 @@ package com.backend.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -15,7 +16,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "tb_member")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -40,6 +43,7 @@ public class Member {
     @Column(name = "member_image")
     private String image;
 
+    @CreationTimestamp
     @Column(name = "member_SignUpTime")
     private LocalDate memberSignUpTime = LocalDate.now();
 
@@ -63,19 +67,6 @@ public class Member {
 
     @Column(name = "member_buyWelcomeYn")
     private boolean buyWelcomePackageYn;
-
-    @Builder
-    public Member(String id, String name, String password, Integer memberPoint, String email, String phone, String birthDate, String image, List<String> role) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.image = image;
-        this.role = role;
-        this.memberPoint = memberPoint;
-    }
 
     public void changeEncodedPassword(String password) {
         this.password = password;

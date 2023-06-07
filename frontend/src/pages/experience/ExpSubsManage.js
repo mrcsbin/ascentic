@@ -18,7 +18,7 @@ const ExpSubsManage = () => {
   useEffect(() => {
     const success = searchParams.get('success');
     if (success == null) return;
-    alert(success);
+    alert('구독신청을 완료하셨습니다!');
     window.history.replaceState({}, document.title, window.location.pathname);
   }, []);
 
@@ -26,7 +26,6 @@ const ExpSubsManage = () => {
     const fetchData = async () => {
       setLoading(true);
       const result = await requestTasteRes(accessToken); // api 함수 호출
-      console.log(result);
       setTasteRes(result); // 결과를 state에 저장
       setLoading(false);
     };

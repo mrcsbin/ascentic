@@ -55,12 +55,14 @@ public class SbMemberServiceImpl implements SbMemberService {
 
         // 멤버 아이디로 마지막 구독정보 가져옴
         SubscribeMember lastSbMemberByMemberId = sbMemberRepository.getFirstByMemberIdOrderBySbStartDateDesc(currentMemberId);
+        SubscribeMember firstSbMemberByMemberId = sbMemberRepository.getFirstByMemberIdOrderBySbStartDateAsc(currentMemberId);
         SubscribePayment lastSubscribePayment = subscribePaymentRepository.findFirstByMemberIdOrderBySubscribePaymentNumDesc(currentMemberId);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++");
         System.out.println(lastSubscribePayment);
         LastSbMemberDTO lastSbMemberDTO = LastSbMemberDTO.builder()
                 .sbStartDate(lastSbMemberByMemberId.getSbStartDate())
                 .sbEndDate(lastSbMemberByMemberId.getSbEndDate())
+                .theFirstSbStartDate(firstSbMemberByMemberId.getSbStartDate())
                 .sbPay(lastSubscribePayment.getSubscribeCard())
                 .sbPaymentDay(lastSbMemberByMemberId.getSbPaymentDay())
                 .memberName(lastSbMemberByMemberId.getSbMemberName())

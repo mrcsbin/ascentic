@@ -15,6 +15,8 @@ public class LastSbMemberDTO {
 
     private LocalDate sbEndDate;
 
+    private LocalDate theFirstSbStartDate; //계정의 맨 처음 구독날짜
+
     private SubscribeCard sbPay;
 
     private Integer sbPaymentDay;

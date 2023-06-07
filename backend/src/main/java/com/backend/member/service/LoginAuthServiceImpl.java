@@ -125,6 +125,7 @@ public class LoginAuthServiceImpl implements LoginAuthService {
                         .password(encodedPassword)
                         .email(email)
                         .name(name)
+                        .memberPoint(0)
                         .build();
                 memberRepository.save(member);
                 JwtTokenDto jwtTokenDto = jwtTokenProvider.generateToken(member);

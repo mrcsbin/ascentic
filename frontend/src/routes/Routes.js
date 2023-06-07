@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setIsLogin } from '../store/modules/login';
-import { getCookie } from '../utils/Cookies';
-import { Routes as BrowserRoutes, Route, Navigate } from 'react-router-dom';
-import * as Pages from '../pages/Pages';
-import * as AdminPages from '../admin/pages/AdminPages';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsLogin } from "../store/modules/login";
+import { getCookie } from "../utils/Cookies";
+import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
+import * as Pages from "../pages/Pages";
+import * as AdminPages from "../admin/pages/AdminPages";
+import ScrollToTop from "../ScrollToTop";
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
@@ -12,11 +13,11 @@ function Routes() {
 
   useEffect(() => {
     const checkTokenExpiration = () => {
-      const token = getCookie('accessToken');
+      const token = getCookie("accessToken");
       if (!token && isLoggedIn) {
         dispatch(setIsLogin(false));
-        alert('세션이 만료되었습니다. 다시 로그인해주세요');
-        window.location.replace('/');
+        alert("세션이 만료되었습니다. 다시 로그인해주세요");
+        window.location.replace("/");
       }
     };
     checkTokenExpiration();

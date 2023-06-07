@@ -215,6 +215,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
             <th>상품명</th>
             <th>옵션명</th>
             <th>수량</th>
+            <th>결제상태</th>
             <th>가격</th>
           </tr>
           <ProductItemList>
@@ -232,6 +233,7 @@ const OrderEditModal = ({ order, hadleCloseEditModal }) => {
                 <td>{orderProd.prodName}</td>
                 <td>{orderProd.optionName}</td>
                 <td>{orderProd.prodCount}</td>
+                <td>{orderProd.orderState}</td>
                 <td>{addComma(orderProd.prodPrice)}원</td>
               </ProductItem>
             ))}
@@ -383,7 +385,7 @@ const ProductContainer = styled.table`
     width: 10%;
   }
   tr:nth-child(2) > th:nth-child(2) {
-    width: 20%;
+    width: 15%;
   }
   tr:nth-child(2) > th:nth-child(3) {
     width: 20%;
@@ -395,6 +397,9 @@ const ProductContainer = styled.table`
     width: 10%;
   }
   tr:nth-child(2) > th:nth-child(6) {
+    width: 15%;
+  }
+  tr:nth-child(2) > th:nth-child(7) {
     width: 15%;
   }
 `;
@@ -435,7 +440,7 @@ const ProductItem = styled.div`
     width: 10%;
   }
   td:nth-child(2) {
-    width: 20%;
+    width: 15%;
   }
   td:nth-child(2) > div {
     width: 60px;
@@ -459,6 +464,9 @@ const ProductItem = styled.div`
     width: 10%;
   }
   td:nth-child(6) {
+    width: 15%;
+  }
+  td:nth-child(7) {
     width: 15%;
   }
 `;

@@ -11,25 +11,18 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
   const currentDate = new Date(); // 현재 날짜
   const startYear = start.getFullYear();
-  const startMonth = start.getMonth();
+  const startMonth = start.getMonth() + 1;
 
   const theFirstSbDate = new Date(sbMember.theFirstSbStartDate);
   const firstYear = theFirstSbDate.getFullYear();
   const [currnetYear, currnetMonth] = [
     currentDate.getFullYear(),
-    currentDate.getMonth(),
+    currentDate.getMonth() + 1,
   ];
-
-  // useEffect(() => {
-  //   if (success) {
-  //     console.log('success안이다잇~');
-  //     setTimeout(alert('성공했다잇@!!!'), 5000);
-  //   }
-  // }, [success]);
 
   //구독중인 기간
   let subsDuration =
-    (currnetYear - startYear) * 12 + (currnetMonth - startMonth + 1) + 1;
+    (currnetYear - startYear) * 12 + (currnetMonth - startMonth) + 1;
   // if (subsDuration === 0) subsDuration = 1;
 
   // ------------------------------ 과거 배송상품 관련 -------------------------------------------
@@ -44,7 +37,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   const monthOptions = (value) => {
     let months = [];
 
-    for (let i = 1; i <= currnetMonth + 1; i++) {
+    for (let i = 1; i <= currnetMonth; i++) {
       months = [...months, i];
     }
 
@@ -75,7 +68,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
 
   const [filterProd, setFilterProd] = useState([]);
   const [chosenYear, setChosenYear] = useState(currnetYear);
-  const [chosenMonth, setChoenMonth] = useState(currnetMonth + 1);
+  const [chosenMonth, setChoenMonth] = useState(currnetMonth);
   const [loading, setLoading] = useState(true);
 
   const filterByMonth = (chosenYear, chosenMonth) => {

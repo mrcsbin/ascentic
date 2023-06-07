@@ -179,7 +179,7 @@ public class SubscribePaymentController {
 //                .build()
 //                .toUri();
         URI location = UriComponentsBuilder.fromUriString("http://localhost:3000/exp/subsmanage")
-                .queryParam("success", true)
+                .queryParam("success", "구독신청에 성공하셨습니다!")
                 .build()
                 .toUri();
 

@@ -17,7 +17,7 @@ function Main() {
   }, []);
 
   let options = {
-    anchors: ['sectionOne', 'sectionTwo', 'sectionThree', 'sectionFour'],
+    anchors: ["sectionOne", "sectionTwo", "sectionThree", "sectionFour"],
     navigation: true,
     scrollbars: true,
     // animation: 5000,
@@ -167,6 +167,7 @@ export default Main;
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
+  padding-bottom: 107px;
 `;
 
 const SectionOne = styled.div`

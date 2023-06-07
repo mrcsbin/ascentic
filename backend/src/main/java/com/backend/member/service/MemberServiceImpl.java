@@ -193,7 +193,7 @@ public class MemberServiceImpl implements MemberService {
     public void init() {
         Member member = Member.builder()
                 .id("admin")
-                .password(passwordEncoder.encode("admin"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("admin@ascentic.com")
                 .name("관리자")
                 .birthDate("0101")
@@ -205,7 +205,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member1 = Member.builder()
                 .id("sungbin")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test1@ascentic.com")
                 .memberPoint(0)
                 .name("조성빈")
@@ -217,7 +217,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member2 = Member.builder()
                 .id("hansic")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test2@ascentic.com")
                 .memberPoint(0)
                 .name("조한식")
@@ -229,7 +229,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member3 = Member.builder()
                 .id("kyungmin")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test3@ascentic.com")
                 .memberPoint(0)
                 .name("강경민")
@@ -241,7 +241,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member4 = Member.builder()
                 .id("haesung")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test4@ascentic.com")
                 .memberPoint(0)
                 .name("나해성")
@@ -253,7 +253,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member5 = Member.builder()
                 .id("chaeeun")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test5@ascentic.com")
                 .memberPoint(0)
                 .name("전채은")
@@ -265,7 +265,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member6 = Member.builder()
                 .id("sungmin")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test6@ascentic.com")
                 .memberPoint(0)
                 .name("황성민")

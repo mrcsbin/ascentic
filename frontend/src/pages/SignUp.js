@@ -8,9 +8,12 @@ import { SIGNUP_ERROR_MESSAGE } from "../constants/Message";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Timer from "../components/common/Timer";
+import { saveMember } from "../api/MemberApi";
+import { useNavigate } from "react-router-dom";
+
 function SignUp() {
   const [showCertificate, setShowCertificate] = useState(false);
-
+  const navigate = useNavigate();
   const [emailDuplicateStatus, setEmailDuplicateStatus] = useState(0);
   const [idDuplicateStatus, setIdDuplicateStatus] = useState(0);
   const [certificateCode, setCertificateCode] = useState("");
@@ -219,7 +222,7 @@ function SignUp() {
     setShowCertificate(false);
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid =
       formData.id &&
@@ -235,18 +238,10 @@ function SignUp() {
       alert("모든 값을 정확히 입력해주세요.");
       return;
     }
-    axios
-      .post("/member/insert", formData)
-      .then((res) => {
-        console.log(res.data);
-        alert(res.data);
-        window.location.href = "/";
-      })
-      .catch((e) => {
-        console.error(e);
-        alert(e);
-      });
-  }
+    await saveMember(formData).then(
+      navigate("/signupsuccess", { state: formData.name })
+    );
+  };
 
   function goLogin() {
     window.location.href = "/login";
@@ -459,6 +454,10 @@ function SignUp() {
             placeholder="a"
             onChange={handleInputChange}
             value={selectedDate ? selectedDate.toLocaleDateString() : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              setShowCalendar(!showCalendar);
+            }}
           />
           <label htmlFor="birthDate" className="label">
             생일

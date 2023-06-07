@@ -7,28 +7,14 @@ import lombok.Getter;
 // 사이즈 설정해야함
 @Getter
 public class SignupDto {
-
-    @NotNull
-    @Size(min = 1, max = 20)
     private String id;
-
-    @NotNull
-    @Size(min = 1, max = 20)
     private String password;
-
-    @NotNull
-    @Size(min = 1, max = 20)
+    private String confirmPassword;
     private String name;
-
-    @NotNull
-    @Size(min = 1, max = 20)
     private String phone;
-
-    @NotNull
-    @Size(min = 1, max = 20)
     private String email;
-
-    @NotNull
-    @Size(min = 1, max = 20)
-    private String birth;
+    private String birthDate;
+    private boolean emailPush;
+    private boolean infoAgree;
+    private boolean snsPush;
 }

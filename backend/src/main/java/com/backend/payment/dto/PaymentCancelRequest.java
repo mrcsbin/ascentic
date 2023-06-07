@@ -15,6 +15,7 @@ public class PaymentCancelRequest {
     }
 
     @Getter
+    @Setter
     public static class OrderProductCancelDto {
         private Integer cancelAmount;
         private String cancelReason;

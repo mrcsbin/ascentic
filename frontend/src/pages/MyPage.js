@@ -5,10 +5,11 @@ import { Order } from "../components/mypage/shopping/Order";
 import { Review } from "../components/mypage/shopping/Review";
 import { Wish } from "../components/mypage/shopping/Wish";
 import { Subscribe } from "../components/mypage/shopping/Subscribe";
-import { Update } from "../components/mypage/customerservice/Update";
+import { PasswordUpdate } from "../components/mypage/customerservice/PasswordUpdate";
 import { InquiryList } from "../components/mypage/customerservice/InquiryList";
 import { Notification } from "../components/mypage/customerservice/Notification";
 import { MyPageProfile } from "../components/mypage/MyPageProfile";
+import { Withdrawal } from "../components/mypage/customerservice/Withdrawal";
 
 function MyPage() {
   const params = useParams();
@@ -23,9 +24,10 @@ function MyPage() {
           {params.category === "reviewlist" && <Review />}
           {params.category === "wishlist" && <Wish />}
           {params.category === "subscribe" && <Subscribe />}
-          {params.category === "update" && <Update />}
+          {params.category === "password" && <PasswordUpdate />}
           {params.category === "alarm" && <Notification />}
           {params.category === "inquirylist" && <InquiryList />}
+          {params.category === "withdrawal" && <Withdrawal />}
         </ContentArea>
       </ContentWrap>
     </MyPageWrap>

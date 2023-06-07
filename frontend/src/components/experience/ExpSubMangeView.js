@@ -10,7 +10,8 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
   const start = new Date(sbMember.sbStartDate); // 구독시작 날짜
   const currentDate = new Date(); // 현재 날짜
-  const [startYear, startMonth] = [start.getFullYear(), start.getMonth()];
+  const startYear = start.getFullYear();
+  const startMonth = start.getMonth();
   const [currnetYear, currnetMonth] = [
     currentDate.getFullYear(),
     currentDate.getMonth(),
@@ -53,7 +54,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
 
     if (value == currnetYear) {
       if (startYear == chosenYear) {
-        for (let i = startMonth; i <= currnetMonth; i++) {
+        for (let i = startMonth + 1; i <= currnetMonth + 1; i++) {
           months = [...months, i];
         }
       } else {

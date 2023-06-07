@@ -36,7 +36,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public String join(SignupDto signupDto) {
+    public void join(SignupDto signupDto) {
+        if (memberRepository.existsById(signupDto.getId())) {
+            throw new RuntimeException("이미 존재하는 아이디");
+        }
+        if (memberRepository.existsByEmail(signupDto.getEmail())) {
+            throw new RuntimeException("이미 존재하는 이메일");
+        }
+        if (memberRepository.existsByPhone(signupDto.getPhone())) {
+            throw new RuntimeException("이미 존재하는 휴대폰");
+        }
+
         Member member = Member.builder()
                 .id(signupDto.getId())
                 .name(signupDto.getName())
@@ -45,23 +55,12 @@ public class MemberServiceImpl implements MemberService {
                 .phone(signupDto.getPhone())
                 .password(passwordEncoder.encode(signupDto.getPassword()))
                 .role(Collections.singletonList("USER"))
-                .birthDate(signupDto.getBirth())
+                .birthDate(signupDto.getBirthDate())
+                .infoAgree(signupDto.isInfoAgree())
+                .emailPushYn(signupDto.isEmailPush())
+                .snsPushYn(signupDto.isSnsPush())
                 .build();
-        return memberRepository.save(member).getId();
-    }
-
-    @Override
-    public boolean insertMember(Member member) {
-        if (memberRepository.existsById(member.getId())) {
-            return false; // 이미 동일한 PK 값이 존재하면 false 반환
-        }
-        try {
-            memberRepository.save(member);
-            return true; // 삽입 성공 시 true 반환
-        } catch (Exception e) {
-            System.out.println(e);
-            return false; // 삽입 실패 시 false 반환
-        }
+        memberRepository.save(member);
     }
 
     @Override
@@ -78,23 +77,6 @@ public class MemberServiceImpl implements MemberService {
     public boolean existPhone(String phone) {
         return memberRepository.existsByPhone(phone);
     }
-
-
-//    @Override
-//    @Transactional
-//    public void updateMember(Member member) {
-//        member.setRole(Collections.singletonList("USER"));
-//        member.changeEncodedPassword(passwordEncoder.encode(member.getPassword()));
-//        memberRepository.save(member);
-//    }
-
-//    @Override
-//    @Transactional
-//    public void updateMember(Member member) {
-//        member.setRole(Collections.singletonList("USER"));
-//        member.changeEncodedPassword(passwordEncoder.encode(member.getPassword()));
-//        memberRepository.save(member);
-//    }
 
     @Override
     @Transactional

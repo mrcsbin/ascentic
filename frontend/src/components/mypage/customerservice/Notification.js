@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { getCookie } from "../../../utils/Cookies";
 import { useEffect } from "react";
 import { getMemberInfo, updatePushYn } from "../../../api/MemberApi";
@@ -7,9 +7,11 @@ import { useDispatch } from "react-redux";
 import { setActiveTab } from "../../../store/modules/mypage";
 
 export const Notification = () => {
-  const [emailPushYn, setEmailPushYn] = useState(false);
-  const [snsPushYn, setSnsPushYn] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [emailPushYn, setEmailPushYn] = useState();
+  const [snsPushYn, setSnsPushYn] = useState();
   const dispatch = useDispatch();
+  const accessToken = getCookie("accessToken");
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -22,49 +24,74 @@ export const Notification = () => {
     fetchMemberInfo();
   }, [dispatch]);
 
-  const handleUpdate = async () => {
-    const accessToken = getCookie("accessToken");
-    await updatePushYn(accessToken, snsPushYn, emailPushYn).then(
-      alert("수정되었습니다.")
-    );
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
+
+  const changeEmailHandle = async (e) => {
+    const newEmailYn = e.target.checked;
+    setEmailPushYn(newEmailYn);
+    await updatePushYn(accessToken, snsPushYn, newEmailYn).then(() => {
+      setShowNotification(true);
+    });
+  };
+
+  const changeSnsHandle = async (e) => {
+    const newSnsPushYn = e.target.checked;
+    setSnsPushYn(newSnsPushYn);
+    await updatePushYn(accessToken, newSnsPushYn, emailPushYn).then(() => {
+      setShowNotification(true);
+    });
   };
 
   return (
-    <Wrap>
-      <ContentHeader>알림 설정</ContentHeader>
-      <ContentBody>
-        <Header>이벤트 및 혜택 알림</Header>
-        <Container>
-          <SettingBox>
-            <TitleBox>
-              <Title>이메일</Title>
-            </TitleBox>
-            <OnOffButtonBox>
-              <OnOffButton
-                type="checkbox"
-                checked={emailPushYn}
-                onChange={(e) => setEmailPushYn(e.target.checked)}
-              ></OnOffButton>
-              <OnOff isChecked={emailPushYn} />
-            </OnOffButtonBox>
-          </SettingBox>
-          <SettingBox>
-            <TitleBox>
-              <Title>휴대폰</Title>
-            </TitleBox>
-            <OnOffButtonBox>
-              <OnOffButton
-                type="checkbox"
-                checked={snsPushYn}
-                onChange={(e) => setSnsPushYn(e.target.checked)}
-              ></OnOffButton>
-              <OnOff isChecked={snsPushYn} />
-            </OnOffButtonBox>
-          </SettingBox>
-          <UpdateBtn onClick={() => handleUpdate()}>수정</UpdateBtn>
-        </Container>
-      </ContentBody>
-    </Wrap>
+    <>
+      <Wrap>
+        <ContentHeader>알림 설정</ContentHeader>
+        <ContentBody>
+          <Header>이벤트 및 혜택 알림</Header>
+          <SubTitle>진행중인 이벤트 정보를 빠르게 알려드려요.</SubTitle>
+          <Container>
+            <SettingBox>
+              <TitleBox>
+                <Title>이메일</Title>
+              </TitleBox>
+              <OnOffButtonBox>
+                <OnOffButton
+                  type="checkbox"
+                  checked={emailPushYn}
+                  onChange={(e) => changeEmailHandle(e)}
+                ></OnOffButton>
+                <OnOff isChecked={emailPushYn} />
+              </OnOffButtonBox>
+            </SettingBox>
+            <SettingBox>
+              <TitleBox>
+                <Title>휴대폰</Title>
+              </TitleBox>
+              <OnOffButtonBox>
+                <OnOffButton
+                  type="checkbox"
+                  checked={snsPushYn}
+                  onChange={(e) => changeSnsHandle(e)}
+                ></OnOffButton>
+                <OnOff isChecked={snsPushYn} />
+              </OnOffButtonBox>
+            </SettingBox>
+          </Container>
+        </ContentBody>
+      </Wrap>
+      {showNotification && (
+        <NotificationContainer>
+          <NotificationText>저장되었습니다.</NotificationText>
+        </NotificationContainer>
+      )}
+    </>
   );
 };
 
@@ -73,39 +100,45 @@ const Wrap = styled.div`
 `;
 
 const ContentHeader = styled.div`
-  padding: 20px 0;
-  font-size: 30px;
+  padding: 0px 0px 20px 0;
+  font-size: 1.8rem;
   font-weight: 700;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid grey;
 `;
 
 const ContentBody = styled.div`
-  padding: 50px;
+  padding: 80px;
   box-sizing: border-box;
 `;
 
 const Header = styled.div`
-  font-size: 30px;
+  font-size: 2rem;
   margin-bottom: 40px;
 `;
 
+const SubTitle = styled.div`
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+`;
+
 const Container = styled.div`
-  padding: 20px 40px;
+  padding: 10px 40px;
   border: 1px solid grey;
+  border-radius: 8px;
 `;
 
 const SettingBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 0;
+  margin: 40px 0;
 `;
 
 const TitleBox = styled.div``;
 
 const Title = styled.div`
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 1.3rem;
+  font-weight: 600;
 `;
 
 const OnOffButtonBox = styled.div`
@@ -187,10 +220,41 @@ const OnOff = styled.div`
     `}
 `;
 
-const UpdateBtn = styled.button`
-  margin-left: 33%;
-  width: 30%;
-  height: 30px;
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const NotificationContainer = styled.div`
+  position: fixed;
+  bottom: 70px;
+  left: 46%;
+  padding: 10px 20px;
   background-color: black;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: ${slideUp} 0.3s ease-in-out, ${fadeOut} 1.5s 1s forwards;
+`;
+
+const NotificationText = styled.p`
+  margin: 0;
+  padding: 20 20px;
+  font-size: 1.3rem;
   color: white;
 `;

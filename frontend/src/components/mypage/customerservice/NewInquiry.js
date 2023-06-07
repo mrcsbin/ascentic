@@ -58,6 +58,7 @@ const NewInquiry = ({ showInquiry, handleNewInquiryButtonClick }) => {
       setError("");
       handleNewInquiryButtonClick();
       alert("제출이 완료되었습니다!");
+      window.location.reload();
       closeModal();
     } catch (error) {
       console.error("Error submitting inquiry:", error);

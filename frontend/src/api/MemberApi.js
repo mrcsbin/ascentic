@@ -50,10 +50,21 @@ export const delProfileImg = async (accessToken) => {
 };
 
 // 회원 삭제
-export const deleteMember = async (id) => {
-  const response = await axios.delete(`${MEMBER_API_URL}/${id}/v2`, {});
+export const deleteMember = async (accessToken, password) => {
+  const response = await axios.delete(
+    `${MEMBER_API_URL}`,
+    {
+      data: {
+        password: password
+      },
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
   return response.data;
 };
+
 
 // 로그인
 export const login = async (id, password) => {

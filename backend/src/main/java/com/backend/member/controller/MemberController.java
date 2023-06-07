@@ -71,16 +71,15 @@ public class MemberController {
 
     // 회원 탈퇴 V1 - 상태값 바꾸기 => 같은 아이디로 가입과 삭제를 반복했을 때 통계엔 다 회원으로 기록
     @DeleteMapping("/{id}/v1")
-    public String deleteMemberV1(@PathVariable String id, @RequestBody Member member) {
+    public String deleteMemberV1(@PathVariable String id, @RequestParam Member member) {
         memberService.deleteMemberV1(member);
         return id + "님 그동안 이용해주셔서 감사합니다.";
     }
 
     // 회원 탈퇴 V2 - 테이블안에 값 없애버리기
-    @DeleteMapping("/{id}/v2")
-    public String deleteMemberV2(@PathVariable String id) {
-        memberService.deleteMemberV2(id);
-        return id + "님 그동안 이용해주셔서 감사합니다.";
+    @DeleteMapping
+    public String deleteMemberV2(@RequestBody DeleteMemberDto deleteMemberDto) {
+        return memberService.deleteMemberV2(deleteMemberDto);
     }
 
     // 로그인

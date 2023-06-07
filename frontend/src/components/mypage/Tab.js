@@ -82,7 +82,9 @@ export const Tab = () => {
           </StyledLink>
         </TabList>
         <TabList>
-          <TabBody>고객센터</TabBody>
+          <StyledLink to="/community/notice">
+            <TabBody>고객센터</TabBody>
+          </StyledLink>
         </TabList>
         <TabList>
           <StyledLink to="/mypage/inquirylist">

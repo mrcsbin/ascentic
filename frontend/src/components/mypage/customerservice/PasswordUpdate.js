@@ -100,7 +100,7 @@ const NewPasswordConfirmBox = styled.div`
 
 const CurrentPasswordInput = styled.input`
   margin-top: 10px;
-  width: 100%;
+  width: 90%;
   height: 50px;
   border: none;
   border-bottom: 0.5px solid grey;
@@ -115,7 +115,7 @@ const CurrentPasswordInput = styled.input`
 
 const NewPasswordInput = styled.input`
   margin-top: 10px;
-  width: 100%;
+  width: 90%;
   height: 50px;
   border: none;
   border-bottom: 0.5px solid grey;
@@ -130,7 +130,7 @@ const NewPasswordInput = styled.input`
 
 const NewPasswordConfirmInput = styled.input`
   margin-top: 10px;
-  width: 100%;
+  width: 90%;
   height: 50px;
   border: none;
   border-bottom: 0.5px solid grey;

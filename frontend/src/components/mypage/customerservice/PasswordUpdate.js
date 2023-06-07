@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setActiveTab } from "../../../store/modules/mypage";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { getCookie } from "../../../utils/Cookies";
 import { useEffect, useState } from "react";
 import { updateMember } from "../../../api/MemberApi";
@@ -14,10 +14,11 @@ export const PasswordUpdate = () => {
   const [newPasswordValid, setNewPasswordValid] = useState("");
   const [confirmPasswordValid, setConfirmPasswordValid] = useState("");
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [showFailNotification, setFailNotification] = useState(false);
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
-      const accessToken = getCookie("accessToken");
       await dispatch(setActiveTab("비밀번호변경"));
     };
     fetchMemberInfo();
@@ -62,29 +63,25 @@ export const PasswordUpdate = () => {
   const submitHandle = async () => {
     if (currentPassword) {
       if (newPassword === confirmPassword) {
-        try {
-          const response = await updateMember(
-            getCookie("accessToken"),
-            currentPassword,
-            newPassword
-          );
+        const response = await updateMember(
+          getCookie("accessToken"),
+          currentPassword,
+          newPassword
+        );
 
-          if (response.data === "success") {
-            alert("성공적으로 변경되었습니다!");
-            window.location.reload();
-          } else if (response === "fail") {
-            alert(
-              "변경에 실패하였습니다. 입력하신 비밀번호를 다시확인 바랍니다."
-            );
-            setNewPassword("");
-            setCurrentPassword("");
-            setConfirmPassword("");
-            setNewPasswordValid("");
-            setConfirmPasswordValid("");
-            setIsSubmitEnabled(false);
-          }
-        } catch (error) {
-          alert("쿠뿌로삥뽕~");
+        if (response === "비밀번호가 변경되었습니다.") {
+          setShowNotification(true);
+          setNewPassword("");
+          setCurrentPassword("");
+          setConfirmPassword("");
+        } else {
+          setNewPassword("");
+          setCurrentPassword("");
+          setConfirmPassword("");
+          setNewPasswordValid("");
+          setConfirmPasswordValid("");
+          setIsSubmitEnabled(false);
+          setFailNotification(true);
         }
       }
     }
@@ -101,6 +98,24 @@ export const PasswordUpdate = () => {
     "is-valid": confirmPasswordValid,
     "is-invalid": confirmPasswordValid === false,
   });
+
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
+
+  useEffect(() => {
+    if (showFailNotification) {
+      const timer = setTimeout(() => {
+        setFailNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showFailNotification]);
 
   return (
     <Wrap>
@@ -148,6 +163,18 @@ export const PasswordUpdate = () => {
           </SubmitButton>
         </ButtonBox>
       </PasswordUpdateBox>
+      {showNotification && (
+        <NotificationContainer>
+          <NotificationText>비밀번호가 변경 되었습니다.</NotificationText>
+        </NotificationContainer>
+      )}
+      {showFailNotification && (
+        <NotificationContainer>
+          <NotificationText>
+            입력하신 정보가 올바르지 않습니다.
+          </NotificationText>
+        </NotificationContainer>
+      )}
     </Wrap>
   );
 };
@@ -263,11 +290,50 @@ const SubmitButton = styled.button`
   &.disabled {
     color: rgba(0, 0, 0, 0.2);
     border: none;
-    cursor: not-allowed;
+    cursor: default;
   }
 `;
 
 const ButtonBox = styled.div`
   text-align: center;
   margin: 3rem auto 0 auto;
+`;
+
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const NotificationContainer = styled.div`
+  position: fixed;
+  bottom: 120px;
+  left: 45%;
+  padding: 10px 20px;
+  background-color: black;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: ${slideUp} 0.3s ease-in-out, ${fadeOut} 1.5s 1s forwards;
+`;
+
+const NotificationText = styled.p`
+  margin: 0;
+  padding: 20 20px;
+  font-size: 1.3rem;
+  color: white;
 `;

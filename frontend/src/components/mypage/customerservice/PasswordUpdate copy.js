@@ -11,7 +11,7 @@ import { getCookie, removeCookie } from "../../../utils/Cookies";
 import { useDispatch } from "react-redux";
 import { setActiveTab } from "../../../store/modules/mypage";
 
-export const Update = () => {
+export const PasswordUpdate = () => {
   const fileInput = useRef(null);
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
@@ -50,7 +50,7 @@ export const Update = () => {
       setId(id);
       setEmail(email);
       setNickname(nickname);
-      await dispatch(setActiveTab("회원정보수정"));
+      await dispatch(setActiveTab("비밀번호변경"));
     };
     fetchMemberInfo();
   }, []);
@@ -113,9 +113,10 @@ export const Update = () => {
             <ImageBox>
               <ProfileImage src={image} alt="프로필 이미지" />
               {image === DefaultProfileImageURL ? null : (
-                <DeleteButton onClick={() => imgdelHandle()}>
-                  삭제하기
-                </DeleteButton>
+                // <DeleteButton onClick={() => imgdelHandle()}>
+                // 삭제하기
+                // </DeleteButton>
+                <></>
               )}
             </ImageBox>
             <ImageInputContainer>
@@ -140,12 +141,6 @@ export const Update = () => {
           <Label>이름</Label>
           <InputBox>
             <DisabledInput readOnly value={name} />
-          </InputBox>
-        </Box>
-        <Box>
-          <Label>아이디</Label>
-          <InputBox>
-            <DisabledInput readOnly value={id} />
           </InputBox>
         </Box>
         <Box>
@@ -189,16 +184,6 @@ export const Update = () => {
             {newPassword === newPasswordCheck ? null : (
               <Warning>비밀번호가 일치하지 않습니다.</Warning>
             )}
-          </InputBox>
-        </Box>
-        <Box>
-          <Label>닉네임</Label>
-          <InputBox>
-            <Input
-              type="text"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-            ></Input>
           </InputBox>
         </Box>
         <UpdateButtonBox>

@@ -3,10 +3,13 @@ import styled, { css } from "styled-components";
 import { getCookie } from "../../../utils/Cookies";
 import { useEffect } from "react";
 import { getMemberInfo, updatePushYn } from "../../../api/MemberApi";
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
 
 export const Notification = () => {
   const [emailPushYn, setEmailPushYn] = useState(false);
   const [snsPushYn, setSnsPushYn] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -14,14 +17,14 @@ export const Notification = () => {
       const getInfo = await getMemberInfo(accessToken);
       setEmailPushYn(getInfo.emailPushYn);
       setSnsPushYn(getInfo.snsPushYn);
-      console.log(getInfo);
+      dispatch(setActiveTab("알림 설정"));
     };
     fetchMemberInfo();
-  }, []);
+  }, [dispatch]);
 
   const handleUpdate = async () => {
     const accessToken = getCookie("accessToken");
-    const res = await updatePushYn(accessToken, snsPushYn, emailPushYn).then(
+    await updatePushYn(accessToken, snsPushYn, emailPushYn).then(
       alert("수정되었습니다.")
     );
   };

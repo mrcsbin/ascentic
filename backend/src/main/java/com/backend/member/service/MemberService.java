@@ -10,9 +10,8 @@ import java.util.Optional;
 
 public interface MemberService {
 
-    String join(SignupDto signupDto);
+    void join(SignupDto signupDto);
 
-    //    void updateMember(Member member);
     String updateMember(UpdateMemberDto updateMemberDto);
 
     void deleteMemberV1(Member member);
@@ -24,8 +23,6 @@ public interface MemberService {
     Optional<Member> findId(FindDataDto findDataDto);
 
     String findPw(FindDataDto findDataDto);
-
-    boolean insertMember(Member member);
 
     boolean existMemberId(String memberId);
 

@@ -3,11 +3,9 @@ import axios from "axios";
 const MEMBER_API_URL = "http://localhost:8080/member";
 
 // 회원가입
-export const 회원가입 = async (e) => {
-  const response = await axios.post(`${MEMBER_API_URL}/signup`, {
-    /* data */
-  });
-  return response.data;
+export const saveMember = async (memberData) => {
+  console.log(memberData);
+  await axios.post(`${MEMBER_API_URL}/signup`, memberData);
 };
 
 // 회원 수정
@@ -24,7 +22,6 @@ export const updateMember = async (accessToken, password, newPassword) => {
       },
     }
   );
-  console.log(response.data);
   return response.data;
 };
 
@@ -176,7 +173,7 @@ export const getMyPageProfile = async (accessToken) => {
 };
 
 export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
-  const response = await axios.post(
+  await axios.post(
     `${MEMBER_API_URL}/updatePushYn`,
     { snsPushYn, emailPushYn },
     {
@@ -185,8 +182,6 @@ export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
       },
     }
   );
-
-  return response.data;
 };
 
 // 보유 포인트 조회

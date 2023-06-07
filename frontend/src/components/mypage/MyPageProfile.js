@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setActiveTab } from "../../store/modules/mypage";
 import { MyPageProfileOrder } from "./MyPageProfileOrder";
@@ -10,17 +10,31 @@ import { getMyPageProfile } from "../../api/MemberApi";
 import { getCookie } from "../../utils/Cookies";
 
 function addComma(num) {
-  var regexp = /\B(?=(\d{3})+(?!\d))/g;
-  return num.toString().replace(regexp, ",");
+  if (num === undefined) {
+    return 0;
+  } else {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ",");
+  }
 }
 
 export const MyPageProfile = () => {
+  const fileInput = useRef(null);
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState();
+  const [image, setImage] = useState();
 
   const dispatch = useDispatch();
   const DefaultProfileImageURL =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
+  const changeHandle = (event) => {
+    const imageFile = event.target.files[0];
+    setProfileImage(imageFile);
+    const imageUrl = URL.createObjectURL(imageFile);
+    setImage(imageUrl);
+  };
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -28,6 +42,11 @@ export const MyPageProfile = () => {
       setProfileData(response);
       dispatch(setActiveTab(""));
       setIsLoading(false);
+      if (response.profileImage === null) {
+        setImage(DefaultProfileImageURL);
+      } else {
+        setImage(`http://localhost:8080/images/${response.profileImage}`);
+      }
     };
     fetchProfileData();
   }, [dispatch]);
@@ -41,18 +60,25 @@ export const MyPageProfile = () => {
       <Wrap>
         <LeftBox>
           <ImageBox>
-            <Image
-              src={
-                profileData.profileImage === null
-                  ? DefaultProfileImageURL
-                  : `http://localhost:8080/images/${profileData.profileImage}`
-              }
-            />
+            <Image src={image} />
           </ImageBox>
           <ProfileBox>
             <ProfileName>{profileData.profileName}</ProfileName>
             <ProfileEmail>{profileData.profileEmail}</ProfileEmail>
-            <ProfileButton to="/mypage/update">프로필 관리</ProfileButton>
+            <ImageUpload
+              type="file"
+              accept="image/*"
+              name="image"
+              ref={fileInput}
+              onChange={changeHandle}
+            ></ImageUpload>
+            <ProfileButton
+              onClick={() => {
+                fileInput.current.click();
+              }}
+            >
+              이미지 변경
+            </ProfileButton>
             <TasteButton to="/exp/taste">취향 테스트</TasteButton>
           </ProfileBox>
         </LeftBox>
@@ -109,8 +135,8 @@ const RightBox = styled.div`
 const ImageBox = styled.div`
   position: relative;
   margin-right: 12px;
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   border-radius: 100%;
   flex-shrink: 0;
 `;
@@ -123,6 +149,7 @@ const Image = styled.img`
 
 const ProfileBox = styled.div`
   margin-left: 30px;
+  padding-top: 10px;
 `;
 
 const ProfileName = styled.strong`
@@ -138,6 +165,10 @@ const ProfileEmail = styled.p`
   line-height: 21px;
   font-size: 1.1rem;
   color: rgba(34, 34, 34, 0.5);
+`;
+
+const ImageUpload = styled.input`
+  display: none;
 `;
 
 const ProfileButton = styled(Link)`

@@ -11,7 +11,6 @@ export const Subscribe = () => {
   const [subscribeList, setSubscribeList] = useState([]);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  console.log(subscribeList)
 
   useEffect(() => {
     const fetchSubscribeData = async () => {

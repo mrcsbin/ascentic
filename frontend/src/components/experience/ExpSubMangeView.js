@@ -44,14 +44,27 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   const monthOptions = (value) => {
     let months = [];
 
-    subscribe.map((sub) => {
-      let date = new Date(sub.sbSendPayDate);
+    for (let i = 1; i <= currnetMonth + 1; i++) {
+      months = [...months, i];
+    }
 
-      if (date.getFullYear() == value) {
-        months = [...months, date.getMonth() + 1];
-      }
-    });
-    setmonths([...months].sort());
+    // // subscribe.map((sub) => {
+    // let date = new Date(subscribe[0].sbSendPayDate);
+    // let month = date.getMonth();
+    // let year = date.getFullYear();
+
+    // console.log('===============', month, value);
+    // if (value == year) {
+    //   for (let i = month; i <= currnetMonth; i++) {
+    //     months = [...months, i + 1];
+    //   }
+    // } else {
+    //   for (let i = 1; i <= 12; i++) {
+    //     months = [...months, i];
+    //   }
+    // }
+
+    setmonths(months);
   };
 
   useEffect(() => {
@@ -62,45 +75,30 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
 
   const [filterProd, setFilterProd] = useState([]);
   const [chosenYear, setChosenYear] = useState(currnetYear);
-  const [chosenMonth, setChoenMonth] = useState(currnetMonth);
+  const [chosenMonth, setChoenMonth] = useState(currnetMonth + 1);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const filterByMonth = (chosenYear, chosenMonth) => {
-      if (chosenMonth < 10) chosenMonth = '0' + chosenMonth;
-      const chosenDate = chosenYear + chosenMonth;
-      console.log(chosenDate, 'chosenDate', typeof chosenDate);
+  const filterByMonth = (chosenYear, chosenMonth) => {
+    if (chosenMonth < 10) chosenMonth = '0' + chosenMonth;
+    const chosenDate = chosenYear + chosenMonth;
+    console.log(chosenDate, 'chosenDate', typeof chosenDate);
 
-      let filtered = subscribe.filter(
-        (data) =>
-          data.sbSendPayDate.slice(0, 4) + data.sbSendPayDate.slice(5, 7) ==
-          chosenDate
-      );
-      setFilterProd(filtered);
-      setLoading(false);
-    };
+    let filtered = subscribe.filter(
+      (data) =>
+        data.sbSendPayDate.slice(0, 4) + data.sbSendPayDate.slice(5, 7) ==
+        chosenDate
+    );
+    setFilterProd(filtered);
+    setLoading(false);
+  };
+
+  useEffect(() => {
     filterByMonth(chosenYear, chosenMonth);
   }, [chosenYear, chosenMonth, subscribe, currnetMonth]);
 
-  //비동기 처리 시도중
-  // useEffect(() => {
-  //   const filterByMonth = async (chosenYear, chosenMonth) => {
-  //     if (chosenMonth < 10) chosenMonth = '0' + chosenMonth;
-  //     const chosenDate = chosenYear + chosenMonth;
-  //     try {
-  //       const filtered = subscribe.filter(
-  //         (data) =>
-  //           data.sbSendPayDate.slice(0, 4) + data.sbSendPayDate.slice(5, 7) ===
-  //           chosenDate
-  //       );
-  //       setFilterProd(filtered);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   filterByMonth(chosenYear, chosenMonth);
-  // }, [chosenYear, chosenMonth, subscribe]);
+  useEffect(() => {
+    filterByMonth(currnetYear, currnetMonth);
+  }, []);
 
   // ------------------------------------ 구독상품 정보와 리뷰 ---------------------------------------
   // let showSubsInfo = false;
@@ -113,10 +111,11 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   }
 
   const SubsInfo = () => {
-    if (loading) {
-      console.log('로딩에 들어오긴하나');
-      return <div>Loading...</div>; // 로딩 중일 때 로딩 표시
-    } else if (filterProd.length >= 1) {
+    // if (loading) {
+    //   console.log('로딩에 들어오긴하나');
+    //   return <div>Loading...</div>; // 로딩 중일 때 로딩 표시
+    // } else
+    if (filterProd.length > 0) {
       return (
         <div className="subs-info">
           <div>

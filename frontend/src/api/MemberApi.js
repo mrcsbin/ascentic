@@ -110,7 +110,6 @@ export const findId = async (name, phone) => {
 
 // PW 찾기
 export const findPw = async (email, phone) => {
-  console.log(email + phone);
   const response = await axios.post(`${MEMBER_API_URL}/find/pw`, {
     email,
     phone,
@@ -205,4 +204,11 @@ export const getMemberPoint = async (accessToken) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const isExistMember = async (name, phone) => {
+  const response = await axios.get(
+    `${MEMBER_API_URL}/ismember?name=${name}&phone=${phone}`
+  );
+  return response.data;
 };

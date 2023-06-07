@@ -243,7 +243,7 @@ const fadeOut = keyframes`
 
 const NotificationContainer = styled.div`
   position: fixed;
-  bottom: 70px;
+  bottom: 150px;
   left: 46%;
   padding: 10px 20px;
   background-color: black;

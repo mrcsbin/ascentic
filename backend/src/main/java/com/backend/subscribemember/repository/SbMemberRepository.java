@@ -18,6 +18,8 @@ public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integ
 
     SubscribeMember getFirstByMemberIdOrderBySbStartDateDesc(String memberId);
 
+    SubscribeMember getFirstByMemberIdOrderBySbStartDateAsc(String memberId);
+
 //    @Query(value = "select sb_member_num from tb_subscribe_member where member_id = :memberId", nativeQuery = true)
 //    List<Integer> getSbMemberNum(String memberId);
 

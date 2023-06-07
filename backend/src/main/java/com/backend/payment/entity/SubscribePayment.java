@@ -18,7 +18,7 @@ public class SubscribePayment {
     private Integer subscribePaymentNum;
 
     @Column
-    private String customerKey; // Member에 있는거 그대로 가져옴 -- 구독
+    private String customerKey; // billingkey 발급요청할때 씀
 
     @Column
     private String billingKey; //실 결제시 필요한 데이터

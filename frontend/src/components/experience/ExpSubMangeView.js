@@ -12,38 +12,30 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   const currentDate = new Date(); // 현재 날짜
   const startYear = start.getFullYear();
   const startMonth = start.getMonth();
+
+  const theFirstSbDate = new Date(sbMember.theFirstSbStartDate);
+  const firstYear = theFirstSbDate.getFullYear();
   const [currnetYear, currnetMonth] = [
     currentDate.getFullYear(),
     currentDate.getMonth(),
   ];
-  console.log('view' + success);
-  console.log(subscribe);
 
-  useEffect(() => {
-    if (success) {
-      console.log('success안이다잇~');
-      setTimeout(alert('성공했다잇@!!!'), 5000);
-    }
-  }, [success]);
+  // useEffect(() => {
+  //   if (success) {
+  //     console.log('success안이다잇~');
+  //     setTimeout(alert('성공했다잇@!!!'), 5000);
+  //   }
+  // }, [success]);
 
-  // if (success) {
-  //   console.log("success안이다잇~");
-  // if (success) {
-  //   console.log("success안이다잇~");
-  //   setTimeout(() => {
-  //   alert("성공했다잇@!!!");
-  //   }, 500);
-  // }
-  // }
   //구독중인 기간
   let subsDuration =
-    (currnetYear - startYear) * 12 + (currnetMonth - startMonth);
-  if (subsDuration === 0) subsDuration = 1;
+    (currnetYear - startYear) * 12 + (currnetMonth - startMonth + 1) + 1;
+  // if (subsDuration === 0) subsDuration = 1;
 
   // ------------------------------ 과거 배송상품 관련 -------------------------------------------
 
   let years = [];
-  for (let i = startYear; i <= currnetYear; i++) {
+  for (let i = firstYear; i <= currnetYear; i++) {
     years = [...years, i];
   }
 
@@ -52,29 +44,16 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   const monthOptions = (value) => {
     let months = [];
 
-    if (value == currnetYear) {
-      if (startYear == chosenYear) {
-        for (let i = startMonth + 1; i <= currnetMonth + 1; i++) {
-          months = [...months, i];
-        }
-      } else {
-        for (let i = 1; i <= currnetMonth; i++) {
-          months = [...months, i];
-        }
-      }
-    } else if (value == startYear) {
-      // 아니면 시작한 달부터 그 년의 12월까지
-      for (let i = startMonth; i <= 12; i++) {
-        months = [...months, i];
-      }
-    } else {
-      for (let i = 1; i <= 12; i++) {
-        months = [...months, i];
-      }
-    }
+    subscribe.map((sub) => {
+      let date = new Date(sub.sbSendPayDate);
 
-    setmonths(months);
+      if (date.getFullYear() == value) {
+        months = [...months, date.getMonth() + 1];
+      }
+    });
+    setmonths([...months].sort());
   };
+
   useEffect(() => {
     monthOptions(currnetYear);
   }, []);
@@ -84,6 +63,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   const [filterProd, setFilterProd] = useState([]);
   const [chosenYear, setChosenYear] = useState(currnetYear);
   const [chosenMonth, setChoenMonth] = useState(currnetMonth);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const filterByMonth = (chosenYear, chosenMonth) => {
@@ -97,9 +77,30 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
           chosenDate
       );
       setFilterProd(filtered);
+      setLoading(false);
     };
     filterByMonth(chosenYear, chosenMonth);
-  }, [chosenYear, chosenMonth, subscribe]);
+  }, [chosenYear, chosenMonth, subscribe, currnetMonth]);
+
+  //비동기 처리 시도중
+  // useEffect(() => {
+  //   const filterByMonth = async (chosenYear, chosenMonth) => {
+  //     if (chosenMonth < 10) chosenMonth = '0' + chosenMonth;
+  //     const chosenDate = chosenYear + chosenMonth;
+  //     try {
+  //       const filtered = subscribe.filter(
+  //         (data) =>
+  //           data.sbSendPayDate.slice(0, 4) + data.sbSendPayDate.slice(5, 7) ===
+  //           chosenDate
+  //       );
+  //       setFilterProd(filtered);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+  //   filterByMonth(chosenYear, chosenMonth);
+  // }, [chosenYear, chosenMonth, subscribe]);
 
   // ------------------------------------ 구독상품 정보와 리뷰 ---------------------------------------
   // let showSubsInfo = false;
@@ -112,7 +113,10 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   }
 
   const SubsInfo = () => {
-    if (filterProd.length >= 1) {
+    if (loading) {
+      console.log('로딩에 들어오긴하나');
+      return <div>Loading...</div>; // 로딩 중일 때 로딩 표시
+    } else if (filterProd.length >= 1) {
       return (
         <div className="subs-info">
           <div>
@@ -285,6 +289,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
             );
           })}
         </select>
+        {console.log('subscribe = ', subscribe)}
         {console.log('filterProd = ', filterProd)}
         {console.log('sbMember = ', sbMember)}
       </div>

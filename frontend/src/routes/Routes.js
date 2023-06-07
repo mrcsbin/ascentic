@@ -35,6 +35,7 @@ function Routes() {
       <Route path="/" element={<Pages.Main />}></Route>
       <Route path="/login" element={<Pages.Login />} />
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
+      <Route path="/login/find_id" element={<Pages.FindId />} />
       {/* <Route
         path="/mypage/*"
         element={
@@ -47,7 +48,6 @@ function Routes() {
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
-      <Route path="/member/find" element={<Pages.FindIdPw />} />
       <Route path="/signup" element={<Pages.SignUp />}></Route>
       <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
       <Route path="/goodbye" element={<Pages.Withdrawal />} />

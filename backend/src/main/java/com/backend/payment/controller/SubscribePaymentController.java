@@ -14,6 +14,8 @@ import com.backend.payment.repository.SubscribePaymentRepository;
 import com.backend.payment.service.SubscribePaymentServiceImpl;
 import com.backend.subscribemember.entity.SubscribeMember;
 import com.backend.subscribemember.repository.SbMemberRepository;
+import com.backend.subscribeproduct.entity.SubscribeProduct;
+import com.backend.subscribeproduct.repository.SbProductRepository;
 import com.backend.subscribesend.entity.SubscribeSend;
 import com.backend.subscribesend.repository.SubscribeSendRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,6 +46,8 @@ public class SubscribePaymentController {
     private final SbMemberRepository sbMemberRepository;
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
     private final SubscribeSendRepository subscribeSendRepository;
+    private final SbProductRepository sbProductRepository;
+
     private RestTemplate restTemplate = new RestTemplate();
 
     private final AutomaticPayments automaticPayments;
@@ -172,12 +176,17 @@ public class SubscribePaymentController {
                 subscribePaymentReceiptRepository.save(subscribePaymentReceipt);
 
                 SubscribeMember subscribeMember1 = sbMemberRepository.getLastSbMemberByMemberId(memberId);
+                SubscribeProduct subscribeProduct = sbProductRepository.findByScentNameScentNoteName(subscribeMember1.getTasteResult()).get(0);
                 subscribeMember1.getSbMemberNum();
                 String addr = subscribeMember1.getSbMainAddr() + " " + subscribeMember1.getSbSubAddr();
+
                 SubscribeSend subscribeSend = SubscribeSend.builder()
                         .subscribeMember(subscribeMember1)
                         .sbSendPostcode(addr)
                         .sbSendPayDate(LocalDate.now())
+                        .subscribeProduct(subscribeProduct)
+                        .sbSendState("결제완료")
+                        .sbSendPayment("card")
                         .build();
                 subscribeSendRepository.save(subscribeSend);
 

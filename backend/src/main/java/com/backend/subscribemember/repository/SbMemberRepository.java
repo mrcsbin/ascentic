@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface SbMemberRepository extends JpaRepository<SubscribeMember, Integer> {
 
-    SubscribeMember findTopByMemberId(String memberId);
+//    List<SubscribeMember> findByMemberId(String memberId);
 
     @Query(value = "select * from tb_subscribe_member where member_id = :memberId order by sb_start_date desc limit 1", nativeQuery = true)
     SubscribeMember getLastSbMemberByMemberId(String memberId);

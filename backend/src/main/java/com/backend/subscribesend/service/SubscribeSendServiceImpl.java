@@ -52,11 +52,17 @@ public class SubscribeSendServiceImpl implements SubscribeSendService {
         System.out.println(currentMemberId);
         //예전 구독상품에 대해서는 조회 불가. 탭따로만들거나 없는 기능으로
         //구독멤버레퍼지토리에 SubscribeMember findByMember(Member member); 추가;
-        SubscribeMember subsMember = sbMemberRepository
-                .findTopByMemberId(currentMemberId);
+        List<SubscribeMember> subsMember = sbMemberRepository
+                .findByMemberId(currentMemberId).get();
 
-        List<SubscribeSend> subslist = subscribeSendRepository
-                .findAllBySubscribeMember(subsMember);
+        List<SubscribeSend> subslist = new ArrayList<>();
+
+        for(SubscribeMember subscribeMember : subsMember) {
+            List<SubscribeSend> subscribeSendList = subscribeSendRepository.findBySubscribeMember(subscribeMember).get();
+            for(SubscribeSend subscribeSend : subscribeSendList) {
+                subslist.add((subscribeSend));
+            }
+        }
 
         List<SubsSendDTO> subsDTOlist = new ArrayList<>();
 

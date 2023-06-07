@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   extend: {
@@ -10,18 +10,18 @@ const initialState = {
   },
 
   orderInformation: {
-    email: "example",
-    domain: "naver.com",
-    name: "김기자",
-    tel: "01012341234",
+    email: '',
+    domain: '',
+    name: '',
+    tel: '',
   },
 
   shipInfo: {
-    shipName: "", // 수령인
-    shipTel: "", // 연락처
-    mainAddress: "", // 메인배송지
-    subAddress: "", // 상세주소
-    shipMessage: "", // 기사님께 전하는 메시지
+    shipName: '', // 수령인
+    shipTel: '', // 연락처
+    mainAddress: '', // 메인배송지
+    subAddress: '', // 상세주소
+    shipMessage: '', // 기사님께 전하는 메시지
   },
 
   pointInfo: {
@@ -37,11 +37,11 @@ const initialState = {
     account: false,
   },
 
-  paymentMethod: "kakao",
+  paymentMethod: 'kakao',
 };
 
 const orderSlice = createSlice({
-  name: "order",
+  name: 'order',
   initialState,
   reducers: {
     extendChange: (state, action) => {
@@ -122,19 +122,19 @@ const orderSlice = createSlice({
         account: false,
       };
       switch (paymentMethod.type) {
-        case "kakao":
+        case 'kakao':
           payMethod.kakao = true;
           break;
-        case "naver":
+        case 'naver':
           payMethod.naver = true;
           break;
-        case "card":
+        case 'card':
           payMethod.card = true;
           break;
-        case "deposit":
+        case 'deposit':
           payMethod.deposit = true;
           break;
-        case "account":
+        case 'account':
           payMethod.account = true;
           break;
         default:

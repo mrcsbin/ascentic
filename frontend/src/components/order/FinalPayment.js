@@ -41,6 +41,7 @@ const FinalPayment = ({
   const orderInformation = useSelector((state) => state.order.orderInformation);
   const shipInfo = useSelector((state) => state.order.shipInfo);
   const paymentMethod = useSelector((state) => state.order.paymentMethod);
+  const pointInfo = useSelector((state) => state.order.pointInfo);
 
   // 상품정보
   // const prods = props.prods;
@@ -78,14 +79,23 @@ const FinalPayment = ({
     shipCharge: shippingFee, // 배송비
     discount: 0, //할인 금액
     prodNames: prodNamesString,
+    usePoint: pointInfo.usePoint,
   };
 
   // requestData.orderPriceSum
   // requestData.shipCharge
   const [buttonDisable, setButtonDisable] = useState(false);
   useEffect(() => {
-    setButtonDisable(!isOrderFormComplete || !isDeliveryFormComplete);
-  }, [isOrderFormComplete, isDeliveryFormComplete, buttonDisable]);
+    const { check1, check2, check3, check4 } = checkValues;
+    setButtonDisable(
+      !isOrderFormComplete ||
+        !isDeliveryFormComplete ||
+        !check1 ||
+        !check2 ||
+        !check3 ||
+        !check4
+    );
+  }, [isOrderFormComplete, isDeliveryFormComplete, buttonDisable, checkValues]);
   // 구매하기 버튼 클릭 이벤트
   const buySubmit = async () => {
     const { check1, check2, check3, check4 } = checkValues;
@@ -93,10 +103,11 @@ const FinalPayment = ({
     if (check1 && check2 && check3 && check4) {
       alert("결제를 진행하겠습니다.");
       try {
-        console.log("FinalPayment")
-        console.log(products)
+        console.log("FinalPayment");
+        console.log(products);
         const res = await requestOrder(accessToken, requestData, products);
       } catch (e) {
+        console.log(e);
         console.error(e);
       }
     } else {
@@ -123,8 +134,8 @@ const FinalPayment = ({
           <div>+{addComma(requestData.shipCharge)}원</div>
         </div>
         <div>
-          <div>할인 금액</div>
-          <div>{requestData.discount}원</div>
+          <div>포인트</div>
+          <div>-{addComma(requestData.usePoint)}원</div>
         </div>
         <div>
           <div>총 금액</div>
@@ -132,7 +143,7 @@ const FinalPayment = ({
             {addComma(
               requestData.orderPriceSum +
                 requestData.shipCharge -
-                requestData.discount
+                requestData.usePoint
             )}
             원
           </div>

@@ -2,6 +2,7 @@ package com.backend.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -15,7 +16,9 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "tb_member")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -40,6 +43,7 @@ public class Member {
     @Column(name = "member_image")
     private String image;
 
+    @CreationTimestamp
     @Column(name = "member_SignUpTime")
     private LocalDate memberSignUpTime = LocalDate.now();
 
@@ -52,6 +56,9 @@ public class Member {
     @Column(name = "member_Email_Push_Yn")
     private boolean emailPushYn;
 
+    @Column(name = "member_point")
+    private Integer memberPoint;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "member_role")
     @CollectionTable(name = "tb_member_role", joinColumns = @JoinColumn(name = "member_id"))
@@ -61,34 +68,7 @@ public class Member {
     @Column(name = "member_buyWelcomeYn")
     private boolean buyWelcomePackageYn;
 
-//    @Column(name = "customer_key")
-//    private String customerKey;
-
-//    @Column
-//    @Enumerated(EnumType.STRING)
-//    private Authority authority;
-
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "authority_id") // 외래키
-//    private Authority authority;
-
-//    @OneToMany(mappedBy = "memberTest")
-//    private Set<Authority> authorities;
-
-    @Builder
-    public Member(String id, String name, String password, String email, String phone, String birthDate, String image, List<String> role) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.birthDate = birthDate;
-        this.image = image;
-        this.role = role;
-    }
-
-    public void ChangeEncodedPassword(String password) {
+    public void changeEncodedPassword(String password) {
         this.password = password;
     }
 

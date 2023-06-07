@@ -1,14 +1,19 @@
 package com.backend.review.service;
 
-import com.backend.review.dto.ReviewDto;
-import com.backend.review.dto.ReviewListDto;
+import com.backend.review.dto.ReviewRequest;
+import com.backend.review.dto.ReviewResponse;
 
 import java.util.List;
 
 public interface ReviewService {
-    public List<ReviewDto> findAllByProdNum(Integer prodNum);
 
-    void deleteReview(Integer prodNum);
+    void addReview(ReviewRequest.AddReviewDto addReviewDto);
 
-    List<ReviewListDto> getReviewList();
+    List<ReviewResponse.ReviewListDto> getReviewList();
+
+    ReviewResponse.ReviewDto getReview(String orderId, Integer orderProductNum);
+
+    void deleteReview(String orderId, Integer orderProductNum);
+
+    void setReviewCount(Integer reviewNum);
 }

@@ -3,12 +3,12 @@ package com.backend.subscribesend.controller;
 import com.backend.subscribesend.dto.SubsReviewDTO;
 import com.backend.subscribesend.dto.SubsSendDTO;
 import com.backend.subscribesend.dto.SubsSendInsertDTO;
+import com.backend.subscribesend.dto.SubscribeSendResponse;
+import com.backend.subscribesend.dto.admin.AdminSbSendUpdateDto;
+import com.backend.subscribesend.dto.admin.AdminSendDto;
 import com.backend.subscribesend.service.SubscribeSendServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,4 +34,24 @@ public class SubscribeSendController {
     }
 
     //결제일, 배송시작일, 배송완료일 업데이트를 위한 각각의 API필요 (관리자페이지용)
+
+    @GetMapping("/adminGetSbSend")
+    public List<AdminSendDto> getAdminSbSend(@RequestParam("sbSendState") String sbSendState) {
+        return subscribeSendServiceImpl.getAdminSbSend(sbSendState);
+    }
+
+    @PostMapping("/adminUpdateSbSend")
+    public void updateSbSend(@RequestBody AdminSbSendUpdateDto adminSbSendUpdateDto) {
+        subscribeSendServiceImpl.updateSbSend(adminSbSendUpdateDto);
+    }
+
+    @GetMapping("/subscribe/mypage/profile")
+    public SubscribeSendResponse.MyPageProfileSubscribeDto getMyPageProfileSubscribe() {
+        return subscribeSendServiceImpl.getMyPageProfileSubscribe();
+    }
+
+    @GetMapping("/subscribe/mypage")
+    public List<SubscribeSendResponse.MemberSubscribeDto> getMemberSubscribe() {
+        return subscribeSendServiceImpl.getMemberSubscribe();
+    }
 }

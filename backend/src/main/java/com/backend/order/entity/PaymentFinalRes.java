@@ -1,5 +1,6 @@
 package com.backend.order.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import lombok.*;
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ public class PaymentFinalRes {
 
     @Column
     private String orderId;
+
     @Column
     private String orderName;
 
@@ -27,14 +29,20 @@ public class PaymentFinalRes {
     @Column
     private Integer totalAmount;
 
+    @Nullable
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "card_id")
     private Card card;
 
+    @Nullable
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "failure_id")
     private Failure failure;
 
+    @Nullable
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "easy_pay")
+    private EasyPay easyPay;
 //    public PaymentFinalRes() {
 //    }
 

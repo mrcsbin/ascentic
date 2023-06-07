@@ -6,4 +6,5 @@ import com.backend.payment.entity.SubscribePayment;
 
 public interface SubscribePaymentService {
     void insertSubscribePayment(SubscribePayment subscribePayment);
+
 }

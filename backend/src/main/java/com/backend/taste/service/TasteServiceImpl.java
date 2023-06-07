@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -67,7 +69,16 @@ public class TasteServiceImpl implements TasteService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 //        String currentMemberId = "kka12345";
 
-        Optional<Taste> findTaste = tasteRepository.findByMemberId(currentMemberId);
+        return getTasteResultDTO(currentMemberId);
+    }
+
+    @Override
+    public TasteResultDTO adminMemberTestResult(String memberId) {
+        return getTasteResultDTO(memberId);
+    }
+
+    private TasteResultDTO getTasteResultDTO(String memberId) {
+        Optional<Taste> findTaste = tasteRepository.findByMemberId(memberId);
 
         if (!findTaste.isPresent()) {
             return TasteResultDTO.builder()
@@ -157,19 +168,10 @@ public class TasteServiceImpl implements TasteService {
     }
 
     private List<String> findTestRes(int[] resCounts) {
-        // 향 대분류
-        // 애니멀, 나무, 풀, 꽃, 이끼, 상큼, 과일, 파우더, 스파이시
         String[] scentRes = {"Animal", "Woody", "Herbal&Green", "Floral", "Mossy", "Citrus", "Fruity", "Watery&Powdery", "Special"};
-        Map<String, Integer> mapRes = new HashMap<>(); // <대분류(결과), count>
 
-        for (int i = 0; i < TASTE_TEST_RESULT_LENGTH; i++) {
-            mapRes.put(scentRes[i], resCounts[i]);
-        }
-
-        List<String> sortedRes = new ArrayList<>(mapRes.keySet());
-        // 정렬하기
-        sortedRes.sort(Comparator.comparing(mapRes::get, Comparator.nullsLast(Comparator.reverseOrder())));
-
-        return sortedRes;
+        return Arrays.stream(scentRes)
+                .sorted(Comparator.comparingInt(s -> -resCounts[Arrays.asList(scentRes).indexOf(s)]))
+                .collect(Collectors.toList());
     }
 }

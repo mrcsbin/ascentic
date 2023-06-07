@@ -7,14 +7,20 @@ import com.backend.member.jwt.JwtTokenProvider;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.member.jwt.TempPasswordGenerator;
 import com.backend.member.repository.MemberRepository;
+import com.backend.wish.entity.Wish;
+import com.backend.wish.repository.WishRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,35 +32,35 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final WishRepository wishRepository;
 
     @Override
     @Transactional
-    public String join(SignupDto signupDto) {
+    public void join(SignupDto signupDto) {
+        if (memberRepository.existsById(signupDto.getId())) {
+            throw new RuntimeException("이미 존재하는 아이디");
+        }
+        if (memberRepository.existsByEmail(signupDto.getEmail())) {
+            throw new RuntimeException("이미 존재하는 이메일");
+        }
+        if (memberRepository.existsByPhone(signupDto.getPhone())) {
+            throw new RuntimeException("이미 존재하는 휴대폰");
+        }
+
         Member member = Member.builder()
                 .id(signupDto.getId())
                 .name(signupDto.getName())
                 .email(signupDto.getEmail())
+                .memberPoint(0)
                 .phone(signupDto.getPhone())
                 .password(passwordEncoder.encode(signupDto.getPassword()))
                 .role(Collections.singletonList("USER"))
-                .birthDate(signupDto.getBirth())
+                .birthDate(signupDto.getBirthDate())
+                .infoAgree(signupDto.isInfoAgree())
+                .emailPushYn(signupDto.isEmailPush())
+                .snsPushYn(signupDto.isSnsPush())
                 .build();
-
-        return memberRepository.save(member).getId();
-    }
-
-    @Override
-    public boolean insertMember(Member member) {
-        if (memberRepository.existsById(member.getId())) {
-            return false; // 이미 동일한 PK 값이 존재하면 false 반환
-        }
-        try {
-            memberRepository.save(member);
-            return true; // 삽입 성공 시 true 반환
-        } catch (Exception e) {
-            System.out.println(e);
-            return false; // 삽입 실패 시 false 반환
-        }
+        memberRepository.save(member);
     }
 
     @Override
@@ -74,10 +80,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void updateMember(Member member) {
-        member.setRole(Collections.singletonList("USER"));
-        member.ChangeEncodedPassword(passwordEncoder.encode(member.getPassword()));
-        memberRepository.save(member);
+    public String updateMember(UpdateMemberDto updateMemberDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("해당회원이 존재하지 않음"));
+        if (passwordEncoder.matches(updateMemberDto.getPassword(), member.getPassword())) {
+            member.changeEncodedPassword(passwordEncoder.encode(updateMemberDto.getNewPassword()));
+            memberRepository.save(member);
+            return "비밀번호가 변경되었습니다.";
+        } else {
+            return "현재 비밀번호가 일치하지 않습니다.";
+        }
     }
 
     @Override
@@ -88,8 +100,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void deleteMemberV2(String id) {
-        memberRepository.deleteById(id);
+    public String deleteMemberV2(DeleteMemberDto deleteMemberDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("해당회원이 존재하지 않음"));
+        if (passwordEncoder.matches(deleteMemberDto.getPassword(), member.getPassword())) {
+            memberRepository.deleteById(currentMemberId);
+            return "탈퇴가 완료 되었습니다.";
+        } else {
+            return "비밀번호가 일치하지 않습니다.";
+        }
     }
 
     @Override
@@ -100,11 +119,6 @@ public class MemberServiceImpl implements MemberService {
             Member member = findData.get();
             if (passwordEncoder.matches(loginDto.getPassword(), member.getPassword()) && loginDto.getId().equals(member.getId())) {
                 JwtTokenDto jwtTokenDto = jwtTokenProvider.generateToken(member);
-//                JwtTokenDto jwtTokenDto = JwtTokenDto.builder()
-//                        .grantType("bearer")
-//                        .accessToken(jwtToken)
-//                        .refreshToken(jwtToken)
-//                        .build();
                 log.debug("jwtToken : {}", jwtTokenDto);
                 return jwtTokenDto;
             } else {
@@ -124,16 +138,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public String findPw(FindDataDto findDataDto) {
-        Optional<Member> member = memberRepository.findByNameAndIdAndPhone(findDataDto.getName(), findDataDto.getId(), findDataDto.getPhone());
+        Optional<Member> member = memberRepository.findByEmailAndPhone(findDataDto.getEmail(), findDataDto.getPhone());
         Optional<Member> sendTo = memberRepository.findEmailByPhone(findDataDto.getPhone());
         String tempPassword = TempPasswordGenerator.generateRandomPassword(10);
         if (member.isPresent()) {
             changeTempPw(member.get(), tempPassword);
             // 이메일 전송
-            mailController.sendMail(sendTo.get(), tempPassword, findDataDto.getName());
-
+            mailController.sendMail(sendTo.get(), tempPassword, member.get().getName());
+            System.out.println(tempPassword);
+            System.out.println(member.get().getName());
+            System.out.println(sendTo.get());
+            System.out.println("======================================================");
+            return "성공";
         }
-        return "해당 회원이 존재하지 않습니다.";
+        else return "실패";
+
     }
 
     @Override
@@ -155,7 +174,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     public void changeTempPw(Member member, String tempPassword) {
-        member.ChangeEncodedPassword(passwordEncoder.encode(tempPassword));
+        member.changeEncodedPassword(passwordEncoder.encode(tempPassword));
         memberRepository.save(member);
     }
 
@@ -167,15 +186,23 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다"));
     }
 
+    @Override
+    public MemberResponse.MyPageDto getMyPageProfile() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원정보 없음"));
+        List<Wish> wishList = wishRepository.findAllByMemberId(currentMemberId);
+        return MemberResponse.MyPageDto.of(member, wishList.size());
+    }
+
     @PostConstruct
     public void init() {
         Member member = Member.builder()
                 .id("admin")
-                .password(passwordEncoder.encode("admin"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("admin@ascentic.com")
-                .image("profileimage1")
                 .name("관리자")
                 .birthDate("0101")
+                .memberPoint(0)
                 .phone("01100000000")
                 .role(Collections.singletonList("ADMIN"))
                 .build();
@@ -183,9 +210,9 @@ public class MemberServiceImpl implements MemberService {
 
         Member member1 = Member.builder()
                 .id("sungbin")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test1@ascentic.com")
-                .image("profileimage1")
+                .memberPoint(0)
                 .name("조성빈")
                 .birthDate("0101")
                 .phone("01100000001")
@@ -195,9 +222,9 @@ public class MemberServiceImpl implements MemberService {
 
         Member member2 = Member.builder()
                 .id("hansic")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test2@ascentic.com")
-                .image("profileimage1")
+                .memberPoint(0)
                 .name("조한식")
                 .birthDate("0101")
                 .phone("01100000002")
@@ -207,9 +234,9 @@ public class MemberServiceImpl implements MemberService {
 
         Member member3 = Member.builder()
                 .id("kyungmin")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test3@ascentic.com")
-                .image("profileimage1")
+                .memberPoint(0)
                 .name("강경민")
                 .birthDate("0101")
                 .phone("01100000003")
@@ -219,9 +246,9 @@ public class MemberServiceImpl implements MemberService {
 
         Member member4 = Member.builder()
                 .id("haesung")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test4@ascentic.com")
-                .image("profileimage1")
+                .memberPoint(0)
                 .name("나해성")
                 .birthDate("0101")
                 .phone("01100000004")
@@ -231,9 +258,9 @@ public class MemberServiceImpl implements MemberService {
 
         Member member5 = Member.builder()
                 .id("chaeeun")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test5@ascentic.com")
-                .image("profileimage1")
+                .memberPoint(0)
                 .name("전채은")
                 .birthDate("0101")
                 .phone("01100000005")
@@ -243,9 +270,9 @@ public class MemberServiceImpl implements MemberService {
 
         Member member6 = Member.builder()
                 .id("sungmin")
-                .password(passwordEncoder.encode("1234"))
+                .password(passwordEncoder.encode("djtpsxlr12!@"))
                 .email("test6@ascentic.com")
-                .image("profileimage1")
+                .memberPoint(0)
                 .name("황성민")
                 .birthDate("0101")
                 .phone("01100000006")
@@ -254,5 +281,42 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member6);
     }
 
+    @Override
+    public void updateProfileImg(MultipartFile profileImg) throws IOException {
+        if (profileImg.isEmpty()) return;
 
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        File storedFilename = new File(UUID.randomUUID().toString() + "_" + profileImg.getOriginalFilename());
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원정보 없음"));
+        member.setImage(storedFilename.toString());
+        profileImg.transferTo(storedFilename);
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void delProfileImg() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("화원 정보 없음"));
+        member.setImage(null);
+
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void updatePushYn(PushYnDto pushYnDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("화원 정보 없음"));
+        member.setSnsPushYn(pushYnDto.getSnsPushYn());
+        member.setEmailPushYn(pushYnDto.getEmailPushYn());
+
+        memberRepository.save(member);
+    }
+
+    @Override
+    public Integer getPoint() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원 정보 없음"));
+        return member.getMemberPoint();
+    }
 }

@@ -1,6 +1,5 @@
 .event-list-wrapper {
   width: 100%;
-  padding-top: 100px;
 }
 .event-list-wrapper .event-list h1 {
   text-align: center;
@@ -274,7 +273,23 @@
   padding: 10px 0;
   text-align: center;
 }
+.infobox span {
+  font-weight: lighter;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+}
 
 .event-list h1 {
   font-weight: bold;
+}
+.event-video {
+  width: 100%;
+  height: 30vw;
+  overflow: hidden;
+}
+.event-video-webm {
+  width: 100vw;
+  height: 30vw;
+  object-fit: cover;
+  object-position: center top;
 }

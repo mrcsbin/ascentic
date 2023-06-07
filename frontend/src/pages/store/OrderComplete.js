@@ -30,7 +30,7 @@ function OrderComplete() {
       })
       .then((res) => {
         const data = res.data;
-
+        console.log(data);
         if (data.orderId === "0") {
           navigate("/NotFound");
         } else {
@@ -45,6 +45,7 @@ function OrderComplete() {
             orderMemberPhone: data.shipTel,
             ShippingCharge: data.shipCharge,
             Price: data.orderPriceSum,
+            usePoint: data.usePoint,
             ProdNames: data.prodNames,
             count: data.totalProdCount,
             OrderState: data.card.orderState,
@@ -53,11 +54,13 @@ function OrderComplete() {
             cardType: data.card.cardType,
             cardOwnerType: data.card.ownerType,
             cardInstallmentPlanMonths: data.card.installmentPlanMonths,
+            easyPay: data.easyPay.provider,
             failureCode: data.failure.code,
             failureMessage: data.failure.message,
           });
         }
         setLoading(false);
+        console.log(orderInfo)
       })
       .catch((error) => {
         console.log("처음 데이터 못 받아옴");
@@ -67,7 +70,7 @@ function OrderComplete() {
   }, []);
 
   return (
-    <div>
+    <div style={{paddingBottom: "107px"}}>
       {loading ? (
         <div>Loading...</div>
       ) : (
@@ -104,20 +107,22 @@ function OrderComplete() {
                   {orderInfo.orderMemberEmail}) <br />
                 </td>
                 <td>
-                  {`${CardInfo[orderInfo.cardIssuerCode]} ${
-                    orderInfo.cardType
-                  } `}
-                  <br />
-                  {orderInfo.cardNumber}
-                  {/* <br /> */}
-                  {/* 신용/체크 : {orderInfo.cardType} */}
-                  {/* <br /> */}
-                  {/* 개인/법인 : {orderInfo.cardOwnerType} */}
-                  <br />
-                  {orderInfo.cardInstallmentPlanMonths === 0 ? (
-                    <span>일시불</span>
+                  {!orderInfo.cardNumber ? (
+                    <span>{orderInfo.easyPay}</span>
                   ) : (
-                    <span>{orderInfo.cardInstallmentPlanMonths}개월</span>
+                    <>
+                      {`${CardInfo[orderInfo.cardIssuerCode]} ${
+                        orderInfo.cardType
+                      }`}
+                      <br />
+                      {orderInfo.cardNumber}
+                      <br />
+                      {orderInfo.cardInstallmentPlanMonths === 0 ? (
+                        <span>일시불</span>
+                      ) : (
+                        <span>{orderInfo.cardInstallmentPlanMonths}개월</span>
+                      )}
+                    </>
                   )}
                 </td>
               </tr>
@@ -126,7 +131,8 @@ function OrderComplete() {
                   <br />
                   <br />
                   <br />
-                  {orderInfo.ProdNames} <br />총 {orderInfo.count} 개
+                  {orderInfo.ProdNames} <br />
+                  <br />총 {orderInfo.count} 개
                   <br />
                   {/* <a href="#">더보기</a> */}
                 </td>
@@ -135,6 +141,8 @@ function OrderComplete() {
                   <br />
                   <br />
                   {orderInfo.shipMainAddr}
+                  <br />
+                  <br />
                   {orderInfo.shipSubAddr}
                   <br />
                   <br />
@@ -145,7 +153,10 @@ function OrderComplete() {
                   <br />
                   <div>{orderInfo.paymentMethod}</div>
                   <br />
-                  <div>{orderInfo.Price + orderInfo.ShippingCharge}원</div>
+                  <div>
+                    <div>주문 총 금액</div>
+                    <div>{orderInfo.Price + orderInfo.ShippingCharge}원</div>
+                  </div>
                   <div>
                     <div>
                       <div>주문 금액</div>
@@ -156,9 +167,17 @@ function OrderComplete() {
                       <div>+{orderInfo.ShippingCharge} 원</div>
                     </div>
                     <div>
+                      <div>사용 포인트</div>
+                      <div>-{orderInfo.usePoint} 원</div>
+                    </div>
+                    <div>
                       <div>총 결제 금액</div>
                       <div>
-                        +{orderInfo.Price + orderInfo.ShippingCharge} 원
+                        +
+                        {orderInfo.Price +
+                          orderInfo.ShippingCharge -
+                          orderInfo.usePoint}{" "}
+                        원
                       </div>
                     </div>
                   </div>

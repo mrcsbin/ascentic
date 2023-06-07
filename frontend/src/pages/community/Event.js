@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/Event.css";
 import styled from "styled-components";
+import flowervideo from "../../assets/flowers.webm";
 import { NavLink } from "react-router-dom";
 function Event() {
   const [posts, setPosts] = useState([]);
@@ -42,27 +43,16 @@ function Event() {
     setSelectedStatus(event.target.value);
   };
 
-  const getStatusText = (status) => {
-    switch (status) {
-      case 0:
-        return "저장";
-      case 1:
-        return "임시 저장";
-      case 2:
-        return "삭제";
-      default:
-        return "";
-    }
-  };
-
   const filterPostsByStatus = (postStatus) => {
     if (postStatus === "all") {
-      return posts;
+      return posts.filter((post) => post.postStatus === 0);
     } else {
-      return posts.filter((post) => post.postStatus === Number(postStatus));
+      return posts.filter(
+        (post) =>
+          post.postStatus === Number(postStatus) && post.postStatus === 0
+      );
     }
   };
-
   // 페이지 수 계산
   const totalPages = Math.ceil(posts.length / productsPerPage);
 
@@ -101,6 +91,11 @@ function Event() {
     " 여러분은 우리와 함께하는 이 이벤트를 통해 향기의 세계를 더 깊이 탐험하고, 멋진 선물과 특별한 혜택을 누릴 수 있습니다.";
   return (
     <div className="event-list-wrapper">
+      <div className="event-video">
+        <video className="event-video-webm" loop autoPlay muted>
+          <source src={flowervideo} type="video/webm" />
+        </video>
+      </div>
       <div className="event-list">
         <h1>이벤트</h1>
         <div className="infobox">
@@ -134,7 +129,6 @@ function Event() {
                         to={`/community/event/${post.postId}`}
                         className="postLink"
                       >
-                        {" "}
                         <div className="post">
                           <div className="post-img">
                             {post.postImage && (

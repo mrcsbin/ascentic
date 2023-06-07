@@ -1,6 +1,7 @@
 package com.backend.order.dto;
 
 import com.backend.order.entity.Card;
+import com.backend.order.entity.EasyPay;
 import com.backend.order.entity.Failure;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +26,6 @@ public class SuccessOrderDto {
     private String orderState; //결제 상태
     private Failure failure; //결제 실패시
     private Card card; //결제수단
+    private EasyPay easyPay; //토스 or 카카오페이 등
     }
 

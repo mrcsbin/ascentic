@@ -60,6 +60,7 @@ const ExpTaste = () => {
         setResultData(res.data);
       } catch (e) {
         console.log(e);
+        setResultData({ firstPlace: "null" });
       }
       setLoading(false);
     };
@@ -82,7 +83,7 @@ const ExpTaste = () => {
   }
 
   return (
-    <div>
+    <div style={{paddingBottom: "107px"}}>
       {activeComp === 0 ? (
         <ExpTestMain resultData={resultData} setActiveComp={setActiveComp} />
       ) : (

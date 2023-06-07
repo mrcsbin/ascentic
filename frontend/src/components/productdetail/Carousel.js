@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import TEST_IMAGE from "../../assets/correct.png";
 import RIGHT_ARROW from "../../assets/productdetail/right-arrow.png";
 import LEFT_ARROW from "../../assets/productdetail/left-arrow.png";
 import axios from "axios";
 import Loading from "../common/Loading";
 import { Link } from "react-router-dom";
+import { getRecommendList } from "../../api/ProductApi";
 
-// const items = [
-//   { id: 1, name: "Item 1" },
-//   { id: 2, name: "Item 2" },
-//   { id: 3, name: "Item 3" },
-//   { id: 4, name: "Item 4" },
-//   { id: 5, name: "Item 5" },
-//   { id: 6, name: "Item 6" },
-//   { id: 7, name: "Item 7" },
-// ];
-
-const Carousel = ({ prodNum, category, navigate }) => {
+const Carousel = ({ prodNum, category, scentNoteName, navigate }) => {
   const [loading, setLoading] = useState(true);
   const [recommendProduct, setRecommendProduct] = useState();
   const [translateXValue, setTranslateXValue] = useState(0);
@@ -26,7 +16,7 @@ const Carousel = ({ prodNum, category, navigate }) => {
   const slideNext = () => {
     const carouselContainer = document.querySelector(".carousel-container");
     const containerWidth = carouselContainer.offsetWidth;
-    const visibleItems = 3;
+    const visibleItems = 4;
 
     const itemCardWidth = containerWidth / visibleItems;
     const totalItems = recommendProduct.length;
@@ -69,15 +59,18 @@ const Carousel = ({ prodNum, category, navigate }) => {
 
   useEffect(() => {
     const fetchRecommendList = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/recommend/${prodNum}?category=${category}`
-        );
-        console.log(res.data);
-        setRecommendProduct(res.data);
-      } finally {
-        setLoading(false);
-      }
+      // try {
+      //   const res = await axios.get(
+      //     `http://localhost:8080/product/recommend/${prodNum}?category=${category}`
+      //   );
+      //   console.log(res.data);
+      //   setRecommendProduct(res.data);
+      // } finally {
+      // setLoading(false);
+      // }
+      const response = await getRecommendList(prodNum, scentNoteName);
+      setRecommendProduct(response);
+      setLoading(false);
     };
     fetchRecommendList();
   }, []);
@@ -128,15 +121,15 @@ const Carousel = ({ prodNum, category, navigate }) => {
         </CarouselWrapper>
         <ButtonBox>
           <NextButton
-            show={currentPage !== Math.ceil(recommendProduct.length / 3)}
+            show={currentPage !== Math.ceil(recommendProduct.length / 4)}
             onClick={slideNext}
             src={RIGHT_ARROW}
           />
         </ButtonBox>
       </Wrapper>
-      <PageIndicator>{`${currentPage}/${Math.ceil(
-        recommendProduct.length / 3
-      )}`}</PageIndicator>
+      {/* <PageIndicator>{`${currentPage}/${Math.ceil(
+        recommendProduct.length / 4
+      )}`}</PageIndicator> */}
     </>
   );
 };
@@ -166,8 +159,8 @@ const CarouselContainer = styled.div`
 `;
 
 const CarouselItem = styled.div`
-  flex: 0 0 calc(33.3333%);
-  height: 500px;
+  flex: 0 0 calc(25%);
+  height: 400px;
   padding: 5%;
   box-sizing: border-box;
 `;
@@ -186,18 +179,22 @@ const PrevButton = styled.img`
 
 const CarouselImage = styled.img`
   width: 100%;
+  transition: border-bottom 0.3s ease-in-out;
+  :hover {
+    border-bottom: 5px solid black;
+  }
 `;
 
 const CarouselName = styled.div`
   text-align: center;
   margin: 20px 0;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 `;
 
 const CarouselPrice = styled.div`
   text-align: center;
   margin: 20px 0;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
 `;
 
 const PageIndicator = styled.div`

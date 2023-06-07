@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  activeTab: "주문",
+  activeTab: "",
 };
 
 const myPageReducer = createSlice({

@@ -28,3 +28,13 @@ export const requestTasteRes = async (accessToken) => {
     console.error(error);
   }
 };
+
+export const isSubscribeMember = async (accessToken) => {
+  const response = await axios.get("http://localhost:8080/subscribe/member", {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+
+  return response.data;
+};

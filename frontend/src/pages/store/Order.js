@@ -2,7 +2,6 @@ import ProductInfo from "../../components/order/ProductInfo";
 import OrderInfo from "../../components/order/OrderInfo";
 import DiscountBenefit from "../../components/order/DiscountBenefit";
 import DeliveryInfo from "../../components/order/DeliveryInfo";
-import Payment from "../../components/order/Payment";
 import FinalPayment from "../../components/order/FinalPayment";
 import { useLocation } from "react-router-dom";
 import ExtendAble from "../../components/order/ExtendAble";
@@ -15,8 +14,10 @@ import styled from "styled-components";
 
 // 구매 과정 페이지
 const Order = () => {
+  const nav = useNavigate();
   const [isOrderFormComplete, setIsOrderFormComplete] = useState(false);
   const [isDeliveryFormComplete, setIsDeliveryFormComplete] = useState(false);
+
   // 상품정보 (서버에 전송할 데이터)
   const location = useLocation();
   const cartItems = location.state.cartItems;
@@ -91,7 +92,7 @@ const Order = () => {
             />
           </ExtendAble>
 
-          {/* <ExtendAble
+          <ExtendAble
             title="할인 혜택"
             isOpen={extend.disCount}
             onClick={() => handleExtendChange("disCount")}
@@ -99,12 +100,12 @@ const Order = () => {
             <DiscountBenefit />
           </ExtendAble>
 
-          <ExtendAble
+          {/* <ExtendAble
             title="결제 수단"
             isOpen={extend.payment}
             onClick={() => handleExtendChange("payment")}
-          > */}
-          {/* <Payment />
+          >
+            <Payment />
           </ExtendAble> */}
 
           <OrderNotice>
@@ -139,6 +140,7 @@ const OrderWrap = styled.div`
   // OrderWrap 스타일 정의
   padding-top: 110px;
   margin-left: 150px;
+  padding-bottom: 107px;
 `;
 
 const Title = styled.div`

@@ -51,10 +51,8 @@ public class ProductController {
         return productServiceImpl.getSearchList(searchData);
     }
 
-    @GetMapping("/recommend/{productNum}")
-    public List<ProductResponse.RecommendProductDto> getRecommendList(@PathVariable Integer productNum, @RequestParam String category) {
-        System.out.println("productNum = " + productNum);
-        System.out.println("category = " + category);
-        return productServiceImpl.getRecommendList(category, productNum);
+    @GetMapping("/product/recommend/{productNum}")
+    public List<ProductResponse.RecommendProductDto> getRecommendList(@RequestParam String scentNoteName, @PathVariable Integer productNum) {
+        return productServiceImpl.getRecommendList(scentNoteName, productNum);
     }
 }

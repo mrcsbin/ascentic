@@ -1,6 +1,7 @@
 package com.backend.product.service;
 
 import com.backend.member.jwt.SecurityUtils;
+import com.backend.orderproduct.repository.OrderProductRepository;
 import com.backend.product.dto.ProductResponse;
 import com.backend.product.dto.admindto.AdminProdUpdateInfoDto;
 import com.backend.product.dto.admindto.AdminProductListDto;
@@ -18,7 +19,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,8 +54,8 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(findProduct);
 
         List<ProductResponse.ReviewDto> reviews = reviewRepository.findByProdNum(prodNum).stream()
-                        .map(ProductResponse.ReviewDto::of)
-                        .collect(Collectors.toList());
+                .map(ProductResponse.ReviewDto::of)
+                .collect(Collectors.toList());
 
         return ProductResponse.ProductDetailDto.of(findProduct, currentMemberId, reviews);
     }
@@ -62,7 +65,8 @@ public class ProductServiceImpl implements ProductService {
         List<Product> products = scentName.equals("all") ? productRepository.findAll() : productRepository.findByScentScentNoteName(scentName);
 
         return products.stream()
-                .filter(product -> !product.getProdState().equals("판매종료"))
+                .filter(product -> product.getProductOption().stream()
+                        .anyMatch(productOption -> productOption.getOptionState().equals("판매중")))
                 .map(ProductResponse.ProductListDto::of)
                 .collect(Collectors.toList());
     }
@@ -95,13 +99,36 @@ public class ProductServiceImpl implements ProductService {
         product.setScent(scentRepository.findById(adminProdUpdateInfoDto.getScentName()).orElse(null));
         product.setProdName(adminProdUpdateInfoDto.getProdName());
         product.setProdCategory(adminProdUpdateInfoDto.getProdCategory());
-        product.setProdState(adminProdUpdateInfoDto.getProdState());
+        product.setProdState(optionStateCheckResult(adminProdUpdateInfoDto.getOptions()));
         product.setProdInfo(adminProdUpdateInfoDto.getProdInfo());
         Product resProduct = productRepository.save(product);
 
         updateOptions(adminProdUpdateInfoDto, product); // 옵션 업데이트
 
         return resProduct.getProdNum();
+    }
+
+    private String optionStateCheckResult(List<OptionDto> optionDtos) {
+        boolean isSellOption = false;
+        boolean isSoldOutOption = false;
+
+        for (OptionDto optionDto : optionDtos) {
+            String optionState = optionDto.getOptionState();
+
+            if (optionState.equals("판매중")) {
+                isSellOption = true;
+            } else if (optionState.equals("품절")) {
+                isSoldOutOption = true;
+            }
+        }
+
+        if (isSellOption) {
+            return "판매중";
+        } else if (isSoldOutOption) {
+            return "품절";
+        } else {
+            return "판매종료";
+        }
     }
 
     // 옵션 업데이트
@@ -133,13 +160,12 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<ProductResponse.RecommendProductDto> getRecommendList(String category, Integer productNum) {
-        int pageNumber = 0; // 첫 번째 페이지
-        int pageSize = 6; // 페이지 크기는 6
-
-        System.out.println("category = " + category);
+    public List<ProductResponse.RecommendProductDto> getRecommendList(String scentNoteName, Integer productNum) {
+        int pageNumber = 0;
+        int pageSize = 8;
+        List<String> prodState = Arrays.asList("판매종료", "품절");
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Product> productPage = productRepository.findByProdCategoryAndProdNumNot(category, productNum, pageable);
+        Page<Product> productPage = productRepository.findByScentScentNoteNameAndProdStateNotInAndProdNumNot(scentNoteName, prodState, productNum, pageable);
 
         return productPage.getContent()
                 .stream()

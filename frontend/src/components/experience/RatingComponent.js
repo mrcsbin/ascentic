@@ -3,10 +3,24 @@ import axios from "axios";
 import React, { useState } from "react";
 
 const RatingForm = styled.form`
+  .header {
+    margin-top: 15px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+  }
   .wrapper {
-    display: block;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     font-size: 20px;
     height: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 0 15px;
   }
 
   .rating-fieldset {
@@ -14,50 +28,68 @@ const RatingForm = styled.form`
     direction: rtl;
     border: 0;
   }
-
   .rating-fieldset legend {
-    text-align: right;
+    text-align: left;
   }
-
   .rating-fieldset input[type="radio"] {
     display: none;
   }
-
   .rating-fieldset label {
-    font-size: 3em;
+    font-size: 2rem;
     color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
+    text-shadow: 0 0 0 lightgray;
   }
-
-  .rating-fieldset label:hover {
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+  .rating-fieldset label.active:hover {
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0.99);
   }
-
-  .rating-fieldset label:hover ~ label {
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+  .rating-fieldset label.active:hover ~ label {
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0.99);
   }
-
   .rating-fieldset input[type="radio"]:checked ~ label {
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    text-shadow: 0 0 0 rgba(0, 0, 0, 0.99);
+  }
+  .rating-fieldset.disabled label {
+    pointer-events: none;
   }
 
+  .textreview {
+    width: 60%;
+  }
   #reviewContents {
-    width: 90%;
-    height: 20px;
-    // box-sizing: border-box;
-    margin-top: 1.3%;
+    width: 100%;
+    height: 25px;
+    border: 0;
+    margin: 0 15px;
+    padding: 5px 15px;
+    font-size: 1.2rem;
+    font-weight: 500;
     border-bottom: solid 1.5px #d3d3d3;
-    border-left: none;
-    border-top: none;
-    border-right: none;
-    font-size: 18px;
     resize: none;
+  }
+
+  .wrapper > button {
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 5px 15px;
+    margin: 0 10px;
+    color: white;
+    background-color: black;
+    border: 1.5px solid black;
+  }
+  .wrapper > button:hover {
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 5px 15px;
+    color: black;
+    background-color: white;
+    border: 1.5px solid black;
   }
 `;
 
 const RatingComponent = ({ sbSendNum, score, review }) => {
   const [rating, setRating] = useState(score);
   const [reviewText, setReviewText] = useState(score !== null ? review : "");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.name === "reviewStar") {
@@ -70,6 +102,12 @@ const RatingComponent = ({ sbSendNum, score, review }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 별점이랑 텍스트 다 채워야지 제출 됨~
+    if (!rating || reviewText.length < 10) {
+      alert("별점과 리뷰(10자 이상)를 모두 채워주세요");
+      return;
+    }
+
     const reviewData = {
       sbSendNum: sbSendNum,
       sbSendScore: rating,
@@ -79,6 +117,7 @@ const RatingComponent = ({ sbSendNum, score, review }) => {
     try {
       const response = await axios.post("/subscribeReview", reviewData);
       console.log(response.data);
+      setIsSubmitted(true);
     } catch (error) {
       console.error(error);
     }
@@ -90,8 +129,13 @@ const RatingComponent = ({ sbSendNum, score, review }) => {
       onChange={handleChange}
       onSubmit={handleSubmit}
     >
+      <div className="header">리뷰</div>
       <div className="wrapper">
-        <fieldset className="rating-fieldset" value="5">
+        {/* 제출 후에는 별점과 리뷰 변경 불가능 */}
+        <fieldset
+          className={`rating-fieldset ${isSubmitted ? "disabled" : "active"}`}
+          value="5"
+        >
           <input
             type="radio"
             name="reviewStar"
@@ -138,7 +182,7 @@ const RatingComponent = ({ sbSendNum, score, review }) => {
           />
           <label htmlFor="rate5">★</label>
         </fieldset>
-        <div>
+        <div className="textreview">
           <textarea
             // className="col-auto form-control"
             type="text"
@@ -152,11 +196,7 @@ const RatingComponent = ({ sbSendNum, score, review }) => {
             }
           ></textarea>
         </div>
-        {score === null && (
-          <div>
-            <button type="submit">Submit</button>
-          </div>
-        )}
+        {!isSubmitted && score === null && <button type="submit">등록</button>}
       </div>
     </RatingForm>
   );

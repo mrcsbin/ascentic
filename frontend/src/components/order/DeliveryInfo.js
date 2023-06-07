@@ -58,13 +58,12 @@ const DeliveryInfo = ({ isDeliveryFormComplete, onChange }) => {
       const isShipTelFilled = shipInfo.shipTel.trim() !== "";
       const isMainAddressFilled = shipInfo.mainAddress.trim() !== "";
       const isSubAddressFilled = shipInfo.subAddress.trim() !== "";
-      const isShipMessageFilled = shipInfo.shipMessage.trim() !== "";
+
       const isComplete =
         isShipNameFilled &&
         isShipTelFilled &&
         isMainAddressFilled &&
-        isSubAddressFilled &&
-        isShipMessageFilled;
+        isSubAddressFilled;
 
       onChange(isComplete);
     };
@@ -86,7 +85,7 @@ const DeliveryInfo = ({ isDeliveryFormComplete, onChange }) => {
         ></input>
       </RecipientContent>
       <TelContent>
-        <div>연락처</div>{" "}
+        <div>연락처</div>
         {/* 연락처  아무렇게나 입력해도 010-1234-1234 형태로 바꾸는 기능 추가해야될 듯?*/}
         <input
           type="text"

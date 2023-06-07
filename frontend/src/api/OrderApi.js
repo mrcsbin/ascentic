@@ -32,6 +32,13 @@ export const requestOrder = async (accessToken, requestData, products) => {
 
           .then((res) => {
             console.log(res.data);
+          })
+          .catch(() => {
+            axios.get("/order/delete", {
+              headers: {
+                Authorization: "Bearer " + accessToken,
+              },
+            });
           });
 
         // ProdOrder 생성하기
@@ -57,9 +64,9 @@ export const requestOrder = async (accessToken, requestData, products) => {
         );
       });
   } catch (e) {
-    if (e.code === "USER_CANCEL") {
-      alert("사용자가 결제를 취소하였습니다!");
-    }
+    if (e.code != null) {
+      alert(e.message);
+    } //카트에 다시 담아두기
   }
 };
 
@@ -90,5 +97,23 @@ export const getProductInfo = async (cartNum) => {
   const queryParam = cartNum.map((cartNum) => `cartNum=${cartNum}`).join("&");
   const response = await axios.get(`${ORDER_API_URL}/order?${queryParam}`);
 
+  return response.data;
+};
+
+export const getOrderList = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/getlist`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const getOrderListInMyPageProfile = async (accessToken) => {
+  const response = await axios.get(`${ORDER_API_URL}/order/get/mypage-profile`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return response.data;
 };

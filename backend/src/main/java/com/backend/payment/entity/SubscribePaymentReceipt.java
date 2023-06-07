@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table()
+@Table(name="tb_subscribe_payment_receipt")
 @Entity
 public class SubscribePaymentReceipt {
 

@@ -3,18 +3,16 @@ package com.backend.review.service;
 import com.backend.member.jwt.SecurityUtils;
 import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
-import com.backend.review.dto.ReviewDto;
-import com.backend.review.dto.PostReviewDto;
-import com.backend.review.dto.ReviewListDto;
+import com.backend.review.dto.ReviewRequest;
+import com.backend.review.dto.ReviewResponse;
 import com.backend.review.entity.Review;
 import com.backend.review.repository.ReviewRepository;
-import com.backend.productimage.repository.ProductImageRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,72 +20,63 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final OrderProductRepository orderProductRepository;
-    private final ProductImageRepository productImageRepository;
 
     @Override
-    public List<ReviewDto> findAllByProdNum(Integer prodNum) {
-        List<Review> prodReviews = reviewRepository.findByProdNum(prodNum);
-        List<ReviewDto> reviewDtos = new ArrayList<>();
+    public void addReview(ReviewRequest.AddReviewDto postReviewDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().orElseThrow(() -> new RuntimeException("Current member ID not found"));
 
-        for (Review prodReview : prodReviews) {
-            reviewDtos.add(ReviewDto.of(prodReview));
-        }
-        return reviewDtos;
-    }
+        OrderProduct orderProduct = orderProductRepository.findById(postReviewDto.getOrderProductNum())
+                .orElseThrow(() -> new RuntimeException("Order product not found"));
 
-    public void addReview(PostReviewDto postReviewDto) {
-        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        OrderProduct orderProduct = orderProductRepository.findById(postReviewDto.getOrderProductNum()).get();
-        System.out.println("orderProduct.getMemberId() = " + orderProduct.getMemberId());
         reviewRepository.save(Review.builder()
                 .memberId(currentMemberId)
                 .prodNum(postReviewDto.getProductNum())
                 .reviewContent(postReviewDto.getReviewContent())
-                .reviewDate(postReviewDto.getReviewDate())
                 .reviewScore(postReviewDto.getReviewScore())
-                .orderProduct(orderProductRepository.findById(postReviewDto.getOrderProductNum()).get())
+                .reviewGoodCount(0)
+                .orderProduct(orderProduct)
                 .build());
-        orderProduct.setOrderReviewState(true);
+
+        orderProduct.setOrderReviewState("리뷰 작성 완료");
         orderProductRepository.save(orderProduct);
     }
 
-    /**
-     * Order 테이블에 order_review_state 추가해야함
-     */
     @Override
-    public List<ReviewListDto> getReviewList() {
+    public List<ReviewResponse.ReviewListDto> getReviewList() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         List<Review> reviewList = reviewRepository.findByMemberId(currentMemberId);
-        List<ReviewListDto> reviewListDto = new ArrayList<>();
-        for (Review review : reviewList) {
-            String productImage = productImageRepository.findByProdImageTypeAndProductProdNum(0, review.getProdNum()).getProdSaveName();
-            String orderDate = String.valueOf(review.getOrderProduct().getOrder().getOrderDate());
-            orderDate = orderDate.replaceFirst("-", "년 ").replaceFirst("-", "월 ").replaceFirst("T", "일").substring(0, 13);
-            reviewListDto.add(ReviewListDto.builder()
-                    .productImage(productImage)
-                    .productName(review.getOrderProduct().getProductOption().getProduct().getProdName())
-                    .productOptionName(review.getOrderProduct().getProductOption().getProdOption())
-                    .productNum(review.getProdNum())
-                    .orderDate(orderDate)
-                    .orderProductQuantity(review.getOrderProduct().getProdCount())
-                    .orderProductPrice(review.getOrderProduct().getProductOption().getProdPrice())
-                    .orderProductReviewState(review.getOrderProduct().isOrderReviewState())
-                    .orderProductNum(review.getOrderProduct().getOrderProdNum())
-                    .build());
-        }
-        return reviewListDto;
+
+        return reviewList.stream()
+                .filter(review -> review.getOrderProduct().getOrderState().equals("배송완료"))
+                .map(ReviewResponse.ReviewListDto::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ReviewResponse.ReviewDto getReview(String orderId, Integer orderProductNum) {
+        Review review = reviewRepository.findByOrderProductOrderOrderIdAndOrderProductOrderProdNum(orderId, orderProductNum);
+        return ReviewResponse.ReviewDto.of(review);
     }
 
     @Override
     @Transactional
-    public void deleteReview(Integer prodNum) {
-        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
-        reviewRepository.deleteByProdNumAndMemberId(prodNum, currentMemberId);
+    public void deleteReview(String orderId, Integer orderProductNum) {
+        reviewRepository.deleteByOrderProductOrderOrderIdAndOrderProductOrderProdNum(orderId, orderProductNum);
+        OrderProduct orderProduct = orderProductRepository.findById(orderProductNum).get();
+        orderProduct.setOrderReviewState("리뷰 삭제");
+        orderProductRepository.save(orderProduct);
     }
 
-    public Boolean reviewAble(String orderState) {
-        if (orderState == "배송완료")
-            return true;
-        else return false;
+    @Override
+    public void setReviewCount(Integer reviewNum) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+
+        Review review = reviewRepository.findById(reviewNum)
+                .orElseThrow(() -> new IllegalArgumentException("reviewNum 에 해당하는 리뷰가 없음"));
+
+        review.setReviewCount(currentMemberId);
+        reviewRepository.save(review);
     }
+
+
 }

@@ -8,8 +8,11 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
+
 @Table(name = "tb_failure")
 @Entity
+
 public class Failure {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

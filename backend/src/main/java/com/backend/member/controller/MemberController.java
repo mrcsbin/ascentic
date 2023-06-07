@@ -7,7 +7,10 @@ import com.backend.member.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,7 +20,6 @@ import java.util.UUID;
 public class MemberController {
 
     private final MemberServiceImpl memberService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/checktoken")
     public Member tokenValidate() {
@@ -41,24 +43,12 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/signup")
-    public String join(@RequestBody SignupDto signupDto) {
-        return memberService.join(signupDto);
-    }
-
-    //
-    @PostMapping("/insert")
-    public String insertMember(@RequestBody Member member) {
-        member.setPassword(member.getPassword(), passwordEncoder); // 암호화된 비밀번호를 저장
-        boolean result = memberService.insertMember(member);
-        if (result) {
-            return member.getName() + "님 회원 가입이 완료되었습니다.";
-        } else {
-            return "회원 가입에 실패하였습니다.";
-        }
+    public void join(@RequestBody SignupDto signupDto) {
+        memberService.join(signupDto);
     }
 
     @GetMapping("/idDuplicate/{memberId}")
-    public boolean existsMemberId(@PathVariable String memberId){
+    public boolean existsMemberId(@PathVariable String memberId) {
         return memberService.existMemberId(memberId);
     }
 
@@ -68,24 +58,28 @@ public class MemberController {
     }
 
     // 회원 수정
-    @PatchMapping("/{id}")
-    public String updateMember(@PathVariable String id, @RequestBody Member member) {
-        memberService.updateMember(member);
-        return id + "님 수정이 완료 되었습니다.";
+//    @PatchMapping("/{id}")
+//    public String updateMember(@PathVariable String id, @RequestBody Member member) {
+//        memberService.updateMember(member);
+//        return id + "님 수정이 완료 되었습니다.";
+//    }
+
+    @PatchMapping("/userUpdate")
+    public String updateMember(@RequestBody UpdateMemberDto updateMemberDto) {
+        return memberService.updateMember(updateMemberDto);
     }
 
     // 회원 탈퇴 V1 - 상태값 바꾸기 => 같은 아이디로 가입과 삭제를 반복했을 때 통계엔 다 회원으로 기록
     @DeleteMapping("/{id}/v1")
-    public String deleteMemberV1(@PathVariable String id, @RequestBody Member member) {
+    public String deleteMemberV1(@PathVariable String id, @RequestParam Member member) {
         memberService.deleteMemberV1(member);
         return id + "님 그동안 이용해주셔서 감사합니다.";
     }
 
     // 회원 탈퇴 V2 - 테이블안에 값 없애버리기
-    @DeleteMapping("/{id}/v2")
-    public String deleteMemberV2(@PathVariable String id) {
-        memberService.deleteMemberV2(id);
-        return id + "님 그동안 이용해주셔서 감사합니다.";
+    @DeleteMapping
+    public String deleteMemberV2(@RequestBody DeleteMemberDto deleteMemberDto) {
+        return memberService.deleteMemberV2(deleteMemberDto);
     }
 
     // 로그인
@@ -97,7 +91,6 @@ public class MemberController {
         } else {
             return jwtTokenDto;
         }
-
     }
 
     // 아이디 찾기
@@ -114,11 +107,11 @@ public class MemberController {
     // 비밀번호 찾기
     @PostMapping("/find/pw")
     public String findPw(@RequestBody FindDataDto findDataDto) {
-        String tempPw = memberService.findPw(findDataDto);
-        if (tempPw == null) {
-            return "찾으시는 정보가 없습니다.";
-        } else {
+        String answer = memberService.findPw(findDataDto);
+        if (answer=="성공") {
             return "가입하실때 사용하셨던 이메일로 임시 비밀번호가 발급되었습니다.";
+        } else {
+            return "찾으시는 정보가 없습니다";
         }
     }
 
@@ -126,9 +119,31 @@ public class MemberController {
     @GetMapping("/order/getuser")
     public MemberInfoDto getUserInfo() {
         MemberInfoDto memberInfo = memberService.getMemberInfo();
-        System.out.println("모르곘다");
         return memberInfo;
     }
 
+    @GetMapping("/mypage/profile")
+    public MemberResponse.MyPageDto getMyPageProfile() {
+        return memberService.getMyPageProfile();
+    }
 
+    @PostMapping("/updateProfile")
+    public void updateProfileImg(MultipartFile profileImg) throws IOException {
+        memberService.updateProfileImg(profileImg);
+    }
+
+    @GetMapping("/delProfile")
+    public void delProfileImg() {
+        memberService.delProfileImg();
+    }
+
+    @PostMapping("/updatePushYn")
+    public void updatePushYn(@RequestBody PushYnDto pushYnDto) {
+        memberService.updatePushYn(pushYnDto);
+    }
+
+    @GetMapping("getPoint")
+    public Integer getPoint() {
+        return memberService.getPoint();
+    }
 }

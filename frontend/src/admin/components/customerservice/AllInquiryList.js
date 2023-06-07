@@ -83,7 +83,6 @@ export const AllInquiryList = () => {
     <>
       <HeaderWrap>
         <HeaderLeft>답변 내역</HeaderLeft>
-        <HeaderRight></HeaderRight>
       </HeaderWrap>
       <ListBox>
         <TitleList>
@@ -105,21 +104,13 @@ const HeaderWrap = styled.div`
   justify-content: space-between;
   width: 90%;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: 30px;
   border-bottom: 2px solid black;
 `;
-
 const HeaderLeft = styled.div`
   padding: 20px 0;
   font-size: 30px;
-  font-weight: 700;
-`;
-
-const HeaderRight = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: end;
+  font-weight: 600;
 `;
 
 const ListBox = styled.div`

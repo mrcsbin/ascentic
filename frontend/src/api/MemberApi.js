@@ -3,38 +3,62 @@ import axios from "axios";
 const MEMBER_API_URL = "http://localhost:8080/member";
 
 // 회원가입
-export const 회원가입 = async (e) => {
-  const response = await axios.post(`${MEMBER_API_URL}/signup`, {
-    /* data */
-  });
-  return response.data;
+export const saveMember = async (memberData) => {
+  console.log(memberData);
+  await axios.post(`${MEMBER_API_URL}/signup`, memberData);
 };
 
 // 회원 수정
-export const updateMember = async (
-  id,
-  name,
-  email,
-  image,
-  nickname,
-  password,
-  newPassword
-) => {
-  const response = await axios.patch(`${MEMBER_API_URL}/${id}`, {
-    id,
-    name,
-    email,
-    image,
-    nickname,
-    password,
-    newPassword,
+export const updateMember = async (accessToken, password, newPassword) => {
+  const response = await axios.patch(
+    `${MEMBER_API_URL}/userUpdate`,
+    {
+      password,
+      newPassword,
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
+  return response.data;
+};
+
+// 회원 프로필이미지 수정
+export const updateProfileImg = async (accessToken, profileImg) => {
+  const response = await axios.post(
+    `${MEMBER_API_URL}/updateProfile`,
+    profileImg,
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
+  return response.data;
+};
+
+// 회원 프로필이미지 삭제 API
+export const delProfileImg = async (accessToken) => {
+  const response = await axios.get(`${MEMBER_API_URL}/delProfile`, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
   });
   return response.data;
 };
 
 // 회원 삭제
-export const deleteMember = async (id) => {
-  const response = await axios.delete(`${MEMBER_API_URL}/${id}/v2`, {});
+export const deleteMember = async (accessToken, password) => {
+  const response = await axios.delete(`${MEMBER_API_URL}`, {
+    data: {
+      password: password,
+    },
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
   return response.data;
 };
 
@@ -85,10 +109,10 @@ export const findId = async (name, phone) => {
 };
 
 // PW 찾기
-export const findPw = async (name, id, phone) => {
+export const findPw = async (email, phone) => {
+  console.log(email + phone);
   const response = await axios.post(`${MEMBER_API_URL}/find/pw`, {
-    name,
-    id,
+    email,
     phone,
   });
   return response.data;
@@ -139,6 +163,43 @@ export const getOrderInfo = async (accessToken) => {
         Authorization: "Bearer " + accessToken,
       },
     });
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getMyPageProfile = async (accessToken) => {
+  const response = await axios.get(`${MEMBER_API_URL}/mypage/profile`, {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+  return response.data;
+};
+
+export const updatePushYn = async (accessToken, snsPushYn, emailPushYn) => {
+  await axios.post(
+    `${MEMBER_API_URL}/updatePushYn`,
+    { snsPushYn, emailPushYn },
+    {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    }
+  );
+};
+
+// 보유 포인트 조회
+export const getMemberPoint = async (accessToken) => {
+  try {
+    const response = await axios.get(`${MEMBER_API_URL}/getPoint`, {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    });
+    console.log(response.data);
 
     return response.data;
   } catch (error) {

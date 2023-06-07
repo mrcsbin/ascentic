@@ -15,6 +15,8 @@ import { setIsLogin } from "../../store/modules/login";
 import arrow from "../../assets/menu_arrow.svg";
 import Notice from "./Notice";
 import { Search } from "./Search";
+import { getCartCount } from "../../api/CartApi";
+import { fetchCartItems } from "../../store/modules/cart";
 
 //HSM
 //RouteTest.js 에 임시로 연결
@@ -23,6 +25,7 @@ const HeaderV2 = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.login.isLogin);
+  const role = useSelector((state) => state.login.role);
   const location = useLocation();
   const [hoverMenu, setHoverMenu] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -47,11 +50,14 @@ const HeaderV2 = () => {
     setShowSearch(false);
   };
 
+  // 로그아웃 => 로그아웃 하면 메인페이지로 가진 후 새로고침
   function handleLogout() {
     removeCookie("accessToken");
     dispatch(setIsLogin(false));
     navigate("/", { replace: true });
+    window.location.reload();
   }
+
   useEffect(() => {
     if (location.pathname.startsWith("/exp")) {
       setIsDarkMode(true);
@@ -72,10 +78,18 @@ const HeaderV2 = () => {
       const token = getCookie("accessToken");
       if (token) {
         await dispatch(setIsLogin(true));
+        dispatch(fetchCartItems());
       }
     };
     checkLoginStatus();
   }, [dispatch]);
+
+  // 카트 개수 가져오기
+  const cartCount = useSelector((state) => state.cart.cartItem.length);
+  // useEffect(() => {
+  //   dispatch(fetchCartItems());
+  // }, [dispatch]);
+
   const logoSrc = isDarkMode ? logoW : logoB;
   if (location.pathname.startsWith("/admin")) return null;
   if (location.pathname.startsWith("/NotFound")) return null;
@@ -116,7 +130,7 @@ const HeaderV2 = () => {
               <MenuBox>
                 <StyledLink
                   isDarkMode={isDarkMode}
-                  to="/"
+                  to="/community/notice"
                   onMouseEnter={() => setHoverMenu("커뮤니티")}
                 >
                   <Menu>커 뮤 니 티</Menu>
@@ -160,23 +174,13 @@ const HeaderV2 = () => {
             >
               <CategoryBox>
                 <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>뉴스</SubMenu>
-                  </StyledLink>
-                </CategoryItem>
-                <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
+                  <StyledLink to="community/notice" isDarkMode={isDarkMode}>
                     <SubMenu>공지사항</SubMenu>
                   </StyledLink>
                 </CategoryItem>
                 <CategoryItem>
                   <StyledLink to="/community/event/" isDarkMode={isDarkMode}>
                     <SubMenu>이벤트</SubMenu>
-                  </StyledLink>
-                </CategoryItem>
-                <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>게시판</SubMenu>
                   </StyledLink>
                 </CategoryItem>
               </CategoryBox>
@@ -192,15 +196,27 @@ const HeaderV2 = () => {
               ></Icon>
             </IconBox>
             <IconBox>
-              <StyledLink to="/login" isDarkMode={isDarkMode}>
+              <StyledLink
+                to={
+                  isLoggedIn
+                    ? role === "ADMIN"
+                      ? "/admin"
+                      : "/mypage"
+                    : "/login"
+                }
+                isDarkMode={isDarkMode}
+              >
                 <Icon src={iconUser} alt="iconMyPage"></Icon>
               </StyledLink>
             </IconBox>
-            <IconBox>
+            <CartBox>
               <StyledLink to="/cart" isDarkMode={isDarkMode}>
                 <Icon src={iconBag} alt="iconBag"></Icon>
+                <CountBox>
+                  <Count>{cartCount === 0 ? "" : cartCount}</Count>
+                </CountBox>
               </StyledLink>
-            </IconBox>
+            </CartBox>
             {isLoggedIn ? (
               <IconBox>
                 <StyledLink to="/" isDarkMode={isDarkMode}>
@@ -222,6 +238,16 @@ const HeaderV2 = () => {
 };
 
 export default HeaderV2;
+
+const CountBox = styled.div`
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  text-align: center;
+`;
+
+const Count = styled.div``;
+
 const Wrap = styled.div`
   height: 75px;
   z-index: 999;
@@ -243,7 +269,7 @@ const Wrap = styled.div`
 
   &.header-wrap-change-header {
     background-color: ${({ isDarkMode }) =>
-      isDarkMode ? "rgba(0, 0, 0, 0.7)" : "rgba(255, 255, 255, 0.7)"};
+      isDarkMode ? "rgba(0, 0, 0, 0.8)" : "rgba(255, 255, 255, 0.9)"};
   }
 `;
 
@@ -277,6 +303,7 @@ const RightBox = styled.div`
   display: flex;
   filter: ${({ isDarkMode }) =>
     isDarkMode ? "brightness(0) invert(1)" : "none"};
+  width: 15%;
 `;
 const Logo = styled.img`
   width: 150px;
@@ -286,11 +313,19 @@ const StyledLink = styled(Link)`
   color: ${({ isDarkMode }) => (isDarkMode ? "white;" : "black;")};
 `;
 
+const CartBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  margin: 0px 15px;
+  position: relative;
+`;
+
 const IconBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
-  padding: 0px 15px;
+  margin: 0px 15px;
 `;
 
 const Icon = styled.img`
@@ -397,7 +432,7 @@ const CommunitySubMenuContainer = styled.div`
 
 const CategoryBox = styled.div`
   margin: 0 auto;
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: space-evenly;
   text-decoration: none;
@@ -410,7 +445,7 @@ const CategoryItem = styled.div`
 
 const SubMenu = styled.div`
   font-size: 15px;
-  width: 80px;
+  width: 120px;
 `;
 
 // 검색 CSS

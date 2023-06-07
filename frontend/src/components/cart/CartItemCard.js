@@ -32,6 +32,11 @@ function CountButton({ cartNum, productCount }) {
   );
 }
 
+function addComma(num) {
+  var regexp = /\B(?=(\d{3})+(?!\d))/g;
+  return num.toString().replace(regexp, ",");
+}
+
 export const CartItemCard = ({ item }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItem);
@@ -61,6 +66,7 @@ export const CartItemCard = ({ item }) => {
           type="checkbox"
           checked={isChecked}
           onChange={handleToggleCheck}
+          disabled={item.optionState === "품절"}
         />
       </SelectButtonBox>
       <ImageBox>
@@ -69,6 +75,7 @@ export const CartItemCard = ({ item }) => {
             src={`http://localhost:8080/images/${item.productImage}`}
             alt="상품 이미지"
           />
+          {item.optionState === "품절" && <SoldOutText>SOLD OUT</SoldOutText>}
         </ItemImageLink>
       </ImageBox>
       <ItemBox>
@@ -81,7 +88,7 @@ export const CartItemCard = ({ item }) => {
         <CountButton productCount={productCount} cartNum={item.cartNum} />
       </CountBox>
       <PriceBox>
-        <ItemPrice>{productCount * item.productPrice}</ItemPrice>
+        <ItemPrice>{addComma(productCount * item.productPrice)}원</ItemPrice>
       </PriceBox>
       <DeleteButtonBox>
         <DeleteButton onClick={handleDeleteClick} />
@@ -90,7 +97,16 @@ export const CartItemCard = ({ item }) => {
   );
 };
 
-// countButton
+const SoldOutText = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  text-align: center;
+  font-size: 1.1rem;
+  color: red;
+  font-weight: 600;
+`;
+
 const CountButtonBox = styled.div`
   display: inline-flex;
   align-items: center;
@@ -138,7 +154,7 @@ const ItemCard = styled.li`
   display: flex;
   align-items: center;
   padding: 20px 0px;
-  border-bottom: 0.5px solid grey;
+  border-top: 1px solid grey;
 `;
 
 const SelectButtonBox = styled.div`
@@ -150,6 +166,7 @@ const SelectButtonBox = styled.div`
 const SelectButton = styled.input``;
 
 const ImageBox = styled.div`
+  position: relative;
   width: 15%;
 `;
 
@@ -183,7 +200,7 @@ const ItemTitle = styled.p`
 const ItemOption = styled.p`
   cursor: pointer;
   margin-top: 8px;
-  font-size: 13px;
+  font-size: 1rem;
   line-height: 19px;
   color: grey;
 `;

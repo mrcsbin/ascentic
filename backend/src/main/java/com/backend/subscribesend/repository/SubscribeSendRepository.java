@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, Integer> {
 //    @Transactional
@@ -20,4 +21,12 @@ public interface SubscribeSendRepository extends JpaRepository<SubscribeSend, In
     List<SubscribeSend> findAllBySubscribeMember(SubscribeMember subscribeMember);
 
     Double findAverageSbSendScoreBySubscribeProduct(SubscribeProduct subscribeProduct);
+
+    List<SubscribeSend> findBySbSendState(String sbSendState);
+
+    SubscribeSend findDistinctTopBySubscribeMemberAndSubscribeProduct(SubscribeMember subscribeMember, SubscribeProduct subscribeProduct);
+
+    Optional<List<SubscribeSend>> findBySubscribeMember(SubscribeMember subscribeMember);
+
+    Optional<List<SubscribeSend>> findBySubscribeMemberSbMemberNum(Integer sbMemberNum);
 }

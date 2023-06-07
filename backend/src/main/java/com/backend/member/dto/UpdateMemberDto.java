@@ -6,10 +6,6 @@ import lombok.Getter;
 
 @Getter
 public class UpdateMemberDto {
-
-    @Size(min = 1, max = 20)
     private String password;
-
-    private String image;
-
+    private String newPassword;
 }

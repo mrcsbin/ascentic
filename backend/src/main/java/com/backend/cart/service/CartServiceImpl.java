@@ -26,6 +26,7 @@ public class CartServiceImpl implements CartService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
         return cartRepository.findByMemberId(currentMemberId).stream()
+                .filter(cart -> !cart.getProductOption().getOptionState().equals("판매종료"))
                 .map(CartResponse.GetCartDto::of)
                 .collect(Collectors.toList());
     }

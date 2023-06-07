@@ -9,6 +9,8 @@ const ProdList = () => {
   const [category, setCategory] = useState("all");
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const [selectProdNum, setSelectProdNum] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortOption, setSortOption] = useState("old");
 
   const hadleOpenEditModal = (prodNum) => {
     setIsOpenEditModal(true);
@@ -54,6 +56,37 @@ const ProdList = () => {
     },
   ];
 
+  const handleSort = () => {
+    if (sortOption === "early") {
+      products.sort((a, b) => {
+        return new Date(b.prodNum) - new Date(a.prodNum);
+      });
+    } else if (sortOption === "old") {
+      products.sort((a, b) => {
+        return new Date(a.prodNum) - new Date(b.prodNum);
+      });
+    }
+  };
+  handleSort();
+
+  const productsPerPage = 10;
+
+  // 페이지 수 계산
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  // 페이지별로 보여줄 상품 데이터 선택
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  // 페이지 변경 함수
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(Number(pageNumber));
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -67,106 +100,188 @@ const ProdList = () => {
       }
     };
     fetchProducts();
-  }, [category]);
+    setCurrentPage(1);
+  }, [category, sortOption]);
 
   return (
     <>
-      <CategoriesBox>
-        {categories.map((c) => (
+      <HeaderWrap>
+        <HeaderLeft>상품 목록</HeaderLeft>
+      </HeaderWrap>
+      <InputContainer>
+        <CategoriesBox>
+          {categories.map((c) => (
+            <button
+              key={c.text}
+              className={c.text === category ? "activeCateBtn" : "cateBtn"}
+              onClick={() => setCategory(c.name)}
+            >
+              {c.name}
+            </button>
+          ))}
+        </CategoriesBox>
+        <SortOptionBox>
           <button
-            key={c.text}
-            className={c.text === category ? "activeCateBtn" : "cateBtn"}
-            onClick={() => setCategory(c.name)}
+            className={sortOption === "old" ? "active" : ""}
+            onClick={() => setSortOption("old")}
           >
-            {c.name}
+            번호순
           </button>
-        ))}
-      </CategoriesBox>
-      <TitleContainer>
-        <ListTitle>제품 목록</ListTitle>
-      </TitleContainer>
-      <ListWrapper>
-        <ListBox>
-          <ContentTitle>
-            <NumTitle>No</NumTitle>
-            <ImgTitle>이미지</ImgTitle>
-            <NameTitle>상품명</NameTitle>
-            <ScentTitle>향이름</ScentTitle>
-            <PriceTitle>판매가</PriceTitle>
-            <CatTitle>카테고리</CatTitle>
-            <StockTitle>재고</StockTitle>
-            <OptionTitle>옵션</OptionTitle>
-            <StateTitle>상태</StateTitle>
-            <DateTitle>등록일</DateTitle>
-            <EditTitle>수정</EditTitle>
-          </ContentTitle>
-        </ListBox>
-        {products.map((item, index) => (
-          <Items
-            item={item}
-            index={index}
-            hadleOpenEditModal={hadleOpenEditModal}
-          />
-        ))}
-        {isOpenEditModal && (
-          <ProdEditModal
-            prodNum={selectProdNum}
-            hadleCloseEditModal={hadleCloseEditModal}
-          />
-        )}
-      </ListWrapper>
+          <button
+            className={sortOption === "early" ? "active" : ""}
+            onClick={() => setSortOption("early")}
+          >
+            최신순
+          </button>
+        </SortOptionBox>
+        <ListWrapper>
+          <ListBox>
+            <ContentTitle>
+              <NumTitle>No</NumTitle>
+              <ImgTitle>이미지</ImgTitle>
+              <NameTitle>상품명</NameTitle>
+              <ScentTitle>향이름</ScentTitle>
+              <PriceTitle>판매가</PriceTitle>
+              <CatTitle>카테고리</CatTitle>
+              <StockTitle>재고</StockTitle>
+              <OptionTitle>옵션</OptionTitle>
+              <StateTitle>상태</StateTitle>
+              <DateTitle>등록일</DateTitle>
+              <EditTitle>수정</EditTitle>
+            </ContentTitle>
+          </ListBox>
+          {handleSort()}
+          {currentProducts.map((item, index) => (
+            <Items
+              item={item}
+              index={index}
+              hadleOpenEditModal={hadleOpenEditModal}
+            />
+          ))}
+          {isOpenEditModal && (
+            <ProdEditModal
+              prodNum={selectProdNum}
+              hadleCloseEditModal={hadleCloseEditModal}
+            />
+          )}
+        </ListWrapper>
+        <Pagination>
+          {currentPage - 3 <= 0 ? (
+            ""
+          ) : (
+            <PageBtn onClick={() => handlePageChange(currentPage - 1)}>
+              이전
+            </PageBtn>
+          )}
+          {Array.from({ length: totalPages }, (_, i) => i + 1)
+            .filter(
+              (pageNumber) =>
+                pageNumber > currentPage - 3 && pageNumber < currentPage + 3
+            )
+            .map((pageNumber) => (
+              <PageNumBtn
+                key={pageNumber}
+                onClick={() => handlePageChange(pageNumber)}
+                style={{
+                  pointerEvents: pageNumber === currentPage ? "none" : "auto",
+                  borderColor: pageNumber === currentPage ? "black" : "white",
+                }}
+              >
+                {pageNumber}
+              </PageNumBtn>
+            ))}
+          {currentPage + 3 > totalPages ? (
+            ""
+          ) : (
+            <PageBtn onClick={() => handlePageChange(currentPage + 1)}>
+              다음
+            </PageBtn>
+          )}
+        </Pagination>
+      </InputContainer>
     </>
   );
 };
 
 const CategoriesBox = styled.div`
-  padding: 10px auto;
+  padding: 0 auto;
+  margin-top: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid black;
   button {
     margin: 10px;
     padding: 10px;
-    font-size: 1rem;
+    font-size: 1.3rem;
     background-color: white;
     border: 0;
     cursor: pointer;
   }
   .activeCateBtn,
   .cateBtn:hover {
-    font-weight: 700;
+    font-weight: 600;
+    border-bottom: 2px solid black;
   }
+`;
+const HeaderWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-bottom: 2px solid black;
+`;
+
+const HeaderLeft = styled.div`
+  padding: 20px 0;
+  font-size: 30px;
+  font-weight: 600;
+`;
+const SortOptionBox = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0;
+  button {
+    background-color: white;
+    border: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0 5px 20px 5px;
+    cursor: pointer;
+  }
+  .active {
+    font-weight: 600;
+    cursor: default;
+  }
+`;
+
+const InputContainer = styled.div`
+  width: 90%;
+  height: 90%;
+  margin: 0 auto;
 `;
 
 const ListWrapper = styled.div`
   margin: 0 auto;
-  width: 95%;
-  border-bottom: 2px solid black;
-`;
-
-const TitleContainer = styled.div`
-  margin: 2% 5%;
-  font-weight: 700;
-  display: flex;
-`;
-
-const ListTitle = styled.div`
   width: 90%;
-  font-size: 30px;
-  font-weight: 700;
-`;
-
-const ListBox = styled.div`
-  margin-top: 30px;
-  border-top: 2px solid black;
   border-bottom: 2px solid black;
-  background-color: white;
+`;
+const ListBox = styled.div`
+  margin-top: 0;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  background-color: rgba(250, 250, 250, 1);
 `;
 const ContentTitle = styled.div`
   height: 40px;
-  font-size: 18px;
+  font-size: 1rem;
   display: flex;
+  div {
+    margin: 0 10px;
+    font-weight: 600;
+    color: rgba(100, 100, 100, 1);
+  }
 `;
 const NumTitle = styled.div`
   display: flex;
@@ -250,6 +365,41 @@ const EditTitle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const Pagination = styled.div`
+  display: inline-block;
+  width: 100%;
+  height: 30px;
+  margin: 30px auto;
+  text-align: center;
+  align-items: center;
+`;
+const PageBtn = styled.div`
+  display: inline-block;
+  cursor: pointer;
+  margin: 5px;
+  padding: 2px;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  border: 1px solid;
+  width: 2rem;
+  &:hover {
+    border-color: black;
+  }
+`;
+const PageNumBtn = styled.div`
+  display: inline-block;
+  cursor: pointer;
+  margin: 5px;
+  padding: 2px;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  border: 1px solid;
+  width: 1rem;
+  &:hover {
+    border-color: black;
+  }
 `;
 
 export default ProdList;

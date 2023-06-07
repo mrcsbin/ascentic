@@ -1,11 +1,10 @@
 .page-wrapper {
-  width: 72%;
-  height: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  /* border: 2px dotted black; */
+  width: 70%;
+  margin: 0 auto;
   height: auto;
-  padding-top: 200px;
+  padding-top: 170px;
+  text-align: right;
+  padding-bottom: 107px;
 }
 
 .clear-both {
@@ -13,145 +12,248 @@
 }
 
 .sbMember {
-  float: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   border: 1px solid #d3d3d3;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
 }
 
 .hello-member {
-  width: 25%;
-
-  float: left;
-  padding: 3%;
-  padding-top: 4%;
-  padding-left: 6%;
+  width: fit-content;
   line-height: 2;
-  font-size: 110%;
-  height: 100%;
-
-  /* border: 5px solid #eee; */
-  /* border-radius: 10px; */
+  font-size: 1.2rem;
+  padding: 50px 0;
+  padding-left: 100px;
 }
-
 .hello-member span {
-  font-weight: bold;
+  font-weight: 700;
 }
 
-.sbMember-info {
-  width: 50%;
-  padding: 3%;
-  padding-left: 10%;
-  /* padding-top: 1.8%; */
-  float: left;
-  line-height: 1.5;
-}
-
-.subscribe-or-not {
-  font-size: 20px;
-  font-weight: bold;
-}
 .duration-payDay {
-  width: 48%;
+  width: fit-content;
   line-height: 2.3;
-
-  float: left;
-  /* border: 1px solid green; */
+  padding: 50px 0;
+}
+.duration-payDay > p:nth-child(1) {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: right;
+}
+.duration-payDay > p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.9;
+  text-align: right;
+}
+.duration-payDay > p > span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-left: 10px;
 }
 
-.duration-payDay span {
-  font-weight: bold;
-  margin-left: 30px;
+.sbMember-taste {
+  width: fit-content;
+  line-height: 2;
+  padding: 50px 0;
+  padding-right: 100px;
+}
+.sbMember-taste > p {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+.sbMember-taste > p > span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-left: 10px;
 }
 
 .select-year-month {
-  padding: 5%;
-  padding-top: 2%;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+.select-year-month > select:nth-child(1) {
+  margin: 30px 10px;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+}
+.select-year-month > select:nth-child(2) {
+  margin: 30px 10px;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+}
+/* 구독해지버튼 */
+.end-subscribe {
+  margin: 10px 0;
+  background-color: white;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  font-weight: 400;
+  border: 0;
+  cursor: pointer;
 }
 
-.select-year-month select {
-  padding: 5px;
-  font-size: 15px;
-}
-
-.rating-component {
-  /* border: 0.1px inset black; */
-  /* box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1); */
-  width: 85%;
-  /* border: solid 1.3px #d3d3d3; */
-  margin-top: 2%;
-  margin-bottom: 2%;
-  padding: 3%;
-}
+/* 구독상세정보 */
 .subs-info {
-  padding: 5%;
-  padding-left: 7%;
-  padding-top: 0%;
+  width: 80%;
+  margin: 0 auto;
 }
 
-.subs-prod-name-intro {
-  padding: 3%;
-  height: auto;
+.subs-info > div:nth-child(1) {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.subs-info > div > .subs-num {
+  font-size: 1rem;
+}
+.subs-info > div > .subs-num > span {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.subs-info > div > .subs-state {
+  font-size: 1.3rem;
+  font-weight: 500;
+  border: 1.5px solid black;
+  padding: 10px 15px;
 }
 
-.subs-info span {
-  font-weight: bold;
-  font-size: 22px;
+.subs-info > .subs-pay {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.subs-info > .subs-pay > div {
+  font-size: 1rem;
+  margin-right: 20px;
+}
+.subs-info > .subs-pay > div > span {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
-.on-delivery {
-  float: right;
-  margin-right: 5%;
-  /* display: inline-block; */
+.subs-prod {
+  width: 70%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #bbbaba;
+  border-bottom: 1px solid #bbbaba;
+}
+.subs-prod > .header {
+  width: 100%;
+  margin: 20px 0;
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.subs-prod > div:nth-child(2) {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.subs-prod-image {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin-right: 30px;
+}
+.subs-prod-image > img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
 }
 
-.on-delivery span {
-  /* margin-right: 3%; */
+.subs-prod-info {
+  width: 60%;
+  height: 200px;
+  text-align: left;
 }
-
-.maybe-for-image {
-  background-color: #eeee;
-  float: left;
-  width: 25%;
-  height: 140px;
-  padding-right: 3%;
-  /* margin-top: 1px; */
-  /* display: inline-block; */
+.subs-prod-info > div {
+  width: 100%;
 }
-
-.scent-name {
-  width: 65%;
-  float: left;
-  margin-top: 3%;
-  margin-left: 3%;
+.subs-prod-info > div:nth-child(1) {
+  font-size: 1.1rem;
+  line-height: 2;
+  font-weight: 600;
 }
-
-.intro-price {
-  width: 67%;
-  float: left;
-  margin-top: 6.5%;
-  margin-left: 3%;
-  /* margin-bottom: 0px; */
+.subs-prod-info > div:nth-child(1) > span {
+  margin-right: 10px;
 }
-
-.intro-price span {
-  float: right;
+.subs-prod-info > div:nth-child(1) > span:nth-child(1) {
+  font-size: 1.2rem;
+}
+.subs-prod-info > .intro {
+  font-size: 1rem;
+  line-height: 1.5;
+  word-break: keep-all;
+  height: 110px;
+  margin: 10px 0;
+}
+.subs-prod-info > .price {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: right;
+  width: 100%;
 }
 
 .address {
-  line-height: 1.5;
-  width: 70%;
-  float: left;
-  margin-bottom: 0.5px;
-  margin-left: 3%;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+}
+.address > div {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+.address > div:nth-child(1) {
+  width: 60%;
+}
+.address > div:nth-child(2) {
+  width: 30%;
+}
+.address > div > p {
+  margin: 20px 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 30px;
 }
 
-.address span {
-  font-size: 18px;
+.rating-component {
+  width: 85%;
+  margin: 0 auto;
+  padding: 10px 40px;
+  background-color: #f3f3f3;
 }
 
+/* 구독정보없음 */
 .no-info {
-  margin-left: 5%;
-  margin-bottom: 5%;
-  font-size: 20px;
+  width: 100%;
+  margin: 150px 0;
+  text-align: center;
+  font-size: 1.5rem;
 }

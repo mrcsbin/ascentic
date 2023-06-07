@@ -2,6 +2,7 @@ package com.backend.subscribeproduct.controller;
 
 import com.backend.subscribeproduct.dto.SbProductDTO;
 import com.backend.subscribeproduct.dto.SbProductReqDTO;
+import com.backend.subscribeproduct.dto.admin.SbProdMemberRecordDto;
 import com.backend.subscribeproduct.service.SbProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,11 @@ public class SbProductController {
     @PostMapping("/delete/{id}")
     public void deleteSbProduct(@PathVariable("id") Integer sbProdNum){
         sbProductService.deleteSbProduct(sbProdNum);
+    }
+
+    @GetMapping("/adminSbMemberRecord")
+    public List<SbProdMemberRecordDto> adminGetSbMemberRecord (@RequestParam("memberId") String memberId,
+                                                               @RequestParam("scentNoteName") String scentNoteName) {
+        return sbProductService.adminGetSbMemberRecord(memberId, scentNoteName);
     }
 }

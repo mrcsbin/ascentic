@@ -8,7 +8,6 @@ import * as AdminPages from "../admin/pages/AdminPages";
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
-  const role = useSelector((state) => state.login.role);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,32 +33,22 @@ function Routes() {
   return (
     <BrowserRoutes>
       <Route path="/" element={<Pages.Main />}></Route>
-      <Route path="/test" element={<Pages.MainTest />}></Route>
-      <Route path="/test2" element={<Pages.MainTest2 />}></Route>
-      <Route path="/test3" element={<Pages.MainTest3 />}></Route>
-      <Route
-        path="/login"
-        element={isLoggedIn ? <Navigate to="/mypage" /> : <Pages.Login />}
-      />
+      <Route path="/login" element={<Pages.Login />} />
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
-      <Route
-        path="/mypage"
+      <Route path="/login/find_id" element={<Pages.FindId />} />
+      <Route path="/login/find_password" element={<Pages.FindPassword />} />
+      {/* <Route
+        path="/mypage/*"
         element={
-          isLoggedIn ? (
-            role === "ADMIN" ? (
-              <Navigate to="/admin" />
-            ) : (
-              <Pages.MyPage />
-            )
-          ) : (
-            <Navigate to="/login" />
-          )
+          isLoggedIn &&
+          (role === "ADMIN" ? <Navigate to="/admin" /> : <Pages.MyPage />)
         }
-      />
+      /> */}
+      <Route path="/mypage" element={<Pages.MyPage />} />
+      <Route path="/mypage/:category" element={<Pages.MyPage />} />
       <Route path="/cart" element={<Pages.Cart />} />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
-      <Route path="/member/find" element={<Pages.FindIdPw />} />
       <Route path="/signup" element={<Pages.SignUp />}></Route>
       <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
@@ -79,6 +68,7 @@ function Routes() {
       <Route path="/exp/subsmanage" element={<Pages.ExpSubsManage />} />
       <Route path="/community/event" element={<Pages.Event />} />
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />
+      <Route path="/community/notice" element={<Pages.Notice />} />
 
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
       <Route path="/admin" element={<AdminPages.AdminMainPage />} />

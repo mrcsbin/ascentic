@@ -20,6 +20,7 @@ export const NotEmptyCart = () => {
 const CartWrap = styled.div`
   position: relative;
   padding-top: 150px;
+  padding-bottom: 107px;
 `;
 
 const CartHeader = styled.h1`
@@ -33,7 +34,7 @@ const CartHeader = styled.h1`
 const CartContainer = styled.div`
   box-sizing: border-box;
   margin: 0 auto;
-  width: 70%;
+  width: 75%;
   max-width: 100%;
   min-height: 1px;
 `;

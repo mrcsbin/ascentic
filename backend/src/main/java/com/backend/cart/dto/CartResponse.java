@@ -19,6 +19,7 @@ public class CartResponse {
                     .productImage(cart.getProductOption().getProduct().getProductImages().get(0).getProdSaveName())
                     .productOptionNum(cart.getProductOption().getOptionNum())
                     .productOptionName(cart.getProductOption().getProdOption())
+                    .optionState(cart.getProductOption().getOptionState())
                     .build();
         }
 
@@ -30,5 +31,6 @@ public class CartResponse {
         private String productImage;
         private Integer productOptionNum;
         private String productOptionName;
+        private String optionState;
     }
 }

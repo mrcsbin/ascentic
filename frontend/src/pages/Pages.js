@@ -21,9 +21,9 @@ const TestResult = lazy(() => import("./experience/ExpTasteRes"));
 const Withdrawal = lazy(() => import("./Withdrawal"));
 const Event = lazy(() => import("./community/Event"));
 const EventDetail = lazy(() => import("./community/EventDetail"));
-const MainTest = lazy(() => import("./MainTest"));
-const MainTest2 = lazy(() => import("./MainTest2"));
-const MainTest3 = lazy(() => import("./MainTest3"));
+const Notice = lazy(() => import("./community/Notice"));
+const FindId = lazy(() => import("./FindId"));
+const FindPassword = lazy(() => import("./FindPassword"));
 
 export {
   Order,
@@ -47,7 +47,7 @@ export {
   Withdrawal,
   Event,
   EventDetail,
-  MainTest,
-  MainTest2,
-  MainTest3,
+  Notice,
+  FindId,
+  FindPassword,
 };

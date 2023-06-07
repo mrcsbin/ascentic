@@ -8,16 +8,24 @@ function addComma(num) {
   return num.toString().replace(regexp, ",");
 }
 
-export const OrderItem = ({ orderId, item }) => {
+export const OrderItem = ({ itemCount, orderId, item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const clickModalHandle = () => {
     setIsModalOpen(!isModalOpen);
   };
+  console.log(itemCount);
 
   const cancelClickHandle = async () => {
+    let cancelAmount;
+    if (itemCount === 1) {
+      cancelAmount = item.orderProductPrice * item.orderProductCount;
+    } else {
+      cancelAmount = item.orderProductPrice * item.orderProductCount;
+    }
+
     const cancelData = {
-      cancelAmount: item.orderProductPrice,
+      cancelAmount,
       cancelReason: "취소 사유",
       orderId: orderId,
       orderProductNum: item.orderProductNum,

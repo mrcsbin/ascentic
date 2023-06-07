@@ -13,7 +13,7 @@ export const Order = () => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState("전체");
   const [filteredList, setFilteredList] = useState([]);
-
+  console.log(filteredList)
   const filterClickHandle = (period) => {
     const filter = new Date();
     filter.setMonth(filter.getMonth() - period);
@@ -97,7 +97,11 @@ export const Order = () => {
         </Content>
       ) : (
         filteredList.map((item, index) => (
-          <OrderList item={item} key={index}></OrderList>
+          <OrderList
+            itemCount={filteredList.length}
+            item={item}
+            key={index}
+          ></OrderList>
         ))
       )}
       {filteredList.length === 0 && filter === "3개월" && (

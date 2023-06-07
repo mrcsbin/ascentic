@@ -20,7 +20,6 @@ import java.util.UUID;
 public class MemberController {
 
     private final MemberServiceImpl memberService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/checktoken")
     public Member tokenValidate() {
@@ -44,20 +43,9 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/signup")
-    public String join(@RequestBody SignupDto signupDto) {
-        return memberService.join(signupDto);
-    }
+    public void join(@RequestBody SignupDto signupDto) {
 
-    //
-    @PostMapping("/insert")
-    public String insertMember(@RequestBody Member member) {
-        member.setPassword(member.getPassword(), passwordEncoder); // 암호화된 비밀번호를 저장
-        boolean result = memberService.insertMember(member);
-        if (result) {
-            return member.getName() + "님 회원 가입이 완료되었습니다.";
-        } else {
-            return "회원 가입에 실패하였습니다.";
-        }
+        memberService.join(signupDto);
     }
 
     @GetMapping("/idDuplicate/{memberId}")
@@ -140,7 +128,7 @@ public class MemberController {
     public MemberResponse.MyPageDto getMyPageProfile() {
         return memberService.getMyPageProfile();
     }
-  
+
     @PostMapping("/updateProfile")
     public void updateProfileImg(MultipartFile profileImg) throws IOException {
         memberService.updateProfileImg(profileImg);
@@ -153,7 +141,7 @@ public class MemberController {
 
     @PostMapping("/updatePushYn")
     public void updatePushYn(@RequestBody PushYnDto pushYnDto) {
-         memberService.updatePushYn(pushYnDto);
+        memberService.updatePushYn(pushYnDto);
     }
 
     @GetMapping("getPoint")

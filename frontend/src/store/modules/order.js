@@ -26,7 +26,7 @@ const initialState = {
 
   pointInfo: {
     holdPoint: 0, // 보유 포인트
-    usePoint: undefined, // 사용 포인트
+    usePoint: 0, // 사용 포인트
   },
 
   payMethod: {

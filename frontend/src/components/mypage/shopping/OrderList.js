@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { OrderItem } from "./OrderItem";
 import { Link } from "react-router-dom";
 
-export const OrderList = ({ item }) => {
+export const OrderList = ({ item, itemCount }) => {
   const orderId = item.orderId;
   return (
     <>
@@ -17,7 +17,12 @@ export const OrderList = ({ item }) => {
           </StyledLink>
         </InfoBar>
         {item.orderProductList.map((item, index) => (
-          <OrderItem orderId={orderId} item={item} key={index} />
+          <OrderItem
+            itemCount={itemCount}
+            orderId={orderId}
+            item={item}
+            key={index}
+          />
         ))}
       </Wrap>
     </>

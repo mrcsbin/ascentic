@@ -1,5 +1,7 @@
 package com.backend.payment.service;
 
+import com.backend.member.entity.Member;
+import com.backend.member.repository.MemberRepository;
 import com.backend.order.entity.Order;
 import com.backend.order.entity.PaymentFinalRes;
 import com.backend.order.repository.OrderRepository;
@@ -20,6 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @AllArgsConstructor
 @Service
@@ -29,6 +34,7 @@ public class PaymentCancelServiceImpl {
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
     private final OrderServiceImpl orderService;
     private final OrderProductRepository orderProductRepository;
+    private final MemberRepository memberRepository;
 
     public String cancelPayment(PaymentCancelRequestDto request) {
         RestTemplate restTemplate = new RestTemplate();
@@ -59,12 +65,36 @@ public class PaymentCancelServiceImpl {
         return response.getBody();
     }
 
+    private void finalCheck(PaymentCancelRequest.OrderProductCancelDto request) {
+        Order order = orderRepository.findByOrderId(request.getOrderId());
+        List<OrderProduct> orderProductList = orderProductRepository.findByOrder(order).stream()
+                .filter(orderProduct -> orderProduct.getOrderState().equals("결제완료"))
+                .collect(Collectors.toList());
+        OrderProduct orderProduct = orderProductRepository.findById(request.getOrderProductNum()).get();
+
+        if (orderProductList.size() == 1) {
+            request.setCancelAmount(request.getCancelAmount() - order.getUsePoint());
+            order.setOrderPriceSum(order.getOrderPriceSum() - request.getCancelAmount() - order.getUsePoint());
+            Member member = memberRepository.findById(order.getMemberId()).get();
+            member.setMemberPoint(member.getMemberPoint() + order.getUsePoint());
+            memberRepository.save(member);
+        } else {
+            order.setOrderPriceSum(order.getOrderPriceSum() - request.getCancelAmount());
+            order.setOrderState("결제취소");
+
+        }
+        orderProduct.setOrderState("결제취소");
+        orderRepository.save(order);
+        orderProductRepository.save(orderProduct);
+    }
+
     public String cancelOrderProduct(PaymentCancelRequest.OrderProductCancelDto request) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Basic dGVzdF9za196WExrS0V5cE5BcldtbzUwblgzbG1lYXhZRzVSOg==");
+        finalCheck(request);
 
         HttpEntity<PaymentCancelRequest.OrderProductCancelDto> entity = new HttpEntity<>(request, headers);
 
@@ -75,12 +105,6 @@ public class PaymentCancelServiceImpl {
         String tossPaymentsApiUrl = "https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel";
 
         ResponseEntity<String> response = restTemplate.postForEntity(tossPaymentsApiUrl, entity, String.class);
-        Order order = orderRepository.findByOrderId(request.getOrderId());
-        order.setOrderPriceSum(order.getOrderPriceSum() - request.getCancelAmount());
-        OrderProduct orderProduct = orderProductRepository.findById(request.getOrderProductNum()).get();
-        orderProduct.setOrderState("결제취소");
-        orderRepository.save(order);
-        orderProductRepository.save(orderProduct);
         return response.getBody();
     }
 }

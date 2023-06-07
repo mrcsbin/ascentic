@@ -1,17 +1,14 @@
 package com.backend.payment.entity;
 
-import com.backend.payment.dto.SubscribeCard;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table()
+@Table(name="tb_subscribe_payment")
 @Entity
 public class SubscribePayment {
 

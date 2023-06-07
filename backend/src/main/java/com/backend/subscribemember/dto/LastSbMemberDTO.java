@@ -1,6 +1,6 @@
 package com.backend.subscribemember.dto;
 
-import com.backend.payment.dto.SubscribeCard;
+import com.backend.payment.entity.SubscribeCard;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

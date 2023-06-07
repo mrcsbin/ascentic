@@ -1,4 +1,4 @@
-package com.backend.payment.dto;
+package com.backend.payment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="tb_subscribe_card")
 public class SubscribeCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

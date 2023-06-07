@@ -1,47 +1,35 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { validateFindPasswordByEmail } from "../constants/Validation";
 
 function FindPassword() {
   const [tel, setTel] = useState("");
-  const [name, setName] = useState("");
-  const idInputRef = useRef(null);
+  const [email, setEmail] = useState("");
 
   const handleClick = async (e) => {
     setTel(e.target.value);
-    console.log(tel);
   };
 
   return (
     <LoginWrap id="login-wrap">
       <LoginArea className="login-area">
         <LoginHeaderBox className="login-box">
-          <LoginHeader>아이디 찾기</LoginHeader>
+          <LoginHeader>비밀번호 찾기</LoginHeader>
         </LoginHeaderBox>
         <InfoText>
-          가입 시 등록한 휴대폰 번호를 입력후
+          가입 시 등록한 휴대폰 번호와 이메일을 입력후
           <br />
-          <br /> 인증받기를 통해 아이디를 알려드립니다.
+          <br /> 이메일로 임시 비밀번호를 보내드립니다.
         </InfoText>
         <InputBox className="id-box input-box">
-          <IdLabel htmlFor="name">이름</IdLabel>
-          <IdInput
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            placeholder="회원 이름"
-            onChange={handleClick}
-          />
-        </InputBox>
-        <InputBox className="id-box input-box">
-          <IdLabel htmlFor="tel">전화번호</IdLabel>
+          <IdLabel htmlFor="tel">휴대폰 번호</IdLabel>
           <IdInput
             type="text"
             id="tel"
             name="tel"
             value={tel}
-            placeholder="가입할 때 입력한 휴대전화 번호"
-            onChange={handleClick}
+            placeholder="전화번호"
+            onChange={(e) => setTel(e.target.value)}
             onInput={(e) => {
               e.target.value = e.target.value
                 .replace(/[^0-9.]/g, "")
@@ -49,9 +37,23 @@ function FindPassword() {
             }}
           />
         </InputBox>
+        <InputBox className="id-box input-box">
+          <IdLabel htmlFor="tel">이메일 주소</IdLabel>
+          <IdInput
+            type="text"
+            id="email"
+            name="email"
+            value={email}
+            placeholder="예) ascentic@ascentic.com"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </InputBox>
         <ButtonBox className="submit-button-box button-box">
-          <Button isCheck={tel.length === 11} type="button">
-            문자 발송
+          <Button
+            isCheck={tel.length === 11 && validateFindPasswordByEmail(email)}
+            type="button"
+          >
+            이메일 발송
           </Button>
         </ButtonBox>
       </LoginArea>

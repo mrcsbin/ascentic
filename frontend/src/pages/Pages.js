@@ -23,6 +23,7 @@ const Event = lazy(() => import("./community/Event"));
 const EventDetail = lazy(() => import("./community/EventDetail"));
 const Notice = lazy(() => import("./community/Notice"));
 const FindId = lazy(() => import("./FindId"));
+const FindPassword = lazy(() => import("./FindPassword"));
 
 export {
   Order,
@@ -48,4 +49,5 @@ export {
   EventDetail,
   Notice,
   FindId,
+  FindPassword,
 };

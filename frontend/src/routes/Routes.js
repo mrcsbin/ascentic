@@ -36,6 +36,7 @@ function Routes() {
       <Route path="/login" element={<Pages.Login />} />
       <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
       <Route path="/login/find_id" element={<Pages.FindId />} />
+      <Route path="/login/find_password" element={<Pages.FindPassword />} />
       {/* <Route
         path="/mypage/*"
         element={

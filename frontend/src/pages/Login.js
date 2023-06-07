@@ -107,6 +107,7 @@ function Login() {
             onChange={(e) => IdChangeHandle(e)}
             onKeyDown={handleKeyPress}
             ref={idInputRef}
+            autocomplete="off"
           />
           {!isIdCheck && (
             <WarningText>
@@ -127,6 +128,7 @@ function Login() {
             onChange={(e) => PwChangeHandle(e)}
             onKeyDown={handleKeyPress}
             ref={pwInputRef}
+            autocomplete="off"
           />
 
           {!isPwCheck && (
@@ -148,11 +150,11 @@ function Login() {
           </Button>
         </ButtonBox>
         <TextButtonBox className="etc-button-box button-box">
-          <LoginLink to="/member/find" state={{ activeTab: 0 }}>
+          <LoginLink to="/login/find_id" state={{ activeTab: 0 }}>
             아이디 찾기
           </LoginLink>
           <span>|</span>
-          <LoginLink to="/member/find" state={{ activeTab: 1 }}>
+          <LoginLink to="/login/find_password" state={{ activeTab: 1 }}>
             비밀번호 찾기
           </LoginLink>
           <span>|</span>
@@ -274,7 +276,7 @@ const Button = styled.button`
   padding: 1rem;
   width: 70%;
   border: 0px;
-  background-color: ${(props) => (props.isCheck ? "black" : "grey")};
+  background-color: ${(props) => (props.isCheck ? "black" : "lightgrey")};
   color: white;
   margin: 10px auto;
   font-size: 1rem;

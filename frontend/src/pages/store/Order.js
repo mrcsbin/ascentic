@@ -140,6 +140,7 @@ const OrderWrap = styled.div`
   // OrderWrap 스타일 정의
   padding-top: 110px;
   margin-left: 150px;
+  padding-bottom: 107px;
 `;
 
 const Title = styled.div`

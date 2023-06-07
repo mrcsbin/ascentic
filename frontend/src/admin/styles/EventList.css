@@ -1,5 +1,6 @@
 .event-list-wrapper {
   width: 100%;
+  padding-bottom:107px;
 }
 
 .event-list-wrapper .event-list .post-grid table {

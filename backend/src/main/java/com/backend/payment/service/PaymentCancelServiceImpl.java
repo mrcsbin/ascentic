@@ -77,7 +77,7 @@ public class PaymentCancelServiceImpl {
             order.setOrderPriceSum(order.getOrderPriceSum() - request.getCancelAmount() - order.getUsePoint());
             Member member = memberRepository.findById(order.getMemberId()).get();
             // 적립 포인트를 원래상태로 돌리기
-            int totalAmount = paymentFinalResRepository.findByOrderId(order.getOrderId()).getTotalAmount();
+            int totalAmount = paymentFinalResRepository.findByOrderId(order.getOrderId()).getTotalAmount() + order.getUsePoint();
             int earnPoint = (int) (totalAmount * 0.01);
             member.setMemberPoint(member.getMemberPoint() + order.getUsePoint() - earnPoint);
             memberRepository.save(member);

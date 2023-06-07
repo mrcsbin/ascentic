@@ -8,10 +8,12 @@ import com.backend.order.entity.Order;
 import com.backend.orderproduct.entity.OrderProduct;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderResponse {
 
@@ -95,6 +97,8 @@ public class OrderResponse {
         private Integer shipCharge; //배송비
         private Integer orderPriceSum; //상품가격
         private String prodNames; //구매한 제품명
+
+        @Setter
         private Integer totalProdCount; // 총 구매한 제품 개수
         private String orderState; //결제 상태
         private Failure failure; //결제 실패시
@@ -102,25 +106,33 @@ public class OrderResponse {
         private EasyPay easyPay; //토스 or 카카오페이 등
         private Integer usePoint; // 사용 포인트
         public static SuccessOrderDto of(Order order, Failure failure, Card card, EasyPay easyPay) {
-            return new SuccessOrderDto(
-                    order.getOrderName(),
-                    order.getOrderId(),
-                    order.getOrderDate(),
-                    order.getOrderEmail(),
-                    order.getOrderName(),
-                    order.getShipMainAddress(),
-                    order.getShipSubAddress(),
-                    order.getShipTel(),
-                    order.getShipCharge(),
-                    order.getOrderPriceSum(),
-                    order.getOrderProducts().get(0).getProductOption().getProduct().getProdName(),
-                    order.getOrderProducts().size(),
-                    order.getOrderState(),
-                    failure,
-                    card,
-                    easyPay,
-                    order.getUsePoint()
-            );
+            SuccessOrderDto successOrderDto = SuccessOrderDto.builder()
+                    .orderName(order.getOrderName())
+                    .orderId(order.getOrderId())
+                    .orderDate(order.getOrderDate())
+                    .email(order.getOrderEmail())
+                    .shipName(order.getShipName())
+                    .shipMainAddress(order.getShipMainAddress())
+                    .shipSubAddress(order.getShipSubAddress())
+                    .shipTel(order.getShipTel())
+                    .shipCharge(order.getShipCharge())
+                    .orderPriceSum(order.getOrderPriceSum())
+                    .prodNames(order.getOrderProducts().get(0).getProductOption().getProduct().getProdName())
+                    .orderState(order.getOrderState())
+                    .failure(failure)
+                    .card(card)
+                    .easyPay(easyPay)
+                    .usePoint(order.getUsePoint())
+                    .build();
+            successOrderDto.setTotalProdCount(order);
+
+            return successOrderDto;
+        }
+
+        private void setTotalProdCount(Order order) {
+            totalProdCount = order.getOrderProducts().stream()
+                    .filter(orderProduct -> !orderProduct.getOrderState().equals("결제취소"))
+                    .collect(Collectors.toList()).size();
         }
     }
 }

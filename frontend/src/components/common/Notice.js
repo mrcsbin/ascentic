@@ -85,15 +85,13 @@ function Notice() {
             </div>
             {/* content 하단 */}
             <div className="popup-link-box">
-              <button className="popup-link-btn">
-                <Link
-                  to={`/community/event/${postData.postId}`}
-                  onClick={handleHidePopup}
-                  className="popup-link"
-                >
-                  자세히 보기
-                </Link>
-              </button>
+              <Link
+                to={`/community/event/${postData.postId}`}
+                onClick={handleHidePopup}
+                className="popup-link"
+              >
+                <button className="popup-link-btn">자세히 보기</button>
+              </Link>
               <button className="popup-close-btn" onClick={handleHidePopup}>
                 닫기
               </button>

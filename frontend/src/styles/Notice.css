@@ -106,6 +106,7 @@
 .notice-bar .popup-link {
   all: unset;
   color: white;
+  width: 100%;
 }
 .notice-bar .popup-close-btn {
   all: unset;

@@ -170,9 +170,15 @@ public class OrderServiceImpl implements OrderService {
 
         String prodNames = orderDTO.getProdNames();
         String productNames = countProdNames(prodNames);
+        int point = 0;
+        if(order.getUsePoint() ==null)
+          point=0;
+        else
+            point = order.getUsePoint();
+
         PaymentRes res = PaymentRes.builder()
                 .payment(orderDTO.getOrderPayment())
-                .amount(orderDTO.getOrderPriceSum() - order.getUsePoint())
+                .amount(orderDTO.getOrderPriceSum() - point)
                 .orderName(productNames)
                 .customerName(order.getOrderName())
                 .orderNum(order.getOrderNum())

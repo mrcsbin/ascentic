@@ -153,11 +153,11 @@ function Login() {
           <LoginLink to="/login/find_id" state={{ activeTab: 0 }}>
             아이디 찾기
           </LoginLink>
-          <span>|</span>
+          <span style={{ cursor: "default" }}>|</span>
           <LoginLink to="/login/find_password" state={{ activeTab: 1 }}>
             비밀번호 찾기
           </LoginLink>
-          <span>|</span>
+          <span style={{ cursor: "default" }}>|</span>
           <LoginLink to="/signup">회원가입</LoginLink>
         </TextButtonBox>
         <InfoBox className="login-info-box">SNS 계정으로 간편 로그인</InfoBox>
@@ -166,12 +166,21 @@ function Login() {
           onClick={() => handleSNSLogin(AUTH_URL.kakao)}
         >
           <div>
-            <ImgButton
-              className="kakaotalk-login img-button"
-              src={KakaoTalk}
-              alt=""
-            />
             <ImgButtonText>카카오로 로그인</ImgButtonText>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignContent: "center",
+              }}
+            >
+              <ImgButton
+                className="kakaotalk-login img-button"
+                src={KakaoTalk}
+                alt=""
+              />
+            </div>
           </div>
         </ImgButtonBox>
       </LoginArea>
@@ -232,7 +241,7 @@ const IdInput = styled.input`
   padding: 11px 0px;
   width: 100%;
   height: 40px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   box-sizing: border-box;
   border: none;
   border-bottom: ${(props) =>
@@ -248,7 +257,7 @@ const PwInput = styled.input`
   padding: 11px 0px;
   width: 100%;
   height: 40px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   box-sizing: border-box;
   border: none;
   border-bottom: ${(props) =>
@@ -279,8 +288,9 @@ const Button = styled.button`
   background-color: ${(props) => (props.isCheck ? "black" : "lightgrey")};
   color: white;
   margin: 10px auto;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
+  box-sizing: border-box;
 `;
 
 const TextButtonBox = styled.div`
@@ -315,31 +325,30 @@ const ImgButtonBox = styled.div`
   -webkit-box-align: center;
   align-items: center;
   text-align: center;
-  width: 50%;
+  width: 35%;
   margin: 20px auto;
   padding: 0px;
   text-decoration: none;
   > div {
     display: flex;
-    width: 70%;
+    width: 100%;
     font-size: 1.1rem;
     box-sizing: border-box;
     font-weight: 700;
     height: 52px;
     border-radius: 12px;
     border: 1px solid grey;
+    justify-content: center;
   }
 `;
 
 const ImgButton = styled.img`
   padding-left: 10px;
-  width: 50px;
-  height: 50px;
-  position: absolute;
+  width: 35px;
+  height: 35px;
 `;
 
 const ImgButtonText = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

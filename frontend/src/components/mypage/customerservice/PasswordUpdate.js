@@ -216,8 +216,6 @@ const NewPasswordInput = styled.input`
   &.is-invalid {
     border-bottom: 0.5px solid red;
   }
-
-  }
 `;
 
 const NewPasswordConfirmInput = styled.input`

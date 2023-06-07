@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
 public class FindDataDto {
     @Size(min = 1, max = 10)

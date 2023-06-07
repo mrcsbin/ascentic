@@ -84,6 +84,7 @@ function Login() {
         <LoginHeaderBox className="login-box">
           <LoginHeader>로그인</LoginHeader>
         </LoginHeaderBox>
+
         <InputBox className="id-box input-box">
           <Label htmlFor="id">아이디</Label>
           <Input
@@ -110,8 +111,10 @@ function Login() {
             ref={pwInputRef}
             isEmpty={setIsPwEmpty}
           />
+
           {isPwEmpty && <WarningText>비번 입력하소</WarningText>}
         </InputBox>
+
         <ButtonBox className="submit-button-box button-box">
           <Button
             className="submit-button button"
@@ -185,7 +188,7 @@ const LoginHeader = styled.h1`
 `;
 
 const InputBox = styled.div`
-  margin: 30px auto;
+  margin: 20px auto;
   text-align: center;
   width: 50%;
 `;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../styles/Event.css";
 import styled from "styled-components";
+import flowervideo from "../../assets/flowers.webm";
 import { NavLink } from "react-router-dom";
 function Event() {
   const [posts, setPosts] = useState([]);
@@ -90,6 +91,11 @@ function Event() {
     " 여러분은 우리와 함께하는 이 이벤트를 통해 향기의 세계를 더 깊이 탐험하고, 멋진 선물과 특별한 혜택을 누릴 수 있습니다.";
   return (
     <div className="event-list-wrapper">
+      <div className="event-video">
+        <video className="event-video-webm" loop autoPlay muted>
+          <source src={flowervideo} type="video/webm" />
+        </video>
+      </div>
       <div className="event-list">
         <h1>이벤트</h1>
         <div className="infobox">

@@ -5,8 +5,20 @@ import axios from "axios";
 import PLUS from "../../../assets/admin/plus-square.png";
 import MINUS from "../../../assets/admin/minus-square.png";
 import NewInquiry from "./NewInquiry";
-export const InquiryItem = ({ item, onClick }) => {
+import { useDispatch } from "react-redux";
+import { setActiveTab } from "../../../store/modules/mypage";
+export const InquiryItem = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const dateTime = new Date(item.inquiryDate);
+
+  const year = dateTime.getFullYear();
+  const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
+  const date = dateTime.getDate().toString().padStart(2, "0");
+  const hours = dateTime.getHours().toString().padStart(2, "0");
+  const minutes = dateTime.getMinutes().toString().padStart(2, "0");
+
+  const formattedDateTime = `${year} . ${month} . ${date}`;
 
   const handleToggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -18,12 +30,22 @@ export const InquiryItem = ({ item, onClick }) => {
         <InquiryNumber>{item.inquiryNum}</InquiryNumber>
         <InquiryCategory>{item.inquiryCategory}</InquiryCategory>
         <InquiryTitle>{item.inquiryTitle}</InquiryTitle>
+        <InquiryDate>{formattedDateTime}</InquiryDate>
         <InquiryState>
           {item.inquiryState === true ? "답변 완료" : "답변 대기중"}
         </InquiryState>
-        <LogoBox>
-          <Logo src={isModalOpen ? MINUS : PLUS} onClick={handleToggleModal} />
-        </LogoBox>
+        {item.inquiryState ? (
+          <LogoBox>
+            <Logo
+              src={isModalOpen ? MINUS : PLUS}
+              onClick={handleToggleModal}
+            />
+          </LogoBox>
+        ) : (
+          <LogoBox>
+            <InquiryEmptyBar></InquiryEmptyBar>
+          </LogoBox>
+        )}
       </InquiryCard>
       {isModalOpen && <Modal item={item} />}
     </>
@@ -32,7 +54,7 @@ export const InquiryItem = ({ item, onClick }) => {
 
 const InquiryCard = styled.div`
   box-sizing: border-box;
-  padding: 25px 5px;
+  padding: 30px 0;
   display: flex;
   border-bottom: 1px solid grey;
 `;
@@ -43,12 +65,18 @@ const InquiryNumber = styled.div`
 `;
 
 const InquiryCategory = styled.div`
-  width: 25%;
+  width: 10%;
   text-align: center;
 `;
 
+const InquiryDate = styled.div`
+  text-align: center;
+  width: 25%;
+`;
+
 const InquiryTitle = styled.div`
-  width: 50%;
+  text-align: center;
+  width: 35%;
 `;
 
 const InquiryState = styled.div`
@@ -117,6 +145,7 @@ export const InquiryList = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
+  const dispatch = useDispatch();
 
   const handleNewInquiryButtonClick = () => {
     setShowInquiry(!showInquiry);
@@ -154,6 +183,7 @@ export const InquiryList = () => {
         console.error("Error fetching inquiry data:", error);
       } finally {
         setIsLoading(false);
+        dispatch(setActiveTab("1:1 문의 내역"));
       }
     };
 
@@ -169,14 +199,22 @@ export const InquiryList = () => {
 
   return (
     <Wrap>
-      <ContentHeader>
-        1:1 문의내역
+      <ContentBar>
+        <ContentHeader>1:1 문의 내역</ContentHeader>
         <ButtonContainer>
           <StyledButton onClick={handleNewInquiryButtonClick}>
-            질문하기
+            문의하기
           </StyledButton>
         </ButtonContainer>
-      </ContentHeader>
+      </ContentBar>
+      <ItemInfoBox>
+        <InquiryNumberBar>문의 번호</InquiryNumberBar>
+        <InquiryCategoryBar>카테고리</InquiryCategoryBar>
+        <InquiryTitleBar>문의 제목</InquiryTitleBar>
+        <InquiryDateBar>문의 날짜</InquiryDateBar>
+        <InquiryStateBar>문의 상태</InquiryStateBar>
+        <InquiryEmptyBar></InquiryEmptyBar>
+      </ItemInfoBox>
 
       <NewInquiry
         showInquiry={showInquiry}
@@ -198,22 +236,24 @@ export const InquiryList = () => {
 
 const Wrap = styled.div`
   height: auto;
-  min-height: 80vh;
-  font-size: 1.1rem;
+`;
+
+const ContentBar = styled.div`
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ContentHeader = styled.div`
-  padding: 20px 0;
-  font-size: 2rem;
+  cursor: default;
+  padding: 0 0 20px 0;
+  font-size: 1.8rem;
   font-weight: 700;
-  border-bottom: 2px solid black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
+  margin-bottom: 10px;
   align-items: center;
 `;
 
@@ -265,6 +305,7 @@ const ModalWrap = styled.div`
   display: flex;
   flex-direction: column;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  border-bottom: 1px solid grey;
 
   &.show {
     animation: ${slideDown} 0.3s ease;
@@ -352,7 +393,37 @@ const Logo = styled.img`
   height: 20px;
   cursor: pointer;
 `;
-const NoSuchAnswer = styled.div`
+
+const ItemInfoBox = styled.div`
+  padding: 20px 0;
+  display: flex;
+  border-bottom: 1px solid grey;
+`;
+
+const InquiryNumberBar = styled.div`
   text-align: center;
-  font-size: 2rem;
+  width: 10%;
+`;
+const InquiryCategoryBar = styled.div`
+  text-align: center;
+  width: 10%;
+`;
+
+const InquiryTitleBar = styled.div`
+  text-align: center;
+  width: 35%;
+`;
+
+const InquiryDateBar = styled.div`
+  text-align: center;
+  width: 25%;
+`;
+
+const InquiryStateBar = styled.div`
+  text-align: center;
+  width: 15%;
+`;
+
+const InquiryEmptyBar = styled.div`
+  width: 5%;
 `;

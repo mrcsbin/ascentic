@@ -45,23 +45,24 @@ function WishItems({ item }) {
   );
 }
 
-export const WishList = () => {
+export const Wish = () => {
   const [wishList, setWishList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const response = await getWishList(getCookie("accessToken"));
-      setWishList(response.data);
-      await dispatch(setActiveTab("관심 상품"));
-      setIsLoading(false);
+      await getWishList(getCookie("accessToken")).then((response) => {
+        setWishList(response);
+        dispatch(setActiveTab("관심 상품"));
+        setIsLoading(false);
+      });
     };
     fetchProductData();
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
-    return <></>;
+    return <div style={{ height: "100vh" }}></div>;
   }
 
   return (
@@ -154,16 +155,6 @@ const IsNotItemBox = styled.div`
   align-items: center;
   color: rgba(34, 34, 34, 0.5);
   font-size: 1rem;
-`;
-
-const IsNotItem = styled.div`
-  color: rgba(34, 34, 34, 0.5);
-  font-size: 1rem;
-  text-decoration: none;
-  margin-top: 10px;
-  border: 1px solid rgba(34, 34, 34, 0.5);
-  padding: 10px;
-  border-radius: 10px;
 `;
 
 const SetWishButton = styled.button``;

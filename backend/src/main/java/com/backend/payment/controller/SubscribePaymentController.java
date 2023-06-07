@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,8 +58,8 @@ public class SubscribePaymentController {
                 .memberId(currentMemberId)
                 .build();
 
-        System.out.println("76번째 줄++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println(subscribePayment.toString());
+//        System.out.println("76번째 줄++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//        System.out.println(subscribePayment.toString());
 
         subscribePaymentRepository.save(subscribePayment);
 
@@ -67,7 +68,6 @@ public class SubscribePaymentController {
                 .build();
     }
 
-//    public CustomerKeyDto ge
 
     @GetMapping("/billingAuthSuccess")
     public ResponseEntity<Object> handleSuccess(@RequestParam("customerKey") String customerKey,
@@ -119,7 +119,7 @@ public class SubscribePaymentController {
         subscribePaymentRepository.save(subscribePayment);
 
         // 빌링키 넣어서 찐 결제 보내는 url~
-        String billingUrl = "https://api.tosspayments.com/v1/billing/"+subscribePayment.getBillingKey();
+        String billingUrl = "https://api.tosspayments.com/v1/billing/" + subscribePayment.getBillingKey();
 
         RestTemplate billingRestTemplate = new RestTemplate();
 
@@ -150,7 +150,6 @@ public class SubscribePaymentController {
         // 제대로 성공하면 subsManage 기릿요
         if(billingResponse.getStatusCode() == HttpStatus.OK) {
 
-
             String responseBody = billingResponse.getBody(); // JSON 형식의 응답 데이터
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -172,8 +171,6 @@ public class SubscribePaymentController {
                 e.printStackTrace();
 
             }
-
-
         }
 
         HttpHeaders redirectHeaders = new HttpHeaders();
@@ -193,11 +190,6 @@ public class SubscribePaymentController {
                 .build();
     }
 
-    //일단 개발용
-//    @GetMapping("/automation")
-//    public void automation() {
-//    automaticPayments.processAutoPayment();
-//    }
 }
 
 

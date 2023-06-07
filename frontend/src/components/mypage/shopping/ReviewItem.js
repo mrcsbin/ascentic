@@ -39,10 +39,8 @@ export const ReviewItem = ({ item, isComplete }) => {
           <ItemAmount>{addComma(item.orderProductPrice)} 원</ItemAmount>
           <ItemCount>{item.orderProductCount} 개</ItemCount>
         </ItemAmountBox>
-        {item.orderProductReviewState === "리뷰 작성" ? (
-          <ItemOrderState onClick={clickModalHandle}>
-            {item.orderProductReviewState}
-          </ItemOrderState>
+        {item.orderProductReviewState === "작성 기간 만료" ? (
+          <ItemOrderState>{item.orderProductReviewState}</ItemOrderState>
         ) : (
           <ItemOrderState onClick={clickModalHandle}>
             {item.orderProductReviewState}

@@ -154,7 +154,7 @@ const ItemCard = styled.li`
   display: flex;
   align-items: center;
   padding: 20px 0px;
-  border-bottom: 0.5px solid grey;
+  border-top: 1px solid grey;
 `;
 
 const SelectButtonBox = styled.div`
@@ -200,7 +200,7 @@ const ItemTitle = styled.p`
 const ItemOption = styled.p`
   cursor: pointer;
   margin-top: 8px;
-  font-size: 13px;
+  font-size: 1rem;
   line-height: 19px;
   color: grey;
 `;

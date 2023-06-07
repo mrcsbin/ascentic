@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import '../../styles/ExpSubManageView.css';
 import RatingComponent from './RatingComponent';
 import { getCookie } from '../../utils/Cookies';
+import { CardInfo } from '../../constants/card';
 
 const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   // ------------------------------------ 구독기간 관련 ---------------------------------------
@@ -15,6 +16,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
     currentDate.getMonth(),
   ];
   console.log('view' + success);
+  console.log(subscribe);
 
   useEffect(() => {
     if (success) {
@@ -228,7 +230,12 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
             결제일 :<span> 매월 {sbMember.sbPaymentDay} 일</span>
           </p>
           <p>
-            결제정보 :<span>{sbMember.sbPay}</span>
+            결제정보 :
+            <span>
+              {/* {sbMember.sbPay.cardType} */}
+              {CardInfo[sbMember.sbPay.issuerCode]}
+              {/* {sbMember.sbPay.number} */}
+            </span>
           </p>
         </div>
         <div className="sbMember-taste">

@@ -217,10 +217,10 @@ const Wrap = styled.div`
 `;
 
 const ContentHeader = styled.div`
-  padding: 20px 0;
-  font-size: 30px;
+  padding: 0px 0px 20px 0;
+  font-size: 1.8rem;
   font-weight: 700;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid grey;
 `;
 
 const UpdateFormWrap = styled.div`

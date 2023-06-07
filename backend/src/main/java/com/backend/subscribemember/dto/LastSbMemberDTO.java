@@ -1,5 +1,6 @@
 package com.backend.subscribemember.dto;
 
+import com.backend.payment.dto.SubscribeCard;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +15,7 @@ public class LastSbMemberDTO {
 
     private LocalDate sbEndDate;
 
-    private String sbPay;
+    private SubscribeCard sbPay;
 
     private Integer sbPaymentDay;
 

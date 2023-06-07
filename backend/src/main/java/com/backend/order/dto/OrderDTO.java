@@ -25,5 +25,6 @@ public class OrderDTO {
     private Integer shipCharge;
     private String orderState;
     private String prodNames;
+    private Integer usePoint;
 
 }

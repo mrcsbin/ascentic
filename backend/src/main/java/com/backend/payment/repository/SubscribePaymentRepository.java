@@ -1,6 +1,7 @@
 package com.backend.payment.repository;
 
 import com.backend.payment.entity.SubscribePayment;
+import com.backend.subscribemember.entity.SubscribeMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,7 +11,6 @@ public interface SubscribePaymentRepository extends JpaRepository<SubscribePayme
 
 //    SubscribePayment findByMemberId(String memberId);
     SubscribePayment findFirstByMemberIdOrderBySubscribePaymentNumDesc(String memberId);
-
 
 }
 

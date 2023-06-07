@@ -82,6 +82,9 @@ public class Order {
     @Column(name = "ship_code")
     private String shipCode;
 
+    @Column(name = "use_point")
+    private Integer usePoint;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     private List<OrderProduct> orderProducts = new ArrayList<>();
 

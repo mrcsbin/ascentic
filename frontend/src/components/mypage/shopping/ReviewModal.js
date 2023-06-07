@@ -156,5 +156,3 @@ const ItemPrice = styled.div`
 const RatingBox = styled.div`
   margin-top: 2rem;
 `;
-
-const SubmitBox = styled.div``;

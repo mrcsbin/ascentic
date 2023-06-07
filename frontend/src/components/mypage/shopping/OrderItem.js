@@ -1,18 +1,48 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ReviewModal from "./ReviewModal";
+import axios from "axios";
 
 function addComma(num) {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
   return num.toString().replace(regexp, ",");
 }
 
-export const OrderItem = ({ item }) => {
+export const OrderItem = ({ orderId, item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const clickModalHandle = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const cancelClickHandle = async () => {
+    const cancelData = {
+      cancelAmount: item.orderProductPrice,
+      cancelReason: "취소 사유",
+      orderId: orderId,
+      orderProductNum: item.orderProductNum,
+    };
+
+    if (window.confirm("정말 주문을 취소하시겠습니까?")) {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/order/cancel/orderproduct",
+          cancelData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        // .then(window.location.reload());
+        console.log(response.data);
+      } catch (error) {
+        console.error(
+          "주문 결제 취소 요청을 보내는 도중 오류가 발생했습니다:",
+          error
+        );
+      }
+    }
   };
 
   return (
@@ -40,19 +70,25 @@ export const OrderItem = ({ item }) => {
           </ItemInfoBox>
           {/* </StyledLink> */}
           <ButtonBox>
-            {item.orderProductState === "결제 완료" && (
-              <OrderCancelButton>주문 취소</OrderCancelButton>
+            {item.orderProductState === "결제완료" && (
+              <OrderCancelButton onClick={() => cancelClickHandle()}>
+                주문 취소
+              </OrderCancelButton>
             )}
-            {item.orderProductState === "배송 완료" && (
-              <WriteReviewButton
-                onClick={
-                  item.orderProductReviewState === "리뷰 작성"
-                    ? clickModalHandle
-                    : null
-                }
-              >
-                {item.orderProductReviewState}
-              </WriteReviewButton>
+            {item.orderProductState === "배송완료" &&
+              item.orderProductReviewState === "리뷰 작성" && (
+                <WriteReviewButton
+                  onClick={
+                    item.orderProductReviewState === "리뷰 작성"
+                      ? clickModalHandle
+                      : null
+                  }
+                >
+                  {item.orderProductReviewState}
+                </WriteReviewButton>
+              )}
+            {item.orderProductState === "주문취소" && (
+              <OrderCancelButton>장바구니에 담기</OrderCancelButton>
             )}
           </ButtonBox>
         </ItemBox>
@@ -113,10 +149,6 @@ const WriteReviewButton = styled.div`
 `;
 
 const ItemCard = styled.div`
-  /* box-sizing: border-box;
-  padding: 25px 0;
-  display: flex;
-  border-bottom: 1px solid grey; */
   width: 100%;
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
@@ -125,13 +157,6 @@ const ItemCard = styled.div`
   margin-bottom: 20px;
   padding: 24px 24px 16px;
   box-sizing: border-box;
-`;
-
-const StyledLink = styled(Link)`
-  color: "black";
-  text-align: none;
-  display: flex;
-  width: 40%;
 `;
 
 const ItemInfoBox = styled.div`
@@ -156,36 +181,3 @@ const ItemName = styled.div`
 `;
 
 const ItemOption = styled.div``;
-
-const ItemOrderDate = styled.div`
-  text-align: center;
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const ItemAmountBox = styled.div`
-  width: 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-`;
-
-const ItemAmount = styled.div`
-  padding: 15px 0;
-  text-align: center;
-`;
-
-const ItemCount = styled.div`
-  text-align: center;
-`;
-
-const ItemOrderState = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 20%;
-`;

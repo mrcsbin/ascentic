@@ -19,6 +19,7 @@ public class PaymentFinalRes {
 
     @Column
     private String orderId;
+
     @Column
     private String orderName;
 

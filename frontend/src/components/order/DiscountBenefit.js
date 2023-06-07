@@ -2,15 +2,40 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePoint } from "../../store/modules/order";
 import styled from "styled-components";
+import { useEffect } from "react";
+import { getMemberPoint } from "../../api/MemberApi";
+import { getCookie } from "../../utils/Cookies";
 
 // 할인 혜택
 const DiscountBenefit = () => {
   const dispatch = useDispatch(); // action 객체를 보내는 훅
   const pointInfo = useSelector((state) => state.order.pointInfo);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const accessToken = getCookie("accessToken");
+      const result = await getMemberPoint(accessToken); // api 함수 호출
+      dispatch(updatePoint({ updatePointInfo: { holdPoint: result } }));
+    };
+
+    fetchData();
+  }, []);
+
   const handleUpdatePoint = (e) => {
     const { name, value } = e.target;
+    if (name === "usePoint" && parseInt(value) > pointInfo.holdPoint) {
+      dispatch(
+        updatePoint({ updatePointInfo: { usePoint: pointInfo.holdPoint } })
+      );
+      return;
+    }
     dispatch(updatePoint({ updatePointInfo: { [name]: value } }));
+  };
+
+  const handleMaxPoint = () => {
+    dispatch(
+      updatePoint({ updatePointInfo: { usePoint: pointInfo.holdPoint } })
+    );
   };
 
   return (
@@ -31,12 +56,13 @@ const DiscountBenefit = () => {
           name="usePoint"
           value={pointInfo.usePoint}
           onChange={handleUpdatePoint}
+          placeholder="0"
           dir="rtl"
         ></input>
-        <button>사용불가</button>
+        <button onClick={() => handleMaxPoint()}>전액 사용</button>
       </div>
-      <div>배송비, 샘플키트는 포인트 결제 적용되지 않습니다.</div>
-      <button>저장하고 다음 단계로</button>
+      {/* <div>배송비, 샘플키트는 포인트 결제 적용되지 않습니다.</div> */}
+      {/* <button>저장하고 다음 단계로</button> */}
     </DiscountBenefitForm>
   );
 };
@@ -47,7 +73,7 @@ const DiscountBenefitForm = styled.div`
   margin-top: 50px;
   margin-left: 110px;
   width: 609px;
-  height: 320px;
+  height: 250px;
 
   > div > div {
     margin-left: 5px;

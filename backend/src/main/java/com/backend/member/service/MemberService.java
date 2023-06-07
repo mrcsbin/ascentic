@@ -16,7 +16,7 @@ public interface MemberService {
 
     void deleteMemberV1(Member member);
 
-    void deleteMemberV2(String id);
+    String deleteMemberV2(DeleteMemberDto deleteMemberDto);
 
     JwtTokenDto doLogin(LoginDto loginDto);
 

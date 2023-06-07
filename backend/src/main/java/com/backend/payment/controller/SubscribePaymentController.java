@@ -14,6 +14,8 @@ import com.backend.payment.repository.SubscribePaymentRepository;
 import com.backend.payment.service.SubscribePaymentServiceImpl;
 import com.backend.subscribemember.entity.SubscribeMember;
 import com.backend.subscribemember.repository.SbMemberRepository;
+import com.backend.subscribesend.entity.SubscribeSend;
+import com.backend.subscribesend.repository.SubscribeSendRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.json.JSONObject;
@@ -27,6 +29,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -40,6 +43,7 @@ public class SubscribePaymentController {
     private final MemberRepository memberRepository;
     private final SbMemberRepository sbMemberRepository;
     private final SubscribePaymentReceiptRepository subscribePaymentReceiptRepository;
+    private final SubscribeSendRepository subscribeSendRepository;
     private RestTemplate restTemplate = new RestTemplate();
 
     private final AutomaticPayments automaticPayments;
@@ -166,7 +170,18 @@ public class SubscribePaymentController {
                         .paymentKey(paymentKey)
                         .build();
                 subscribePaymentReceiptRepository.save(subscribePaymentReceipt);
-        } catch (JsonProcessingException e) {
+
+                SubscribeMember subscribeMember1 = sbMemberRepository.getLastSbMemberByMemberId(memberId);
+                subscribeMember1.getSbMemberNum();
+                String addr = subscribeMember1.getSbMainAddr() + " " + subscribeMember1.getSbSubAddr();
+                SubscribeSend subscribeSend = SubscribeSend.builder()
+                        .subscribeMember(subscribeMember1)
+                        .sbSendPostcode(addr)
+                        .sbSendPayDate(LocalDate.now())
+                        .build();
+                subscribeSendRepository.save(subscribeSend);
+
+            } catch (JsonProcessingException e) {
                 e.printStackTrace();
 
             }
@@ -178,7 +193,7 @@ public class SubscribePaymentController {
 //                .build()
 //                .toUri();
         URI location = UriComponentsBuilder.fromUriString("http://localhost:3000/exp/subsmanage")
-                .queryParam("success", true)
+                .queryParam("success", "구독신청에 성공하셨습니다!")
                 .build()
                 .toUri();
 

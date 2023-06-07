@@ -100,8 +100,15 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void deleteMemberV2(String id) {
-        memberRepository.deleteById(id);
+    public String deleteMemberV2(DeleteMemberDto deleteMemberDto) {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("해당회원이 존재하지 않음"));
+        if (passwordEncoder.matches(deleteMemberDto.getPassword(), member.getPassword())) {
+            memberRepository.deleteById(currentMemberId);
+            return "탈퇴가 완료 되었습니다.";
+        } else {
+            return "비밀번호가 일치하지 않습니다.";
+        }
     }
 
     @Override

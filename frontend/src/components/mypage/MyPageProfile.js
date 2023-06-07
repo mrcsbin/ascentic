@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { setActiveTab } from "../../store/modules/mypage";
 import { MyPageProfileOrder } from "./MyPageProfileOrder";
 import { MyPageProfileSubscribe } from "./MyPageProfileSubscribe";
 import { useState } from "react";
-import { getMyPageProfile } from "../../api/MemberApi";
+import { getMyPageProfile, updateProfileImg } from "../../api/MemberApi";
 import { getCookie } from "../../utils/Cookies";
 
 function addComma(num) {
@@ -19,6 +19,7 @@ function addComma(num) {
 }
 
 export const MyPageProfile = () => {
+  const [showNotification, setShowNotification] = useState(false);
   const fileInput = useRef(null);
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -29,12 +30,25 @@ export const MyPageProfile = () => {
   const DefaultProfileImageURL =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
-  const changeHandle = (event) => {
+  const changeHandle = async (event) => {
     const imageFile = event.target.files[0];
     setProfileImage(imageFile);
     const imageUrl = URL.createObjectURL(imageFile);
     setImage(imageUrl);
+    const imageFormData = new FormData();
+    imageFormData.append("profileImg", imageFile);
+    await updateProfileImg(getCookie("accessToken"), imageFormData);
+    setShowNotification(true);
   };
+
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -99,6 +113,11 @@ export const MyPageProfile = () => {
       </Wrap>
       <MyPageProfileOrder />
       <MyPageProfileSubscribe />
+      {showNotification && (
+        <NotificationContainer>
+          <NotificationText>저장되었습니다.</NotificationText>
+        </NotificationContainer>
+      )}
     </>
   );
 };
@@ -234,4 +253,43 @@ const RightButtonContentValue = styled.strong`
 const RightButtonContentName = styled.p`
   font-size: 1rem;
   color: rgba(34, 34, 34, 0.5);
+`;
+
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const NotificationContainer = styled.div`
+  position: fixed;
+  bottom: 70px;
+  left: 46%;
+  padding: 10px 20px;
+  background-color: black;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: ${slideUp} 0.3s ease-in-out, ${fadeOut} 1.5s 1s forwards;
+`;
+
+const NotificationText = styled.p`
+  margin: 0;
+  padding: 20 20px;
+  font-size: 1.3rem;
+  color: white;
 `;

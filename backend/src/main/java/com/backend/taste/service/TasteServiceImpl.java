@@ -78,7 +78,7 @@ public class TasteServiceImpl implements TasteService {
     }
 
     private TasteResultDTO getTasteResultDTO(String memberId) {
-        Optional<Taste> findTaste = tasteRepository.findLastByMemberId(memberId);
+        Optional<Taste> findTaste = tasteRepository.findTopByMemberIdOrderByTasteNumDesc(memberId);
 
         if (!findTaste.isPresent()) {
             return TasteResultDTO.builder()

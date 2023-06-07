@@ -130,7 +130,7 @@ const HeaderV2 = () => {
               <MenuBox>
                 <StyledLink
                   isDarkMode={isDarkMode}
-                  to="/"
+                  to="/community/notice"
                   onMouseEnter={() => setHoverMenu("커뮤니티")}
                 >
                   <Menu>커 뮤 니 티</Menu>
@@ -181,11 +181,6 @@ const HeaderV2 = () => {
                 <CategoryItem>
                   <StyledLink to="/community/event/" isDarkMode={isDarkMode}>
                     <SubMenu>이벤트</SubMenu>
-                  </StyledLink>
-                </CategoryItem>
-                <CategoryItem>
-                  <StyledLink to="/" isDarkMode={isDarkMode}>
-                    <SubMenu>게시판</SubMenu>
                   </StyledLink>
                 </CategoryItem>
               </CategoryBox>

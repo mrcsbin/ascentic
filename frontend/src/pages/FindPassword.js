@@ -29,7 +29,6 @@ function FindPassword() {
     setIsRequestPending(true); // 요청 대기 상태로 설정
     try {
       const message = await findPw(email, phone);
-      alert(message);
       if (message === "찾으시는 정보가 없습니다") {
         setShowNotification(true);
         setEmail("");

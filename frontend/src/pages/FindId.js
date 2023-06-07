@@ -12,7 +12,7 @@ function FindId() {
           <LoginHeader>아이디 찾기</LoginHeader>
         </LoginHeaderBox>
         <InfoText>
-          가입 시 등록한 휴대폰 번호를 입력후
+          가입 시 등록한 이름과 휴대폰 번호를 입력후
           <br />
           <br /> 인증받기를 통해 아이디를 알려드립니다.
         </InfoText>

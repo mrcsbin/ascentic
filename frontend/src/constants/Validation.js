@@ -31,6 +31,13 @@ export const validateEmail = (email) => {
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   return !email || emailRegex.test(email);
 };
+
+export const validateFindPasswordByEmail = (email) => {
+  const emailRegex =
+    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+  return emailRegex.test(email);
+};
+
 //입력된 이메일 값이 이메일 주소의 형식에 맞는지
 export const validatePhone = (phone) => {
   const phoneRegex = /^[0-9]{11}$/; // 11자리 숫자인지 검증

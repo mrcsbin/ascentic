@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import {
   findId,
@@ -28,7 +28,7 @@ function FindId() {
     setIsRequestPending(true); // 요청 대기 상태로 설정
 
     try {
-      if (isExistMember(name, phone)) {
+      if (!isExistMember(name, phone)) {
         const res = await sendCode(phone);
         console.log(res);
         if (res) {
@@ -39,11 +39,12 @@ function FindId() {
         }
       } else {
         setShowNotification(true);
+        setName("")
+        setPhone("")
       }
     } catch (error) {
       console.error(error);
     }
-
     setIsRequestPending(false); // 요청 완료 후 상태값 변경
   };
 
@@ -62,7 +63,6 @@ function FindId() {
     } else {
       if (res === "Wrong") {
         setIsCodeCheck(false);
-        alert("인증번호가 올바르지 않습니다.");
       } else {
         alert(SIGNUP_ERROR_MESSAGE.UNKNOWN);
         setShowCertificate(false);
@@ -73,6 +73,15 @@ function FindId() {
       setCode("");
     }
   };
+
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
 
   const handleCheckTime = () => {
     window.location.reload();
@@ -432,7 +441,7 @@ const NotificationContainer = styled.div`
 
 const NotificationText = styled.p`
   margin: 0;
-  padding: 20px 20px;
+  padding: 20 20px;
   font-size: 1.3rem;
   color: white;
 `;

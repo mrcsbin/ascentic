@@ -86,10 +86,10 @@ public class MemberServiceImpl implements MemberService {
         if (passwordEncoder.matches(updateMemberDto.getPassword(), member.getPassword())) {
             member.changeEncodedPassword(passwordEncoder.encode(updateMemberDto.getNewPassword()));
             memberRepository.save(member);
-            return "success";
+            return "비밀번호가 변경되었습니다.";
+        } else {
+            return "현재 비밀번호가 일치하지 않습니다.";
         }
-        return "fail";
-
     }
 
     @Override

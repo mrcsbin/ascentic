@@ -44,7 +44,6 @@ public class MemberController {
     // 회원가입
     @PostMapping("/signup")
     public void join(@RequestBody SignupDto signupDto) {
-
         memberService.join(signupDto);
     }
 

@@ -127,9 +127,9 @@ const Carousel = ({ prodNum, category, scentNoteName, navigate }) => {
           />
         </ButtonBox>
       </Wrapper>
-      <PageIndicator>{`${currentPage}/${Math.ceil(
+      {/* <PageIndicator>{`${currentPage}/${Math.ceil(
         recommendProduct.length / 4
-      )}`}</PageIndicator>
+      )}`}</PageIndicator> */}
     </>
   );
 };

@@ -22,7 +22,6 @@ export const updateMember = async (accessToken, password, newPassword) => {
       },
     }
   );
-  console.log(response.data);
   return response.data;
 };
 

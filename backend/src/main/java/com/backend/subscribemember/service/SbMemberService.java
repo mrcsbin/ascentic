@@ -11,4 +11,5 @@ public interface SbMemberService {
 
     public LastSbMemberDTO getLastSbMemberByMemberId();
 
+    boolean isSubscribeUseMonth();
 }

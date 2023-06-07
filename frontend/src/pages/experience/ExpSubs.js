@@ -7,7 +7,11 @@ import ExpSubDeliveryInfo from "../../components/ExpSubs/ExpSubDeliveryInfo";
 import expSubsBackground from "../../assets/expMain/expmain_content3.webp";
 import { getCookie } from "../../utils/Cookies";
 import { useEffect } from "react";
-import { isSubscribeMember, requestTasteRes } from "../../api/SubsMemberApi";
+import {
+  isSubscribUseMonth,
+  isSubscribeMember,
+  requestTasteRes,
+} from "../../api/SubsMemberApi";
 import Loading from "../../components/common/Loading";
 import logow from "../../assets/ascentic_logo_w.svg";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +20,7 @@ const ExpSubs = () => {
   const [loading, setLoading] = useState(false);
   const [tasteResList, setTasteResList] = useState("");
   const [isSubsCribeMember, setIsSubscribeMember] = useState();
+  const [isUseThisMonth, setIsUseThisMonth] = useState(false);
   const [userTasteRes, setTasteRes] = useState("");
   const Navigate = useNavigate();
   const location = useLocation();
@@ -53,6 +58,8 @@ const ExpSubs = () => {
       setLoading(true);
       const result = await requestTasteRes(accessToken); // api 함수 호출
       setIsSubscribeMember(await isSubscribeMember(accessToken));
+      setIsUseThisMonth(await isSubscribUseMonth(accessToken)); // 같은년도 같은 월에 이미 신청기록이 있으면 신청못하도록 함
+
       console.log(result);
       if (result === undefined) {
         return Navigate("/login", {
@@ -146,7 +153,7 @@ const ExpSubs = () => {
     return <Loading />;
   }
   return (
-    <div style={{paddingBottom: "107px"}}>
+    <div style={{ paddingBottom: "107px" }}>
       <ExpSubsBody>
         <ExpSubsIntro>
           <div>특별한 당신을 위해</div>
@@ -158,6 +165,7 @@ const ExpSubs = () => {
         <GuideLocation>
           <ExpGuide
             isSubsCribeMember={isSubsCribeMember}
+            isUseThisMonth={isUseThisMonth}
             showModal={() => openModal()}
             userTasteRes={userTasteRes}
           ></ExpGuide>

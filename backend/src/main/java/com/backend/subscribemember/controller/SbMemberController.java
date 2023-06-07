@@ -31,4 +31,11 @@ public class SbMemberController {
     public boolean isSubscribeMember() {
         return sbMemberService.isSubscribeMember();
     }
+
+    // 같은년도 같은월에 신청했는지 조회하는 api
+
+    @GetMapping("/subscribe/usemonth")
+    public boolean isSubscribeUseMonth() {
+        return sbMemberService.isSubscribeUseMonth();
+    }
 }

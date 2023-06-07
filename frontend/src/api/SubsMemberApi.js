@@ -38,3 +38,13 @@ export const isSubscribeMember = async (accessToken) => {
 
   return response.data;
 };
+
+export const isSubscribUseMonth = async (accessToken) => {
+  const response = await axios.get("http://localhost:8080/subscribe/usemonth", {
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
+
+  return response.data;
+};

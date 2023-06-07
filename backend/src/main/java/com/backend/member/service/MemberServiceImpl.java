@@ -138,16 +138,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public String findPw(FindDataDto findDataDto) {
-        Optional<Member> member = memberRepository.findByIdAndPhone(findDataDto.getId(), findDataDto.getPhone());
+        Optional<Member> member = memberRepository.findByEmailAndPhone(findDataDto.getEmail(), findDataDto.getPhone());
         Optional<Member> sendTo = memberRepository.findEmailByPhone(findDataDto.getPhone());
         String tempPassword = TempPasswordGenerator.generateRandomPassword(10);
         if (member.isPresent()) {
             changeTempPw(member.get(), tempPassword);
             // 이메일 전송
-            mailController.sendMail(sendTo.get(), tempPassword, findDataDto.getName());
-
+            mailController.sendMail(sendTo.get(), tempPassword, member.get().getName());
+            System.out.println(tempPassword);
+            System.out.println(member.get().getName());
+            System.out.println(sendTo.get());
+            System.out.println("======================================================");
+            return "성공";
         }
-        return "해당 회원이 존재하지 않습니다.";
+        else return "실패";
+
     }
 
     @Override

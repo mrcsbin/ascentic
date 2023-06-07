@@ -1,15 +1,43 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { validateFindPasswordByEmail } from "../constants/Validation";
+import { findPw } from "../api/MemberApi";
 
 function FindPassword() {
-  const [tel, setTel] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [isRequestPending, setIsRequestPending] = useState(false); // 요청 대기 상태를 나타내는 상태값
 
   const handleClick = async (e) => {
-    setTel(e.target.value);
+    console.log("기릿");
+    e.preventDefault();
+    if (isRequestPending) {
+      // 요청이 대기 중인 경우
+      alert("잠시 기다려주세요");
+      return; // 요청 무시
+    }
+    if (email === "") {
+      alert("이메일을 입력하세요");
+      return;
+    }
+    if (phone === "") {
+      alert("전화번호를 입력해주세요");
+      return;
+    }
+    setIsRequestPending(true); // 요청 대기 상태로 설정
+    try {
+      const message = await findPw(email, phone);
+      alert(message);
+      if (message == "찾으시는 정보가 없습니다") {
+        setEmail("");
+        setPhone("");
+      }
+    } catch (e) {
+      alert(e);
+    } finally {
+      setIsRequestPending(false); // 요청 상태 초기화
+    }
   };
-
   return (
     <LoginWrap id="login-wrap">
       <LoginArea className="login-area">
@@ -27,9 +55,9 @@ function FindPassword() {
             type="text"
             id="tel"
             name="tel"
-            value={tel}
+            value={phone}
             placeholder="전화번호"
-            onChange={(e) => setTel(e.target.value)}
+            onChange={(e) => setPhone(e.target.value)}
             onInput={(e) => {
               e.target.value = e.target.value
                 .replace(/[^0-9.]/g, "")
@@ -50,8 +78,9 @@ function FindPassword() {
         </InputBox>
         <ButtonBox className="submit-button-box button-box">
           <Button
-            isCheck={tel.length === 11 && validateFindPasswordByEmail(email)}
+            isCheck={phone.length === 11 && validateFindPasswordByEmail(email)}
             type="button"
+            onClick={(e) => handleClick(e)}
           >
             이메일 발송
           </Button>

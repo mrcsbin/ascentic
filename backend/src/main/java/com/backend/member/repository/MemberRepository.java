@@ -22,7 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findByNameAndPhone(String name, String phone);
 
-    Optional<Member> findByIdAndPhone(String id, String phone);
+    Optional<Member> findByEmailAndPhone(String email, String phone);
 
     Optional<Member> findEmailByPhone(String phone);
 

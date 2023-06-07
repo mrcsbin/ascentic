@@ -51,20 +51,16 @@ export const delProfileImg = async (accessToken) => {
 
 // 회원 삭제
 export const deleteMember = async (accessToken, password) => {
-  const response = await axios.delete(
-    `${MEMBER_API_URL}`,
-    {
-      data: {
-        password: password
-      },
-      headers: {
-        Authorization: "Bearer " + accessToken,
-      },
-    }
-  );
+  const response = await axios.delete(`${MEMBER_API_URL}`, {
+    data: {
+      password: password,
+    },
+    headers: {
+      Authorization: "Bearer " + accessToken,
+    },
+  });
   return response.data;
 };
-
 
 // 로그인
 export const login = async (id, password) => {
@@ -113,10 +109,10 @@ export const findId = async (name, phone) => {
 };
 
 // PW 찾기
-export const findPw = async (name, id, phone) => {
+export const findPw = async (email, phone) => {
+  console.log(email + phone);
   const response = await axios.post(`${MEMBER_API_URL}/find/pw`, {
-    name,
-    id,
+    email,
     phone,
   });
   return response.data;

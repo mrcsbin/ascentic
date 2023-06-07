@@ -26,7 +26,10 @@ const TestResult = () => {
           }
         );
         setResultData(res.data);
-        if (res.data.firstPlace === "null") {
+        if (
+          (res.data.firstPlace === "null") |
+          (res.data.firstPlace === undefined)
+        ) {
           return Navigate("/login", {
             state: { taste: location.state.taste, pathname: "/exp/taste/res" },
           });

@@ -39,11 +39,13 @@
 .duration-payDay > p:nth-child(1) {
   font-size: 1.3rem;
   font-weight: 700;
-  text-align: center;
+  text-align: right;
 }
 .duration-payDay > p {
   font-size: 1.1rem;
   font-weight: 400;
+  line-height: 1.9;
+  text-align: right;
 }
 .duration-payDay > p > span {
   font-size: 1.2rem;

@@ -105,7 +105,7 @@ export const MyPageProfile = () => {
           </WishButton>
           <PointButton>
             <RightButtonContentValue>
-              {addComma(profileData.point)}
+              {addComma(profileData.point)}P
             </RightButtonContentValue>
             <RightButtonContentName>포인트</RightButtonContentName>
           </PointButton>

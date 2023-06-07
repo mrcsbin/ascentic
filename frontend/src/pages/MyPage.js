@@ -37,7 +37,6 @@ function MyPage() {
 export default MyPage;
 
 const MyPageWrap = styled.div`
-  min-height: 1000px;
   width: 100%;
   margin: 0px auto;
   box-sizing: border-box;

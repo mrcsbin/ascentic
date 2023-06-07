@@ -124,7 +124,7 @@ function StoreMain() {
   //productlist 필터 모달값 기본 적용 (전체 카테고리, 최신순 정렬)
   // 값이 유효할 때
   return (
-    <div>
+    <div style={{ paddingBottom: "107px" }}>
       <div className="imagebox">
         {category === "all" && (
           <video className="topVideo" loop autoPlay muted>

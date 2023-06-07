@@ -165,9 +165,8 @@ export default Login;
 
 const LoginWrap = styled.div`
   width: 60vw;
-  margin: 0 auto;
+  margin: 0px auto 120px;
   padding-top: 180px;
-  margin-bottom: 120px;
 `;
 
 const LoginArea = styled.div`

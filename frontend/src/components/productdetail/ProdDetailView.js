@@ -262,10 +262,10 @@ export default ProdDetailView;
 
 const Wrap = styled.div`
   /* width: 85vw; */
+  padding-bottom: 107px;
   width: 100%;
   height: fit-content;
   margin: 0 auto;
-  padding: 0;
   overflow: hidden;
 `;
 

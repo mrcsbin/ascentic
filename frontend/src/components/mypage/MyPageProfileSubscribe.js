@@ -14,7 +14,7 @@ function addComma(num) {
 }
 
 export const MyPageProfileSubscribe = () => {
-  const [subscribe, setSubscribe] = useState();
+  const [subscribe, setSubscribe] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [nextPaymentDate, setNextPaymentDate] = useState();
 
@@ -58,7 +58,7 @@ export const MyPageProfileSubscribe = () => {
       </ContentBox>
       <Wrap>
         <DownSide>
-          {subscribe === undefined ? (
+          {subscribe === "" ? (
             <DownSideContent>
               구독중인 상품이 없습니다.
               <ExpLink to="/exp/subs">구독하러가기</ExpLink>
@@ -122,7 +122,9 @@ const ContentPlusButton = styled(Link)`
   align-items: center;
 `;
 
-const Wrap = styled.div``;
+const Wrap = styled.div`
+  margin-bottom: 10rem;
+`;
 
 const DownSide = styled.div``;
 

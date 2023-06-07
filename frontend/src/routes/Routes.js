@@ -5,7 +5,6 @@ import { getCookie } from "../utils/Cookies";
 import { Routes as BrowserRoutes, Route, Navigate } from "react-router-dom";
 import * as Pages from "../pages/Pages";
 import * as AdminPages from "../admin/pages/AdminPages";
-import ScrollToTop from "../ScrollToTop";
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);

@@ -107,11 +107,11 @@ public class MemberController {
     // 비밀번호 찾기
     @PostMapping("/find/pw")
     public String findPw(@RequestBody FindDataDto findDataDto) {
-        String tempPw = memberService.findPw(findDataDto);
-        if (tempPw == null) {
-            return "찾으시는 정보가 없습니다.";
-        } else {
+        String answer = memberService.findPw(findDataDto);
+        if (answer=="성공") {
             return "가입하실때 사용하셨던 이메일로 임시 비밀번호가 발급되었습니다.";
+        } else {
+            return "찾으시는 정보가 없습니다";
         }
     }
 

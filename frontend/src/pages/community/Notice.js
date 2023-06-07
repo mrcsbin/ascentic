@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
-  min-height: 100vh;
   padding-top: 5%;
+  padding-bottom: 107px;
   width: 90%;
   overflow: auto; // 스크롤 생성
 `;
@@ -28,8 +28,8 @@ const ToggleButton = styled.button`
   font-size: 16px;
   border: none;
   background-color: transparent;
-  color: ${({ selected }) => (selected ? '#333333' : '#777777')};
-  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
+  color: ${({ selected }) => (selected ? "#333333" : "#777777")};
+  font-weight: ${({ selected }) => (selected ? "bold" : "normal")};
   cursor: pointer;
 `;
 
@@ -71,7 +71,7 @@ const PostContent = styled.div`
 `;
 
 const Notice = () => {
-  const [selectedCategory, setSelectedCategory] = useState('notice');
+  const [selectedCategory, setSelectedCategory] = useState("notice");
   const [selectedPost, setSelectedPost] = useState(null);
   const { pathname } = useLocation();
   const [allPosts, setAllposts] = useState([]);
@@ -121,14 +121,14 @@ const Notice = () => {
     <Container>
       <LeftSection>
         <ToggleButton
-          selected={selectedCategory === 'notice'}
-          onClick={() => handleToggle('notice')}
+          selected={selectedCategory === "notice"}
+          onClick={() => handleToggle("notice")}
         >
           공지사항
         </ToggleButton>
         <ToggleButton
-          selected={selectedCategory === 'news'}
-          onClick={() => handleToggle('news')}
+          selected={selectedCategory === "news"}
+          onClick={() => handleToggle("news")}
         >
           뉴스
         </ToggleButton>

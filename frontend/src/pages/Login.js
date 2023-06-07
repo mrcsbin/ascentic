@@ -1,13 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Facebook from "../assets/login/facebook_logo.png";
-import KakaoTalk from "../assets/login/kakaotalk_logo.png";
 import Naver from "../assets/login/naver_logo.png";
 import { AUTH_URL } from "../constants/Url";
 import { getCookie } from "../utils/Cookies";
 import { useDispatch } from "react-redux";
 import { fetchTokenByLogin, fetchMemberByToken } from "../store/modules/login";
+import KakaoTalk from "../assets/kakao.png";
+import { validateLoginPassword } from "../constants/Validation";
 
 function Login() {
   const navigate = useNavigate();
@@ -16,30 +17,39 @@ function Login() {
   const [password, setPassword] = useState("");
   const idInputRef = useRef(null);
   const pwInputRef = useRef(null);
-  const [isIdEmpty, setIsIdEmpty] = useState(false);
-  const [isPwEmpty, setIsPwEmpty] = useState(false);
+  const [isIdCheck, setIsIdCheck] = useState(true);
+  const [isPwCheck, setIsPwCheck] = useState(true);
+  const [isCheck, setIsCheck] = useState(true);
   const dispatch = useDispatch();
 
-  // 입력칸 비었는지 확인
-  const checkInput = (data, ref, setIsEmpty) => {
-    if (data === "") {
-      ref.current.focus();
-      setIsEmpty(true);
-      return false;
+  const IdChangeHandle = (e) => {
+    setId(e.target.value);
+    if (id.length >= 5) {
+      setIsIdCheck(true);
+    } else {
+      setIsIdCheck(false);
     }
-    setIsEmpty(false);
-    return true;
   };
+
+  const PwChangeHandle = (e) => {
+    setPassword(e.target.value);
+    if (!validateLoginPassword(password)) {
+      setIsPwCheck(false);
+    } else {
+      setIsPwCheck(true);
+    }
+  };
+
+  useEffect(() => {
+    if (isIdCheck && isPwCheck) {
+      if (password.length > 2) setIsCheck(true);
+    } else {
+      setIsCheck(false);
+    }
+  }, [isIdCheck, isPwCheck]);
 
   // 로그인
   const handleClick = async () => {
-    if (!checkInput(id, idInputRef, setIsIdEmpty)) {
-      return;
-    }
-    if (!checkInput(password, pwInputRef, setIsPwEmpty)) {
-      return;
-    }
-
     // 로그인 정보로 토큰 생성
     await dispatch(fetchTokenByLogin({ id, password }));
     if (getCookie("accessToken")) {
@@ -56,7 +66,7 @@ function Login() {
     } else {
       setId("");
       setPassword("");
-      alert("틀렸수다");
+      alert("아이디 혹은 비밀번호가 틀렸습니다.");
     }
   };
 
@@ -84,42 +94,55 @@ function Login() {
         <LoginHeaderBox className="login-box">
           <LoginHeader>로그인</LoginHeader>
         </LoginHeaderBox>
-
         <InputBox className="id-box input-box">
-          <Label htmlFor="id">아이디</Label>
-          <Input
+          <IdLabel htmlFor="id" isIdCheck={isIdCheck}>
+            아이디
+          </IdLabel>
+          <IdInput
             type="text"
             id="id"
             name="id"
             value={id}
-            onChange={(e) => setId(e.target.value)}
+            isIdCheck={isIdCheck}
+            onChange={(e) => IdChangeHandle(e)}
             onKeyDown={handleKeyPress}
             ref={idInputRef}
-            isEmpty={setIsIdEmpty}
           />
-          {isIdEmpty && <WarningText>아이디 입력하소</WarningText>}
+          {!isIdCheck && (
+            <WarningText>
+              영문, 숫자를 조합하여 입력해주세요. (6자 이상)
+            </WarningText>
+          )}
         </InputBox>
         <InputBox className="password-box input-box">
-          <Label htmlFor="pw">비밀번호</Label>
-          <Input
+          <PwLabel htmlFor="pw" isPwCheck={isPwCheck}>
+            비밀번호
+          </PwLabel>
+          <PwInput
             type="password"
             id="pw"
             name="pw"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            isPwCheck={isPwCheck}
+            onChange={(e) => PwChangeHandle(e)}
             onKeyDown={handleKeyPress}
             ref={pwInputRef}
-            isEmpty={setIsPwEmpty}
           />
 
-          {isPwEmpty && <WarningText>비번 입력하소</WarningText>}
+          {!isPwCheck && (
+            <WarningText>
+              영문, 숫자, 특수문자를 조합해서 입력해주세요. (8자 이상)
+            </WarningText>
+          )}
         </InputBox>
-
         <ButtonBox className="submit-button-box button-box">
           <Button
             className="submit-button button"
             type="button"
-            onClick={() => handleClick()}
+            onClick={
+              isCheck && id && password ? () => handleClick() : undefined
+            }
+            isCheck={isCheck}
           >
             로그인
           </Button>
@@ -136,25 +159,18 @@ function Login() {
           <LoginLink to="/signup">회원가입</LoginLink>
         </TextButtonBox>
         <InfoBox className="login-info-box">SNS 계정으로 간편 로그인</InfoBox>
-        <ImgButtonBox className="img-button-box button-box">
-          <ImgButton
-            className="facebook-login img-button"
-            src={Facebook}
-            alt=""
-            onClick={() => handleSNSLogin(AUTH_URL.facebook)}
-          />
-          <ImgButton
-            className="kakaotalk-login img-button"
-            src={KakaoTalk}
-            alt=""
-            onClick={() => handleSNSLogin(AUTH_URL.kakao)}
-          />
-          <ImgButton
-            className="naver-login img-button"
-            src={Naver}
-            alt=""
-            onClick={() => handleSNSLogin(AUTH_URL.naver)}
-          />
+        <ImgButtonBox
+          className="img-button-box button-box"
+          onClick={() => handleSNSLogin(AUTH_URL.kakao)}
+        >
+          <div>
+            <ImgButton
+              className="kakaotalk-login img-button"
+              src={KakaoTalk}
+              alt=""
+            />
+            <ImgButtonText>카카오로 로그인</ImgButtonText>
+          </div>
         </ImgButtonBox>
       </LoginArea>
     </LoginWrap>
@@ -164,10 +180,9 @@ function Login() {
 export default Login;
 
 const LoginWrap = styled.div`
-  width: 60vw;
+  width: 70%;
   margin: 0 auto;
-  padding-top: 180px;
-  margin-bottom: 120px;
+  padding-top: 200px;
 `;
 
 const LoginArea = styled.div`
@@ -180,34 +195,67 @@ const LoginHeaderBox = styled.div`
 `;
 
 const LoginHeader = styled.h1`
+  text-align: center;
   font-size: 1.6rem;
   font-weight: bold;
   // margin: 100px 0 50px 0;
-  padding-left: 15%;
-  padding-bottom: 10px;
+  margin-bottom: 60px;
 `;
 
 const InputBox = styled.div`
-  margin: 20px auto;
+  margin: 30px auto;
   text-align: center;
-  width: 50%;
+  width: 35%;
 `;
 
-const Label = styled.label`
+const IdLabel = styled.label`
   text-align: left;
   display: block;
-  padding-left: 15%;
-  margin: 10px 0;
+  margin: 10px 0px;
   font-size: 1rem;
+  font-weight: 600;
+  color: ${(props) => !props.isIdCheck && "red"};
 `;
 
-const Input = styled.input`
-  border: 1.5px solid;
+const PwLabel = styled.label`
+  text-align: left;
+  display: block;
+  margin: 10px 0px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: ${(props) => !props.isPwCheck && "red"};
+`;
+
+const IdInput = styled.input`
+  padding: 11px 0px;
+  width: 100%;
+  height: 40px;
+  font-size: 1.1rem;
   box-sizing: border-box;
-  padding: 0;
-  padding-left: 10px;
-  width: 70%;
-  height: 35px;
+  border: none;
+  border-bottom: ${(props) =>
+    !props.isIdCheck ? "1px solid red" : "1px solid black"};
+  outline: none;
+  :focus {
+    border-bottom: ${(props) =>
+      !props.isIdCheck ? "2px solid red" : "2px solid black"};
+  }
+`;
+
+const PwInput = styled.input`
+  padding: 11px 0px;
+  width: 100%;
+  height: 40px;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: ${(props) =>
+    !props.isPwCheck ? "1px solid red" : "1px solid black"};
+  outline: none;
+  :focus {
+    border-bottom: ${(props) =>
+      !props.isPwCheck ? "2px solid red" : "2px solid black"};
+  }
 `;
 
 const ButtonBox = styled.div`
@@ -222,11 +270,11 @@ const ButtonBox = styled.div`
 `;
 
 const Button = styled.button`
-  cursor: pointer;
+  cursor: ${(props) => (props.isCheck ? "pointer" : "default")};
   padding: 1rem;
   width: 70%;
   border: 0px;
-  background-color: black;
+  background-color: ${(props) => (props.isCheck ? "black" : "grey")};
   color: white;
   margin: 10px auto;
   font-size: 1rem;
@@ -257,26 +305,50 @@ const InfoBox = styled.div`
 `;
 
 const ImgButtonBox = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+  justify-content: center;
+  -webkit-box-align: center;
   align-items: center;
   text-align: center;
-  width: 25%;
-  margin: 0 auto;
-  padding: 0;
+  width: 50%;
+  margin: 20px auto;
+  padding: 0px;
   text-decoration: none;
+  > div {
+    display: flex;
+    width: 70%;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+    font-weight: 700;
+    height: 52px;
+    border-radius: 12px;
+    border: 1px solid grey;
+  }
 `;
 
 const ImgButton = styled.img`
+  padding-left: 10px;
   width: 50px;
   height: 50px;
-  cursor: pointer;
-  border-radius: 50%;
-  margin-left: 3%;
-  margin-right: 3%;
+  position: absolute;
+`;
+
+const ImgButtonText = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
 `;
 
 const WarningText = styled.div`
-  color: red;
+  display: block;
+  position: absolute;
+  line-height: 16px;
+  font-size: 0.8rem;
+  color: #f15746;
 `;

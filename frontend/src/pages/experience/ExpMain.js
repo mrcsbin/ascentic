@@ -78,7 +78,7 @@ const ExpMain = () => {
 export default ExpMain;
 
 const MainWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: fit-content;
   margin: 0 auto;
   padding: 0;
@@ -98,7 +98,7 @@ const Content1 = styled.div`
     top: 0;
     left: 0;
     z-index: 900;
-    width: 100vw;
+    width: 100%;
     height: 200px;
     background: linear-gradient(
       to bottom,

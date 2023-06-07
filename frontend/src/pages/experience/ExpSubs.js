@@ -181,7 +181,7 @@ const ExpSubsBody = styled.div`
   background-position: center;
   background-size: cover;
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 120vh;
   padding-top: 120px;
 `;

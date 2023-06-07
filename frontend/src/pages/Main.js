@@ -1,19 +1,23 @@
-import React from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { SectionsContainer, Section } from "react-fullpage";
-import SPRING_IMAGE from "../assets/main/spring6.webp";
-import SUMMER_IMAGE from "../assets/main/summer5.webp";
-import FALL_IMAGE from "../assets/main/fall5.webp";
-import WINTER_IMAGE from "../assets/main/winter2.webp";
-import SPRING_VIDEO from "../assets/main/spring4.mp4";
-import SUMMER_VIDEO from "../assets/main/summer4.mp4";
-import FALL_VIDEO from "../assets/main/fall5.mp4";
-import WINTER_VIDEO from "../assets/main/winter3.mp4";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { SectionsContainer, Section } from 'react-fullpage';
+import SPRING_IMAGE from '../assets/main/spring6.webp';
+import SUMMER_IMAGE from '../assets/main/summer5.webp';
+import FALL_IMAGE from '../assets/main/fall5.webp';
+import WINTER_IMAGE from '../assets/main/winter2.webp';
+import SPRING_VIDEO from '../assets/main/spring4.mp4';
+import SUMMER_VIDEO from '../assets/main/summer4.mp4';
+import FALL_VIDEO from '../assets/main/fall5.mp4';
+import WINTER_VIDEO from '../assets/main/winter3.mp4';
 
 function Main() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   let options = {
-    anchors: ["sectionOne", "sectionTwo", "sectionThree", "sectionFour"],
+    anchors: ['sectionOne', 'sectionTwo', 'sectionThree', 'sectionFour'],
     navigation: true,
     scrollbars: false,
     // animation: 5000,

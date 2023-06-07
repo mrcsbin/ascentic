@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { validateFindPasswordByEmail } from "../constants/Validation";
-import { findPw } from "../api/MemberApi";
+import { findPw, isExistMember } from "../api/MemberApi";
 
 function FindPassword() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [isRequestPending, setIsRequestPending] = useState(false); // 요청 대기 상태를 나타내는 상태값
+  const [isFinalCheck, setIsFinalCheck] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleClick = async (e) => {
-    console.log("기릿");
     e.preventDefault();
     if (isRequestPending) {
       // 요청이 대기 중인 경우
@@ -24,20 +25,31 @@ function FindPassword() {
       alert("전화번호를 입력해주세요");
       return;
     }
+
     setIsRequestPending(true); // 요청 대기 상태로 설정
     try {
       const message = await findPw(email, phone);
       alert(message);
-      if (message == "찾으시는 정보가 없습니다") {
+      if (message === "찾으시는 정보가 없습니다") {
+        setShowNotification(true);
         setEmail("");
         setPhone("");
       }
     } catch (e) {
-      alert(e);
     } finally {
       setIsRequestPending(false); // 요청 상태 초기화
     }
   };
+
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
+
   return (
     <LoginWrap id="login-wrap">
       <LoginArea className="login-area">
@@ -80,12 +92,23 @@ function FindPassword() {
           <Button
             isCheck={phone.length === 11 && validateFindPasswordByEmail(email)}
             type="button"
-            onClick={(e) => handleClick(e)}
+            onClick={
+              phone.length === 11 && validateFindPasswordByEmail(email)
+                ? (e) => handleClick(e)
+                : null
+            }
           >
             이메일 발송
           </Button>
         </ButtonBox>
       </LoginArea>
+      {showNotification && (
+        <NotificationContainer>
+          <NotificationText>
+            일치하는 사용자 정보를 찾을 수 없습니다.
+          </NotificationText>
+        </NotificationContainer>
+      )}
     </LoginWrap>
   );
 }
@@ -96,6 +119,7 @@ const LoginWrap = styled.div`
   width: 70%;
   margin: 0 auto;
   padding-top: 200px;
+  position: relative;
 `;
 
 const LoginArea = styled.div`
@@ -172,4 +196,43 @@ const Button = styled.button`
   margin: 10px auto;
   font-size: 1rem;
   font-weight: 500;
+`;
+
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const NotificationContainer = styled.div`
+  position: fixed;
+  bottom: 120px;
+  left: 40%;
+  padding: 10px 20px;
+  background-color: black;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: ${slideUp} 0.3s ease-in-out, ${fadeOut} 1.5s 1s forwards;
+`;
+
+const NotificationText = styled.p`
+  margin: 0;
+  padding: 20 20px;
+  font-size: 1.3rem;
+  color: white;
 `;

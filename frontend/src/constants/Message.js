@@ -20,3 +20,9 @@ export const SIGNUP_ERROR_MESSAGE = {
   EMAIL_DUPLICATE: "중복된 이메일이가 존재합니다",
   UNKNOWN: "알 수 없는 오류 입니다. 고객 서비스센터로 연락 주세요.",
 };
+
+export const FIND_DATA_MESSAGE = {
+  SUCCESS: "문자가 발송 되었습니다",
+  UNKNOWN: "알 수 없는 오류 입니다. 고객 서비스센터로 연락 주세요.",
+  PHONE_TIMEOVER: "인증 시간이 초과되었습니다.",
+};

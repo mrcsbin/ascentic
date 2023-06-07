@@ -30,9 +30,9 @@ public class SmsCertificateController {
     /**
      * 단일 메시지 발송 예제
      */
-@PostMapping("/send-one")
+    @PostMapping("/send-one")
     public SingleMessageSentResponse sendOne(String phoneNumber) {
-    System.out.println(phoneNumber);
+        System.out.println(phoneNumber);
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
         message.setFrom("01074152889");
@@ -45,7 +45,6 @@ public class SmsCertificateController {
 
         return response;
     }
-
 
 
     /**
@@ -91,8 +90,6 @@ public class SmsCertificateController {
 //        }
 //        return null;
 //    }
-
-
 
 
 //    /**
@@ -159,6 +156,6 @@ public class SmsCertificateController {
 //        System.out.println(response);
 //
 //        return response;
-    }
+}
 
 

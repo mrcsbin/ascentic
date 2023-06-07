@@ -9,6 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface TasteRepository extends JpaRepository<Taste, Integer> {
-    @Query("SELECT t FROM Taste t WHERE t.memberId = :memberId ORDER BY t.tasteNum DESC limit 1")
-    Optional<Taste> findLastByMemberId(@Param("memberId") String memberId);
+    Optional<Taste> findTopByMemberIdOrderByTasteNumDesc(String memberId);
 }

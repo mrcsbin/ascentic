@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { SectionsContainer, Section } from "react-fullpage";
@@ -15,9 +15,12 @@ function Main() {
   let options = {
     anchors: ["sectionOne", "sectionTwo", "sectionThree", "sectionFour"],
     navigation: true,
-    scrollbars: false,
+    scrollbars: true,
     // animation: 5000,
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

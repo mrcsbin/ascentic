@@ -3,6 +3,7 @@ import { setActiveTab } from "../../../store/modules/mypage";
 import styled from "styled-components";
 import { getCookie } from "../../../utils/Cookies";
 import { useEffect, useState } from "react";
+import { updateMember } from "../../../api/MemberApi";
 
 export const PasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -18,14 +19,21 @@ export const PasswordUpdate = () => {
     fetchMemberInfo();
   }, []);
 
-  const submitHandle = () => {
-    //api
+  const submitHandle = async () => {
+    if (currentPassword) {
+      if (newPassword === confirmPassword) {
+        await updateMember(
+          getCookie("accessToken"),
+          currentPassword,
+          newPassword
+        );
+      }
+    }
   };
 
   return (
     <Wrap>
       <ContentHeader>비밀번호변경</ContentHeader>
-
       <PasswordUpdateBox>
         <CurrentPasswordBox>
           <Label>현재 비밀번호</Label>
@@ -37,10 +45,8 @@ export const PasswordUpdate = () => {
         </CurrentPasswordBox>
 
         <NewPasswordBox>
-          <Label>새로운 비밀번호</Label>
-          <div>
-            새 비밀번호 영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
-          </div>
+          <Label>새 비밀번호</Label>
+          <div>영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
           <NewPasswordInput
             type="password"
             value={newPassword}
@@ -55,7 +61,9 @@ export const PasswordUpdate = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></NewPasswordConfirmInput>
         </NewPasswordConfirmBox>
-        <SubmitButton>수정 완료</SubmitButton>
+        <ButtonBox>
+          <SubmitButton onClick={submitHandle}>비밀번호변경</SubmitButton>
+        </ButtonBox>
       </PasswordUpdateBox>
     </Wrap>
   );
@@ -79,7 +87,7 @@ const PasswordUpdateBox = styled.div`
 `;
 
 const CurrentPasswordBox = styled.div`
-  margin: 20px 0;
+  margin: 20px 0 40px 0;
 `;
 
 const NewPasswordBox = styled.div`
@@ -94,33 +102,45 @@ const CurrentPasswordInput = styled.input`
   margin-top: 10px;
   width: 100%;
   height: 50px;
-  border-radius: 8px;
-  border: 0.5px solid grey;
+  border: none;
+  border-bottom: 0.5px solid grey;
   box-sizing: border-box;
   padding: 10px 11px;
   font-size: 1.5rem;
+  outline: none;
+  :focus {
+    border-bottom: 2px solid black;
+  }
 `;
 
 const NewPasswordInput = styled.input`
   margin-top: 10px;
   width: 100%;
   height: 50px;
-  border-radius: 8px;
-  border: 0.5px solid grey;
+  border: none;
+  border-bottom: 0.5px solid grey;
   box-sizing: border-box;
   padding: 10px 11px;
   font-size: 1.5rem;
+  outline: none;
+  :focus {
+    border-bottom: 2px solid black;
+  }
 `;
 
 const NewPasswordConfirmInput = styled.input`
   margin-top: 10px;
   width: 100%;
   height: 50px;
-  border-radius: 8px;
-  border: 0.5px solid grey;
+  border: none;
+  border-bottom: 0.5px solid grey;
   box-sizing: border-box;
   padding: 10px 11px;
   font-size: 1.5rem;
+  outline: none;
+  :focus {
+    border-bottom: 2px solid black;
+  }
 `;
 
 const Label = styled.div`
@@ -129,11 +149,17 @@ const Label = styled.div`
   margin-bottom: 10px;
 `;
 
-const SubmitButton = styled.div`
+const SubmitButton = styled.span`
   color: rgba(34, 34, 34, 0.5);
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin-top: 10px;
   border: 1px solid rgba(34, 34, 34, 0.5);
   padding: 10px;
   border-radius: 10px;
+  cursor: pointer;
+`;
+
+const ButtonBox = styled.div`
+  text-align: center;
+  margin: 3rem auto 0 auto;
 `;

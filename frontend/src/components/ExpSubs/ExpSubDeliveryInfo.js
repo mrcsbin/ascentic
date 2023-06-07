@@ -2,18 +2,21 @@ import React from "react";
 import { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useDispatch, useSelector } from "react-redux";
-import { sameOrderInfo, updateShip } from "../../store/modules/order";
+import { updateShip } from "../../store/modules/order";
 import { requestRecentAddr } from "../../api/OrderApi";
 import { getCookie } from "../../utils/Cookies";
 import styled from "styled-components";
+import { getOrderInfo } from "../../api/MemberApi";
 
 // 배송 정보
 const DeliveryInfo = ({ setDisable }) => {
   const dispatch = useDispatch(); // action 객체를 보내는 훅
   const shipInfo = useSelector((state) => state.order.shipInfo);
 
-  const hadleSameOrderInfo = () => {
-    dispatch(sameOrderInfo());
+  const hadleSameOrderInfo = async () => {
+    const result = await getOrderInfo(accessToken);
+    dispatch(updateShip({ updateShipInfo: { shipName: result.name } }));
+    dispatch(updateShip({ updateShipInfo: { shipTel: result.tel } }));
   };
 
   const handleUpdateShip = (e) => {

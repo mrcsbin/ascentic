@@ -25,16 +25,13 @@ export const OrderItem = ({ orderId, item }) => {
 
     if (window.confirm("정말 주문을 취소하시겠습니까?")) {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/order/cancel/orderproduct",
-          cancelData,
-          {
+        const response = await axios
+          .post("http://localhost:8080/order/cancel/orderproduct", cancelData, {
             headers: {
               "Content-Type": "application/json",
             },
-          }
-        );
-        // .then(window.location.reload());
+          })
+          .then(window.location.reload());
         console.log(response.data);
       } catch (error) {
         console.error(

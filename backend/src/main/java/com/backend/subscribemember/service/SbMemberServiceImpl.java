@@ -97,4 +97,18 @@ public class SbMemberServiceImpl implements SbMemberService {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
         return sbMemberRepository.existsByMemberIdAndSbEndDateIsNull(currentMemberId);
     }
+
+    @Override
+    public boolean isSubscribeUseMonth() {
+        String currentMemberId = SecurityUtils.getCurrentMemberId().get();
+        Boolean res;
+
+        SubscribeMember lastSbMember = sbMemberRepository.getLastSbMemberByMemberId(currentMemberId);
+
+        res = lastSbMember.getSbStartDate().getYear() == LocalDate.now().getYear()
+                && lastSbMember.getSbStartDate().getMonthValue() == LocalDate.now().getMonthValue();
+        return res;
+    }
+
+
 }

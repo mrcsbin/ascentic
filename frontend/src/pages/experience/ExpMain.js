@@ -83,6 +83,7 @@ const MainWrapper = styled.div`
   margin: 0 auto;
   padding: 0;
   overflow: auto;
+  padding-bottom: 107px;
 `;
 
 const Content1 = styled.div`

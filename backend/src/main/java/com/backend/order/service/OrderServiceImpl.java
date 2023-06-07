@@ -334,7 +334,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderResponse.OrderListDto> getOrderList() {
         String currentMemberId = SecurityUtils.getCurrentMemberId().get();
 
-        return orderRepository.findByMemberId(currentMemberId).stream()
+        return orderRepository.findByMemberIdOrderByOrderDateDesc(currentMemberId).stream()
                 .map(order -> {
                     List<OrderResponse.OrderProductDto> orderProductList = order.getOrderProducts().stream()
                             .map(OrderResponse.OrderProductDto::of)
@@ -344,6 +344,7 @@ public class OrderServiceImpl implements OrderService {
                 })
                 .collect(Collectors.toList());
     }
+
 
     @Transactional
     public void deleteCancelOrder() {

@@ -146,33 +146,35 @@ const ExpSubs = () => {
     return <Loading />;
   }
   return (
-    <ExpSubsBody>
-      <ExpSubsIntro>
-        <div>특별한 당신을 위해</div>
-        <div>
-          <img src={logow} alt="ascentic_logo_white" />이 준비한
-        </div>
-        <div>체험 패키지 구독 서비스</div>
-      </ExpSubsIntro>
-      <GuideLocation>
-        <ExpGuide
-          isSubsCribeMember={isSubsCribeMember}
-          showModal={() => openModal()}
-          userTasteRes={userTasteRes}
-        ></ExpGuide>
-      </GuideLocation>
-      {showOrderModal && (
-        <>
-          <ModalBackground onClick={closeModal} />
-          <ModalContainer>
-            <button className="modal_close_btn" onClick={closeModal}>
-              &times;
-            </button>
-            {currentPage()}
-          </ModalContainer>
-        </>
-      )}
-    </ExpSubsBody>
+    <div style={{paddingBottom: "107px"}}>
+      <ExpSubsBody>
+        <ExpSubsIntro>
+          <div>특별한 당신을 위해</div>
+          <div>
+            <img src={logow} alt="ascentic_logo_white" />이 준비한
+          </div>
+          <div>체험 패키지 구독 서비스</div>
+        </ExpSubsIntro>
+        <GuideLocation>
+          <ExpGuide
+            isSubsCribeMember={isSubsCribeMember}
+            showModal={() => openModal()}
+            userTasteRes={userTasteRes}
+          ></ExpGuide>
+        </GuideLocation>
+        {showOrderModal && (
+          <>
+            <ModalBackground onClick={closeModal} />
+            <ModalContainer>
+              <button className="modal_close_btn" onClick={closeModal}>
+                &times;
+              </button>
+              {currentPage()}
+            </ModalContainer>
+          </>
+        )}
+      </ExpSubsBody>
+    </div>
   );
 };
 

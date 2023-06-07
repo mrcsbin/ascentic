@@ -83,7 +83,7 @@ const ExpTaste = () => {
   }
 
   return (
-    <div>
+    <div style={{paddingBottom: "107px"}}>
       {activeComp === 0 ? (
         <ExpTestMain resultData={resultData} setActiveComp={setActiveComp} />
       ) : (

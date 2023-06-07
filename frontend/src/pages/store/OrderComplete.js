@@ -60,6 +60,7 @@ function OrderComplete() {
           });
         }
         setLoading(false);
+        console.log(orderInfo)
       })
       .catch((error) => {
         console.log("처음 데이터 못 받아옴");
@@ -69,7 +70,7 @@ function OrderComplete() {
   }, []);
 
   return (
-    <div>
+    <div style={{paddingBottom: "107px"}}>
       {loading ? (
         <div>Loading...</div>
       ) : (

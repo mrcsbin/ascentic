@@ -13,6 +13,13 @@ export const validatePassword = (password, confirmPassword) => {
 //입력된 비밀번호 값이 8자 이상이며, 영문 대/소문자와 숫자, 그리고 특수문자가 각각 하나 이상 포함되어 있는지,
 //그리고 비밀번호와 확인 비밀번호가 일치하는지
 
+export const validateLoginPassword = (password) => {
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  const isValidPassword = passwordRegex.test(password);
+  return isValidPassword;
+};
+
 export const validateName = (name) => {
   const koreanNameRegex = /^[가-힣]{2,4}$/; // 2~4자의 한글 이름
   return !name || koreanNameRegex.test(name);

@@ -143,6 +143,8 @@ const ExpGuide = (props) => {
                 </ApplyBtn>
               ) : props.isSubsCribeMember ? (
                 <ApplyBtn>이미 구독중인 상품입니다.</ApplyBtn>
+              ) : props.isUseThisMonth ? (
+                <ApplyBtn>이번월은 구독중입니다.</ApplyBtn>
               ) : (
                 <ApplyBtn onClick={() => expApply()}>구독 신청하기</ApplyBtn>
               )}

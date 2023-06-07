@@ -41,4 +41,6 @@ public interface MemberService {
     MemberResponse.MyPageDto getMyPageProfile();
 
     Integer getPoint();
+
+    boolean isExistMember(String name, String phone);
 }

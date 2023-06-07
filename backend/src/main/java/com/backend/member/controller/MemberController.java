@@ -146,4 +146,9 @@ public class MemberController {
     public Integer getPoint() {
         return memberService.getPoint();
     }
+
+    @GetMapping("/ismember")
+    public boolean isExistMember(String name, String phone) {
+        return memberService.isExistMember(name, phone);
+    }
 }

@@ -198,7 +198,7 @@ const TestResult = () => {
     );
     //result 는 TasteResultDTO형태임
     return (
-      <div className="testresbox">
+      <div style={{paddingBottom: "107px"}} className="testresbox">
         <div className="firstTaste">
           <TasteResultview place={firstPlace[0]} />
         </div>

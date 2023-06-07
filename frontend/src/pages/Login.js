@@ -33,7 +33,7 @@ function Login() {
 
   const PwChangeHandle = (e) => {
     setPassword(e.target.value);
-    if (!validateLoginPassword(password)) {
+    if (!validateLoginPassword(e.target.value)) {
       setIsPwCheck(false);
     } else {
       setIsPwCheck(true);

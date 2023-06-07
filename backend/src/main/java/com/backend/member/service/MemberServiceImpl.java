@@ -319,4 +319,9 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(currentMemberId).orElseThrow(() -> new IllegalArgumentException("회원 정보 없음"));
         return member.getMemberPoint();
     }
+
+    @Override
+    public boolean isExistMember(String name, String phone) {
+        return memberRepository.existsByNameAndPhone(name, phone);
+    }
 }

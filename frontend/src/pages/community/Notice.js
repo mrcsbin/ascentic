@@ -74,6 +74,7 @@ const Notice = () => {
   const [selectedCategory, setSelectedCategory] = useState('notice');
   const [selectedPost, setSelectedPost] = useState(null);
   const { pathname } = useLocation();
+  const [allPosts, setAllposts] = useState([]);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -81,19 +82,31 @@ const Notice = () => {
     fetchData(selectedCategory);
   }, [pathname]);
 
-  const fetchData = async (category) => {
+  useEffect(() => {
+    selectPosts(selectedCategory);
+  }, [allPosts]);
+
+  //처음에 데이터 받아오기
+  const fetchData = async () => {
     try {
-      const response = await axios.get(`/admin/posts?category=${category}`);
-      setPosts(response.data);
+      await axios.get(`/admin/allposts`).then((response) => {
+        const sorted = response.data.sort((a, b) => b.postId - a.postId); //최신순으로 보여줌
+        setAllposts(sorted);
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
+  const selectPosts = (category) => {
+    const filtered = allPosts.filter((post) => post.postCategory == category);
+    setPosts(filtered);
+  };
+
   const handleToggle = (category) => {
+    selectPosts(category);
     setSelectedCategory(category);
     setSelectedPost(null);
-    fetchData(category);
   };
 
   const handlePostClick = (post) => {

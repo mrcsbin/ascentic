@@ -135,14 +135,17 @@ public class AdminAnalysisServiceImpl implements AdminAnalysisService {
         return Map.of("id", id, "label", label, "value", count);
     }
 
+
     @Override
     public List<Map<String, Object>> getSubscribeProductScores() {
         List<SubscribeSend> allSubscribeSends = subscribeSendRepository.findAll();
 
         Map<SubscribeProduct, List<Integer>> scoresByProduct = allSubscribeSends.stream()
+                .filter(subscribeSend -> subscribeSend.getSbSendScore() != null) // Null 값을 필터링하여 예외 방지
                 .collect(Collectors.groupingBy(SubscribeSend::getSubscribeProduct,
                         LinkedHashMap::new,
                         Collectors.mapping(SubscribeSend::getSbSendScore, Collectors.toList())));
+
 
         List<Map<String, Object>> result = scoresByProduct.entrySet().stream()
                 .map(entry -> {

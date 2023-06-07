@@ -1,30 +1,30 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import ImageResize from "@looop/quill-image-resize-module-react";
-import axios from "axios";
-import styled from "styled-components";
-import { ko } from "date-fns/esm/locale";
-import { storage } from "../../../utils/firebaseConfig";
-import "../../styles/QuillEditor.css";
-import { DateRangePicker } from "react-date-range";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import ImageResize from '@looop/quill-image-resize-module-react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { ko } from 'date-fns/esm/locale';
+import { storage } from '../../../utils/firebaseConfig';
+import '../../styles/QuillEditor.css';
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 const WritePost = ({ postEdit }) => {
-  Quill.register("modules/ImageResize", ImageResize);
-  const [postId, setPostId] = useState("");
-  const [content, setContent] = useState("");
-  const [postTitle, setPostTitle] = useState("");
-  const [postCategory, setPostCategory] = useState("");
-  const [postStatus, setPostStatus] = useState("");
+  Quill.register('modules/ImageResize', ImageResize);
+  const [postId, setPostId] = useState('');
+  const [content, setContent] = useState('');
+  const [postTitle, setPostTitle] = useState('');
+  const [postCategory, setPostCategory] = useState('');
+  const [postStatus, setPostStatus] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const [postCoreMessage, setPostCoreMessage] = useState("");
+  const [postCoreMessage, setPostCoreMessage] = useState('');
   const [eventDateRange, setEventDateRange] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
-      key: "selection",
+      key: 'selection',
     },
   ]);
   const quillRef = useRef(null);
@@ -39,7 +39,7 @@ const WritePost = ({ postEdit }) => {
         setPostId(postEdit);
         setPostTitle(postData.postTitle);
         setPostCategory(postData.postCategory);
-        setPostStatus("");
+        setPostStatus('');
         setContent(postData.postContent);
         setSelectedImage(postData.postImage);
         setPostCoreMessage(postData.postCoreMessage);
@@ -47,11 +47,11 @@ const WritePost = ({ postEdit }) => {
           {
             startDate: new Date(postData.eventStartDate),
             endDate: new Date(postData.eventEndDate),
-            key: "selection",
+            key: 'selection',
           },
         ]);
       } catch (error) {
-        console.error("Error fetching post details: ", error);
+        console.error('Error fetching post details: ', error);
       }
     };
 
@@ -72,17 +72,17 @@ const WritePost = ({ postEdit }) => {
       eventEndDate: eventDateRange[0].endDate,
     };
     console.log(data);
-    if (postStatus === "") return;
-    let message = "";
+    if (postStatus === '') return;
+    let message = '';
     switch (postStatus) {
       case 0:
-        message = "저장하시겠습니까?";
+        message = '저장하시겠습니까?';
         break;
       case 1:
-        message = "임시저장하시겠습니까?";
+        message = '임시저장하시겠습니까?';
         break;
       case 2:
-        message = "삭제하시겠습니까?";
+        message = '삭제하시겠습니까?';
         break;
       default:
         break;
@@ -90,28 +90,28 @@ const WritePost = ({ postEdit }) => {
 
     if (window.confirm(message)) {
       try {
-        const response = await axios.post("/admin/post", data);
+        const response = await axios.post('/admin/post', data);
         if (response.status === 200) {
-          let successMessage = "";
+          let successMessage = '';
           switch (postStatus) {
             case 0:
-              successMessage = "저장에 성공했습니다!";
+              successMessage = '저장에 성공했습니다!';
               break;
             case 1:
-              successMessage = "임시 저장에 성공했습니다!";
+              successMessage = '임시 저장에 성공했습니다!';
               break;
             case 2:
-              successMessage = "삭제에 성공했습니다!";
+              successMessage = '삭제에 성공했습니다!';
               break;
             default:
               break;
           }
           alert(successMessage);
           // 성공 메시지 처리
-          window.location.href = "http://localhost:3000/admin/eventnews";
+          window.location.href = 'http://localhost:3000/admin/eventnews';
         }
       } catch (error) {
-        console.error("Error saving post: ", error);
+        console.error('Error saving post: ', error);
       }
     }
   };
@@ -130,15 +130,15 @@ const WritePost = ({ postEdit }) => {
 
     const config = {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     };
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append('image', file);
 
     axios
-      .post("/admin/mainimg", formData, config)
+      .post('/admin/mainimg', formData, config)
       .then((response) => {
         console.log(response);
         console.log(response.data);
@@ -146,15 +146,15 @@ const WritePost = ({ postEdit }) => {
         setSelectedImage(imageUrl);
       })
       .catch((error) => {
-        console.error("이미지 업로드 오류: ", error);
+        console.error('이미지 업로드 오류: ', error);
       });
   };
 
   const mainImageReplace = (e) => {
     e.preventDefault();
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
     input.click();
     input.onchange = (e) => {
       mainImageUpload(e);
@@ -165,39 +165,39 @@ const WritePost = ({ postEdit }) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("image", selectedImage);
+    formData.append('image', selectedImage);
 
     axios
-      .post("/admin/mainimg", formData, {
+      .post('/admin/mainimg', formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       })
       .then(() => {
         setSelectedImage(null);
       })
       .catch((error) => {
-        console.error("이미지 삭제 오류: ", error);
+        console.error('이미지 삭제 오류: ', error);
       });
   };
   const renderStaticRangeLabel = (key, label) => {
     switch (key) {
-      case "Today":
-        return "오늘";
-      case "yesterday":
-        return "어제";
-      case "this_week":
-        return "이번 주";
-      case "last_week":
-        return "저번 주";
-      case "this_month":
-        return "이번 달";
-      case "last_month":
-        return "저번 달";
-      case "days_up_to_today":
-        return "오늘로부터 몇일 전";
-      case "days_starting_today":
-        return "오늘로부터 몇일 후";
+      case 'Today':
+        return '오늘';
+      case 'yesterday':
+        return '어제';
+      case 'this_week':
+        return '이번 주';
+      case 'last_week':
+        return '저번 주';
+      case 'this_month':
+        return '이번 달';
+      case 'last_month':
+        return '저번 달';
+      case 'days_up_to_today':
+        return '오늘로부터 몇일 전';
+      case 'days_starting_today':
+        return '오늘로부터 몇일 후';
       default:
         return label;
     }
@@ -217,9 +217,9 @@ const WritePost = ({ postEdit }) => {
 
       // Quill Editor에 이미지 URL 삽입
       const range = quillRef.current.getEditor().getSelection();
-      quillRef.current.getEditor().insertEmbed(range.index, "image", imageUrl);
+      quillRef.current.getEditor().insertEmbed(range.index, 'image', imageUrl);
     } catch (error) {
-      console.error("Error uploading image: ", error);
+      console.error('Error uploading image: ', error);
     }
   };
 
@@ -228,51 +228,51 @@ const WritePost = ({ postEdit }) => {
   };
 
   const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "align",
-    "strike",
-    "script",
-    "blockquote",
-    "background",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "color",
-    "code-block",
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'align',
+    'strike',
+    'script',
+    'blockquote',
+    'background',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+    'color',
+    'code-block',
   ];
   const modules = useMemo(
     () => ({
       toolbar: {
         container: [
-          ["bold", "italic", "underline", "strike"],
-          ["blockquote", "code-block"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ indent: "-1" }, { indent: "+1" }],
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ indent: '-1' }, { indent: '+1' }],
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
           [{ color: [] }, { background: [] }],
           [{ align: [] }],
-          ["image"],
+          ['image'],
         ],
         handlers: {
           image: () => {
-            const input = document.createElement("input");
-            input.setAttribute("type", "file");
-            input.setAttribute("accept", "image/*");
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
             input.click();
             input.onchange = handleImageUpload;
           },
         },
       },
       ImageResize: {
-        parchment: Quill.import("parchment"),
-        modules: ["Resize", "DisplaySize"],
+        parchment: Quill.import('parchment'),
+        modules: ['Resize', 'DisplaySize'],
       },
       history: {
         delay: 500,
@@ -290,7 +290,7 @@ const WritePost = ({ postEdit }) => {
       </HeaderWrap>
       <InputContainer>
         <div className="NameCategory">
-          {postCategory === "event" && (
+          {postCategory === 'event' && (
             <div className="image-selection">
               <h4>대표 이미지 선택</h4>
               {selectedImage && (
@@ -327,7 +327,7 @@ const WritePost = ({ postEdit }) => {
                   {
                     startDate: new Date(),
                     endDate: new Date(),
-                    key: "selection",
+                    key: 'selection',
                   },
                 ]);
               }}
@@ -335,6 +335,7 @@ const WritePost = ({ postEdit }) => {
               <option value="">게시판을 선택해 주세요.</option>
               <option value="event">이벤트</option>
               <option value="news">뉴스</option>
+              <option value="notice">공지사항</option>
             </select>
             <input
               type="text"

@@ -8,5 +8,5 @@ public interface AdminPostRepository extends JpaRepository<AdminPost, Long> {
 
     List<AdminPost> findByPostCategory(String category);
 
-    List<AdminPost> findAllByOrderByPostIdDesc();
+    List<AdminPost> findAll();
 }

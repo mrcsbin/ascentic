@@ -93,7 +93,7 @@ function ProductInfo({
         </AccordionContentWrapper>
       </AccordionWrapper>
       <AccordionWrapper>
-        <AccordionDetails>
+        <AccordionDetails open>
           <AccordionSummary>
             <SummaryText>리뷰</SummaryText>
             <ArrowIcon />

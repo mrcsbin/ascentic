@@ -10,14 +10,14 @@ import { useEffect } from "react";
 import { isSubscribeMember, requestTasteRes } from "../../api/SubsMemberApi";
 import Loading from "../../components/common/Loading";
 import logow from "../../assets/ascentic_logo_w.svg";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const ExpSubs = () => {
   const accessToken = getCookie("accessToken");
   const [loading, setLoading] = useState(false);
   const [tasteResList, setTasteResList] = useState("");
   const [isSubsCribeMember, setIsSubscribeMember] = useState();
   const [userTasteRes, setTasteRes] = useState("");
-
+  const Navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const message = searchParams.get("message");
@@ -54,6 +54,11 @@ const ExpSubs = () => {
       const result = await requestTasteRes(accessToken); // api 함수 호출
       setIsSubscribeMember(await isSubscribeMember(accessToken));
       console.log(result);
+      if (result === undefined) {
+        return Navigate("/login", {
+          state: { pathname: "/exp/subs" },
+        });
+      }
       setTasteRes(result.firstPlace); // 결과 1순위를 state에 저장
       setTasteResList(result); // 전체 결과를 저장
       setLoading(false);

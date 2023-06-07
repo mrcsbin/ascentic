@@ -2,12 +2,12 @@ import React, { useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Facebook from "../assets/login/facebook_logo.png";
-import KakaoTalk from "../assets/login/kakaotalk_logo.png";
 import Naver from "../assets/login/naver_logo.png";
 import { AUTH_URL } from "../constants/Url";
 import { getCookie } from "../utils/Cookies";
 import { useDispatch } from "react-redux";
 import { fetchTokenByLogin, fetchMemberByToken } from "../store/modules/login";
+import KakaoTalk from "../assets/kakao.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -84,7 +84,6 @@ function Login() {
         <LoginHeaderBox className="login-box">
           <LoginHeader>로그인</LoginHeader>
         </LoginHeaderBox>
-
         <InputBox className="id-box input-box">
           <Label htmlFor="id">아이디</Label>
           <Input
@@ -114,7 +113,6 @@ function Login() {
 
           {isPwEmpty && <WarningText>비번 입력하소</WarningText>}
         </InputBox>
-
         <ButtonBox className="submit-button-box button-box">
           <Button
             className="submit-button button"
@@ -136,25 +134,18 @@ function Login() {
           <LoginLink to="/signup">회원가입</LoginLink>
         </TextButtonBox>
         <InfoBox className="login-info-box">SNS 계정으로 간편 로그인</InfoBox>
-        <ImgButtonBox className="img-button-box button-box">
-          <ImgButton
-            className="facebook-login img-button"
-            src={Facebook}
-            alt=""
-            onClick={() => handleSNSLogin(AUTH_URL.facebook)}
-          />
-          <ImgButton
-            className="kakaotalk-login img-button"
-            src={KakaoTalk}
-            alt=""
-            onClick={() => handleSNSLogin(AUTH_URL.kakao)}
-          />
-          <ImgButton
-            className="naver-login img-button"
-            src={Naver}
-            alt=""
-            onClick={() => handleSNSLogin(AUTH_URL.naver)}
-          />
+        <ImgButtonBox
+          className="img-button-box button-box"
+          onClick={() => handleSNSLogin(AUTH_URL.kakao)}
+        >
+          <div>
+            <ImgButton
+              className="kakaotalk-login img-button"
+              src={KakaoTalk}
+              alt=""
+            />
+            <ImgButtonText>카카오로 로그인</ImgButtonText>
+          </div>
         </ImgButtonBox>
       </LoginArea>
     </LoginWrap>
@@ -164,9 +155,9 @@ function Login() {
 export default Login;
 
 const LoginWrap = styled.div`
-  width: 60vw;
-  margin: 0px auto 120px;
-  padding-top: 180px;
+  width: 70%;
+  margin: 0 auto;
+  padding-top: 200px;
 `;
 
 const LoginArea = styled.div`
@@ -179,15 +170,15 @@ const LoginHeaderBox = styled.div`
 `;
 
 const LoginHeader = styled.h1`
+  text-align: center;
   font-size: 1.6rem;
   font-weight: bold;
   // margin: 100px 0 50px 0;
-  padding-left: 15%;
-  padding-bottom: 10px;
+  margin-bottom: 60px;
 `;
 
 const InputBox = styled.div`
-  margin: 20px auto;
+  margin: 30px auto;
   text-align: center;
   width: 50%;
 `;
@@ -198,15 +189,21 @@ const Label = styled.label`
   padding-left: 15%;
   margin: 10px 0;
   font-size: 1rem;
+  font-weight: 600;
 `;
 
 const Input = styled.input`
-  border: 1.5px solid;
-  box-sizing: border-box;
-  padding: 0;
-  padding-left: 10px;
+  padding: 11px 0px;
   width: 70%;
-  height: 35px;
+  height: 40px;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  :focus {
+    border-bottom: 2px solid black;
+  }
 `;
 
 const ButtonBox = styled.div`
@@ -256,24 +253,44 @@ const InfoBox = styled.div`
 `;
 
 const ImgButtonBox = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+  justify-content: center;
+  -webkit-box-align: center;
   align-items: center;
   text-align: center;
-  width: 25%;
-  margin: 0 auto;
-  padding: 0;
+  width: 50%;
+  margin: 20px auto;
+  padding: 0px;
   text-decoration: none;
+  > div {
+    display: flex;
+    width: 70%;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+    font-weight: 700;
+    height: 52px;
+    border-radius: 12px;
+    border: 1px solid grey;
+  }
 `;
 
 const ImgButton = styled.img`
+  padding-left: 10px;
   width: 50px;
   height: 50px;
-  cursor: pointer;
-  border-radius: 50%;
-  margin-left: 3%;
-  margin-right: 3%;
+  position: absolute;
+`;
+
+const ImgButtonText = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
 `;
 
 const WarningText = styled.div`

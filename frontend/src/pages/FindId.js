@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { findId, findPw, sendCode, checkCode } from "../api/MemberApi";
 import Timer from "../components/common/Timer";
@@ -6,25 +6,34 @@ import { SIGNUP_ERROR_MESSAGE } from "../constants/Message";
 import { Link } from "react-router-dom";
 
 function FindId() {
-  const [tel, setTel] = useState("");
+  const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [getData, setGetData] = useState("");
   const [showCertificate, setShowCertificate] = useState(false);
   const [codeOk, setCodeOk] = useState(false);
   const [isCodeCheck, setIsCodeCheck] = useState(true);
   const [isFinalCheck, setIsFinalCheck] = useState(false);
-  const [findId, setFindId] = useState("");
+  const [isRequestPending, setIsRequestPending] = useState(false); // 요청 대기 상태를 나타내는 상태값
+  const [foundId, setFoundId] = useState("");
 
   const getCode = async (phone) => {
-    const res = await sendCode(phone);
-    console.log(res);
-    if (res) {
-      setShowCertificate(true);
-    } else {
-      setShowCertificate(false);
-      setTel("");
+    if (isRequestPending) return; // 이미 요청 대기 중이면 중복 요청 방지
+    setIsRequestPending(true); // 요청 대기 상태로 설정
+
+    try {
+      const res = await sendCode(phone);
+      console.log(res);
+      if (res) {
+        setShowCertificate(true);
+      } else {
+        setShowCertificate(false);
+        setPhone("");
+      }
+    } catch (error) {
+      console.error(error);
     }
+
+    setIsRequestPending(false); // 요청 완료 후 상태값 변경
   };
 
   const check = async (phone, code) => {
@@ -33,20 +42,21 @@ function FindId() {
       setCodeOk(true);
       setShowCertificate(false);
       setIsFinalCheck(true);
-      console.log(res);
+      try {
+        const res = await findId(name, phone);
+        setFoundId(res); // set findId value
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       if (res === "Wrong") {
         setIsCodeCheck(false);
-      } else if (res === "Ok") {
-        alert("문자가 발송되었습니다.");
-        setShowCertificate(false);
-        setCodeOk(false);
-        setTel("");
+        alert("인증번호가 올바르지 않습니다.");
       } else {
         alert(SIGNUP_ERROR_MESSAGE.UNKNOWN);
         setShowCertificate(false);
         setCodeOk(false);
-        setTel("");
+        setPhone("");
       }
       setCodeOk(false);
       setCode("");
@@ -87,10 +97,10 @@ function FindId() {
               type="text"
               id="tel"
               name="tel"
-              value={tel}
+              value={phone}
               disabled={showCertificate}
               placeholder="가입할 때 입력한 휴대전화 번호"
-              onChange={(e) => setTel(e.target.value)}
+              onChange={(e) => setPhone(e.target.value)}
               onInput={(e) => {
                 e.target.value = e.target.value
                   .replace(/[^0-9.]/g, "")
@@ -100,9 +110,9 @@ function FindId() {
           </InputBox>
           <ButtonBox className="submit-button-box button-box">
             <Button
-              isCheck={name && tel.length === 11}
-              disabled={showCertificate || tel.length < 11 || codeOk}
-              onClick={() => getCode(tel)}
+              isCheck={name && phone.length === 11}
+              disabled={showCertificate || phone.length < 11 || codeOk}
+              onClick={() => getCode(phone)}
               type="button"
             >
               문자 발송
@@ -133,7 +143,7 @@ function FindId() {
               <CertificateButtonBox className="button-box">
                 <CertificateButton
                   className="check"
-                  onClick={() => check(tel, code)}
+                  onClick={() => check(phone, code)}
                 >
                   인증하기
                 </CertificateButton>
@@ -148,7 +158,7 @@ function FindId() {
           </LoginHeaderBox>
           <SuccessBox>
             <SuccessTitle>아이디</SuccessTitle>
-            <Id>mrcsbin</Id>
+            <Id>{foundId}</Id>
           </SuccessBox>
           <SuccessButtonBox>
             <GoToLoginButton to="/login">로그인</GoToLoginButton>
@@ -191,7 +201,6 @@ const LoginHeader = styled.h1`
   text-align: center;
   font-size: 1.6rem;
   font-weight: bold;
-  // margin: 100px 0 50px 0;
   margin-bottom: 40px;
 `;
 
@@ -338,7 +347,6 @@ const SuccessButtonBox = styled.div`
 const GoToLoginButton = styled(Link)`
   width: 40%;
   text-align: center;
-  /* flex: 1 1 0%; */
   height: 52px;
   line-height: 52px;
   border-radius: 12px;
@@ -357,7 +365,6 @@ const GoToLoginButton = styled(Link)`
 const GoToFindPwButton = styled(Link)`
   width: 40%;
   text-align: center;
-  /* flex: 1 1 0%; */
   height: 52px;
   line-height: 52px;
   border-radius: 12px;

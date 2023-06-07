@@ -1,6 +1,12 @@
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
-import { findId, findPw, sendCode, checkCode } from "../api/MemberApi";
+import styled, { keyframes } from "styled-components";
+import {
+  findId,
+  findPw,
+  sendCode,
+  checkCode,
+  isExistMember,
+} from "../api/MemberApi";
 import Timer from "../components/common/Timer";
 import { SIGNUP_ERROR_MESSAGE } from "../constants/Message";
 import { Link } from "react-router-dom";
@@ -9,21 +15,24 @@ function FindId() {
   const [tel, setTel] = useState("");
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
-  const [getData, setGetData] = useState("");
   const [showCertificate, setShowCertificate] = useState(false);
   const [codeOk, setCodeOk] = useState(false);
   const [isCodeCheck, setIsCodeCheck] = useState(true);
   const [isFinalCheck, setIsFinalCheck] = useState(false);
-  const [findId, setFindId] = useState("");
+  const [showNotification, setShowNotification] = useState(false);
 
   const getCode = async (phone) => {
-    const res = await sendCode(phone);
-    console.log(res);
-    if (res) {
-      setShowCertificate(true);
+    if (isExistMember(name, phone)) {
+      const res = await sendCode(phone);
+      console.log(res);
+      if (res) {
+        setShowCertificate(true);
+      } else {
+        setShowCertificate(false);
+        setTel("");
+      }
     } else {
-      setShowCertificate(false);
-      setTel("");
+      setShowNotification(true);
     }
   };
 
@@ -157,6 +166,13 @@ function FindId() {
             </GoToFindPwButton>
           </SuccessButtonBox>
         </LoginArea>
+      )}
+      {showNotification && (
+        <NotificationContainer>
+          <NotificationText>
+            일치하는 사용자 정보를 찾을 수 없습니다.
+          </NotificationText>
+        </NotificationContainer>
       )}
     </LoginWrap>
   );
@@ -371,4 +387,43 @@ const GoToFindPwButton = styled(Link)`
     color: white;
     background-color: black;
   }
+`;
+
+const slideUp = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const NotificationContainer = styled.div`
+  position: fixed;
+  bottom: 120px;
+  left: 40%;
+  padding: 10px 20px;
+  background-color: black;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: ${slideUp} 0.3s ease-in-out, ${fadeOut} 1.5s 1s forwards;
+`;
+
+const NotificationText = styled.p`
+  margin: 0;
+  padding: 20 20px;
+  font-size: 1.3rem;
+  color: white;
 `;

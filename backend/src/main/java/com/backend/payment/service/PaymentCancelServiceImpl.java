@@ -76,12 +76,14 @@ public class PaymentCancelServiceImpl {
             request.setCancelAmount(request.getCancelAmount() - order.getUsePoint());
             order.setOrderPriceSum(order.getOrderPriceSum() - request.getCancelAmount() - order.getUsePoint());
             Member member = memberRepository.findById(order.getMemberId()).get();
-            member.setMemberPoint(member.getMemberPoint() + order.getUsePoint());
+            // 적립 포인트를 원래상태로 돌리기
+            int totalAmount = paymentFinalResRepository.findByOrderId(order.getOrderId()).getTotalAmount();
+            int earnPoint = (int) (totalAmount * 0.01);
+            member.setMemberPoint(member.getMemberPoint() + order.getUsePoint() - earnPoint);
             memberRepository.save(member);
+            order.setOrderState("결제취소");
         } else {
             order.setOrderPriceSum(order.getOrderPriceSum() - request.getCancelAmount());
-            order.setOrderState("결제취소");
-
         }
         orderProduct.setOrderState("결제취소");
         orderRepository.save(order);

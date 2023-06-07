@@ -12,8 +12,12 @@ import FALL_VIDEO from "../assets/main/fall5.mp4";
 import WINTER_VIDEO from "../assets/main/winter3.mp4";
 
 function Main() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   let options = {
-    anchors: ["sectionOne", "sectionTwo", "sectionThree", "sectionFour"],
+    anchors: ['sectionOne', 'sectionTwo', 'sectionThree', 'sectionFour'],
     navigation: true,
     scrollbars: true,
     // animation: 5000,

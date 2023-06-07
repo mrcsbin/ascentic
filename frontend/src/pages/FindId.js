@@ -3,12 +3,7 @@ import styled from "styled-components";
 
 function FindId() {
   const [tel, setTel] = useState("");
-  const idInputRef = useRef(null);
-
-  const handleClick = async (e) => {
-    setTel(e.target.value);
-    console.log(tel);
-  };
+  const [name, setName] = useState("");
 
   return (
     <LoginWrap id="login-wrap">
@@ -22,15 +17,25 @@ function FindId() {
           <br /> 인증받기를 통해 아이디를 알려드립니다.
         </InfoText>
         <InputBox className="id-box input-box">
+          <IdLabel htmlFor="name">이름</IdLabel>
+          <IdInput
+            type="text"
+            id="name"
+            name="name"
+            value={name}
+            placeholder="회원 이름"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </InputBox>
+        <InputBox className="id-box input-box">
           <IdLabel htmlFor="tel">전화번호</IdLabel>
           <IdInput
             type="text"
             id="tel"
             name="tel"
             value={tel}
-            ref={idInputRef}
             placeholder="가입할 때 입력한 휴대전화 번호"
-            onChange={handleClick}
+            onChange={(e) => setTel(e.target.value)}
             onInput={(e) => {
               e.target.value = e.target.value
                 .replace(/[^0-9.]/g, "")
@@ -39,8 +44,8 @@ function FindId() {
           />
         </InputBox>
         <ButtonBox className="submit-button-box button-box">
-          <Button isCheck={tel.length === 11} type="button">
-            인증받기
+          <Button isCheck={name && tel.length === 11} type="button">
+            문자 발송
           </Button>
         </ButtonBox>
       </LoginArea>
@@ -70,7 +75,7 @@ const InfoText = styled.div`
   width: 35%;
   font-size: 1rem;
   color: grey;
-  margin: 2rem auto 4rem auto;
+  margin: 2rem auto 3rem auto;
 `;
 
 const LoginHeader = styled.h1`

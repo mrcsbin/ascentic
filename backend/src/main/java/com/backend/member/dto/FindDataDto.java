@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class FindDataDto {
 
-    @NotNull
+
     @Size(min = 1, max = 10)
     private String name;
 

@@ -124,6 +124,7 @@ public class LoginAuthServiceImpl implements LoginAuthService {
                         .id(id)
                         .password(encodedPassword)
                         .email(email)
+                        .memberPoint(0)
                         .name(name)
                         .build();
                 memberRepository.save(member);

@@ -138,7 +138,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public String findPw(FindDataDto findDataDto) {
-        Optional<Member> member = memberRepository.findByNameAndIdAndPhone(findDataDto.getName(), findDataDto.getId(), findDataDto.getPhone());
+        Optional<Member> member = memberRepository.findByIdAndPhone(findDataDto.getId(), findDataDto.getPhone());
         Optional<Member> sendTo = memberRepository.findEmailByPhone(findDataDto.getPhone());
         String tempPassword = TempPasswordGenerator.generateRandomPassword(10);
         if (member.isPresent()) {

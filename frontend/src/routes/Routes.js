@@ -8,6 +8,7 @@ import * as AdminPages from "../admin/pages/AdminPages";
 
 function Routes() {
   const isLoggedIn = useSelector((state) => state.login.isLogin);
+  const role = useSelector((state) => state.login.role);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,15 +29,27 @@ function Routes() {
     return () => {
       clearInterval(interval);
     };
-  }, [isLoggedIn]);
+  }, [isLoggedIn, dispatch]);
 
   return (
     <BrowserRoutes>
-      <Route path="/" element={<Pages.Main />}></Route>
-      <Route path="/login" element={<Pages.Login />} />
-      <Route path="/login/kakao" element={<Pages.KakaoLogin />} />
-      <Route path="/login/find_id" element={<Pages.FindId />} />
-      <Route path="/login/find_password" element={<Pages.FindPassword />} />
+      <Route path="/" element={<Pages.Main />} />
+      <Route
+        path="/login/"
+        element={isLoggedIn ? <Navigate to="/" /> : <Pages.Login />}
+      />
+      <Route
+        path="/login/kakao"
+        element={isLoggedIn ? <Navigate to="/" /> : <Pages.KakaoLogin />}
+      />
+      <Route
+        path="/login/find_id"
+        element={isLoggedIn ? <Navigate to="/" /> : <Pages.FindId />}
+      />
+      <Route
+        path="/login/find_password"
+        element={isLoggedIn ? <Navigate to="/" /> : <Pages.FindPassword />}
+      />
       {/* <Route
         path="/mypage/*"
         element={
@@ -44,15 +57,50 @@ function Routes() {
           (role === "ADMIN" ? <Navigate to="/admin" /> : <Pages.MyPage />)
         }
       /> */}
-      <Route path="/mypage" element={<Pages.MyPage />} />
-      <Route path="/mypage/:category" element={<Pages.MyPage />} />
-      <Route path="/cart" element={<Pages.Cart />} />
+      <Route
+        path="/mypage"
+        element={
+          isLoggedIn ? (
+            role === "ADMIN" ? (
+              <Navigate to="/admin" />
+            ) : (
+              <Pages.MyPage />
+            )
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/mypage/:category"
+        element={
+          isLoggedIn ? (
+            role === "ADMIN" ? (
+              <Navigate to="/admin" />
+            ) : (
+              <Pages.MyPage />
+            )
+          ) : (
+            <Navigate to="/login" />
+          )
+        }
+      />
+      <Route
+        path="/cart"
+        element={isLoggedIn ? <Pages.Cart /> : <Navigate to="/login" />}
+      />
       <Route path="/*" element={<Navigate to="/NotFound" />} />
       <Route path="/NotFound" element={<Pages.NotFound />} />
-      <Route path="/signup" element={<Pages.SignUp />}></Route>
+      <Route
+        path="/signup"
+        element={isLoggedIn ? <Navigate to="/" /> : <Pages.SignUp />}
+      />
       <Route path="/signupsuccess" element={<Pages.SignUpSuccess />} />
       <Route path="/goodbye" element={<Pages.Withdrawal />} />
-      <Route path="/order" element={<Pages.Order />}></Route>
+      <Route
+        path="/order"
+        element={isLoggedIn ? <Pages.Order /> : <Navigate to="/" />}
+      />
       <Route path="/ordercomplete" element={<Pages.OrderComplete />} />
       <Route path="/proddetail" element={<Pages.ProdDetail />} />
       <Route
@@ -71,45 +119,96 @@ function Routes() {
       <Route path="/community/notice" element={<Pages.Notice />} />
 
       {/* ---------------------------------Admin pages.... ------------------------------------------*/}
-      <Route path="/admin" element={<AdminPages.AdminMainPage />} />
-      <Route path="/admin/analysis" element={<AdminPages.AdminAnalysis />} />
+      <Route
+        path="/admin"
+        element={
+          role === "ADMIN" ? <AdminPages.AdminMainPage /> : <Navigate to="/" />
+        }
+      />
+      <Route
+        path="/admin/analysis"
+        element={
+          role === "ADMIN" ? <AdminPages.AdminAnalysis /> : <Navigate to="/" />
+        }
+      />
       <Route
         path="/admin/analysis/:category"
-        element={<AdminPages.AdminAnalysis />}
+        element={
+          role === "ADMIN" ? <AdminPages.AdminAnalysis /> : <Navigate to="/" />
+        }
       />
       <Route
         path="/admin/customerservice"
-        element={<AdminPages.AdminCustomerService />}
+        element={
+          role === "ADMIN" ? (
+            <AdminPages.AdminCustomerService />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
       />
       <Route
         path="/admin/customerservice/:category"
-        element={<AdminPages.AdminCustomerService />}
+        element={
+          role === "ADMIN" ? (
+            <AdminPages.AdminCustomerService />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
       />
-      <Route path="/admin/eventnews" element={<AdminPages.AdminEventNews />} />
+      <Route
+        path="/admin/eventnews"
+        element={
+          role === "ADMIN" ? <AdminPages.AdminEventNews /> : <Navigate to="/" />
+        }
+      />
       <Route
         path="/admin/eventnews/:category"
-        element={<AdminPages.AdminEventNews />}
+        element={
+          role === "ADMIN" ? <AdminPages.AdminEventNews /> : <Navigate to="/" />
+        }
       />
       <Route
         path="/admin/membermanagement"
-        element={<AdminPages.AdminMemberManagement />}
+        element={
+          role === "ADMIN" ? (
+            <AdminPages.AdminMemberManagement />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
       />
       <Route
         exact
         path="/admin/storemanagement/:category"
-        element={<AdminPages.AdminStoreManagement />}
+        element={
+          role === "ADMIN" ? (
+            <AdminPages.AdminStoreManagement />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
       ></Route>
-      {/* <Route
-        path="/admin/storemangement/add"
-        element={<ProdAdd></ProdAdd>}
-      ></Route> */}
       <Route
         path="/admin/subscribemanagement"
-        element={<AdminPages.AdminSubscribeManagement />}
+        element={
+          role === "ADMIN" ? (
+            <AdminPages.AdminSubscribeManagement />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
       />
       <Route
         path="/admin/subscribemanagement/:category"
-        element={<AdminPages.AdminSubscribeManagement />}
+        element={
+          role === "ADMIN" ? (
+            <AdminPages.AdminSubscribeManagement />
+          ) : (
+            <Navigate to="/" />
+          )
+        }
       />
     </BrowserRoutes>
   );

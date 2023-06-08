@@ -19,26 +19,16 @@ import mossy from "../../assets/storeMain/storemain_mossy.mp4";
 import special from "../../assets/storeMain/storemain_special2.mp4";
 import watery from "../../assets/storeMain/storemain_watery.mp4";
 import woody from "../../assets/storeMain/storemain_woody.mp4";
-import styled from "styled-components";
-import DOWN_ARROW from "../../assets/storeMain/down.png";
 
 function StoreMain() {
   const [products, setProducts] = useState([]);
   const [productList, setProductList] = useState(products);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(12);
-  const totalPages = Math.ceil(productList.length / 12);
-
-  const handleLoadMore = () => {
-    setCount((prevCount) => prevCount + 12);
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
   const params = useParams();
   // 카테고리가 선택되지 않았으면 기본값 all로 사용
   const category = params.category || "all";
   const encodecategory = escape(category);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [sortOption, setSortOption] = useState("latest");
   const [prodcategory, setProdcategory] = useState("all");
 
@@ -132,7 +122,7 @@ function StoreMain() {
   //productlist 필터 모달값 기본 적용 (전체 카테고리, 최신순 정렬)
   // 값이 유효할 때
   return (
-    <div style={{ paddingBottom: "200px" }}>
+    <div style={{ paddingBottom: "250px" }}>
       <div className="imagebox">
         {category === "all" && (
           <video className="topVideo" loop autoPlay muted>
@@ -208,56 +198,13 @@ function StoreMain() {
         getProdcategory={prodcategory}
       />
       {sortByOption(productList, sortOption)}
-      <CardList products={productList.slice(0, count)} />
-      {count < productList.length && (
-        <PlusButtonBox>
-          <PlusButton onClick={handleLoadMore}>
-            더보기&nbsp;({currentPage}/{totalPages})
-            <ImageBox>
-              <DropArrow src={DOWN_ARROW} alt="" />
-            </ImageBox>
-          </PlusButton>
-        </PlusButtonBox>
-      )}
+      <CardList
+        products={productList}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }
 
 export default StoreMain;
-
-const PlusButtonBox = styled.div`
-  display: flex;
-  flex-flow: row wrap;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  width: 90vw;
-  height: fit-content;
-  max-width: 1200px;
-  margin: 50px auto;
-`;
-
-const PlusButton = styled.div`
-  margin: 0px auto;
-  cursor: pointer;
-  background-color: #EEEEEE;
-  border-radius: 8px;
-  padding: 20px 21px;
-  font-size: 1.4rem;
-  width: 30%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-`;
-
-const ImageBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DropArrow = styled.img`
-  width: 1.6rem;
-  height: 1.6rem;
-  padding-left: 5px;
-`;

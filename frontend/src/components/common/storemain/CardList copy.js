@@ -4,32 +4,32 @@ import ProductCard from "./ProductCard";
 import styled from "styled-components";
 
 const CardList = ({ products, currentPage, setCurrentPage }) => {
-  // const productsPerPage = 12;
+  const productsPerPage = 12;
 
-  // // 페이지 수 계산
-  // const totalPages = Math.ceil(products.length / productsPerPage);
+  // 페이지 수 계산
+  const totalPages = Math.ceil(products.length / productsPerPage);
 
-  // // 페이지별로 보여줄 상품 데이터 선택
-  // const indexOfLastProduct = currentPage * productsPerPage;
-  // const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  // const currentProducts = products.slice(
-  //   indexOfFirstProduct,
-  //   indexOfLastProduct
-  // );
+  // 페이지별로 보여줄 상품 데이터 선택
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
-  // // 페이지 변경 함수
-  // const handlePageChange = (pageNumber) => {
-  //   setCurrentPage(Number(pageNumber));
-  // };
+  // 페이지 변경 함수
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(Number(pageNumber));
+  };
 
   return (
     <div>
       <Cardbox>
-        {products.map((product) => {
+        {currentProducts.map((product) => {
           return <ProductCard key={product.prodNum} product={product} />;
         })}
       </Cardbox>
-      {/* <Pagination>
+      <Pagination>
         {currentPage - 3 <= 0 ? (
           ""
         ) : (
@@ -73,7 +73,7 @@ const CardList = ({ products, currentPage, setCurrentPage }) => {
         ) : (
           " "
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -92,12 +92,14 @@ export const fetchMemberByToken = createAsyncThunk(
   }
 );
 
+const savedRole = localStorage.getItem("role");
+
 const initialState = {
   isLogin: false,
   accessToken: "",
   refreshToken: "",
   loading: false,
-  role: "",
+  role: savedRole || "",
 };
 
 const loginSlice = createSlice({
@@ -138,6 +140,7 @@ const loginSlice = createSlice({
       if (action.payload) {
         state.isLogin = true;
         state.role = action.payload.role[0];
+        localStorage.setItem("role", state.role);
       }
       console.log(state.isLogin);
     },

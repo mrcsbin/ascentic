@@ -21,9 +21,7 @@ const ExpSubsManageView = ({ sbMember, subscribe, success, TasteRes }) => {
   ];
 
   //구독중인 기간
-  let subsDuration =
-    (currnetYear - startYear) * 12 + (currnetMonth - startMonth) + 1;
-  // if (subsDuration === 0) subsDuration = 1;
+  let subsDuration = subscribe.length;
 
   // ------------------------------ 과거 배송상품 관련 -------------------------------------------
 

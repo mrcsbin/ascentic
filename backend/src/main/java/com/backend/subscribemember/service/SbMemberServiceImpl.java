@@ -105,6 +105,9 @@ public class SbMemberServiceImpl implements SbMemberService {
 
         SubscribeMember lastSbMember = sbMemberRepository.getLastSbMemberByMemberId(currentMemberId);
 
+        if(lastSbMember == null)
+            return false;
+
         res = lastSbMember.getSbStartDate().getYear() == LocalDate.now().getYear()
                 && lastSbMember.getSbStartDate().getMonthValue() == LocalDate.now().getMonthValue();
         return res;

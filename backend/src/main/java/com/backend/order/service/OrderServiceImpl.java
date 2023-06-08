@@ -14,6 +14,7 @@ import com.backend.orderproduct.entity.OrderProduct;
 import com.backend.orderproduct.repository.OrderProductRepository;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -326,6 +327,14 @@ public class OrderServiceImpl implements OrderService {
                 adminOrderUpdateDto.getShipMainAddress(), adminOrderUpdateDto.getShipSubAddress(),
                 adminOrderUpdateDto.getShipMessage(), adminOrderUpdateDto.getShipCode(),
                 adminOrderUpdateDto.getOrderState());
+
+        List<OrderProduct> orderProducts = orderProductRepository.findByOrder(order);
+        orderProducts.stream()
+                .filter(orderProduct -> !orderProduct.getOrderState().equals("결제취소"))
+                .forEach(orderProduct -> {
+                    orderProduct.setOrderState(adminOrderUpdateDto.getOrderState());
+                    orderProductRepository.save(orderProduct);
+                });
 
         orderRepository.save(order);
     }

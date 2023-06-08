@@ -239,7 +239,6 @@ const PlusButtonBox = styled.div`
 const PlusButton = styled.div`
   margin: 0px auto;
   cursor: pointer;
-  border: 1px solid grey;
   background-color: #EEEEEE;
   border-radius: 8px;
   padding: 20px 21px;

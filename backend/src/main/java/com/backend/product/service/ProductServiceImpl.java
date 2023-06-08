@@ -69,6 +69,13 @@ public class ProductServiceImpl implements ProductService {
                         .anyMatch(productOption -> productOption.getOptionState().equals("판매중")))
                 .map(ProductResponse.ProductListDto::of)
                 .collect(Collectors.toList());
+//        return products.stream()
+//                .filter(product -> product.getProductOption().stream()
+//                        .anyMatch(productOption -> productOption.getOptionState().equals("판매중")))
+//                .skip(page * pageSize)
+//                .limit(pageSize)
+//                .map(ProductResponse.ProductListDto::of)
+//                .collect(Collectors.toList());
     }
 
     @Override

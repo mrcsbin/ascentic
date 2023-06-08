@@ -64,7 +64,7 @@ public class ProductResponse {
 
         public static ProductDetailDto of(Product product, String memberId, List<ProductResponse.ReviewDto> reviews) {
             List<OptionDetailDto> prodOptions = product.getProductOption().stream()
-                    .filter(option -> !option.getOptionState().equals("판매종료"))
+                    .filter(option -> option.getOptionState().equals("판매중"))
                     .map(OptionDetailDto::of)
                     .collect(Collectors.toList());
 

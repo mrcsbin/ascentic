@@ -71,20 +71,7 @@ function Routes() {
           )
         }
       />
-      <Route
-        path="/mypage/:category"
-        element={
-          isLoggedIn ? (
-            role === "ADMIN" ? (
-              <Navigate to="/admin" />
-            ) : (
-              <Pages.MyPage />
-            )
-          ) : (
-            <Navigate to="/login" />
-          )
-        }
-      />
+      <Route path="/mypage/:category" element={<Pages.MyPage />} />
       <Route
         path="/cart"
         element={isLoggedIn ? <Pages.Cart /> : <Navigate to="/login" />}

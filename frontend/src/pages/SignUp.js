@@ -238,9 +238,7 @@ function SignUp() {
       alert("모든 값을 정확히 입력해주세요.");
       return;
     }
-    await saveMember(formData).then(
-      navigate("/signupsuccess", { state: formData.name })
-    );
+    await saveMember(formData).then((window.location.href = "/"));
   };
 
   function goLogin() {

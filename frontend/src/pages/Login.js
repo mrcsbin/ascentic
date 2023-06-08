@@ -194,6 +194,7 @@ const LoginWrap = styled.div`
   width: 70%;
   margin: 0 auto;
   padding-top: 200px;
+  padding-bottom: 107px;
 `;
 
 const LoginArea = styled.div`

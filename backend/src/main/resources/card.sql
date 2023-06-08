@@ -1,0 +1,3 @@
+insert into ascentic.tb_card (id, acquireStatus, acquirerCode, amount, approveNo, cardType, installmentPlanMonths, interestPayer, isInterestFree, issuerCode, number, ownerType, useCardPoint)
+values  (1, 'READY', '11', 233000, '00000000', '체크', 0, null, false, '11', '94912353****900*', '법인', false),
+        (2, 'READY', '11', 93570, '00000000', '체크', 0, null, false, '11', '94912315****707*', '법인', false);

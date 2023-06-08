@@ -54,6 +54,7 @@ const HeaderV2 = () => {
   function handleLogout() {
     removeCookie("accessToken");
     dispatch(setIsLogin(false));
+    localStorage.removeItem("role");
     navigate("/", { replace: true });
     window.location.reload();
   }

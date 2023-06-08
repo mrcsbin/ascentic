@@ -112,7 +112,10 @@ function Routes() {
       <Route path="/exp" element={<Pages.ExpMain />} />
       <Route path="/exp/taste" element={<Pages.ExpTaste></Pages.ExpTaste>} />
       <Route path="/exp/taste/res" element={<Pages.TestResult />} />
-      <Route path="/exp/subs" element={<Pages.ExpSubs />} />
+      <Route
+        path="/exp/subs"
+        element={isLoggedIn ? <Pages.ExpSubs /> : <Navigate to="/login" />}
+      />
       <Route path="/exp/subsmanage" element={<Pages.ExpSubsManage />} />
       <Route path="/community/event" element={<Pages.Event />} />
       <Route path="/community/event/:postId" element={<Pages.EventDetail />} />

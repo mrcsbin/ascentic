@@ -327,6 +327,14 @@ public class OrderServiceImpl implements OrderService {
                 adminOrderUpdateDto.getShipMessage(), adminOrderUpdateDto.getShipCode(),
                 adminOrderUpdateDto.getOrderState());
 
+        List<OrderProduct> orderProducts = orderProductRepository.findByOrder(order);
+        orderProducts.stream()
+                .filter(orderProduct -> !orderProduct.getOrderState().equals("결제취소"))
+                .forEach(orderProduct -> {
+                    orderProduct.setOrderState(adminOrderUpdateDto.getOrderState());
+                    orderProductRepository.save(orderProduct);
+                });
+
         orderRepository.save(order);
     }
 

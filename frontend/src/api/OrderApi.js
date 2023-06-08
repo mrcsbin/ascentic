@@ -80,7 +80,7 @@ export const requestRecentAddr = async (accessToken) => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
+    alert("최근 배송지가 없습니다.");
   }
 };
 
@@ -110,10 +110,13 @@ export const getOrderList = async (accessToken) => {
 };
 
 export const getOrderListInMyPageProfile = async (accessToken) => {
-  const response = await axios.get(`${ORDER_API_URL}/order/get/mypage-profile`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await axios.get(
+    `${ORDER_API_URL}/order/get/mypage-profile`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
   return response.data;
 };

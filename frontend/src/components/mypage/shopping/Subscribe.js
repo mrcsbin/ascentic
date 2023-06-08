@@ -54,10 +54,7 @@ export const Subscribe = () => {
             </ItemSmallBox>
           </ItemInfoBox>
           {subscribeList.map((item, index) => (
-            <SubscribeItem
-              item={item}
-              key={index}
-            />
+            <SubscribeItem item={item} key={index} />
           ))}
         </>
       )}

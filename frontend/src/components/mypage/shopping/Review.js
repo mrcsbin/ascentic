@@ -117,9 +117,7 @@ export const Review = () => {
   );
 };
 
-const ReviewListWrap = styled.div`
-  height: 500px;
-`;
+const ReviewListWrap = styled.div``;
 
 const ContentBar = styled.div`
   border-bottom: 1px solid grey;

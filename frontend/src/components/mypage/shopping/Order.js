@@ -118,7 +118,6 @@ export const Order = () => {
 };
 
 const OrderListWrap = styled.div`
-  min-height: 500px;
 `;
 
 const ContentBar = styled.div`
@@ -160,7 +159,6 @@ const Filter = styled.div`
 `;
 
 const Content = styled.div`
-  height: 500px;
   text-align: center;
   display: flex;
   flex-direction: column;

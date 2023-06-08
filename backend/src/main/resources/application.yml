@@ -95,6 +95,8 @@ spring:
           - classpath:eventnews.sql
           - classpath:subscribeCard.sql
           - classpath:subscribePayment.sql
+          - classpath:card.sql
+          - classpath:orderPaymentReceipt.sql
 
 # 멤버 이미지, 전화번호(-) 빼기
 # subscribeMember.sql (member_name, member_tel, member_addr 수정)

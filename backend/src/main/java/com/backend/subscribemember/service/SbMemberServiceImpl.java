@@ -8,6 +8,8 @@ import com.backend.subscribemember.dto.LastSbMemberDTO;
 import com.backend.subscribemember.dto.SubscribeMemberDto;
 import com.backend.subscribemember.entity.SubscribeMember;
 import com.backend.subscribemember.repository.SbMemberRepository;
+import com.backend.subscribesend.entity.SubscribeSend;
+import com.backend.subscribesend.repository.SubscribeSendRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class SbMemberServiceImpl implements SbMemberService {
 
     private final SbMemberRepository sbMemberRepository;
     private final SubscribePaymentRepository subscribePaymentRepository;
+    private final SubscribeSendRepository subscribeSendRepository;
 
     @Override
     public void sbMemberAdd(SubscribeMemberDto subscribeMemberDto) {
@@ -108,8 +111,13 @@ public class SbMemberServiceImpl implements SbMemberService {
         if(lastSbMember == null)
             return false;
 
-        res = lastSbMember.getSbStartDate().getYear() == LocalDate.now().getYear()
-                && lastSbMember.getSbStartDate().getMonthValue() == LocalDate.now().getMonthValue();
+        SubscribeSend subscribeSend = subscribeSendRepository.findTopBySubscribeMemberOrderBySbSendNumDesc(lastSbMember);
+
+        if(subscribeSend == null)
+            return false;
+
+        res = subscribeSend.getSbSendPayDate().getYear() == LocalDate.now().getYear()
+                && subscribeSend.getSbSendPayDate().getMonthValue() == LocalDate.now().getMonthValue();
         return res;
     }
 

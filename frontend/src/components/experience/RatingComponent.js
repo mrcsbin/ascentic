@@ -191,7 +191,7 @@ const RatingComponent = ({ sbSendNum, score, review }) => {
             readOnly={score !== null}
             placeholder={
               score === null
-                ? "이번 달의 체험 패키지에 대한 만족도를 들려주세요! 고객님의 의견은 서비스 개선에 큰 도움이 됩니다."
+                ? "이번 달의 체험 패키지에 대한 만족도를 들려주세요!"
                 : ""
             }
           ></textarea>

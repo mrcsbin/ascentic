@@ -30,22 +30,18 @@
 
 
 ### Front-End
-
-### Back-End
-
-### Database
-
-### Open API
-
 - React.js
 - redux-toolkit(전역 상태 라이브러리)
 
+### Back-End
 - Spring Boot
 - JPA(Java Persistence API)
 - JJWT
-
+  
+### Database
 - MySQL
-
+  
+### Open API
 - kakao 로그인 API
 - Toss Payments 결제 API
 

@@ -4,7 +4,7 @@
 
 
 
-[[https://github.com/kmindev/ascentic](https://github.com/kmindev/ascentic)](https://dented-bell-59e.notion.site/ascentic-69fb1a6b2ce74de28e77352a3565ad45?pvs=4)
+(https://dented-bell-59e.notion.site/ascentic-69fb1a6b2ce74de28e77352a3565ad45?pvs=4)
 
 ## 프로젝트 소개
 

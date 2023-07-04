@@ -1,6 +1,6 @@
 # ascentic
 
-## Github Link
+## Notion Link
 
 
 

@@ -1,0 +1,236 @@
+.signupFrm {
+  padding-bottom: 107px;
+  font-family: "Lato", sans-serif;
+}
+
+.signupFrm {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 120px;
+  padding-bottom:107px;
+}
+.input.disabled {
+  color: rgb(149, 148, 148);
+  font-weight: bold;
+}
+.signupFrm body {
+  background-color: white;
+}
+
+.signupFrm .form {
+  background-color: white;
+  width: 400px;
+  border-radius: 8px;
+  padding: 20px 40px;
+}
+
+.signupFrm .title {
+  font-size: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.signupFrm .inputContainer {
+  position: relative;
+  height: 45px;
+  width: 90%;
+  margin: 25px 0px;
+}
+
+.signupFrm .input {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #dadce0;
+  font-size: 16px;
+  padding: 0 0 0 20px;
+  outline: none;
+  background: none;
+  z-index: 1;
+}
+
+.signupFrm ::placeholder {
+  color: transparent;
+}
+
+.signupFrm .label {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 0 4px;
+  background-color: white;
+  color: #dadce0;
+  font-size: 16px;
+  transition: 0.2s;
+  z-index: 0;
+}
+
+.signupFrm .submitBtn {
+  display: block;
+  margin-left: 10px;
+  padding: 15px 30px;
+  border: none;
+  background-color: rgb(60, 60, 60);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 30px;
+  transition: 0.2s;
+}
+
+.signupFrm .submitBtn:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+.signupFrm .submitBtn:disabled {
+  background-color: rgb(200, 200, 200);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.signupFrm .input:focus + .label {
+  top: -7px;
+  left: 3px;
+  z-index: 10;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(0, 0, 0);
+}
+
+.signupFrm .input:focus {
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.signupFrm .input:not(:placeholder-shown) + .label {
+  top: -7px;
+  left: 3px;
+  z-index: 10;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.signupFrm .buttonCollection {
+  float: right;
+  display: flex;
+}
+
+.signupFrm #verifyBtn {
+  display: inline-block;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  top: 20%;
+  right: 0;
+  z-index: 999;
+  position: absolute;
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+  font-size: 0.9em;
+  padding: 0;
+  margin: 0;
+  padding: 0.1rem 0.2rem;
+  background-color: #8c8c8c4d;
+  border: 4px solid #a3a3a3;
+  border-radius: 0.25rem;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.signupFrm .verify-correct {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%) translateX(300%);
+  width: 20px;
+}
+
+.signupFrm .error {
+  display: inline-block;
+  font-size: 15px;
+  color: rgb(255, 119, 119);
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  background-color: #f8d7da;
+  border: 5px solid #f5c2c7;
+  border-radius: 0.25rem;
+  width: fit-content;
+  line-height: 120%;
+}
+.inputCertificateContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 90%;
+  height: 50px;
+}
+
+#certificateCode {
+  flex: 1;
+
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid gray;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+#certificateVerify {
+  padding: 15px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  z-index: 999;
+}
+
+#certificateVerify:hover {
+  background-color: #0056b3;
+}
+.timer {
+  position: absolute;
+  z-index: 999;
+  margin: 10px;
+  color: red;
+  right: 65px;
+}
+
+#showCalendar {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 2rem;
+  position: absolute;
+  right: 0;
+  z-index: 999;
+}
+.react-calendar {
+  margin: auto;
+}
+input[type="checkbox"] {
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+label[for="infoAgree"],
+label[for="snsPush"],
+label[for="emailPush"] {
+  font-weight: bold;
+  font-size: 1.1rem;
+  display: inline-block;
+  vertical-align: middle;
+}

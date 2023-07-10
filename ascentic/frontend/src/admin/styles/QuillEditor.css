@@ -1,0 +1,201 @@
+/* Noto Sans KR */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+/* Nanum Gothic */
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+/* Gothic A1 */
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap");
+
+/* Black Han Sans */
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap");
+
+/* 폰트 스타일 */
+.ql-font-Noto-Sans {
+  font-family: "Noto Sans", sans-serif;
+}
+
+.ql-font-Roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.ql-font-Open-Sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+.ql-font-Gugi {
+  font-family: "Gugi", cursive;
+}
+.ql-editor strong {
+  font-weight: bold;
+}
+.ql-editor em {
+  font-style: italic;
+}
+
+/* .QuillContainer {
+  height: 90%;
+} */
+.ql-editor {
+  min-height: 700px !important;
+  max-height: 700px;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+.CalendarContainer {
+  z-index: 999;
+}
+
+/* .NameCategory {
+  display: flex;
+  flex-direction: column;
+} */
+
+/* .NameCategory select {
+  margin-bottom: 10px;
+} */
+
+.CalendarContainer {
+  margin-left: 20px;
+}
+
+/* .NameCategory {
+  margin-bottom: 10px;
+} */
+
+.CalendarContainer {
+  margin-left: 0;
+}
+
+/* 추가 변경부분 */
+.QuillContainer .NameCategory {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.QuillContainer .NameCategory h1 {
+  text-align: center;
+  font-size: 2vw;
+  margin-top: 0;
+  margin-bottom: 1vw;
+}
+.QuillContainer .post-status {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  margin: 40px 0;
+}
+.post-status button {
+  text-align: center;
+  all: unset;
+  cursor: pointer;
+  padding: 15px 30px;
+  margin: 5px 10px;
+  color: white;
+  background-color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.QuillContainer .NameCategory .post-category-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px auto;
+  width: 100%;
+}
+.QuillContainer .NameCategory .post-category-input select {
+  font-size: 1vw;
+  margin: 7px auto;
+  width: 100%;
+  height: 2.2vw;
+  border-width: 0px;
+  border: 1px solid black;
+  padding-left: 10px;
+}
+.QuillContainer .NameCategory .post-category-input input {
+  width: 99%;
+  height: 1.5vw;
+  font-size: 1vw;
+  margin: 7px auto;
+  padding: 4px;
+  border-width: 0px;
+  border: 1px solid black;
+  padding-left: 10px;
+}
+.QuillContainer .event-date {
+  width: 100%;
+}
+.QuillContainer .event-date h4 {
+  height: 1.5vw;
+  text-align: center;
+  font-size: 1vw;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  font-weight: 600;
+}
+.QuillContainer .CalendarContainer {
+  text-align: center;
+  font-size: 1vw;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.image-selection {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.selected-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.image-container {
+  display: flex;
+  margin: 0 auto;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.image-container > img {
+  margin: 0 auto;
+}
+.image-buttons {
+  display: flex;
+  width: fit-content;
+  margin: 15px auto;
+}
+.image-buttons > button {
+  margin: 0 10px;
+  font-size: 1rem;
+  background-color: white;
+  border: 1.5px solid black;
+  font-weight: 500;
+  padding: 5px 15px;
+}
+.image-selection h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  height: 1.5vw;
+  text-align: center;
+  font-size: 1vw;
+  font-weight: 600;
+}
+.upload-container input {
+  font-size: 1rem;
+}
+.rdrCalendarWrapper {
+  color: #000000;
+  font-size: 1.05rem !important;
+}
+.rdrDefinedRangesWrapper {
+  font-size: 1rem !important;
+  width: 280px !important;
+  border-right: solid 1px #eff2f7 !important;
+  background: #fff !important;
+}

@@ -1,0 +1,519 @@
+/* 폰트 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+
+/* 취향테스트 메인 페이지 ExpTestMain */
+.startTaste {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.startTaste > .mainvideo {
+  width: 100vw;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+.contentbox {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 12vw auto;
+  padding: 10px 0;
+  text-align: center;
+  border: 1px solid white;
+  z-index: 10;
+}
+.contentbox > img {
+  width: 200px;
+  margin: 5vw auto 0 auto;
+  padding: 0 20vw;
+  text-align: center;
+}
+.contentbox > h3 {
+  margin: 2vw auto;
+  padding: 0;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: white;
+}
+.contentbox > span {
+  display: block;
+  margin: 7px auto;
+  padding: 0;
+  text-align: center;
+  font-size: 1rem;
+  font-family: "Pretendard";
+  font-weight: 400;
+  color: white;
+}
+.buttonbox {
+  display: flex;
+  flex-direction: row;
+  margin: 3vw auto 5vw auto;
+  padding: 0;
+  text-align: center;
+}
+.buttonbox > button {
+  display: block;
+  margin: 0 1rem;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-family: "Pretendard";
+  font-weight: 500;
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+}
+.buttonbox > button:hover {
+  background: rgba(256, 256, 256, 10%);
+}
+
+/* 취향테스트 시작 페이지 TasteTestStart */
+.tasteTest {
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 110vh;
+  overflow: hidden;
+}
+.tasteTest > .mainvideo {
+  width: 100vw;
+  object-fit: cover;
+  object-position: center;
+  z-index: -10;
+}
+.testcontentbox {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-width: 730px;
+  margin: auto auto;
+  padding: 3.5vw 4vw;
+  text-align: center;
+  border: 1px solid black;
+  background-color: white;
+  opacity: 0.95;
+}
+.maintext {
+  margin: 0.5vw auto 1vw auto;
+  padding: 0;
+  text-align: center;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 400;
+  color: black;
+}
+.testcontentbox > input {
+  margin: 0.5vw auto;
+  width: 150px;
+  height: auto;
+  line-height: normal;
+  padding: 0.6rem 0.6rem;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 700;
+  color: black;
+  border: 0;
+  border-bottom: 1.5px solid black;
+  border-radius: 0;
+  outline-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.testcontentbox > .testcontent {
+  margin: 1vw auto;
+  font-family: "Pretendard";
+  font-weight: 500;
+  color: black;
+}
+.testcontentbox > .testcontent > .label {
+  margin: 0.5vw auto;
+  font-size: 1rem;
+}
+.testcontentbox > .testcontent > .btnG {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: 1.5px solid white;
+  border-bottom: 1.5px solid #d0cfcf;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.testcontentbox > .testcontent > .btnG:hover,
+.testcontentbox > .testcontent > .btnG:focus,
+.btnG-active {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: 1.5px solid white;
+  border-bottom: 1.5px solid black;
+  color: black;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.testcontent > input[type="number"] {
+  width: 100px;
+  height: auto;
+  line-height: normal;
+  padding: 0.6rem 0.6rem;
+  font-family: "Pretendard";
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: black;
+  border: 0;
+  border-bottom: 1.5px solid black;
+  border-radius: 0;
+  outline-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.testcontent > input[type="checkbox"] + label {
+  display: inline-block;
+  margin: 0.5vw auto;
+  font-weight: 400;
+  cursor: pointer;
+}
+.testcontent > input[type="checkbox"]:checked {
+  background-color: #666666;
+}
+
+.orderBtnbox {
+  margin: 1.5vw auto 0 auto;
+}
+.orderBtnbox > .beforebtn {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #afadad;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+.orderBtnbox > .nextbtn {
+  width: 200px;
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: black;
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+.orderBtnbox > .nextbtn:disabled {
+  margin: 0 0.6vw;
+  padding: 0.8rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgb(72, 72, 72);
+  border: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* 사진 버튼이 들어가는 취향테스트 페이지 TasteTest1 */
+.testcontentbox > .testimgBtnbox {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn {
+  width: 200px;
+  margin: 1.5vw 1.5vw;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid white;
+  background-color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn2 {
+  width: 150px;
+  margin: 1.5vw 1.5vw;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid white;
+  background-color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg {
+  position: relative;
+  margin: 0.7rem auto;
+  width: 200px;
+  height: 130px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg2,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg2 {
+  position: relative;
+  margin: 0.7rem auto;
+  width: 200px;
+  height: 130px;
+  border-radius: 3px;
+  overflow: visible;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn2 > .testBtnimgmini,
+.testcontentbox > .testimgBtnbox > .testimgBtn2-active > .testBtnimgmini {
+  position: relative;
+  margin: 0.7rem auto;
+  width: 150px;
+  height: 110px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg > img,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg > img {
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  object-position: center;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn > .testBtnimg2 > img,
+.testcontentbox > .testimgBtnbox > .testimgBtn-active > .testBtnimg2 > img {
+  margin-top: 10px;
+  width: 110px;
+  height: 110px;
+  object-fit: scale-down;
+  object-position: center;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn2 > .testBtnimgmini > img,
+.testcontentbox > .testimgBtnbox > .testimgBtn2-active > .testBtnimgmini > img {
+  width: 150px;
+  height: 110px;
+  object-fit: cover;
+  object-position: center;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn:hover,
+.testimgBtn-active {
+  width: 200px;
+  margin: 1.5vw 1.5vw;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid white;
+  background-color: white;
+  font-size: 1rem;
+  border-top: 1.5px solid black;
+  color: black;
+  font-weight: 700;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn2:hover,
+.testimgBtn2-active {
+  width: 150px;
+  margin: 1.5vw 1.5vw;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid white;
+  background-color: white;
+  font-size: 1rem;
+  border-top: 1.5px solid black;
+  color: black;
+  font-weight: 700;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn:hover > .testBtnimg > img,
+.testimgBtn-active > .testBtnimg > img,
+.testcontentbox > .testimgBtnbox > .testimgBtn2:hover > .testBtnimgmini > img,
+.testimgBtn2-active > .testBtnimgmini > img {
+  filter: brightness(90%);
+  transform: scale(1.05);
+  transition: all 0.5s;
+}
+.testcontentbox > .testimgBtnbox > .testimgBtn:hover > .testBtnimg2 > img,
+.testimgBtn-active > .testBtnimg2 > img {
+  transform: scale(1.02);
+  transition: all 0.5s;
+}
+.enneartext {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+/* 추후 반응형 작업 필요 */
+
+/* 테스트 결과 페이지 ExpTasteRes */
+.testresbox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  max-width: 1000px;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 120px 0 3vw 0;
+  text-align: center;
+  border: 0;
+}
+.firstTaste {
+  display: flex;
+  font-family: "Pretendard";
+  padding-top: 3vw;
+}
+.firstTaste > div > .info {
+  margin: 2vw auto;
+  padding: 0;
+  text-align: right;
+  font-size: 2rem;
+  font-weight: 400;
+  color: black;
+}
+.firstTaste > div > .notename {
+  margin: 2vw auto;
+  padding: 0;
+  text-align: right;
+  font-size: 3rem;
+  font-weight: 700;
+  color: black;
+}
+.firstTaste > div > .noteimg {
+  position: relative;
+  margin: 1rem auto;
+  width: 60vw;
+  height: 300px;
+  overflow: hidden;
+}
+.firstTaste > div > .noteimg > img {
+  width: 60vw;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+.firstTaste > div > .scentsbox {
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  width: 60vw;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
+  text-align: center;
+}
+.scentsbox > .scentbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.scentsbox > .scentbox > .scentimg {
+  position: relative;
+  margin: 0.5rem auto;
+  width: 19vw;
+  height: 13vw;
+  overflow: hidden;
+}
+.scentsbox > .scentbox > .scentimg > img {
+  width: 19vw;
+  height: 13vw;
+  object-fit: cover;
+  object-position: center;
+}
+.scentsbox > .scentbox > .scentname {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0.5rem auto;
+}
+.firstTaste > div > .noteinfo {
+  margin: 3vw auto;
+  padding: 0 2vw;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 2.3rem;
+  word-break: keep-all;
+  border-left: 2px solid black;
+}
+.testresbox > .resbtnbox {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: center;
+}
+.testresbox > .resbtnbox > .retrybtn {
+  margin: 0 2vw 2vw 0;
+  padding: 1rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid black;
+  font-size: 1rem;
+  font-weight: 500;
+  color: black;
+  text-decoration: none;
+}
+.testresbox > .resbtnbox > .retrybtn:hover {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  font-weight: 700;
+}
+.testresbox > .resbtnbox > .subsbtn {
+  margin: 0 0 2vw 0;
+  padding: 1rem 3rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: black;
+  border: 1px solid black;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+}
+.testresbox > .resbtnbox > .subsbtn:hover {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  font-weight: 700;
+}
